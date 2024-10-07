@@ -15,14 +15,12 @@
       {
         "name": "Rage Amplification",
         "description": "Amplifies the Barbarian's rage, granting resistance to lightning and thunder damage while raging.",
-        "cooldown": 0,
-        "icon": "icons/rage_amplification.png"
+        "cooldown": 0
       },
       {
         "name": "Electrical Discharge",
         "description": "Can summon minor electrical discharges to intimidate foes.",
-        "cooldown": 60,
-        "icon": "icons/electrical_discharge.png"
+        "cooldown": 60
       }
     ],
     "levelUpRequirements": [
@@ -117,20 +115,17 @@
           {
             "name": "Lightning Rage",
             "description": "Amplifies the Barbarian's rage to deal additional lightning damage.",
-            "cooldown": 0,
-            "icon": "icons/lightning_rage.png"
+            "cooldown": 0
           },
           {
             "name": "Thunderclap",
             "description": "Unleashes a thunderous shockwave that stuns nearby enemies.",
-            "cooldown": 120,
-            "icon": "icons/thunderclap.png"
+            "cooldown": 120
           },
           {
             "name": "Storm Shield",
             "description": "Grants the party resistance to lightning and thunder damage.",
-            "cooldown": 300,
-            "icon": "icons/storm_shield.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -161,20 +156,17 @@
           {
             "name": "Wind Fury",
             "description": "Increases movement speed and grants swift aerial attacks.",
-            "cooldown": 0,
-            "icon": "icons/wind_fury.png"
+            "cooldown": 0
           },
           {
             "name": "Aerial Assault",
             "description": "Performs powerful dive attacks from above.",
-            "cooldown": 180,
-            "icon": "icons/aerial_assault.png"
+            "cooldown": 180
           },
           {
             "name": "Gale Barrier",
             "description": "Generates wind shields that deflect ranged attacks.",
-            "cooldown": 300,
-            "icon": "icons/gale_barrier.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -205,20 +197,17 @@
           {
             "name": "Electric Slash",
             "description": "Melee attacks deal additional lightning damage and can paralyze foes.",
-            "cooldown": 0,
-            "icon": "icons/electric_slash.png"
+            "cooldown": 0
           },
           {
             "name": "Charged Leap",
             "description": "Leaps great distances, leaving a trail of static electricity.",
-            "cooldown": 90,
-            "icon": "icons/charged_leap.png"
+            "cooldown": 90
           },
           {
             "name": "Static Aura",
             "description": "Nearby enemies take minor lightning damage over time.",
-            "cooldown": 0,
-            "icon": "icons/static_aura.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -258,14 +247,12 @@
       {
         "name": "Stone Endurance",
         "description": "Enhances physical strength and endurance, allowing for increased damage output and longer periods of rage.",
-        "cooldown": 0,
-        "icon": "icons/stone_endurance.png"
+        "cooldown": 0
       },
       {
         "name": "Tremor",
         "description": "Provides tremors that can unbalance enemies.",
-        "cooldown": 60,
-        "icon": "icons/tremor.png"
+        "cooldown": 60
       }
     ],
     "levelUpRequirements": [
@@ -360,20 +347,17 @@
           {
             "name": "Earthshatter",
             "description": "Smashes the ground to create shockwaves knocking down enemies.",
-            "cooldown": 120,
-            "icon": "icons/earthshatter.png"
+            "cooldown": 120
           },
           {
             "name": "Stone Skin",
             "description": "Grants significant damage resistance to the party.",
-            "cooldown": 300,
-            "icon": "icons/stone_skin.png"
+            "cooldown": 300
           },
           {
             "name": "Immovable Stance",
             "description": "Becomes unmovable, resisting pushes or knockbacks.",
-            "cooldown": 0,
-            "icon": "icons/immovable_stance.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -404,20 +388,17 @@
           {
             "name": "Crystal Spikes",
             "description": "Projects crystal spikes from the ground to impale enemies.",
-            "cooldown": 150,
-            "icon": "icons/crystal_spikes.png"
+            "cooldown": 150
           },
           {
             "name": "Reflective Armor",
             "description": "Reflects a portion of damage back to attackers.",
-            "cooldown": 0,
-            "icon": "icons/reflective_armor.png"
+            "cooldown": 0
           },
           {
             "name": "Radiant Shield",
             "description": "Provides protection against magical attacks.",
-            "cooldown": 300,
-            "icon": "icons/radiant_shield.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -448,20 +429,17 @@
           {
             "name": "Seismic Slam",
             "description": "Creates localized earthquakes to disrupt enemies.",
-            "cooldown": 180,
-            "icon": "icons/seismic_slam.png"
+            "cooldown": 180
           },
           {
             "name": "Tremor Sense",
             "description": "Detects enemies through ground vibrations.",
-            "cooldown": 0,
-            "icon": "icons/tremor_sense.png"
+            "cooldown": 0
           },
           {
             "name": "Fortress Aura",
             "description": "Increases party defense when near Gronk.",
-            "cooldown": 0,
-            "icon": "icons/fortress_aura.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -501,14 +479,12 @@
       {
         "name": "Fiery Rage",
         "description": "Grants the ability to unleash fiery strikes and grants temporary hit points when entering a rage.",
-        "cooldown": 0,
-        "icon": "icons/fiery_rage.png"
+        "cooldown": 0
       },
       {
         "name": "Blinding Flash",
         "description": "Can emit a blinding flash to disorient adversaries.",
-        "cooldown": 90,
-        "icon": "icons/blinding_flash.png"
+        "cooldown": 90
       }
     ],
     "levelUpRequirements": [
@@ -603,20 +579,17 @@
           {
             "name": "Blazing Rage",
             "description": "Melee attacks deal additional fire damage, igniting enemies.",
-            "cooldown": 0,
-            "icon": "icons/blazing_rage.png"
+            "cooldown": 0
           },
           {
             "name": "Fire Nova",
             "description": "Unleashes a burst of flames damaging surrounding foes.",
-            "cooldown": 120,
-            "icon": "icons/fire_nova.png"
+            "cooldown": 120
           },
           {
             "name": "Heat Aura",
             "description": "Enemies nearby suffer fire damage over time.",
-            "cooldown": 0,
-            "icon": "icons/heat_aura.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -647,20 +620,17 @@
           {
             "name": "Inferno Strike",
             "description": "Attacks cause explosive fire damage.",
-            "cooldown": 0,
-            "icon": "icons/inferno_strike.png"
+            "cooldown": 0
           },
           {
             "name": "Lava Shield",
             "description": "Surrounds the party with protective flames harming attackers.",
-            "cooldown": 300,
-            "icon": "icons/lava_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Phoenix Revival",
             "description": "Revives once upon defeat, emerging from flames.",
-            "cooldown": 86400,
-            "icon": "icons/phoenix_revival.png"
+            "cooldown": 86400
           }
         ],
         "upgradeRequirements": {
@@ -691,20 +661,17 @@
           {
             "name": "Solar Flare",
             "description": "Releases blinding light damaging and disorienting enemies.",
-            "cooldown": 180,
-            "icon": "icons/solar_flare.png"
+            "cooldown": 180
           },
           {
             "name": "Sun's Blessing",
             "description": "Heals the party over time and removes debuffs.",
-            "cooldown": 600,
-            "icon": "icons/suns_blessing.png"
+            "cooldown": 600
           },
           {
             "name": "Radiant Strike",
             "description": "Attacks deal radiant damage effective against undead.",
-            "cooldown": 0,
-            "icon": "icons/radiant_strike.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -745,14 +712,12 @@
       {
         "name": "Performance Enhancement",
         "description": "Enhances bardic performances, increasing the range and effectiveness of Bard spells.",
-        "cooldown": 0,
-        "icon": "icons/performance_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Inspire Courage",
         "description": "Can cast Inspire Courage without expending a Bardic Inspiration die.",
-        "cooldown": 0,
-        "icon": "icons/inspire_courage.png"
+        "cooldown": 0
       }
     ],
     "levelUpRequirements": [
@@ -847,20 +812,17 @@
           {
             "name": "Symphony of Power",
             "description": "Enhances bardic spells' range and potency.",
-            "cooldown": 0,
-            "icon": "icons/symphony_of_power.png"
+            "cooldown": 0
           },
           {
             "name": "Inspiring Anthem",
             "description": "Boosts allies' morale and skill checks.",
-            "cooldown": 120,
-            "icon": "icons/inspiring_anthem.png"
+            "cooldown": 120
           },
           {
             "name": "Echo Spell",
             "description": "Allows spells to affect additional targets.",
-            "cooldown": 60,
-            "icon": "icons/echo_spell.png"
+            "cooldown": 60
           }
         ],
         "upgradeRequirements": {
@@ -891,20 +853,17 @@
           {
             "name": "Healing Melody",
             "description": "Restores allies' health over time.",
-            "cooldown": 180,
-            "icon": "icons/healing_melody.png"
+            "cooldown": 180
           },
           {
             "name": "Song of Silence",
             "description": "Mutes enemies, preventing spellcasting.",
-            "cooldown": 120,
-            "icon": "icons/song_of_silence.png"
+            "cooldown": 120
           },
           {
             "name": "Melodic Barrier",
             "description": "Creates sound-based shields that absorb damage.",
-            "cooldown": 300,
-            "icon": "icons/melodic_barrier.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -935,20 +894,17 @@
           {
             "name": "Masterpiece Performance",
             "description": "Bardic spells are more potent and harder to resist.",
-            "cooldown": 0,
-            "icon": "icons/masterpiece_performance.png"
+            "cooldown": 0
           },
           {
             "name": "Captivating Tune",
             "description": "Charms multiple enemies simultaneously.",
-            "cooldown": 150,
-            "icon": "icons/captivating_tune.png"
+            "cooldown": 150
           },
           {
             "name": "Encore",
             "description": "Recasts a spell without expending a Bardic Inspiration die once per day.",
-            "cooldown": 86400,
-            "icon": "icons/encore.png"
+            "cooldown": 86400
           }
         ],
         "upgradeRequirements": {
@@ -989,14 +945,12 @@
       {
         "name": "Enchantment Mastery",
         "description": "Allows the Bard to cast additional enchantment or illusion spells through Reyvateil's Song Magic.",
-        "cooldown": 0,
-        "icon": "icons/enchantment_mastery.png"
+        "cooldown": 0
       },
       {
         "name": "Soothing Melody",
         "description": "Can create soothing melodies that grant advantage on Charisma-based checks.",
-        "cooldown": 0,
-        "icon": "icons/soothing_melody.png"
+        "cooldown": 0
       }
     ],
     "levelUpRequirements": [
@@ -1091,20 +1045,17 @@
           {
             "name": "Empowering Chorus",
             "description": "Increases allies' attack and damage rolls.",
-            "cooldown": 0,
-            "icon": "icons/empowering_chorus.png"
+            "cooldown": 0
           },
           {
             "name": "Resonant Pulse",
             "description": "Deals sonic damage to enemies and disrupts spellcasting.",
-            "cooldown": 120,
-            "icon": "icons/resonant_pulse.png"
+            "cooldown": 120
           },
           {
             "name": "Harmony Field",
             "description": "Creates an area where allies receive continuous healing.",
-            "cooldown": 300,
-            "icon": "icons/harmony_field.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -1135,20 +1086,17 @@
           {
             "name": "Ballad of Courage",
             "description": "Removes fear effects and boosts allies' bravery.",
-            "cooldown": 180,
-            "icon": "icons/ballad_of_courage.png"
+            "cooldown": 180
           },
           {
             "name": "Lament of Weakness",
             "description": "Weakens enemies' resolve and reduces their defenses.",
-            "cooldown": 120,
-            "icon": "icons/lament_of_weakness.png"
+            "cooldown": 120
           },
           {
             "name": "Narrative Control",
             "description": "Manipulates battlefield events through song.",
-            "cooldown": 300,
-            "icon": "icons/narrative_control.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -1179,20 +1127,17 @@
           {
             "name": "Chorus of Strength",
             "description": "Grants allies enhanced physical abilities.",
-            "cooldown": 0,
-            "icon": "icons/chorus_of_strength.png"
+            "cooldown": 0
           },
           {
             "name": "Discordant Note",
             "description": "Disorients enemies, causing confusion.",
-            "cooldown": 90,
-            "icon": "icons/discordant_note.png"
+            "cooldown": 90
           },
           {
             "name": "Unity Anthem",
             "description": "Synchronizes the party's actions for coordinated attacks.",
-            "cooldown": 300,
-            "icon": "icons/unity_anthem.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -1233,14 +1178,12 @@
       {
         "name": "Inspiration Grant",
         "description": "Provides inspiration to party members, granting bonuses to skill checks or saving throws.",
-        "cooldown": 0,
-        "icon": "icons/inspiration_grant.png"
+        "cooldown": 0
       },
       {
         "name": "Calm Emotions",
         "description": "Can cast Calm Emotions to defuse tense situations.",
-        "cooldown": 180,
-        "icon": "icons/calm_emotions.png"
+        "cooldown": 180
       }
     ],
     "levelUpRequirements": [
@@ -1335,20 +1278,17 @@
           {
             "name": "Melodic Healing",
             "description": "Can cast healing spells to restore allies' health over time.",
-            "cooldown": 0,
-            "icon": "icons/melodic_healing.png"
+            "cooldown": 0
           },
           {
             "name": "Inspiring Anthem",
             "description": "Boosts allies' morale, granting bonuses to their next actions.",
-            "cooldown": 120,
-            "icon": "icons/inspiring_anthem.png"
+            "cooldown": 120
           },
           {
             "name": "Resonant Echo",
             "description": "Allows spells to have increased range and potency.",
-            "cooldown": 60,
-            "icon": "icons/resonant_echo.png"
+            "cooldown": 60
           }
         ],
         "upgradeRequirements": {
@@ -1379,20 +1319,17 @@
           {
             "name": "Masterpiece Performance",
             "description": "Increases the effectiveness and difficulty of resisting Bard spells.",
-            "cooldown": 0,
-            "icon": "icons/masterpiece_performance.png"
+            "cooldown": 0
           },
           {
             "name": "Captivating Melody",
             "description": "Charms multiple enemies simultaneously, causing them to lose focus.",
-            "cooldown": 150,
-            "icon": "icons/captivating_melody.png"
+            "cooldown": 150
           },
           {
             "name": "Encore",
             "description": "Allows Lyra to recast a spell without expending a Bardic Inspiration die once per day.",
-            "cooldown": 86400,
-            "icon": "icons/encore.png"
+            "cooldown": 86400
           }
         ],
         "upgradeRequirements": {
@@ -1423,20 +1360,17 @@
           {
             "name": "Ballad of Valor",
             "description": "Removes fear effects from allies and boosts their courage.",
-            "cooldown": 180,
-            "icon": "icons/ballad_of_valor.png"
+            "cooldown": 180
           },
           {
             "name": "Lament of Weakness",
             "description": "Weakens enemies' resolve, reducing their defenses.",
-            "cooldown": 120,
-            "icon": "icons/lament_of_weakness.png"
+            "cooldown": 120
           },
           {
             "name": "Narrative Control",
             "description": "Manipulates battlefield events through her enchanting songs, such as diverting enemy movements or enhancing ally actions.",
-            "cooldown": 300,
-            "icon": "icons/narrative_control.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -1477,14 +1411,12 @@
       {
         "name": "Healing Enhancement",
         "description": "Enhances healing spells, allowing Clerics to restore additional hit points.",
-        "cooldown": 0,
-        "icon": "icons/healing_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Sanctuary",
         "description": "Can cast Sanctuary to protect allies from harm.",
-        "cooldown": 60,
-        "icon": "icons/sanctuary.png"
+        "cooldown": 60
       }
     ],
     "levelUpRequirements": [
@@ -1579,20 +1511,17 @@
           {
             "name": "Holy Smite",
             "description": "Attacks deal additional radiant damage to evil creatures.",
-            "cooldown": 0,
-            "icon": "icons/holy_smite.png"
+            "cooldown": 0
           },
           {
             "name": "Divine Shield",
             "description": "Grants the party resistance to necrotic damage and increases their armor class.",
-            "cooldown": 300,
-            "icon": "icons/divine_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Blessed Strike",
             "description": "Can heal allies when dealing damage to enemies.",
-            "cooldown": 0,
-            "icon": "icons/blessed_strike.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -1623,20 +1552,17 @@
           {
             "name": "Healing Light",
             "description": "Greatly enhances healing spells, restoring more hit points.",
-            "cooldown": 0,
-            "icon": "icons/healing_light.png"
+            "cooldown": 0
           },
           {
             "name": "Aura of Purity",
             "description": "Removes negative conditions from allies within range.",
-            "cooldown": 180,
-            "icon": "icons/aura_of_purity.png"
+            "cooldown": 180
           },
           {
             "name": "Divine Guidance",
             "description": "Grants advantage on wisdom checks and saving throws to the party.",
-            "cooldown": 60,
-            "icon": "icons/divine_guidance.png"
+            "cooldown": 60
           }
         ],
         "upgradeRequirements": {
@@ -1667,20 +1593,17 @@
           {
             "name": "Sanctified Ground",
             "description": "Creates an area where allies are healed, and enemies are damaged over time.",
-            "cooldown": 0,
-            "icon": "icons/sanctified_ground.png"
+            "cooldown": 0
           },
           {
             "name": "Divine Intervention",
             "description": "Once per day, can call upon higher powers for aid.",
-            "cooldown": 86400,
-            "icon": "icons/divine_intervention.png"
+            "cooldown": 86400
           },
           {
             "name": "Blessing of Protection",
             "description": "Grants immunity to certain conditions for the party.",
-            "cooldown": 0,
-            "icon": "icons/blessing_of_protection.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -1721,14 +1644,12 @@
       {
         "name": "Divine Amplification",
         "description": "Amplifies divine spells, increasing their potency and duration.",
-        "cooldown": 0,
-        "icon": "icons/divine_amplification.png"
+        "cooldown": 0
       },
       {
         "name": "Healing Burst",
         "description": "Can emit a burst of healing light, restoring health to nearby allies.",
-        "cooldown": 120,
-        "icon": "icons/healing_burst.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -1823,20 +1744,17 @@
           {
             "name": "Morning Light",
             "description": "Deals radiant damage to undead and fiends.",
-            "cooldown": 0,
-            "icon": "icons/morning_light.png"
+            "cooldown": 0
           },
           {
             "name": "Renewal Aura",
             "description": "Gradually heals allies over time.",
-            "cooldown": 180,
-            "icon": "icons/renewal_aura.png"
+            "cooldown": 180
           },
           {
             "name": "Inspiration of Dawn",
             "description": "Increases allies' initiative and morale.",
-            "cooldown": 60,
-            "icon": "icons/inspiration_of_dawn.png"
+            "cooldown": 60
           }
         ],
         "upgradeRequirements": {
@@ -1867,20 +1785,17 @@
           {
             "name": "Angelic Chorus",
             "description": "Enhances healing and protective spells.",
-            "cooldown": 0,
-            "icon": "icons/angelic_chorus.png"
+            "cooldown": 0
           },
           {
             "name": "Wings of Salvation",
             "description": "Grants temporary flight to the party.",
-            "cooldown": 300,
-            "icon": "icons/wings_of_salvation.png"
+            "cooldown": 300
           },
           {
             "name": "Divine Presence",
             "description": "Enemies are less likely to attack the party.",
-            "cooldown": 0,
-            "icon": "icons/divine_presence.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -1911,20 +1826,17 @@
           {
             "name": "Light of Truth",
             "description": "Reveals hidden enemies and objects.",
-            "cooldown": 0,
-            "icon": "icons/light_of_truth.png"
+            "cooldown": 0
           },
           {
             "name": "Purifying Radiance",
             "description": "Removes curses and negative effects.",
-            "cooldown": 120,
-            "icon": "icons/purifying_radiance.png"
+            "cooldown": 120
           },
           {
             "name": "Radiant Barrier",
             "description": "Shields allies with light, reducing damage taken.",
-            "cooldown": 300,
-            "icon": "icons/radiant_barrier.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -1965,14 +1877,12 @@
       {
         "name": "Turn Undead",
         "description": "Grants the ability to dispel undead or evil entities with enhanced Turn Undead abilities.",
-        "cooldown": 0,
-        "icon": "icons/turn_undead.png"
+        "cooldown": 0
       },
       {
         "name": "Bless",
         "description": "Can cast Bless without using a spell slot.",
-        "cooldown": 0,
-        "icon": "icons/bless.png"
+        "cooldown": 0
       }
     ],
     "levelUpRequirements": [
@@ -2067,20 +1977,17 @@
           {
             "name": "Veil of Shadows",
             "description": "Grants the party enhanced stealth.",
-            "cooldown": 0,
-            "icon": "icons/veil_of_shadows.png"
+            "cooldown": 0
           },
           {
             "name": "Twilight Shield",
             "description": "Reduces damage from both radiant and necrotic sources.",
-            "cooldown": 300,
-            "icon": "icons/twilight_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Balance Strike",
             "description": "Deals damage while healing allies.",
-            "cooldown": 0,
-            "icon": "icons/balance_strike.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -2111,20 +2018,17 @@
           {
             "name": "Starlight Blessing",
             "description": "Heals and strengthens allies under the night sky.",
-            "cooldown": 180,
-            "icon": "icons/starlight_blessing.png"
+            "cooldown": 180
           },
           {
             "name": "Lunar Protection",
             "description": "Shields the party from enchantments and illusions.",
-            "cooldown": 0,
-            "icon": "icons/lunar_protection.png"
+            "cooldown": 0
           },
           {
             "name": "Dreamwalk",
             "description": "Allows communication through dreams.",
-            "cooldown": 120,
-            "icon": "icons/dreamwalk.png"
+            "cooldown": 120
           }
         ],
         "upgradeRequirements": {
@@ -2155,20 +2059,17 @@
           {
             "name": "Shadow Ward",
             "description": "Protects allies from necrotic damage.",
-            "cooldown": 0,
-            "icon": "icons/shadow_ward.png"
+            "cooldown": 0
           },
           {
             "name": "Banish Darkness",
             "description": "Dispels magical darkness and wards off evil entities.",
-            "cooldown": 0,
-            "icon": "icons/banish_darkness.png"
+            "cooldown": 0
           },
           {
             "name": "Eclipsing Strike",
             "description": "Attacks weaken enemies' defenses.",
-            "cooldown": 120,
-            "icon": "icons/eclipsing_strike.png"
+            "cooldown": 120
           }
         ],
         "upgradeRequirements": {
@@ -2209,14 +2110,12 @@
       {
         "name": "Nature's Enhancement",
         "description": "Enhances nature-based spells, increasing their range and effectiveness.",
-        "cooldown": 0,
-        "icon": "icons/natures_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Entangle Plants",
         "description": "Can summon minor plant growth to entangle enemies or provide cover.",
-        "cooldown": 120,
-        "icon": "icons/entangle_plants.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -2311,20 +2210,17 @@
           {
             "name": "Nature's Embrace",
             "description": "Heals allies and removes poisons.",
-            "cooldown": 0,
-            "icon": "icons/natures_embrace.png"
+            "cooldown": 0
           },
           {
             "name": "Entangling Roots",
             "description": "Immobilizes enemies with vines.",
-            "cooldown": 120,
-            "icon": "icons/entangling_roots.png"
+            "cooldown": 120
           },
           {
             "name": "Forest Guardian",
             "description": "Summons woodland creatures to assist in battle.",
-            "cooldown": 300,
-            "icon": "icons/forest_guardian.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -2355,20 +2251,17 @@
           {
             "name": "Floral Shield",
             "description": "Creates protective barriers of petals.",
-            "cooldown": 180,
-            "icon": "icons/floral_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Pollen Burst",
             "description": "Releases spores that heal allies and hinder foes.",
-            "cooldown": 120,
-            "icon": "icons/pollen_burst.png"
+            "cooldown": 120
           },
           {
             "name": "Blooming Step",
             "description": "Plants grow wherever she moves, hindering enemies.",
-            "cooldown": 300,
-            "icon": "icons/blooming_step.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -2399,20 +2292,17 @@
           {
             "name": "Revitalize",
             "description": "Can revive fallen allies.",
-            "cooldown": 86400,
-            "icon": "icons/revitalize.png"
+            "cooldown": 86400
           },
           {
             "name": "Life Surge",
             "description": "Temporarily increases allies' maximum hit points.",
-            "cooldown": 300,
-            "icon": "icons/life_surge.png"
+            "cooldown": 300
           },
           {
             "name": "Harmony with Nature",
             "description": "Communicates and controls plant life extensively.",
-            "cooldown": 180,
-            "icon": "icons/harmony_with_nature.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -2453,14 +2343,12 @@
       {
         "name": "Animal Communication",
         "description": "Grants the ability to communicate with animals and plants more effectively.",
-        "cooldown": 0,
-        "icon": "icons/animal_communication.png"
+        "cooldown": 0
       },
       {
         "name": "Enhanced Entangle",
         "description": "Can cast Entangle with extended duration and area.",
-        "cooldown": 180,
-        "icon": "icons/enhanced_entangle.png"
+        "cooldown": 180
       }
     ],
     "levelUpRequirements": [
@@ -2555,20 +2443,17 @@
           {
             "name": "Beast Summon",
             "description": "Calls powerful animals to aid in battle.",
-            "cooldown": 0,
-            "icon": "icons/beast_summon.png"
+            "cooldown": 0
           },
           {
             "name": "Animal Communication",
             "description": "Influences beasts to gather information or assist.",
-            "cooldown": 120,
-            "icon": "icons/animal_communication_assist.png"
+            "cooldown": 120
           },
           {
             "name": "Primal Roar",
             "description": "Frightens enemies and boosts allies' courage.",
-            "cooldown": 180,
-            "icon": "icons/primal_roar.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -2599,20 +2484,17 @@
           {
             "name": "Grove Shield",
             "description": "Creates a sanctuary that heals allies and hinders enemies.",
-            "cooldown": 300,
-            "icon": "icons/grove_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Rooted Stance",
             "description": "Increases her defense and resistance when stationary.",
-            "cooldown": 120,
-            "icon": "icons/rooted_stance.png"
+            "cooldown": 120
           },
           {
             "name": "Nature's Wrath",
             "description": "Commands plants to attack foes.",
-            "cooldown": 180,
-            "icon": "icons/natures_wrath.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -2643,20 +2525,17 @@
           {
             "name": "Seasonal Shift",
             "description": "Changes her abilities based on the current season, offering versatility.",
-            "cooldown": 0,
-            "icon": "icons/seasonal_shift.png"
+            "cooldown": 0
           },
           {
             "name": "Cycle of Life",
             "description": "Can accelerate plant growth or induce decay.",
-            "cooldown": 180,
-            "icon": "icons/cycle_of_life.png"
+            "cooldown": 180
           },
           {
             "name": "Weather Control",
             "description": "Influences minor weather patterns to aid the party.",
-            "cooldown": 300,
-            "icon": "icons/weather_control.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -2697,14 +2576,12 @@
       {
         "name": "Earth and Stone Enhancement",
         "description": "Increases the potency of earth and stone-based spells.",
-        "cooldown": 0,
-        "icon": "icons/earth_and_stone_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Stone Barrier",
         "description": "Can create barriers of stone or summon minor earthquakes to disrupt foes.",
-        "cooldown": 180,
-        "icon": "icons/stone_barrier.png"
+        "cooldown": 180
       }
     ],
     "levelUpRequirements": [
@@ -2799,20 +2676,17 @@
           {
             "name": "Stonewall",
             "description": "Raises barriers of stone for defense.",
-            "cooldown": 300,
-            "icon": "icons/stonewall.png"
+            "cooldown": 300
           },
           {
             "name": "Earthquake",
             "description": "Causes tremors to disrupt and damage enemies.",
-            "cooldown": 180,
-            "icon": "icons/earthquake.png"
+            "cooldown": 180
           },
           {
             "name": "Earthen Armor",
             "description": "Increases the party's physical defenses.",
-            "cooldown": 120,
-            "icon": "icons/earthen_armor.png"
+            "cooldown": 120
           }
         ],
         "upgradeRequirements": {
@@ -2843,20 +2717,17 @@
           {
             "name": "Immovable Object",
             "description": "Becomes resistant to physical forces that move or knock back.",
-            "cooldown": 0,
-            "icon": "icons/immovable_object.png"
+            "cooldown": 0
           },
           {
             "name": "Mountain's Endurance",
             "description": "Greatly increases hit points and stamina.",
-            "cooldown": 0,
-            "icon": "icons/mountains_endurance.png"
+            "cooldown": 0
           },
           {
             "name": "Rockslide",
             "description": "Unleashes a cascade of rocks upon enemies.",
-            "cooldown": 180,
-            "icon": "icons/rockslide.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -2887,20 +2758,17 @@
           {
             "name": "Crystal Growth",
             "description": "Manipulates crystals to entrap or damage foes.",
-            "cooldown": 120,
-            "icon": "icons/crystal_growth.png"
+            "cooldown": 120
           },
           {
             "name": "Reflective Shield",
             "description": "Deflects magical attacks back at the caster.",
-            "cooldown": 300,
-            "icon": "icons/reflective_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Gemstone Healing",
             "description": "Uses crystals to heal and rejuvenate allies.",
-            "cooldown": 180,
-            "icon": "icons/gemstone_healing.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -2941,14 +2809,12 @@
       {
         "name": "Weapon Proficiency Enhancement",
         "description": "Enhances weapon proficiency, granting bonuses to attack and damage rolls.",
-        "cooldown": 0,
-        "icon": "icons/weapon_proficiency_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Defensive Barrier",
         "description": "Can create defensive barriers to protect allies.",
-        "cooldown": 120,
-        "icon": "icons/defensive_barrier.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -3043,20 +2909,17 @@
           {
             "name": "Battle Cry",
             "description": "Increases allies' attack power and morale.",
-            "cooldown": 120,
-            "icon": "icons/battle_cry.png"
+            "cooldown": 120
           },
           {
             "name": "Valor's Shield",
             "description": "Grants damage resistance to the party.",
-            "cooldown": 300,
-            "icon": "icons/valors_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Martial Mastery",
             "description": "Enhances proficiency with all weapons.",
-            "cooldown": 0,
-            "icon": "icons/martial_mastery.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -3087,20 +2950,17 @@
           {
             "name": "Iron Wall",
             "description": "Significantly increases her own defense.",
-            "cooldown": 0,
-            "icon": "icons/iron_wall.png"
+            "cooldown": 0
           },
           {
             "name": "Guardian Stance",
             "description": "Absorbs damage intended for nearby allies.",
-            "cooldown": 180,
-            "icon": "icons/guardian_stance.png"
+            "cooldown": 180
           },
           {
             "name": "Fortress Aura",
             "description": "Enhances the party's resistance to physical attacks.",
-            "cooldown": 300,
-            "icon": "icons/fortress_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -3131,20 +2991,17 @@
           {
             "name": "Whirlwind Attack",
             "description": "Strikes multiple enemies in rapid succession.",
-            "cooldown": 180,
-            "icon": "icons/whirlwind_attack.png"
+            "cooldown": 180
           },
           {
             "name": "Blade Barrier",
             "description": "Creates a defensive zone that damages foes who enter.",
-            "cooldown": 300,
-            "icon": "icons/blade_barrier.png"
+            "cooldown": 300
           },
           {
             "name": "Swift Reflexes",
             "description": "Grants increased evasion and initiative in combat.",
-            "cooldown": 0,
-            "icon": "icons/swift_reflexes.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -3185,14 +3042,12 @@
       {
         "name": "Kinetic Channeling",
         "description": "Grants the ability to channel kinetic energy into attacks, increasing damage output.",
-        "cooldown": 0,
-        "icon": "icons/kinetic_channeling.png"
+        "cooldown": 0
       },
       {
         "name": "Swift Maneuver",
         "description": "Can perform swift maneuvers, granting advantage on initiative rolls.",
-        "cooldown": 180,
-        "icon": "icons/swift_maneuver.png"
+        "cooldown": 180
       }
     ],
     "levelUpRequirements": [
@@ -3287,20 +3142,17 @@
           {
             "name": "Arcane Strike",
             "description": "Infuses attacks with magical energy.",
-            "cooldown": 0,
-            "icon": "icons/arcane_strike.png"
+            "cooldown": 0
           },
           {
             "name": "Spell Parry",
             "description": "Deflects magical attacks.",
-            "cooldown": 120,
-            "icon": "icons/spell_parry.png"
+            "cooldown": 120
           },
           {
             "name": "Enchanted Arsenal",
             "description": "Weapons gain additional elemental properties.",
-            "cooldown": 180,
-            "icon": "icons/enchanted_arsenal.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -3331,20 +3183,17 @@
           {
             "name": "Battle Spells",
             "description": "Casts offensive spells alongside melee attacks.",
-            "cooldown": 120,
-            "icon": "icons/battle_spells.png"
+            "cooldown": 120
           },
           {
             "name": "Mage Armor",
             "description": "Increases magical defenses.",
-            "cooldown": 0,
-            "icon": "icons/mage_armor.png"
+            "cooldown": 0
           },
           {
             "name": "Runic Empowerment",
             "description": "Temporarily enhances physical abilities with magic.",
-            "cooldown": 180,
-            "icon": "icons/runic_empowerment.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -3375,20 +3224,17 @@
           {
             "name": "Elemental Strike",
             "description": "Attacks deal additional elemental damage.",
-            "cooldown": 120,
-            "icon": "icons/elemental_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Elemental Resistance",
             "description": "Gains resistance to elemental damage types.",
-            "cooldown": 0,
-            "icon": "icons/elemental_resistance.png"
+            "cooldown": 0
           },
           {
             "name": "Elemental Aura",
             "description": "Surrounds himself with elemental energy that harms enemies.",
-            "cooldown": 300,
-            "icon": "icons/elemental_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -3429,14 +3275,12 @@
       {
         "name": "Defensive Enhancement",
         "description": "Enhances defensive capabilities, providing temporary hit points or reducing incoming damage.",
-        "cooldown": 0,
-        "icon": "icons/defensive_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Precise Strike",
         "description": "Can execute precise strikes that bypass enemy defenses.",
-        "cooldown": 120,
-        "icon": "icons/precise_strike.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -3531,20 +3375,17 @@
           {
             "name": "Shield Wall",
             "description": "Creates a defensive barrier for allies.",
-            "cooldown": 300,
-            "icon": "icons/shield_wall.png"
+            "cooldown": 300
           },
           {
             "name": "Vigilant Defender",
             "description": "Gains bonuses when protecting others.",
-            "cooldown": 120,
-            "icon": "icons/vigilant_defender.png"
+            "cooldown": 120
           },
           {
             "name": "Defensive Aura",
             "description": "Reduces damage allies take when near her.",
-            "cooldown": 180,
-            "icon": "icons/defensive_aura.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -3575,20 +3416,17 @@
           {
             "name": "Dragon's Bane",
             "description": "Deals increased damage to large and powerful enemies.",
-            "cooldown": 0,
-            "icon": "icons/dragons_bane.png"
+            "cooldown": 0
           },
           {
             "name": "Scale Armor",
             "description": "Provides resistance to elemental damage.",
-            "cooldown": 0,
-            "icon": "icons/scale_armor.png"
+            "cooldown": 0
           },
           {
             "name": "Fearless Charge",
             "description": "Immune to fear effects.",
-            "cooldown": 0,
-            "icon": "icons/fearless_charge.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -3619,20 +3457,17 @@
           {
             "name": "Heroic Strike",
             "description": "Deals significant damage with a chance to stun.",
-            "cooldown": 120,
-            "icon": "icons/heroic_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Inspiring Presence",
             "description": "Boosts allies' combat abilities.",
-            "cooldown": 180,
-            "icon": "icons/inspiring_presence.png"
+            "cooldown": 180
           },
           {
             "name": "Unyielding Spirit",
             "description": "Increases resilience and recovers from conditions faster.",
-            "cooldown": 0,
-            "icon": "icons/unyielding_spirit.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -3673,14 +3508,12 @@
       {
         "name": "Unarmed Strike Enhancement",
         "description": "Enhances unarmed strikes, allowing Monks to deal additional damage or effects such as stunning foes.",
-        "cooldown": 0,
-        "icon": "icons/unarmed_strike_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Speed Boost",
         "description": "Can grant temporary movement speed boosts.",
-        "cooldown": 120,
-        "icon": "icons/speed_boost.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -3775,20 +3608,17 @@
           {
             "name": "Inner Peace",
             "description": "Reduces incoming damage and resists mental attacks.",
-            "cooldown": 0,
-            "icon": "icons/inner_peace.png"
+            "cooldown": 0
           },
           {
             "name": "Zen Strike",
             "description": "Attacks disrupt enemy abilities.",
-            "cooldown": 120,
-            "icon": "icons/zen_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Meditative Aura",
             "description": "Restores allies' ki or spell slots over time.",
-            "cooldown": 300,
-            "icon": "icons/meditative_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -3819,20 +3649,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows.",
-            "cooldown": 180,
-            "icon": "icons/shadow_step.png"
+            "cooldown": 180
           },
           {
             "name": "Silent Fist",
             "description": "Attacks are undetectable until they land.",
-            "cooldown": 120,
-            "icon": "icons/silent_fist.png"
+            "cooldown": 120
           },
           {
             "name": "Cloak of Darkness",
             "description": "Becomes invisible in dim light.",
-            "cooldown": 300,
-            "icon": "icons/cloak_of_darkness.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -3863,20 +3690,17 @@
           {
             "name": "Dragon Strike",
             "description": "Attacks deal elemental damage.",
-            "cooldown": 120,
-            "icon": "icons/dragon_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Breath of the Dragon",
             "description": "Emits a breath weapon attack.",
-            "cooldown": 300,
-            "icon": "icons/breath_of_the_dragon.png"
+            "cooldown": 300
           },
           {
             "name": "Scales of Resilience",
             "description": "Gains resistance to a chosen element.",
-            "cooldown": 0,
-            "icon": "icons/scales_of_resilience.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -3917,14 +3741,12 @@
       {
         "name": "Ki Efficiency",
         "description": "Grants the ability to harness ki more efficiently, allowing for additional ki points or enhanced abilities.",
-        "cooldown": 0,
-        "icon": "icons/ki_efficiency.png"
+        "cooldown": 0
       },
       {
         "name": "Evasion Bonus",
         "description": "Can perform swift dodges that grant evasion bonuses.",
-        "cooldown": 120,
-        "icon": "icons/evasion_bonus.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -4019,20 +3841,17 @@
           {
             "name": "Lightning Reflexes",
             "description": "Greatly increased evasion.",
-            "cooldown": 0,
-            "icon": "icons/lightning_reflexes.png"
+            "cooldown": 0
           },
           {
             "name": "Rapid Blows",
             "description": "Multiple attacks in a single action.",
-            "cooldown": 120,
-            "icon": "icons/rapid_blows.png"
+            "cooldown": 120
           },
           {
             "name": "Time Dilation",
             "description": "Perceives time slower, acting faster than others.",
-            "cooldown": 300,
-            "icon": "icons/time_dilation.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4063,20 +3882,17 @@
           {
             "name": "Force Push",
             "description": "Moves enemies or objects without touching them.",
-            "cooldown": 120,
-            "icon": "icons/force_push.png"
+            "cooldown": 120
           },
           {
             "name": "Barrier of Force",
             "description": "Creates invisible protective shields.",
-            "cooldown": 300,
-            "icon": "icons/barrier_of_force.png"
+            "cooldown": 300
           },
           {
             "name": "Energy Redirection",
             "description": "Absorbs and redirects kinetic energy from attacks.",
-            "cooldown": 180,
-            "icon": "icons/energy_redirection.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -4107,20 +3923,17 @@
           {
             "name": "Afterimage Strike",
             "description": "Confuses enemies with illusory duplicates.",
-            "cooldown": 120,
-            "icon": "icons/afterimage_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Echoing Steps",
             "description": "Footsteps create disorienting sounds.",
-            "cooldown": 180,
-            "icon": "icons/echoing_steps.png"
+            "cooldown": 180
           },
           {
             "name": "Mirror Image",
             "description": "Creates multiple illusory copies of herself.",
-            "cooldown": 300,
-            "icon": "icons/mirror_image.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4161,14 +3974,12 @@
       {
         "name": "Enhanced Focus",
         "description": "Provides enhanced focus and concentration, reducing penalties from distractions.",
-        "cooldown": 0,
-        "icon": "icons/enhanced_focus.png"
+        "cooldown": 0
       },
       {
         "name": "Calm Emotions",
         "description": "Can cast Calm Emotions to maintain tranquility during combat.",
-        "cooldown": 180,
-        "icon": "icons/calm_emotions.png"
+        "cooldown": 180
       }
     ],
     "levelUpRequirements": [
@@ -4263,20 +4074,17 @@
           {
             "name": "Tranquil Mind",
             "description": "Immune to mind-altering effects.",
-            "cooldown": 0,
-            "icon": "icons/tranquil_mind.png"
+            "cooldown": 0
           },
           {
             "name": "Healing Touch",
             "description": "Restores health to allies through touch.",
-            "cooldown": 120,
-            "icon": "icons/healing_touch.png"
+            "cooldown": 120
           },
           {
             "name": "Aura of Peace",
             "description": "Reduces aggression in nearby creatures.",
-            "cooldown": 180,
-            "icon": "icons/aura_of_peace.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -4307,20 +4115,17 @@
           {
             "name": "Levitation",
             "description": "Can float and move effortlessly.",
-            "cooldown": 0,
-            "icon": "icons/levitation.png"
+            "cooldown": 0
           },
           {
             "name": "Wind Step",
             "description": "Moves with great speed and agility.",
-            "cooldown": 120,
-            "icon": "icons/wind_step.png"
+            "cooldown": 120
           },
           {
             "name": "Air Shield",
             "description": "Deflects projectiles with gusts of wind.",
-            "cooldown": 180,
-            "icon": "icons/air_shield.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -4351,20 +4156,17 @@
           {
             "name": "Fiery Strikes",
             "description": "Attacks deal additional fire damage.",
-            "cooldown": 120,
-            "icon": "icons/fiery_strikes.png"
+            "cooldown": 120
           },
           {
             "name": "Heat Aura",
             "description": "Damages nearby enemies with intense heat.",
-            "cooldown": 180,
-            "icon": "icons/heat_aura.png"
+            "cooldown": 180
           },
           {
             "name": "Flame Dash",
             "description": "Moves rapidly, leaving a trail of fire.",
-            "cooldown": 300,
-            "icon": "icons/flame_dash.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4405,14 +4207,12 @@
       {
         "name": "Divine Smite Enhancement",
         "description": "Amplifies divine smite, increasing damage against evil creatures.",
-        "cooldown": 0,
-        "icon": "icons/divine_smite_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Shield of Faith",
         "description": "Can cast Shield of Faith to bolster allies' defenses.",
-        "cooldown": 120,
-        "icon": "icons/shield_of_faith.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -4507,20 +4307,17 @@
           {
             "name": "Divine Smite",
             "description": "Significantly increases smite damage against evil-aligned creatures.",
-            "cooldown": 0,
-            "icon": "icons/divine_smite.png"
+            "cooldown": 0
           },
           {
             "name": "Crusader's Shield",
             "description": "Grants the party increased defense and resistance to fear effects.",
-            "cooldown": 300,
-            "icon": "icons/crusaders_shield.png"
+            "cooldown": 300
           },
           {
             "name": "Holy Aura",
             "description": "Radiates an aura that heals allies and damages undead or fiends within range.",
-            "cooldown": 600,
-            "icon": "icons/holy_aura.png"
+            "cooldown": 600
           }
         ],
         "upgradeRequirements": {
@@ -4551,20 +4348,17 @@
           {
             "name": "Beacon of Light",
             "description": "Illuminates dark areas, revealing hidden enemies and dispelling illusions.",
-            "cooldown": 0,
-            "icon": "icons/beacon_of_light.png"
+            "cooldown": 0
           },
           {
             "name": "Ward of Radiance",
             "description": "Creates protective barriers of light around allies, absorbing damage.",
-            "cooldown": 300,
-            "icon": "icons/ward_of_radiance.png"
+            "cooldown": 300
           },
           {
             "name": "Blinding Flash",
             "description": "Emits a flash of light that blinds enemies temporarily.",
-            "cooldown": 180,
-            "icon": "icons/blinding_flash.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -4595,20 +4389,17 @@
           {
             "name": "Champion's Strike",
             "description": "Attacks deal extra radiant damage and can heal nearby allies.",
-            "cooldown": 120,
-            "icon": "icons/champions_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Divine Resolve",
             "description": "Grants immunity to charm and fear effects for the party.",
-            "cooldown": 600,
-            "icon": "icons/divine_resolve.png"
+            "cooldown": 600
           },
           {
             "name": "Aura of Courage",
             "description": "Increases allies' attack rolls and saving throws against spells and effects from evil creatures.",
-            "cooldown": 300,
-            "icon": "icons/aura_of_courage.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4649,14 +4440,12 @@
       {
         "name": "Enhanced Protection",
         "description": "Grants enhanced protection, allowing Paladins to resist damage or provide buffs to nearby allies.",
-        "cooldown": 0,
-        "icon": "icons/enhanced_protection.png"
+        "cooldown": 0
       },
       {
         "name": "Divine Light",
         "description": "Can emit a divine light that blinds enemies temporarily.",
-        "cooldown": 120,
-        "icon": "icons/divine_light.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -4751,20 +4540,17 @@
           {
             "name": "Shield of Faith",
             "description": "Enhances the party's armor class significantly.",
-            "cooldown": 120,
-            "icon": "icons/shield_of_faith.png"
+            "cooldown": 120
           },
           {
             "name": "Guardian's Bulwark",
             "description": "Absorbs a portion of damage dealt to nearby allies.",
-            "cooldown": 300,
-            "icon": "icons/guardians_bulwark.png"
+            "cooldown": 300
           },
           {
             "name": "Unbreakable Stance",
             "description": "Cannot be moved against her will and gains resistance to physical damage.",
-            "cooldown": 0,
-            "icon": "icons/unbreakable_stance.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -4795,20 +4581,17 @@
           {
             "name": "Judgment Strike",
             "description": "Deals significant damage to enemies who have harmed allies.",
-            "cooldown": 120,
-            "icon": "icons/judgment_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Eye of Truth",
             "description": "Detects lies and reveals disguised or invisible foes.",
-            "cooldown": 180,
-            "icon": "icons/eye_of_truth.png"
+            "cooldown": 180
           },
           {
             "name": "Retribution Aura",
             "description": "Enemies attacking the party receive retaliatory damage.",
-            "cooldown": 300,
-            "icon": "icons/retribution_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4839,20 +4622,17 @@
           {
             "name": "Hammer of Justice",
             "description": "Summons a spectral weapon to strike down foes.",
-            "cooldown": 120,
-            "icon": "icons/hammer_of_justice.png"
+            "cooldown": 120
           },
           {
             "name": "Lawbringer's Command",
             "description": "Can compel enemies to surrender or cease hostility.",
-            "cooldown": 180,
-            "icon": "icons/lawbringers_command.png"
+            "cooldown": 180
           },
           {
             "name": "Aura of Order",
             "description": "Enhances allies' discipline and resistance to chaos-based effects.",
-            "cooldown": 300,
-            "icon": "icons/aura_of_order.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -4893,14 +4673,12 @@
       {
         "name": "Aura Enhancement",
         "description": "Enhances aura abilities, expanding their range or potency.",
-        "cooldown": 0,
-        "icon": "icons/aura_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Blessed Recovery",
         "description": "Can cast Bless or Blessed Recovery to aid allies in battle.",
-        "cooldown": 120,
-        "icon": "icons/blessed_recovery.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -4995,20 +4773,17 @@
           {
             "name": "Celestial Strike",
             "description": "Attacks bypass enemy defenses and deal radiant damage.",
-            "cooldown": 120,
-            "icon": "icons/celestial_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Heavenly Grace",
             "description": "Grants the party increased movement speed and the ability to ignore difficult terrain.",
-            "cooldown": 180,
-            "icon": "icons/heavenly_grace.png"
+            "cooldown": 180
           },
           {
             "name": "Divine Insight",
             "description": "Provides advantage on intelligence and wisdom checks.",
-            "cooldown": 0,
-            "icon": "icons/divine_insight.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -5039,20 +4814,17 @@
           {
             "name": "Beacon of Hope",
             "description": "Enhances healing received by allies and removes fear.",
-            "cooldown": 120,
-            "icon": "icons/beacon_of_hope.png"
+            "cooldown": 120
           },
           {
             "name": "Guiding Light",
             "description": "Can lead the party through mazes or confusing terrains without error.",
-            "cooldown": 180,
-            "icon": "icons/guiding_light.png"
+            "cooldown": 180
           },
           {
             "name": "Blessed Visions",
             "description": "Grants the party night vision and the ability to see invisible entities.",
-            "cooldown": 300,
-            "icon": "icons/blessed_visions.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5083,20 +4855,17 @@
           {
             "name": "Sanctuary Field",
             "description": "Creates an area where allies are protected from harm.",
-            "cooldown": 120,
-            "icon": "icons/sanctuary_field.png"
+            "cooldown": 120
           },
           {
             "name": "Divine Ward",
             "description": "Absorbs a portion of magical damage directed at the party.",
-            "cooldown": 180,
-            "icon": "icons/divine_ward.png"
+            "cooldown": 180
           },
           {
             "name": "Healing Wings",
             "description": "Can heal all allies simultaneously with a gesture.",
-            "cooldown": 300,
-            "icon": "icons/healing_wings.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5137,14 +4906,12 @@
       {
         "name": "Tracking Enhancement",
         "description": "Enhances tracking and stealth, granting bonuses to perception and survival checks.",
-        "cooldown": 0,
-        "icon": "icons/tracking_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Summon Forest Creatures",
         "description": "Can summon minor forest creatures to assist in hunts.",
-        "cooldown": 120,
-        "icon": "icons/summon_forest_creatures.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -5239,20 +5006,17 @@
           {
             "name": "Camouflage Cloak",
             "description": "Grants the party enhanced stealth and the ability to move silently through natural terrains.",
-            "cooldown": 120,
-            "icon": "icons/camouflage_cloak.png"
+            "cooldown": 120
           },
           {
             "name": "Nature's Mark",
             "description": "Marks a target, making them easier to track and increasing attack accuracy against them.",
-            "cooldown": 180,
-            "icon": "icons/natures_mark.png"
+            "cooldown": 180
           },
           {
             "name": "Silent Arrow",
             "description": "Fires arrows that are nearly undetectable, surprising enemies and dealing extra damage.",
-            "cooldown": 300,
-            "icon": "icons/silent_arrow.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5283,20 +5047,17 @@
           {
             "name": "Summon Companion",
             "description": "Calls a powerful beast to fight alongside the party.",
-            "cooldown": 120,
-            "icon": "icons/summon_companion.png"
+            "cooldown": 120
           },
           {
             "name": "Beast Empathy",
             "description": "Communicate with animals and influence their behavior.",
-            "cooldown": 180,
-            "icon": "icons/beast_empathy.png"
+            "cooldown": 180
           },
           {
             "name": "Wild Senses",
             "description": "Enhances perception, granting advantage on perception checks and detecting hidden threats.",
-            "cooldown": 300,
-            "icon": "icons/wild_senses.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5327,20 +5088,17 @@
           {
             "name": "Shadow Shot",
             "description": "Fires arrows that can pass through solid objects to hit targets.",
-            "cooldown": 120,
-            "icon": "icons/shadow_shot.png"
+            "cooldown": 120
           },
           {
             "name": "Veil of Shadows",
             "description": "Grants invisibility in low-light conditions.",
-            "cooldown": 180,
-            "icon": "icons/veil_of_shadows.png"
+            "cooldown": 180
           },
           {
             "name": "Silent Hunter",
             "description": "Increases critical hit chances when attacking from stealth.",
-            "cooldown": 300,
-            "icon": "icons/silent_hunter.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5381,14 +5139,12 @@
       {
         "name": "Agility Enhancement",
         "description": "Increases movement speed and agility, allowing Rangers to reposition quickly in combat.",
-        "cooldown": 0,
-        "icon": "icons/agility_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Gust of Wind",
         "description": "Can create gusts of wind to disorient foes.",
-        "cooldown": 120,
-        "icon": "icons/gust_of_wind.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -5483,20 +5239,17 @@
           {
             "name": "Wind Dash",
             "description": "Increases movement speed significantly; can move swiftly through difficult terrain.",
-            "cooldown": 120,
-            "icon": "icons/wind_dash.png"
+            "cooldown": 120
           },
           {
             "name": "Gale Arrow",
             "description": "Arrows fired are carried by the wind, increasing their range and accuracy.",
-            "cooldown": 180,
-            "icon": "icons/gale_arrow.png"
+            "cooldown": 180
           },
           {
             "name": "Whispering Wind",
             "description": "Communicate silently with allies over distances.",
-            "cooldown": 300,
-            "icon": "icons/whispering_wind.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5527,20 +5280,17 @@
           {
             "name": "Thunder Shot",
             "description": "Arrows deal lightning damage and can stun targets.",
-            "cooldown": 120,
-            "icon": "icons/thunder_shot.png"
+            "cooldown": 120
           },
           {
             "name": "Call Lightning",
             "description": "Summons a localized storm to strike enemies.",
-            "cooldown": 180,
-            "icon": "icons/call_lightning.png"
+            "cooldown": 180
           },
           {
             "name": "Storm's Eye",
             "description": "Grants resistance to lightning and thunder damage for the party.",
-            "cooldown": 300,
-            "icon": "icons/storms_eye.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5571,20 +5321,17 @@
           {
             "name": "Aerial Mastery",
             "description": "Grants the ability to fly and perform aerial maneuvers.",
-            "cooldown": 0,
-            "icon": "icons/aerial_mastery.png"
+            "cooldown": 0
           },
           {
             "name": "Skystrike",
             "description": "Performs diving attacks from above for extra damage.",
-            "cooldown": 180,
-            "icon": "icons/skystrike.png"
+            "cooldown": 180
           },
           {
             "name": "Eagle Eye",
             "description": "Enhances vision, allowing detection of distant or hidden enemies.",
-            "cooldown": 120,
-            "icon": "icons/eagle_eye.png"
+            "cooldown": 120
           }
         ],
         "upgradeRequirements": {
@@ -5625,14 +5372,12 @@
       {
         "name": "Ranged Attack Enhancement",
         "description": "Enhances ranged attacks, granting bonuses to attack rolls or increasing range.",
-        "cooldown": 0,
-        "icon": "icons/ranged_attack_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Invisibility Scout",
         "description": "Can scout ahead invisibly, providing reconnaissance information.",
-        "cooldown": 120,
-        "icon": "icons/invisibility_scout.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -5727,20 +5472,17 @@
           {
             "name": "Precision Shot",
             "description": "Greatly increases accuracy and critical hit chance.",
-            "cooldown": 120,
-            "icon": "icons/precision_shot.png"
+            "cooldown": 120
           },
           {
             "name": "Far Sight",
             "description": "Can see over vast distances and through certain obstacles.",
-            "cooldown": 180,
-            "icon": "icons/far_sight.png"
+            "cooldown": 180
           },
           {
             "name": "Target Lock",
             "description": "Marks an enemy, making them easier to hit and revealing their weaknesses.",
-            "cooldown": 300,
-            "icon": "icons/target_lock.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5771,20 +5513,17 @@
           {
             "name": "Wind Barrier",
             "description": "Generates gusts of wind to deflect projectiles.",
-            "cooldown": 120,
-            "icon": "icons/wind_barrier.png"
+            "cooldown": 120
           },
           {
             "name": "Guardian's Dive",
             "description": "Quickly intercepts attacks aimed at allies.",
-            "cooldown": 180,
-            "icon": "icons/guardians_dive.png"
+            "cooldown": 180
           },
           {
             "name": "Alertness",
             "description": "Cannot be surprised; always aware of surroundings.",
-            "cooldown": 0,
-            "icon": "icons/alertness.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -5815,20 +5554,17 @@
           {
             "name": "Sniper's Focus",
             "description": "Increases range and damage of ranged attacks.",
-            "cooldown": 120,
-            "icon": "icons/snipers_focus.png"
+            "cooldown": 120
           },
           {
             "name": "Breath Control",
             "description": "Steadies aim regardless of environmental conditions.",
-            "cooldown": 180,
-            "icon": "icons/breath_control.png"
+            "cooldown": 180
           },
           {
             "name": "Stealth Glide",
             "description": "Moves silently through the air, avoiding detection.",
-            "cooldown": 300,
-            "icon": "icons/stealth_glide.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -5869,14 +5605,12 @@
       {
         "name": "Stealth Enhancement",
         "description": "Grants advantage on stealth checks and the ability to become invisible for short durations.",
-        "cooldown": 0,
-        "icon": "icons/stealth_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Shadow Illusion",
         "description": "Can create distractions with shadow illusions.",
-        "cooldown": 120,
-        "icon": "icons/shadow_illusion.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -5971,20 +5705,17 @@
           {
             "name": "Shadow Strike",
             "description": "Deals extra damage when attacking from stealth.",
-            "cooldown": 120,
-            "icon": "icons/shadow_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Cloak of Darkness",
             "description": "Can become invisible for a short duration.",
-            "cooldown": 180,
-            "icon": "icons/cloak_of_darkness.png"
+            "cooldown": 180
           },
           {
             "name": "Silent Step",
             "description": "Movement does not provoke opportunity attacks.",
-            "cooldown": 0,
-            "icon": "icons/silent_step.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -6015,20 +5746,17 @@
           {
             "name": "Phase Shift",
             "description": "Can move through walls or obstacles for a short distance.",
-            "cooldown": 120,
-            "icon": "icons/phase_shift.png"
+            "cooldown": 120
           },
           {
             "name": "Ethereal Touch",
             "description": "Attacks can ignore armor and deal damage directly.",
-            "cooldown": 180,
-            "icon": "icons/ethereal_touch.png"
+            "cooldown": 180
           },
           {
             "name": "Fear Aura",
             "description": "Enemies within close proximity may become frightened.",
-            "cooldown": 300,
-            "icon": "icons/fear_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6059,20 +5787,17 @@
           {
             "name": "Spectral Veil",
             "description": "Can become incorporeal, reducing physical damage taken.",
-            "cooldown": 120,
-            "icon": "icons/spectral_veil.png"
+            "cooldown": 120
           },
           {
             "name": "Shadow Meld",
             "description": "Blends perfectly with shadows, becoming nearly invisible.",
-            "cooldown": 180,
-            "icon": "icons/shadow_meld.png"
+            "cooldown": 180
           },
           {
             "name": "Life Drain",
             "description": "Attacks can steal a portion of the enemy's life to heal herself.",
-            "cooldown": 300,
-            "icon": "icons/life_drain.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6113,14 +5838,12 @@
       {
         "name": "Sleight of Hand Enhancement",
         "description": "Enhances sleight of hand and pickpocketing abilities.",
-        "cooldown": 0,
-        "icon": "icons/sleight_of_hand_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Minor Illusion",
         "description": "Can cast Minor Illusion to create deceptive sounds or visuals.",
-        "cooldown": 120,
-        "icon": "icons/minor_illusion.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -6215,20 +5938,17 @@
           {
             "name": "Assassin's Strike",
             "description": "Deals massive damage when attacking unaware enemies.",
-            "cooldown": 120,
-            "icon": "icons/assassins_strike.png"
+            "cooldown": 120
           },
           {
             "name": "Deathly Silence",
             "description": "Eliminates all noise made by herself and nearby allies.",
-            "cooldown": 180,
-            "icon": "icons/deathly_silence.png"
+            "cooldown": 180
           },
           {
             "name": "Poison Mastery",
             "description": "Applies potent poisons to weapons with enhanced effects.",
-            "cooldown": 300,
-            "icon": "icons/poison_mastery.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6259,20 +5979,17 @@
           {
             "name": "Mist Form",
             "description": "Can become mist, allowing passage through small openings.",
-            "cooldown": 120,
-            "icon": "icons/mist_form.png"
+            "cooldown": 120
           },
           {
             "name": "Concealing Fog",
             "description": "Creates areas of mist that obscure vision.",
-            "cooldown": 180,
-            "icon": "icons/concealing_fog.png"
+            "cooldown": 180
           },
           {
             "name": "Evasion",
             "description": "Greatly increases ability to dodge attacks.",
-            "cooldown": 0,
-            "icon": "icons/evasion.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -6303,20 +6020,17 @@
           {
             "name": "Dance of Shadows",
             "description": "Confuses enemies, making it difficult for them to target her.",
-            "cooldown": 120,
-            "icon": "icons/dance_of_shadows.png"
+            "cooldown": 120
           },
           {
             "name": "Charm",
             "description": "Can temporarily sway the minds of weak-willed enemies.",
-            "cooldown": 180,
-            "icon": "icons/charm.png"
+            "cooldown": 180
           },
           {
             "name": "Distraction",
             "description": "Creates illusory copies to divert attention.",
-            "cooldown": 300,
-            "icon": "icons/distraction.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6357,14 +6071,12 @@
       {
         "name": "Evasion Enhancement",
         "description": "Provides bonuses to evasion, allowing Rogues to dodge area effects more effectively.",
-        "cooldown": 0,
-        "icon": "icons/evasion_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Debilitating Infusion",
         "description": "Can infuse attacks with poison or other debilitating effects.",
-        "cooldown": 120,
-        "icon": "icons/debilitating_infusion.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -6459,20 +6171,17 @@
           {
             "name": "Deadly Poison",
             "description": "Enhances poisons applied to weapons, increasing potency.",
-            "cooldown": 120,
-            "icon": "icons/deadly_poison.png"
+            "cooldown": 120
           },
           {
             "name": "Toxic Cloud",
             "description": "Releases a cloud of poison that affects multiple enemies.",
-            "cooldown": 180,
-            "icon": "icons/toxic_cloud.png"
+            "cooldown": 180
           },
           {
             "name": "Immunity",
             "description": "Gains immunity to poisons and toxins.",
-            "cooldown": 0,
-            "icon": "icons/immunity.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -6503,20 +6212,17 @@
           {
             "name": "Darkvision",
             "description": "Can see perfectly in total darkness.",
-            "cooldown": 0,
-            "icon": "icons/darkvision.png"
+            "cooldown": 0
           },
           {
             "name": "Stalker's Step",
             "description": "Moves silently and leaves no traces.",
-            "cooldown": 120,
-            "icon": "icons/stalkers_step.png"
+            "cooldown": 120
           },
           {
             "name": "Fear Induction",
             "description": "Causes dread in enemies, reducing their effectiveness.",
-            "cooldown": 180,
-            "icon": "icons/fear_induction.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -6547,20 +6253,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows over short distances.",
-            "cooldown": 120,
-            "icon": "icons/shadow_step.png"
+            "cooldown": 120
           },
           {
             "name": "Venom Strike",
             "description": "Combines poison with shadow magic for enhanced attacks.",
-            "cooldown": 180,
-            "icon": "icons/venom_strike.png"
+            "cooldown": 180
           },
           {
             "name": "Shadow Cloak",
             "description": "Becomes nearly invisible in darkness.",
-            "cooldown": 300,
-            "icon": "icons/shadow_cloak.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6601,14 +6304,12 @@
       {
         "name": "Fire Amplification",
         "description": "Amplifies fire-based spells, increasing damage and area of effect.",
-        "cooldown": 0,
-        "icon": "icons/fire_amplification.png"
+        "cooldown": 0
       },
       {
         "name": "Ignite Touch",
         "description": "Can ignite enemies or objects with a touch.",
-        "cooldown": 120,
-        "icon": "icons/ignite_touch.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -6703,20 +6404,17 @@
           {
             "name": "Inferno Blast",
             "description": "Casts powerful fire spells dealing massive area damage.",
-            "cooldown": 120,
-            "icon": "icons/inferno_blast.png"
+            "cooldown": 120
           },
           {
             "name": "Fire Immunity",
             "description": "Grants immunity to fire damage for herself and resistance for the party.",
-            "cooldown": 0,
-            "icon": "icons/fire_immunity.png"
+            "cooldown": 0
           },
           {
             "name": "Blazing Aura",
             "description": "Damages enemies who come too close.",
-            "cooldown": 180,
-            "icon": "icons/blazing_aura.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -6747,20 +6445,17 @@
           {
             "name": "Immolation",
             "description": "Surrounds herself with flames, damaging enemies in melee range.",
-            "cooldown": 120,
-            "icon": "icons/immolation.png"
+            "cooldown": 120
           },
           {
             "name": "Firestorm",
             "description": "Summons a storm of fire over a wide area.",
-            "cooldown": 300,
-            "icon": "icons/firestorm.png"
+            "cooldown": 300
           },
           {
             "name": "Phoenix Rebirth",
             "description": "Upon defeat, can revive herself once, emerging from flames.",
-            "cooldown": 0,
-            "icon": "icons/phoenix_rebirth.png"
+            "cooldown": 0
           }
         ],
         "upgradeRequirements": {
@@ -6791,20 +6486,17 @@
           {
             "name": "Rejuvenation Flames",
             "description": "Heals allies over time with fire-based magic.",
-            "cooldown": 120,
-            "icon": "icons/rejuvenation_flames.png"
+            "cooldown": 120
           },
           {
             "name": "Wings of Rebirth",
             "description": "Grants the party the ability to revive once if defeated.",
-            "cooldown": 0,
-            "icon": "icons/wings_of_rebirth.png"
+            "cooldown": 0
           },
           {
             "name": "Purifying Fire",
             "description": "Removes negative conditions from allies.",
-            "cooldown": 180,
-            "icon": "icons/purifying_fire.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -6845,14 +6537,12 @@
       {
         "name": "Ice Amplification",
         "description": "Enhances ice and cold-based spells, allowing for extended duration or larger areas.",
-        "cooldown": 0,
-        "icon": "icons/ice_amplification.png"
+        "cooldown": 0
       },
       {
         "name": "Ice Barrier",
         "description": "Can create barriers of ice to block paths or protect allies.",
-        "cooldown": 120,
-        "icon": "icons/ice_barrier.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -6947,20 +6637,17 @@
           {
             "name": "Blizzard",
             "description": "Summons a severe snowstorm to damage and slow enemies.",
-            "cooldown": 120,
-            "icon": "icons/blizzard.png"
+            "cooldown": 120
           },
           {
             "name": "Ice Barrier",
             "description": "Creates protective walls of ice.",
-            "cooldown": 180,
-            "icon": "icons/ice_barrier.png"
+            "cooldown": 180
           },
           {
             "name": "Frozen Touch",
             "description": "Attacks can freeze enemies, immobilizing them.",
-            "cooldown": 300,
-            "icon": "icons/frozen_touch.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -6991,20 +6678,17 @@
           {
             "name": "Whiteout",
             "description": "Reduces visibility for enemies, giving advantage to allies.",
-            "cooldown": 120,
-            "icon": "icons/whiteout.png"
+            "cooldown": 120
           },
           {
             "name": "Frost Nova",
             "description": "Releases a burst of cold, damaging and slowing enemies.",
-            "cooldown": 180,
-            "icon": "icons/frost_nova.png"
+            "cooldown": 180
           },
           {
             "name": "Permafrost",
             "description": "Creates icy terrains that hinder enemy movement.",
-            "cooldown": 300,
-            "icon": "icons/permafrost.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7035,20 +6719,17 @@
           {
             "name": "Hibernate",
             "description": "Puts enemies into a deep sleep.",
-            "cooldown": 120,
-            "icon": "icons/hibernate.png"
+            "cooldown": 120
           },
           {
             "name": "Chill Armor",
             "description": "Increases the party's defenses and reflects a portion of melee damage.",
-            "cooldown": 180,
-            "icon": "icons/chill_armor.png"
+            "cooldown": 180
           },
           {
             "name": "Winter's Grace",
             "description": "Heals allies and removes burn effects.",
-            "cooldown": 300,
-            "icon": "icons/winters_grace.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7089,14 +6770,12 @@
       {
         "name": "Lightning Amplification",
         "description": "Boosts lightning and storm-based spells, increasing their intensity and speed.",
-        "cooldown": 0,
-        "icon": "icons/lightning_amplification.png"
+        "cooldown": 0
       },
       {
         "name": "Electrical Barrier",
         "description": "Can summon temporary electrical barriers or lightning bolts.",
-        "cooldown": 120,
-        "icon": "icons/electrical_barrier.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -7191,20 +6870,17 @@
           {
             "name": "Lightning Mastery",
             "description": "Can cast Chain Lightning and Call Lightning through her Song Magic with increased damage and area of effect.",
-            "cooldown": 120,
-            "icon": "icons/lightning_mastery.png"
+            "cooldown": 120
           },
           {
             "name": "Storm Shield",
             "description": "Creates a protective barrier of electrical energy around the party, reducing incoming damage and shocking attackers.",
-            "cooldown": 180,
-            "icon": "icons/storm_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Thunderclap",
             "description": "Emits a powerful burst of thunder that can stun or deafen nearby enemies, disrupting their actions.",
-            "cooldown": 300,
-            "icon": "icons/thunderclap.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7235,20 +6911,17 @@
           {
             "name": "Tempest Fury",
             "description": "Can cast Hurricane and Tsunami through her Song Magic, unleashing powerful wind and water spells that damage and displace enemies.",
-            "cooldown": 120,
-            "icon": "icons/tempest_fury.png"
+            "cooldown": 120
           },
           {
             "name": "Wind Walk",
             "description": "Grants the party increased movement speed and the ability to move silently, becoming partially insubstantial like the wind.",
-            "cooldown": 180,
-            "icon": "icons/wind_walk.png"
+            "cooldown": 180
           },
           {
             "name": "Weather Control",
             "description": "Manipulates weather conditions to the party's advantage, such as summoning fog for concealment or calming storms to ensure safe passage.",
-            "cooldown": 300,
-            "icon": "icons/weather_control.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7279,20 +6952,17 @@
           {
             "name": "Sky's Wrath",
             "description": "Can cast Storm of Vengeance and Control Weather through her Song Magic, calling upon the full fury of the skies to devastate foes.",
-            "cooldown": 120,
-            "icon": "icons/skys_wrath.png"
+            "cooldown": 120
           },
           {
             "name": "Aerial Supremacy",
             "description": "Grants herself and allies the ability to fly, maneuvering effortlessly through the air and gaining advantages against ground-bound enemies.",
-            "cooldown": 0,
-            "icon": "icons/aerial_supremacy.png"
+            "cooldown": 0
           },
           {
             "name": "Zephyr's Grace",
             "description": "Increases the party's agility and reflexes, improving evasion and granting advantage on dexterity-based checks and saving throws.",
-            "cooldown": 180,
-            "icon": "icons/zephyrs_grace.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -7333,14 +7003,12 @@
       {
         "name": "Eldritch Enhancement",
         "description": "Enhances eldritch invocations, granting additional effects or increasing their potency.",
-        "cooldown": 0,
-        "icon": "icons/eldritch_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Dark Energy Blast",
         "description": "Can create dark energy blasts that saps enemies' strength.",
-        "cooldown": 120,
-        "icon": "icons/dark_energy_blast.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -7435,20 +7103,17 @@
           {
             "name": "Shadowflame Blast",
             "description": "Can cast Shadow of Moil and Hurl Through Hell through her Song Magic, dealing both necrotic and fire damage.",
-            "cooldown": 120,
-            "icon": "icons/shadowflame_blast.png"
+            "cooldown": 120
           },
           {
             "name": "Dark Barrier",
             "description": "Creates a protective shield of shadow and flame around the party, granting resistance to necrotic and fire damage.",
-            "cooldown": 180,
-            "icon": "icons/dark_barrier.png"
+            "cooldown": 180
           },
           {
             "name": "Infernal Chains",
             "description": "Binds enemies with dark energy, restricting their movements and dealing ongoing damage.",
-            "cooldown": 300,
-            "icon": "icons/infernal_chains.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7479,20 +7144,17 @@
           {
             "name": "Void Lash",
             "description": "Can cast Eldritch Blast and Blight through her Song Magic, dealing necrotic and force damage.",
-            "cooldown": 120,
-            "icon": "icons/void_lash.png"
+            "cooldown": 120
           },
           {
             "name": "Dark Binding",
             "description": "Creates bindings of void energy that immobilize enemies and absorb magical energy.",
-            "cooldown": 180,
-            "icon": "icons/dark_binding.png"
+            "cooldown": 180
           },
           {
             "name": "Shadowstep",
             "description": "Grants the ability to teleport short distances through shadows, allowing for quick repositioning and surprise attacks.",
-            "cooldown": 300,
-            "icon": "icons/shadowstep.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7523,20 +7185,17 @@
           {
             "name": "Starlight Curse",
             "description": "Can cast Hex and Finger of Death through her Song Magic, cursing enemies with both necrotic and radiant damage.",
-            "cooldown": 120,
-            "icon": "icons/starlight_curse.png"
+            "cooldown": 120
           },
           {
             "name": "Celestial Veil",
             "description": "Creates a veil of darkness and starlight that obscures the party from enemies, granting advantage on Charisma-based checks and making the party harder to detect.",
-            "cooldown": 180,
-            "icon": "icons/celestial_veil.png"
+            "cooldown": 180
           },
           {
             "name": "Eclipse Overlord",
             "description": "Summons a solar eclipse that weakens enemies and empowers the party’s spells, increasing their effectiveness.",
-            "cooldown": 300,
-            "icon": "icons/eclipse_overlord.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7577,14 +7236,12 @@
       {
         "name": "Teleportation",
         "description": "Grants the ability to teleport short distances or create dark portals.",
-        "cooldown": 0,
-        "icon": "icons/teleportation.png"
+        "cooldown": 0
       },
       {
         "name": "Summon Dark Entities",
         "description": "Can summon minor dark entities to aid in combat.",
-        "cooldown": 120,
-        "icon": "icons/summon_dark_entities.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -7679,20 +7336,17 @@
           {
             "name": "Abyssal Blast",
             "description": "Unleashes dark energy that deals significant necrotic damage.",
-            "cooldown": 120,
-            "icon": "icons/abyssal_blast.png"
+            "cooldown": 120
           },
           {
             "name": "Void Shield",
             "description": "Creates a barrier that absorbs magic and reflects spells back at the caster.",
-            "cooldown": 180,
-            "icon": "icons/void_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Soul Drain",
             "description": "Steals life energy from enemies to heal herself and allies.",
-            "cooldown": 300,
-            "icon": "icons/soul_drain.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7723,20 +7377,17 @@
           {
             "name": "Phase Shift",
             "description": "Allows brief intangibility, avoiding physical attacks.",
-            "cooldown": 120,
-            "icon": "icons/phase_shift.png"
+            "cooldown": 120
           },
           {
             "name": "Nether Step",
             "description": "Teleports through the nether realm over short distances.",
-            "cooldown": 180,
-            "icon": "icons/nether_step.png"
+            "cooldown": 180
           },
           {
             "name": "Ethereal Grasp",
             "description": "Attacks can reduce enemy defenses and disrupt spellcasting.",
-            "cooldown": 300,
-            "icon": "icons/ethereal_grasp.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7767,20 +7418,17 @@
           {
             "name": "Reap Soul",
             "description": "Can cast Soul Cage and Circle of Death through her Song Magic.",
-            "cooldown": 120,
-            "icon": "icons/reap_soul.png"
+            "cooldown": 120
           },
           {
             "name": "Wraith Form",
             "description": "Temporarily transforms into a wraith, increasing mobility and resistances.",
-            "cooldown": 180,
-            "icon": "icons/wraith_form.png"
+            "cooldown": 180
           },
           {
             "name": "Necrotic Aura",
             "description": "Weakens enemies nearby, reducing their attack and defense.",
-            "cooldown": 300,
-            "icon": "icons/necrotic_aura.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7821,14 +7469,12 @@
       {
         "name": "Versatile Spellcasting",
         "description": "Balances offensive and defensive warlock spells, allowing for versatile spellcasting.",
-        "cooldown": 0,
-        "icon": "icons/versatile_spellcasting.png"
+        "cooldown": 0
       },
       {
         "name": "Concealment",
         "description": "Can cast Darkness or Invisibility to conceal movements.",
-        "cooldown": 120,
-        "icon": "icons/concealment.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -7923,20 +7569,17 @@
           {
             "name": "Moonbeam Spell",
             "description": "Can cast Moonbeam and Dream through her Song Magic.",
-            "cooldown": 120,
-            "icon": "icons/moonbeam_spell.png"
+            "cooldown": 120
           },
           {
             "name": "Lunar Blessing",
             "description": "Increases the party's magical abilities during the night.",
-            "cooldown": 180,
-            "icon": "icons/lunar_blessing.png"
+            "cooldown": 180
           },
           {
             "name": "Night's Shield",
             "description": "Provides resistance to radiant and necrotic damage.",
-            "cooldown": 300,
-            "icon": "icons/nights_shield.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -7967,20 +7610,17 @@
           {
             "name": "Eclipse Sphere",
             "description": "Combines radiant and necrotic damage in her spells.",
-            "cooldown": 120,
-            "icon": "icons/eclipse_sphere.png"
+            "cooldown": 120
           },
           {
             "name": "Balance of Shadows",
             "description": "Can manipulate light and darkness to her advantage.",
-            "cooldown": 180,
-            "icon": "icons/balance_of_shadows.png"
+            "cooldown": 180
           },
           {
             "name": "Solar Flare",
             "description": "Blinds enemies temporarily, reducing their accuracy.",
-            "cooldown": 300,
-            "icon": "icons/solar_flare.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8011,20 +7651,17 @@
           {
             "name": "Starlight Blast",
             "description": "Can cast Starfall and Astral Projection through her Song Magic.",
-            "cooldown": 120,
-            "icon": "icons/starlight_blast.png"
+            "cooldown": 120
           },
           {
             "name": "Constellation Shield",
             "description": "Creates protective barriers inspired by constellations.",
-            "cooldown": 180,
-            "icon": "icons/constellation_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Astral Guidance",
             "description": "Enhances the party's navigation and perception abilities.",
-            "cooldown": 300,
-            "icon": "icons/astral_guidance.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8065,14 +7702,12 @@
       {
         "name": "Arcane Efficiency",
         "description": "Enhances arcane spellcasting, allowing Wizards to cast spells with greater efficiency or reduced components.",
-        "cooldown": 0,
-        "icon": "icons/arcane_efficiency.png"
+        "cooldown": 0
       },
       {
         "name": "Spell Slot Reservoir",
         "description": "Can store additional spell slots temporarily.",
-        "cooldown": 120,
-        "icon": "icons/spell_slot_reservoir.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -8167,20 +7802,17 @@
           {
             "name": "Spell Mastery",
             "description": "Can cast high-level spells like Meteor Swarm and Time Stop more efficiently.",
-            "cooldown": 0,
-            "icon": "icons/spell_mastery.png"
+            "cooldown": 0
           },
           {
             "name": "Arcane Shield",
             "description": "Creates a magical barrier that absorbs spell damage.",
-            "cooldown": 180,
-            "icon": "icons/arcane_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Mana Infusion",
             "description": "Increases the party's spellcasting abilities and regenerates spell slots faster.",
-            "cooldown": 300,
-            "icon": "icons/mana_infusion.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8211,20 +7843,17 @@
           {
             "name": "Rune Magic",
             "description": "Can inscribe runes that enhance spells or trap enemies.",
-            "cooldown": 120,
-            "icon": "icons/rune_magic.png"
+            "cooldown": 120
           },
           {
             "name": "Spell Reflection",
             "description": "Reflects spells back to their casters.",
-            "cooldown": 180,
-            "icon": "icons/spell_reflection.png"
+            "cooldown": 180
           },
           {
             "name": "Enchantment Mastery",
             "description": "Enhances the party's equipment with temporary magical properties.",
-            "cooldown": 300,
-            "icon": "icons/enchantment_mastery.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8255,20 +7884,17 @@
           {
             "name": "Time Warp",
             "description": "Can manipulate time to slow enemies or hasten allies.",
-            "cooldown": 120,
-            "icon": "icons/time_warp.png"
+            "cooldown": 120
           },
           {
             "name": "Temporal Shield",
             "description": "Reduces damage by briefly rewinding time upon being hit.",
-            "cooldown": 180,
-            "icon": "icons/temporal_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Future Sight",
             "description": "Grants glimpses of possible future events, aiding decision-making.",
-            "cooldown": 300,
-            "icon": "icons/future_sight.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8309,14 +7935,12 @@
       {
         "name": "Spell Attack Boost",
         "description": "Grants bonuses to spell attack rolls and spell save DCs.",
-        "cooldown": 0,
-        "icon": "icons/spell_attack_boost.png"
+        "cooldown": 0
       },
       {
         "name": "Enhanced Mage Hand",
         "description": "Can cast Mage Hand with increased range and strength.",
-        "cooldown": 120,
-        "icon": "icons/enhanced_mage_hand.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -8411,20 +8035,17 @@
           {
             "name": "Master of Illusions",
             "description": "Creates complex illusions that can deceive all senses.",
-            "cooldown": 120,
-            "icon": "icons/master_of_illusions.png"
+            "cooldown": 120
           },
           {
             "name": "Phantom Reality",
             "description": "Illusions can cause real damage or effects.",
-            "cooldown": 180,
-            "icon": "icons/phantom_reality.png"
+            "cooldown": 180
           },
           {
             "name": "Cloak of Deception",
             "description": "Renders the party invisible or alters their appearance.",
-            "cooldown": 300,
-            "icon": "icons/cloak_of_deception.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8455,20 +8076,17 @@
           {
             "name": "Enchanting Aura",
             "description": "Influences the emotions and thoughts of others.",
-            "cooldown": 120,
-            "icon": "icons/enchanting_aura.png"
+            "cooldown": 120
           },
           {
             "name": "Charm Mastery",
             "description": "Can charm multiple targets simultaneously.",
-            "cooldown": 180,
-            "icon": "icons/charm_mastery.png"
+            "cooldown": 180
           },
           {
             "name": "Mind Shield",
             "description": "Protects the party from mental attacks.",
-            "cooldown": 300,
-            "icon": "icons/mind_shield.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8499,20 +8117,17 @@
           {
             "name": "Dreamwalk",
             "description": "Can enter and manipulate dreams, affecting targets even when they sleep.",
-            "cooldown": 120,
-            "icon": "icons/dreamwalk.png"
+            "cooldown": 120
           },
           {
             "name": "Nightmare Pulse",
             "description": "Sends waves of fear and confusion to enemies.",
-            "cooldown": 180,
-            "icon": "icons/nightmare_pulse.png"
+            "cooldown": 180
           },
           {
             "name": "Lucid Barrier",
             "description": "Creates shields that absorb magical damage.",
-            "cooldown": 300,
-            "icon": "icons/lucid_barrier.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8553,14 +8168,12 @@
       {
         "name": "Enchantment Enhancement",
         "description": "Enhances enchantment and illusion spells, making them harder to resist and more potent.",
-        "cooldown": 0,
-        "icon": "icons/enchantment_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Counterspell Boost",
         "description": "Can cast Counterspell or Dispel Magic with greater effectiveness.",
-        "cooldown": 120,
-        "icon": "icons/counterspell_boost.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -8655,20 +8268,17 @@
           {
             "name": "Rune Casting",
             "description": "Uses runes to cast powerful spells or seal away enemies' abilities.",
-            "cooldown": 120,
-            "icon": "icons/rune_casting.png"
+            "cooldown": 120
           },
           {
             "name": "Sigil Ward",
             "description": "Sets traps that activate upon enemy approach.",
-            "cooldown": 180,
-            "icon": "icons/sigil_ward.png"
+            "cooldown": 180
           },
           {
             "name": "Rune Empowerment",
             "description": "Enhances the party's weapons and armor with runes.",
-            "cooldown": 300,
-            "icon": "icons/rune_empowerment.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8699,20 +8309,17 @@
           {
             "name": "Spell Weaving",
             "description": "Combines spells for unique effects.",
-            "cooldown": 120,
-            "icon": "icons/spell_weaving.png"
+            "cooldown": 120
           },
           {
             "name": "Mana Threads",
             "description": "Manipulates magical energy directly, disrupting enemy spells.",
-            "cooldown": 180,
-            "icon": "icons/mana_threads.png"
+            "cooldown": 180
           },
           {
             "name": "Arcane Net",
             "description": "Traps enemies in a web of magic, restricting movement and spellcasting.",
-            "cooldown": 300,
-            "icon": "icons/arcane_net.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8743,20 +8350,17 @@
           {
             "name": "Sage's Wisdom",
             "description": "Increases the party's intelligence and wisdom stats temporarily.",
-            "cooldown": 0,
-            "icon": "icons/sages_wisdom.png"
+            "cooldown": 0
           },
           {
             "name": "Arcane Insight",
             "description": "Identifies magical properties of items and creatures instantly.",
-            "cooldown": 120,
-            "icon": "icons/arcane_insight.png"
+            "cooldown": 120
           },
           {
             "name": "Spell Recall",
             "description": "Allows casting spells without expending spell slots a limited number of times.",
-            "cooldown": 180,
-            "icon": "icons/spell_recall.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -8797,14 +8401,12 @@
       {
         "name": "Tinkering Enhancement",
         "description": "Enhances tinkering and crafting abilities, allowing for quicker creation of gadgets or magical items.",
-        "cooldown": 0,
-        "icon": "icons/tinkering_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Equipment Enhancement",
         "description": "Can provide temporary enhancements to allies' equipment.",
-        "cooldown": 120,
-        "icon": "icons/equipment_enhancement.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -8899,20 +8501,17 @@
           {
             "name": "Mechanical Overdrive",
             "description": "Can cast Animate Objects and Steel Wind Strike through his Song Magic, controlling multiple constructs and performing swift, powerful strikes.",
-            "cooldown": 120,
-            "icon": "icons/mechanical_overdrive.png"
+            "cooldown": 120
           },
           {
             "name": "Arcane Forge",
             "description": "Enhances the party’s equipment, allowing for temporary magical enhancements and repairs.",
-            "cooldown": 180,
-            "icon": "icons/arcane_forge.png"
+            "cooldown": 180
           },
           {
             "name": "Construct Mastery",
             "description": "Grants the ability to summon and control powerful magical constructs that assist in combat and exploration.",
-            "cooldown": 300,
-            "icon": "icons/construct_mastery.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8943,20 +8542,17 @@
           {
             "name": "Flux Infusion",
             "description": "Can cast Creation and Wall of Force through his Song Magic, creating tangible magical constructs and barriers.",
-            "cooldown": 120,
-            "icon": "icons/flux_infusion.png"
+            "cooldown": 120
           },
           {
             "name": "Energy Manipulation",
             "description": "Grants the ability to manipulate magical energy, enhancing the party’s spellcasting and granting resistance to magical damage.",
-            "cooldown": 180,
-            "icon": "icons/energy_manipulation.png"
+            "cooldown": 180
           },
           {
             "name": "Adaptive Constructs",
             "description": "Creates versatile magical constructs that can adapt to different combat scenarios, providing both offense and defense.",
-            "cooldown": 300,
-            "icon": "icons/adaptive_constructs.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -8987,20 +8583,17 @@
           {
             "name": "Mechanist's Mastery",
             "description": "Can cast Bigby's Hand and Animate Dead through his Song Magic, controlling massive constructs and manipulating life forces.",
-            "cooldown": 120,
-            "icon": "icons/mechanists_mastery.png"
+            "cooldown": 120
           },
           {
             "name": "Protective Engineering",
             "description": "Creates impenetrable barriers around the party, granting immunity to certain damage types and enhancing defenses.",
-            "cooldown": 180,
-            "icon": "icons/protective_engineering.png"
+            "cooldown": 180
           },
           {
             "name": "Life Infusion",
             "description": "Enhances the party's ability to sustain life, allowing for rapid healing and resistance to debilitating effects.",
-            "cooldown": 300,
-            "icon": "icons/life_infusion.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9041,14 +8634,12 @@
       {
         "name": "Arcane Infusion",
         "description": "Enhances infusions and magical constructs, allowing for more powerful or versatile creations.",
-        "cooldown": 0,
-        "icon": "icons/arcane_infusion.png"
+        "cooldown": 0
       },
       {
         "name": "Energy Repair",
         "description": "Can manipulate energy to repair or modify items on the fly.",
-        "cooldown": 120,
-        "icon": "icons/energy_repair.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -9143,20 +8734,17 @@
           {
             "name": "Energy Manipulation",
             "description": "Grants the ability to manipulate magical energy, enhancing the party’s spellcasting and granting resistance to magical damage.",
-            "cooldown": 120,
-            "icon": "icons/energy_manipulation.png"
+            "cooldown": 120
           },
           {
             "name": "Flux Infusion",
             "description": "Can cast Creation and Wall of Force through his Song Magic, creating tangible magical constructs and barriers.",
-            "cooldown": 180,
-            "icon": "icons/flux_infusion.png"
+            "cooldown": 180
           },
           {
             "name": "Adaptive Constructs",
             "description": "Creates versatile magical constructs that can adapt to different combat scenarios, providing both offense and defense.",
-            "cooldown": 300,
-            "icon": "icons/adaptive_constructs.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9187,20 +8775,17 @@
           {
             "name": "Temporal Gearwork",
             "description": "Can manipulate time to slow enemies or hasten allies, enhancing the party's actions in combat.",
-            "cooldown": 120,
-            "icon": "icons/temporal_gearwork.png"
+            "cooldown": 120
           },
           {
             "name": "Time Warp",
             "description": "Grants the ability to create temporary time distortions, affecting the flow of battle.",
-            "cooldown": 180,
-            "icon": "icons/time_warp.png"
+            "cooldown": 180
           },
           {
             "name": "Chrono Shield",
             "description": "Creates a shield that briefly rewinds time to negate damage or negative effects.",
-            "cooldown": 300,
-            "icon": "icons/chrono_shield.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9231,20 +8816,17 @@
           {
             "name": "Arcane Automation",
             "description": "Can create automated magical devices that perform tasks or assist in combat.",
-            "cooldown": 120,
-            "icon": "icons/arcane_automation.png"
+            "cooldown": 120
           },
           {
             "name": "Runic Enhancement",
             "description": "Enhances the party’s equipment with temporary magical properties, improving their effectiveness.",
-            "cooldown": 180,
-            "icon": "icons/runic_enhancement.png"
+            "cooldown": 180
           },
           {
             "name": "Golem Mastery",
             "description": "Summons and controls golems or other magical constructs to aid the party in various situations.",
-            "cooldown": 300,
-            "icon": "icons/golem_mastery.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9285,14 +8867,12 @@
       {
         "name": "Construct Enhancement",
         "description": "Enhances the creation and control of magical constructs or golems.",
-        "cooldown": 0,
-        "icon": "icons/construct_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Defensive Barrier",
         "description": "Can generate energy shields or barriers to provide defensive bonuses.",
-        "cooldown": 120,
-        "icon": "icons/defensive_barrier.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -9387,20 +8967,17 @@
           {
             "name": "Fortified Constructs",
             "description": "Can create and control durable magical constructs that provide both offensive and defensive capabilities.",
-            "cooldown": 120,
-            "icon": "icons/fortified_constructs.png"
+            "cooldown": 120
           },
           {
             "name": "Protective Engineering",
             "description": "Creates impenetrable barriers around the party, granting immunity to certain damage types and enhancing defenses.",
-            "cooldown": 180,
-            "icon": "icons/protective_engineering.png"
+            "cooldown": 180
           },
           {
             "name": "Shield Integration",
             "description": "Enhances the party’s armor and shields with magical protections, increasing their resilience in battle.",
-            "cooldown": 300,
-            "icon": "icons/shield_integration.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9431,20 +9008,17 @@
           {
             "name": "Arcane Forging",
             "description": "Can enchant weapons and armor on the fly, providing temporary magical enhancements during combat.",
-            "cooldown": 120,
-            "icon": "icons/arcane_forging.png"
+            "cooldown": 120
           },
           {
             "name": "Runic Repair",
             "description": "Instantly repairs and upgrades the party’s equipment, ensuring they remain battle-ready.",
-            "cooldown": 180,
-            "icon": "icons/runic_repair.png"
+            "cooldown": 180
           },
           {
             "name": "Magical Constructs",
             "description": "Summons specialized constructs tailored to specific tasks, such as healing or combat support.",
-            "cooldown": 300,
-            "icon": "icons/magical_constructs.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9475,20 +9049,17 @@
           {
             "name": "Elemental Integration",
             "description": "Can infuse constructs with elemental properties (fire, ice, lightning) to adapt to various combat scenarios.",
-            "cooldown": 120,
-            "icon": "icons/elemental_integration.png"
+            "cooldown": 120
           },
           {
             "name": "Elemental Shields",
             "description": "Creates barriers that provide resistance or immunity to specific elemental damage types.",
-            "cooldown": 180,
-            "icon": "icons/elemental_shields.png"
+            "cooldown": 180
           },
           {
             "name": "Elemental Fury",
             "description": "Channels elemental energies into attacks, increasing their damage and effects based on the chosen element.",
-            "cooldown": 300,
-            "icon": "icons/elemental_fury.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9530,14 +9101,12 @@
       {
         "name": "Blood Magic Amplification",
         "description": "Enhances blood magic, increasing damage output and providing resistance to certain types of damage.",
-        "cooldown": 0,
-        "icon": "icons/blood_magic_amplification.png"
+        "cooldown": 5000
       },
       {
         "name": "Health Siphon",
         "description": "Can siphon health from enemies to heal allies.",
-        "cooldown": 120,
-        "icon": "icons/health_siphon.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -9632,20 +9201,17 @@
           {
             "name": "Bloodlust",
             "description": "Increases attack power as health decreases.",
-            "cooldown": 120,
-            "icon": "icons/bloodlust.png"
+            "cooldown": 120
           },
           {
             "name": "Hemorrhage",
             "description": "Attacks cause enemies to bleed, dealing damage over time.",
-            "cooldown": 180,
-            "icon": "icons/hemorrhage.png"
+            "cooldown": 180
           },
           {
             "name": "Life Steal",
             "description": "Heals himself for a portion of the damage dealt to enemies.",
-            "cooldown": 300,
-            "icon": "icons/life_steal.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9676,20 +9242,17 @@
           {
             "name": "Blood Control",
             "description": "Can manipulate the blood within enemies, causing paralysis or damage.",
-            "cooldown": 120,
-            "icon": "icons/blood_control.png"
+            "cooldown": 120
           },
           {
             "name": "Crimson Shield",
             "description": "Forms protective barriers made of solidified blood.",
-            "cooldown": 180,
-            "icon": "icons/crimson_shield.png"
+            "cooldown": 180
           },
           {
             "name": "Blood Puppet",
             "description": "Temporarily control the actions of weakened foes.",
-            "cooldown": 300,
-            "icon": "icons/blood_puppet.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9720,20 +9283,17 @@
           {
             "name": "Night Vision",
             "description": "Sees perfectly in the dark.",
-            "cooldown": 0,
-            "icon": "icons/night_vision.png"
+            "cooldown": 0
           },
           {
             "name": "Silent Predator",
             "description": "Moves undetected, increasing stealth.",
-            "cooldown": 120,
-            "icon": "icons/silent_predator.png"
+            "cooldown": 120
           },
           {
             "name": "Shadow Strike",
             "description": "Deals extra damage when attacking from darkness.",
-            "cooldown": 180,
-            "icon": "icons/shadow_strike.png"
+            "cooldown": 180
           }
         ],
         "upgradeRequirements": {
@@ -9775,14 +9335,12 @@
       {
         "name": "Tracking Enhancement",
         "description": "Grants bonuses to tracking and hunting abilities, allowing for heightened senses and stealth.",
-        "cooldown": 0,
-        "icon": "icons/tracking_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Blood Magic Infusion",
         "description": "Can infuse weapons with blood magic for added effects.",
-        "cooldown": 120,
-        "icon": "icons/blood_magic_infusion.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -9877,20 +9435,17 @@
           {
             "name": "Vitality Drain",
             "description": "Absorbs health from enemies to heal herself.",
-            "cooldown": 120,
-            "icon": "icons/vitality_drain.png"
+            "cooldown": 120
           },
           {
             "name": "Weakening Gaze",
             "description": "Reduces enemies' strength and endurance.",
-            "cooldown": 180,
-            "icon": "icons/weakening_gaze.png"
+            "cooldown": 180
           },
           {
             "name": "Aura of Decay",
             "description": "Slowly saps the life of nearby enemies.",
-            "cooldown": 300,
-            "icon": "icons/aura_of_decay.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9921,20 +9476,17 @@
           {
             "name": "Blood Armor",
             "description": "Increases defense and absorbs damage.",
-            "cooldown": 120,
-            "icon": "icons/blood_armor.png"
+            "cooldown": 120
           },
           {
             "name": "Sanguine Strike",
             "description": "Attacks deal extra damage based on missing health.",
-            "cooldown": 180,
-            "icon": "icons/sanguine_strike.png"
+            "cooldown": 180
           },
           {
             "name": "Battle Frenzy",
             "description": "Gains strength as the battle prolongs.",
-            "cooldown": 300,
-            "icon": "icons/battle_frenzy.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -9965,20 +9517,17 @@
           {
             "name": "Blood Mist",
             "description": "Transforms into a mist to avoid attacks and move through spaces.",
-            "cooldown": 120,
-            "icon": "icons/blood_mist.png"
+            "cooldown": 120
           },
           {
             "name": "Shadow Veil",
             "description": "Becomes nearly invisible in darkness, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 180,
-            "icon": "icons/shadow_veil.png"
+            "cooldown": 180
           },
           {
             "name": "Hemorrhaging Shadows",
             "description": "Attacks cause bleeding and conceal the enemy's vision.",
-            "cooldown": 300,
-            "icon": "icons/hemorrhaging_shadows.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -10020,14 +9569,12 @@
       {
         "name": "Curse Enhancement",
         "description": "Enhances the ability to curse and weaken foes, reducing their combat effectiveness.",
-        "cooldown": 0,
-        "icon": "icons/curse_enhancement.png"
+        "cooldown": 0
       },
       {
         "name": "Blood Ritual",
         "description": "Can perform blood rituals that provide temporary buffs or debuffs.",
-        "cooldown": 120,
-        "icon": "icons/blood_ritual.png"
+        "cooldown": 120
       }
     ],
     "levelUpRequirements": [
@@ -10122,20 +9669,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows over short distances, allowing for quick repositioning and surprise attacks.",
-            "cooldown": 120,
-            "icon": "icons/shadow_step.png"
+            "cooldown": 120
           },
           {
             "name": "Venom Strike",
             "description": "Combines poison with shadow magic for enhanced attacks, dealing both poison and necrotic damage.",
-            "cooldown": 180,
-            "icon": "icons/venom_strike.png"
+            "cooldown": 180
           },
           {
             "name": "Shadow Cloak",
             "description": "Becomes nearly invisible in darkness, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 300,
-            "icon": "icons/shadow_cloak.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -10166,20 +9710,17 @@
           {
             "name": "Darkblood Reave",
             "description": "Performs powerful melee attacks that drain life from enemies, healing Sanguis with each successful strike.",
-            "cooldown": 120,
-            "icon": "icons/darkblood_reave.png"
+            "cooldown": 120
           },
           {
             "name": "Crimson Aura",
             "description": "Emits an aura that saps the strength of nearby enemies, reducing their attack and defense capabilities.",
-            "cooldown": 180,
-            "icon": "icons/crimson_aura.png"
+            "cooldown": 180
           },
           {
             "name": "Blood Ritual",
             "description": "Can perform blood rituals that provide temporary buffs to allies or debilitating effects to enemies, such as increased strength or reduced speed.",
-            "cooldown": 300,
-            "icon": "icons/blood_ritual.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {
@@ -10210,20 +9751,17 @@
           {
             "name": "Necrotic Blade",
             "description": "Infuses her weapons with necrotic energy, increasing damage and applying debilitating effects such as reducing enemy movement speed.",
-            "cooldown": 120,
-            "icon": "icons/necrotic_blade.png"
+            "cooldown": 120
           },
           {
             "name": "Shadow Veil",
             "description": "Creates a veil of necrotic energy that obscures her presence, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 180,
-            "icon": "icons/shadow_veil.png"
+            "cooldown": 180
           },
           {
             "name": "Death's Embrace",
             "description": "Can perform a lethal strike that deals massive necrotic damage and potentially kills weakened enemies instantly.",
-            "cooldown": 300,
-            "icon": "icons/deaths_embrace.png"
+            "cooldown": 300
           }
         ],
         "upgradeRequirements": {

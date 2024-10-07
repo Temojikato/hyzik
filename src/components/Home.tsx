@@ -20,6 +20,7 @@ import ReyvateilInfo from './ReyvateilInfo';
 import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../contexts/ThemeContext';
 import InventoryModal from './InventoryModal';
+import PlayerInfo from './PlayerInfo';
 
 const Home: React.FC = () => {
   const { currentUser } = useAuth();
@@ -157,6 +158,7 @@ const Home: React.FC = () => {
         </Flex>
       </Flex>
       <ReyvateilInfo reyvateil={reyvateil} inventory={inventory} setInventory={setInventory} />
+      <PlayerInfo />
       <InventoryModal
         isOpen={isOpen}
         onClose={onClose}

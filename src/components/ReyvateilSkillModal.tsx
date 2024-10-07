@@ -7,36 +7,61 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   ModalCloseButton,
   Button,
+  VStack,
   Text,
-  Alert,
-  AlertIcon,
+  Image,
+  ModalFooter,
 } from '@chakra-ui/react';
-import { Ability, Reyvateil } from '../types/Reyvateils';
+import { Ability } from '../types/Reyvateils';
 
 interface ReyvateilSkillModalProps {
   isOpen: boolean;
   onClose: () => void;
   ability: Ability;
+  isCooldownActive: boolean;
+  remainingTime: number;
+  onUseAbility: () => void;
 }
 
-const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({ isOpen, onClose, ability }) => {
+const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
+  isOpen,
+  onClose,
+  ability,
+  isCooldownActive,
+  remainingTime,
+  onUseAbility,
+}) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="black" color="white">
         <ModalHeader>{ability.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text>{ability.description}</Text>
-          <Text mt={2}>
-            Cooldown: {(ability.cooldown || 99999) > 0 ? `${ability.cooldown} seconds` : 'None'}
-          </Text>
+          <VStack spacing={4} align="center">
+            <Image
+              src={ability.icon || 'https://via.placeholder.com/100'}
+              alt={ability.name}
+              boxSize="100px"
+              objectFit="cover"
+              filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
+            />
+            <Text textAlign="center">{ability.description}</Text>
+            <Text fontWeight="bold">Cooldown: {ability.cooldown} seconds</Text>
+            <Button
+              onClick={onUseAbility}
+              colorScheme="blue"
+              isDisabled={isCooldownActive}
+              opacity={isCooldownActive ? 0.6 : 1}
+            >
+              {isCooldownActive ? `Cooldown (${remainingTime}s)` : 'Use'}
+            </Button>
+          </VStack>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
+          <Button onClick={onClose} colorScheme="gray">
             Close
           </Button>
         </ModalFooter>
