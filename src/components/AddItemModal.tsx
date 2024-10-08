@@ -223,6 +223,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
                 <Spinner />
               ) : (
                 <Select
+                  placeholder='Select an item'
                   value={selectedItemId}
                   onChange={(e) => setSelectedItemId(e.target.value)}
                   bg="black"

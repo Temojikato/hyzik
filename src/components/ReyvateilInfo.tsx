@@ -380,7 +380,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
       console.error('Transaction failed:', error);
       toast({
         title: 'Error',
-        description: `Failed to unlock ritual. Please try again :: ${error.message}`,
+        description: `Failed to unlock recipe. Please try again :: ${error.message}`,
         status: 'error',
         duration: 5000,
         isClosable: true,

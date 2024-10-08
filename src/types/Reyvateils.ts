@@ -60,6 +60,7 @@ export interface Item {
   quantity?: number;
   description: string; // Placeholder for item descriptions
   category: string;
+  recipe: { itemId: string; quantity: number }[];
 }
 
 export interface DBItem {

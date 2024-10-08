@@ -110,7 +110,7 @@
       {
         "name": "Thundara Stormcaller",
         "features": "Thundara's wings now crackle with intense lightning, and her eyes glow with electric energy. Her presence is electrifying.",
-        "recipe": "recipeName",
+        "recipe": "Stormcalling Ritual",
         "enhancedAbilities": [
           {
             "name": "Lightning Rage",
@@ -151,7 +151,7 @@
       {
         "name": "Thundara Skybreaker",
         "features": "Thundara gains larger, more aerodynamic wings surrounded by swirling winds.",
-        "recipe": "recipeName",
+        "recipe": "Skybreaking Ritual",
         "enhancedAbilities": [
           {
             "name": "Wind Fury",
@@ -192,7 +192,7 @@
       {
         "name": "Thundara Thunderclaw",
         "features": "Thundara's claws sharpen and are imbued with electric energy; her musculature becomes more pronounced.",
-        "recipe": "recipeName",
+        "recipe": "Stormrender Ritual",
         "enhancedAbilities": [
           {
             "name": "Electric Slash",
@@ -342,7 +342,7 @@
       {
         "name": "Gronk Stonecrusher",
         "features": "Gronk's skin hardens into solid rock, with larger crystalline structures.",
-        "recipe": "recipeName",
+        "recipe": "Stonecrushing Ritual",
         "enhancedAbilities": [
           {
             "name": "Earthshatter",
@@ -383,7 +383,7 @@
       {
         "name": "Gronk Crystal Titan",
         "features": "Gronk's crystals glow with inner light; his size increases.",
-        "recipe": "recipeName",
+        "recipe": "Crystal Ritual",
         "enhancedAbilities": [
           {
             "name": "Crystal Spikes",
@@ -424,7 +424,7 @@
       {
         "name": "Gronk Earthbreaker",
         "features": "Gronk becomes more rugged, with boulder-like protrusions.",
-        "recipe": "recipeName",
+        "recipe": "Earthbreaking Ritual",
         "enhancedAbilities": [
           {
             "name": "Seismic Slam",
@@ -574,7 +574,7 @@
       {
         "name": "Ragnor Flamewrath",
         "features": "Ragnor's fiery wings blaze intensely; his presence emits searing heat.",
-        "recipe": "recipeName",
+        "recipe": "Flame and Anger Ritual",
         "enhancedAbilities": [
           {
             "name": "Blazing Rage",
@@ -615,7 +615,7 @@
       {
         "name": "Ragnor Inferno",
         "features": "Ragnor is wreathed in flames; his eyes glow like molten lava.",
-        "recipe": "recipeName",
+        "recipe": "Hellish Ritual",
         "enhancedAbilities": [
           {
             "name": "Inferno Strike",
@@ -656,7 +656,7 @@
       {
         "name": "Ragnor Sunbreaker",
         "features": "Ragnor's wings radiate solar energy; his form shines brightly.",
-        "recipe": "recipeName",
+        "recipe": "Sunbreaking Ritual",
         "enhancedAbilities": [
           {
             "name": "Solar Flare",
@@ -807,7 +807,7 @@
       {
         "name": "Melodia Maestro",
         "features": "Melodia's wings radiate vibrant colors; musical notes float around her.",
-        "recipe": "recipeName",
+        "recipe": "Conduction Ritual",
         "enhancedAbilities": [
           {
             "name": "Symphony of Power",
@@ -848,7 +848,7 @@
       {
         "name": "Melodia Lyricist",
         "features": "Melodia's wings display intricate musical patterns; her aura soothes allies.",
-        "recipe": "recipeName",
+        "recipe": "Lyrical Ritual",
         "enhancedAbilities": [
           {
             "name": "Healing Melody",
@@ -889,7 +889,7 @@
       {
         "name": "Melodia Virtuoso",
         "features": "Melodia exudes artistic mastery; her presence captivates all.",
-        "recipe": "recipeName",
+        "recipe": "Ascension Ritual",
         "enhancedAbilities": [
           {
             "name": "Masterpiece Performance",
@@ -1040,7 +1040,7 @@
       {
         "name": "Harmonix Crescendo",
         "features": "Harmonix's wings resonate with vibrant colors; her music energizes allies.",
-        "recipe": "recipeName",
+        "recipe": "Climactic Ritual",
         "enhancedAbilities": [
           {
             "name": "Empowering Chorus",
@@ -1081,7 +1081,7 @@
       {
         "name": "Harmonix Balladeer",
         "features": "Harmonix's presence tells stories through music; her songs evoke strong emotions.",
-        "recipe": "recipeName",
+        "recipe": "Acapella Ritual",
         "enhancedAbilities": [
           {
             "name": "Ballad of Courage",
@@ -1122,7 +1122,7 @@
       {
         "name": "Harmonix Chorister",
         "features": "Harmonix's music echoes with multiple harmonies; she embodies collective voices.",
-        "recipe": "recipeName",
+        "recipe": "Harmonic Ritual",
         "enhancedAbilities": [
           {
             "name": "Chorus of Strength",
@@ -1273,7 +1273,7 @@
       {
         "name": "Lyra Songweaver",
         "features": "Lyra's wings are shaped like delicate harps, resonating with every note she sings. Her presence inspires creativity and harmony among allies.",
-        "recipe": "recipeName",
+        "recipe": "Writing Ritual",
         "enhancedAbilities": [
           {
             "name": "Melodic Healing",
@@ -1314,7 +1314,7 @@
       {
         "name": "Lyra Bardic Virtuoso",
         "features": "Lyra's mastery over music transforms her wings into intricate musical patterns. Her performances can captivate and influence the battlefield.",
-        "recipe": "recipeName",
+        "recipe": "Transcendance Ritual",
         "enhancedAbilities": [
           {
             "name": "Masterpiece Performance",
@@ -1355,7 +1355,7 @@
       {
         "name": "Lyra Balladist",
         "features": "Lyra's songs weave powerful narratives that can alter the battlefield's dynamics and influence emotions deeply.",
-        "recipe": "recipeName",
+        "recipe": "Storyteller Ritual",
         "enhancedAbilities": [
           {
             "name": "Ballad of Valor",
@@ -1506,7 +1506,7 @@
       {
         "name": "Serapha Radiantblade",
         "features": "Serapha's wings emit a blinding light, and she wields a radiant blade. Her armor is adorned with celestial symbols.",
-        "recipe": "recipeName",
+        "recipe": "Celestial Heaven Ritual",
         "enhancedAbilities": [
           {
             "name": "Holy Smite",
@@ -1547,7 +1547,7 @@
       {
         "name": "Serapha Luminary",
         "features": "Serapha's wings glow with ethereal light, and a halo crowns her head. Her presence brings peace.",
-        "recipe": "recipeName",
+        "recipe": "Guiding Ritual",
         "enhancedAbilities": [
           {
             "name": "Healing Light",
@@ -1588,7 +1588,7 @@
       {
         "name": "Serapha Sanctus",
         "features": "Serapha's entire being radiates divine energy; her wings are magnificent, and she embodies sanctity.",
-        "recipe": "recipeName",
+        "recipe": "Protective Ritual",
         "enhancedAbilities": [
           {
             "name": "Sanctified Ground",
@@ -1739,7 +1739,7 @@
       {
         "name": "Lumiel Dawnbringer",
         "features": "Lumiel's wings shine with the colors of sunrise; her eyes glow softly.",
-        "recipe": "recipeName",
+        "recipe": "Nightrender Ritual",
         "enhancedAbilities": [
           {
             "name": "Morning Light",
@@ -1780,7 +1780,7 @@
       {
         "name": "Lumiel Seraphim",
         "features": "Lumiel gains multiple pairs of wings; her form becomes more angelic.",
-        "recipe": "recipeName",
+        "recipe": "Eternal Subjugation Ritual",
         "enhancedAbilities": [
           {
             "name": "Angelic Chorus",
@@ -1821,7 +1821,7 @@
       {
         "name": "Lumiel Beacon",
         "features": "Lumiel becomes a beacon of light; her presence dispels darkness.",
-        "recipe": "recipeName",
+        "recipe": "Seer Ritual",
         "enhancedAbilities": [
           {
             "name": "Light of Truth",
@@ -1972,7 +1972,7 @@
       {
         "name": "Vespera Twilight",
         "features": "Vespera's wings display hues of dusk; she embodies the transition between day and night.",
-        "recipe": "recipeName",
+        "recipe": "Twillight Ritual",
         "enhancedAbilities": [
           {
             "name": "Veil of Shadows",
@@ -2013,7 +2013,7 @@
       {
         "name": "Vespera Nightwarden",
         "features": "Vespera's wings shimmer with starlight; her presence is serene and protective.",
-        "recipe": "recipeName",
+        "recipe": "Night Ward Ritual",
         "enhancedAbilities": [
           {
             "name": "Starlight Blessing",
@@ -2054,7 +2054,7 @@
       {
         "name": "Vespera Umbra",
         "features": "Vespera's form merges with shadows; she becomes a guardian against darkness.",
-        "recipe": "recipeName",
+        "recipe": "Blinding Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Ward",
@@ -2205,7 +2205,7 @@
       {
         "name": "Sylvane Verdant",
         "features": "Sylvane's wings flourish with vibrant leaves and blossoms; she embodies the essence of the forest.",
-        "recipe": "recipeName",
+        "recipe": "Verdant Ritual",
         "enhancedAbilities": [
           {
             "name": "Nature's Embrace",
@@ -2246,7 +2246,7 @@
       {
         "name": "Sylvane Bloom",
         "features": "Sylvane is adorned with rare and magical flowers; her presence promotes growth.",
-        "recipe": "recipeName",
+        "recipe": "Blooming Ritual",
         "enhancedAbilities": [
           {
             "name": "Floral Shield",
@@ -2287,7 +2287,7 @@
       {
         "name": "Sylvane Lifewarden",
         "features": "Sylvane's connection to life deepens; her wings radiate with life energy.",
-        "recipe": "recipeName",
+        "recipe": "Lifewarding Ritual",
         "enhancedAbilities": [
           {
             "name": "Revitalize",
@@ -2438,7 +2438,7 @@
       {
         "name": "Faelith Wildcaller",
         "features": "Faelith's wings resemble antlers intertwined with vines; she is at one with wildlife.",
-        "recipe": "recipeName",
+        "recipe": "Community Ritual",
         "enhancedAbilities": [
           {
             "name": "Beast Summon",
@@ -2479,7 +2479,7 @@
       {
         "name": "Faelith Grovekeeper",
         "features": "Faelith is surrounded by a protective aura of leaves and branches.",
-        "recipe": "recipeName",
+        "recipe": "Grove Ritual",
         "enhancedAbilities": [
           {
             "name": "Grove Shield",
@@ -2520,7 +2520,7 @@
       {
         "name": "Faelith Seasonsinger",
         "features": "Faelith's appearance shifts with the seasons; she embodies the cycle of nature.",
-        "recipe": "recipeName",
+        "recipe": "Seasonal Ritual",
         "enhancedAbilities": [
           {
             "name": "Seasonal Shift",
@@ -2671,7 +2671,7 @@
       {
         "name": "Terralyn Earthshaper",
         "features": "Terralyn's wings take on rocky textures; she commands the earth.",
-        "recipe": "recipeName",
+        "recipe": "Earthshaping Ritual",
         "enhancedAbilities": [
           {
             "name": "Stonewall",
@@ -2712,7 +2712,7 @@
       {
         "name": "Terralyn Mountainheart",
         "features": "Terralyn's form becomes sturdier; her presence is as enduring as mountains.",
-        "recipe": "recipeName",
+        "recipe": "Mountaineering Ritual",
         "enhancedAbilities": [
           {
             "name": "Immovable Object",
@@ -2753,7 +2753,7 @@
       {
         "name": "Terralyn Crystal Sage",
         "features": "Terralyn's wings sparkle with crystals; she gains affinity with minerals.",
-        "recipe": "recipeName",
+        "recipe": "Mineral Ritual",
         "enhancedAbilities": [
           {
             "name": "Crystal Growth",
@@ -2904,7 +2904,7 @@
       {
         "name": "Valora Warbringer",
         "features": "Valora's armor becomes more ornate with battle insignias; her presence inspires courage.",
-        "recipe": "recipeName",
+        "recipe": "War Ritual",
         "enhancedAbilities": [
           {
             "name": "Battle Cry",
@@ -2945,7 +2945,7 @@
       {
         "name": "Valora Ironclad",
         "features": "Valora's armor gains additional plating; her defense is unparalleled.",
-        "recipe": "recipeName",
+        "recipe": "Armored Ritual",
         "enhancedAbilities": [
           {
             "name": "Iron Wall",
@@ -2986,7 +2986,7 @@
       {
         "name": "Valora Bladestorm",
         "features": "Valora's weapons are imbued with swirling energy; she moves with unmatched speed.",
-        "recipe": "recipeName",
+        "recipe": "Bladeswimming Ritual",
         "enhancedAbilities": [
           {
             "name": "Whirlwind Attack",
@@ -3137,7 +3137,7 @@
       {
         "name": "Arcanix Spellblade",
         "features": "Arcanix's weapons glow with arcane runes; he merges magic and melee.",
-        "recipe": "recipeName",
+        "recipe": "Bladesinge Ritual",
         "enhancedAbilities": [
           {
             "name": "Arcane Strike",
@@ -3178,7 +3178,7 @@
       {
         "name": "Arcanix War Mage",
         "features": "Arcanix's armor and weapons are inscribed with magical glyphs.",
-        "recipe": "recipeName",
+        "recipe": "Destruction Ritual",
         "enhancedAbilities": [
           {
             "name": "Battle Spells",
@@ -3219,7 +3219,7 @@
       {
         "name": "Arcanix Elemental Knight",
         "features": "Arcanix's weapons and armor shift between elemental states.",
-        "recipe": "recipeName",
+        "recipe": "Subordination Ritual",
         "enhancedAbilities": [
           {
             "name": "Elemental Strike",
@@ -3370,7 +3370,7 @@
       {
         "name": "Sentora Sentinel",
         "features": "Sentora's armor becomes imposing; she stands as an unmovable guardian.",
-        "recipe": "recipeName",
+        "recipe": "Breaching Ritual",
         "enhancedAbilities": [
           {
             "name": "Shield Wall",
@@ -3411,7 +3411,7 @@
       {
         "name": "Sentora Dragon Slayer",
         "features": "Sentora's weapons are designed to slay powerful beasts; armor is scaled.",
-        "recipe": "recipeName",
+        "recipe": "Dragonslaying Ritual",
         "enhancedAbilities": [
           {
             "name": "Dragon's Bane",
@@ -3452,7 +3452,7 @@
       {
         "name": "Sentora Champion",
         "features": "Sentora embodies the pinnacle of martial prowess; her presence commands respect.",
-        "recipe": "recipeName",
+        "recipe": "Colloseum Ritual",
         "enhancedAbilities": [
           {
             "name": "Heroic Strike",
@@ -3603,7 +3603,7 @@
       {
         "name": "Zenara Enlightened",
         "features": "Zenara exudes calm; her wings glow softly.",
-        "recipe": "recipeName",
+        "recipe": "Meditation Ritual",
         "enhancedAbilities": [
           {
             "name": "Inner Peace",
@@ -3644,7 +3644,7 @@
       {
         "name": "Zenara Shadowstep",
         "features": "Zenara moves silently; her wings blend into shadows.",
-        "recipe": "recipeName",
+        "recipe": "Disintigration Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Step",
@@ -3685,7 +3685,7 @@
       {
         "name": "Zenara Dragon Soul",
         "features": "Zenara channels the spirit of a dragon; her wings reflect draconic features.",
-        "recipe": "recipeName",
+        "recipe": "Dragon Communion Ritual",
         "enhancedAbilities": [
           {
             "name": "Dragon Strike",
@@ -3836,7 +3836,7 @@
       {
         "name": "Kinetix Swiftstrike",
         "features": "Kinetix moves with unmatched speed; her wings leave afterimages.",
-        "recipe": "recipeName",
+        "recipe": "Flurry Ritual",
         "enhancedAbilities": [
           {
             "name": "Lightning Reflexes",
@@ -3877,7 +3877,7 @@
       {
         "name": "Kinetix Force Master",
         "features": "Kinetix manipulates kinetic energy; her wings ripple with force.",
-        "recipe": "recipeName",
+        "recipe": "Ki Ritual",
         "enhancedAbilities": [
           {
             "name": "Force Push",
@@ -3918,7 +3918,7 @@
       {
         "name": "Kinetix Echo",
         "features": "Kinetix's movements create echoes; her presence is disorienting to foes.",
-        "recipe": "recipeName",
+        "recipe": "Echo Ritual",
         "enhancedAbilities": [
           {
             "name": "Afterimage Strike",
@@ -4069,7 +4069,7 @@
       {
         "name": "Serenix Tranquil Master",
         "features": "Serenix embodies perfect calm; her aura soothes.",
-        "recipe": "recipeName",
+        "recipe": "Relaxing Ritual",
         "enhancedAbilities": [
           {
             "name": "Tranquil Mind",
@@ -4110,7 +4110,7 @@
       {
         "name": "Serenix Windwalker",
         "features": "Serenix moves like the wind; her wings are light and airy.",
-        "recipe": "recipeName",
+        "recipe": "Flying Ritual",
         "enhancedAbilities": [
           {
             "name": "Levitation",
@@ -4151,7 +4151,7 @@
       {
         "name": "Serenix Firebrand",
         "features": "Serenix channels inner fire; her wings flicker with flames.",
-        "recipe": "recipeName",
+        "recipe": "Fire eater Ritual",
         "enhancedAbilities": [
           {
             "name": "Fiery Strikes",
@@ -4302,7 +4302,7 @@
       {
         "name": "Radiant Holy Crusader",
         "features": "Radiant's wings become larger and more luminous, emitting a divine glow that inspires allies and intimidates foes. Her armor is embellished with holy symbols and gleaming metal.",
-        "recipe": "recipeName",
+        "recipe": "Crusading Ritual",
         "enhancedAbilities": [
           {
             "name": "Divine Smite",
@@ -4343,7 +4343,7 @@
       {
         "name": "Radiant Lightwarden",
         "features": "Radiant's wings emit beams of light, and her presence dispels darkness. Her attire is adorned with light-infused crystals that shimmer continuously.",
-        "recipe": "recipeName",
+        "recipe": "Light protection Ritual",
         "enhancedAbilities": [
           {
             "name": "Beacon of Light",
@@ -4384,7 +4384,7 @@
       {
         "name": "Radiant Divine Champion",
         "features": "Radiant's armor becomes more ornate, and a halo forms above her head. Her wings glow with a golden hue, symbolizing her elevated divine status.",
-        "recipe": "recipeName",
+        "recipe": "Royale Ritual",
         "enhancedAbilities": [
           {
             "name": "Champion's Strike",
@@ -4535,7 +4535,7 @@
       {
         "name": "Valorin Guardian Knight",
         "features": "Valorin's armor becomes heavier with intricate designs, and her wings resemble protective shields. She exudes an aura of steadfast defense.",
-        "recipe": "recipeName",
+        "recipe": "Oath Ritual",
         "enhancedAbilities": [
           {
             "name": "Shield of Faith",
@@ -4576,7 +4576,7 @@
       {
         "name": "Valorin Vindicator",
         "features": "Valorin's armor is adorned with symbols of justice, and her eyes glow with determination. Her wings have sharp edges, symbolizing her role as a punisher of the wicked.",
-        "recipe": "recipeName",
+        "recipe": "Vindicating Ritual",
         "enhancedAbilities": [
           {
             "name": "Judgment Strike",
@@ -4617,7 +4617,7 @@
       {
         "name": "Valorin Justice Bringer",
         "features": "Valorin's presence commands respect; her armor shines with an inner light. Her wings are vast, symbolizing her far-reaching influence.",
-        "recipe": "recipeName",
+        "recipe": "Justicial Ritual",
         "enhancedAbilities": [
           {
             "name": "Hammer of Justice",
@@ -4768,7 +4768,7 @@
       {
         "name": "Etherea Celestial Blade",
         "features": "Etherea wields a blade made of pure light; her wings are ethereal and semi-transparent with celestial patterns.",
-        "recipe": "recipeName",
+        "recipe": "Darkslaying Ritual",
         "enhancedAbilities": [
           {
             "name": "Celestial Strike",
@@ -4809,7 +4809,7 @@
       {
         "name": "Etherea Lightbringer",
         "features": "Etherea's entire form glows softly; her wings leave trails of light. She embodies hope and guidance.",
-        "recipe": "recipeName",
+        "recipe": "Pathforging Ritual",
         "enhancedAbilities": [
           {
             "name": "Beacon of Hope",
@@ -4850,7 +4850,7 @@
       {
         "name": "Etherea Sacred Protector",
         "features": "Etherea's wings form a protective dome when needed; her attire is adorned with sacred symbols. Her presence is comforting and reassuring.",
-        "recipe": "recipeName",
+        "recipe": "Self Harm Ritual",
         "enhancedAbilities": [
           {
             "name": "Sanctuary Field",
@@ -5001,7 +5001,7 @@
       {
         "name": "Sylvanna Forest Stalker",
         "features": "Sylvanna's wings become leaf-like, blending seamlessly with forest foliage. Her attire incorporates natural elements, enhancing her stealth in woodland environments.",
-        "recipe": "recipeName",
+        "recipe": "Stalking Ritual",
         "enhancedAbilities": [
           {
             "name": "Camouflage Cloak",
@@ -5042,7 +5042,7 @@
       {
         "name": "Sylvanna Beast Master",
         "features": "Sylvanna gains animalistic features; her connection with wildlife deepens. Animal companions are more responsive to her commands.",
-        "recipe": "recipeName",
+        "recipe": "Commandeering Ritual",
         "enhancedAbilities": [
           {
             "name": "Summon Companion",
@@ -5083,7 +5083,7 @@
       {
         "name": "Sylvanna Shadow Archer",
         "features": "Sylvanna's appearance becomes more enigmatic; her wings darken, allowing her to meld with shadows.",
-        "recipe": "recipeName",
+        "recipe": "Unseen Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Shot",
@@ -5234,7 +5234,7 @@
       {
         "name": "Windrunner Gale Strider",
         "features": "Windrunner's wings become larger and more aerodynamic, enabling faster flight. Breezes constantly swirl around her.",
-        "recipe": "recipeName",
+        "recipe": "Windstep Ritual",
         "enhancedAbilities": [
           {
             "name": "Wind Dash",
@@ -5275,7 +5275,7 @@
       {
         "name": "Windrunner Stormcaller",
         "features": "Windrunner's wings crackle with static energy; storm clouds seem to follow her.",
-        "recipe": "recipeName",
+        "recipe": "Rain Dance Ritual",
         "enhancedAbilities": [
           {
             "name": "Thunder Shot",
@@ -5316,7 +5316,7 @@
       {
         "name": "Windrunner Sky Hunter",
         "features": "Windrunner's affinity with the sky deepens; her eyes reflect the open skies, and she gains an aura of freedom.",
-        "recipe": "recipeName",
+        "recipe": "Havok Ritual",
         "enhancedAbilities": [
           {
             "name": "Aerial Mastery",
@@ -5467,7 +5467,7 @@
       {
         "name": "Falconis Eagle Eye",
         "features": "Falconis's eyes become more avian; her vision sharpens dramatically. Her wings become more feathered and expansive.",
-        "recipe": "recipeName",
+        "recipe": "Replacement Ritual",
         "enhancedAbilities": [
           {
             "name": "Precision Shot",
@@ -5508,7 +5508,7 @@
       {
         "name": "Falconis Sky Sentinel",
         "features": "Falconis exudes a protective aura; her wings are strong and capable of creating gusts of wind.",
-        "recipe": "recipeName",
+        "recipe": "Sky striker Ritual",
         "enhancedAbilities": [
           {
             "name": "Wind Barrier",
@@ -5549,7 +5549,7 @@
       {
         "name": "Falconis Wind Sniper",
         "features": "Falconis's wings become sleek; she moves with stealth and speed, making her an expert at long-range attacks.",
-        "recipe": "recipeName",
+        "recipe": "Breath Ritual",
         "enhancedAbilities": [
           {
             "name": "Sniper's Focus",
@@ -5700,7 +5700,7 @@
       {
         "name": "Shadowlyn Nightblade",
         "features": "Shadowlyn's form becomes more ethereal; her wings allow her to glide silently. Her eyes glow faintly in darkness.",
-        "recipe": "recipeName",
+        "recipe": "Lurker Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Strike",
@@ -5741,7 +5741,7 @@
       {
         "name": "Shadowlyn Phantom",
         "features": "Shadowlyn appears ghost-like; she can phase through thin barriers. Her presence is unsettling to enemies.",
-        "recipe": "recipeName",
+        "recipe": "Death Ritual",
         "enhancedAbilities": [
           {
             "name": "Phase Shift",
@@ -5782,7 +5782,7 @@
       {
         "name": "Shadowlyn Specter",
         "features": "Shadowlyn's body becomes semi-transparent; she is difficult to detect even when visible.",
-        "recipe": "recipeName",
+        "recipe": "Mirror Ritual",
         "enhancedAbilities": [
           {
             "name": "Spectral Veil",
@@ -5933,7 +5933,7 @@
       {
         "name": "Whisper Silent Assassin",
         "features": "Whisper's movements are undetectable; her presence is almost non-existent. She becomes the epitome of stealth.",
-        "recipe": "recipeName",
+        "recipe": "Unheard Ritual",
         "enhancedAbilities": [
           {
             "name": "Assassin's Strike",
@@ -5974,7 +5974,7 @@
       {
         "name": "Whisper Mistwalker",
         "features": "Whisper gains the ability to manipulate mist; her form can dissipate into vapor.",
-        "recipe": "recipeName",
+        "recipe": "Obscuration Ritual",
         "enhancedAbilities": [
           {
             "name": "Mist Form",
@@ -6015,7 +6015,7 @@
       {
         "name": "Whisper Veil Dancer",
         "features": "Whisper moves with unparalleled grace; her attire shimmers, making her movements mesmerizing.",
-        "recipe": "recipeName",
+        "recipe": "Secret dancing Ritual",
         "enhancedAbilities": [
           {
             "name": "Dance of Shadows",
@@ -6166,7 +6166,7 @@
       {
         "name": "Nightshade Poisoner",
         "features": "Nightshade's touch becomes toxic; her wings have patterns resembling poisonous plants.",
-        "recipe": "recipeName",
+        "recipe": "Imbibement Ritual",
         "enhancedAbilities": [
           {
             "name": "Deadly Poison",
@@ -6207,7 +6207,7 @@
       {
         "name": "Nightshade Dark Stalker",
         "features": "Nightshade becomes one with the darkness; her presence is unnerving.",
-        "recipe": "recipeName",
+        "recipe": "Void Ritual",
         "enhancedAbilities": [
           {
             "name": "Darkvision",
@@ -6248,7 +6248,7 @@
       {
         "name": "Nightshade Venom Shadow",
         "features": "Nightshade's form becomes shadowy and fluid; she can move through shadows.",
-        "recipe": "recipeName",
+        "recipe": "Viper Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Step",
@@ -6399,7 +6399,7 @@
       {
         "name": "Emberlyn Flamecaller",
         "features": "Emberlyn's hair and wings blaze with intense fire; she exudes warmth.",
-        "recipe": "recipeName",
+        "recipe": "Snake charmer Ritual",
         "enhancedAbilities": [
           {
             "name": "Inferno Blast",
@@ -6440,7 +6440,7 @@
       {
         "name": "Emberlyn Inferno",
         "features": "Emberlyn embodies the essence of an inferno; her entire form appears as living fire.",
-        "recipe": "recipeName",
+        "recipe": "Volcanic Ritual",
         "enhancedAbilities": [
           {
             "name": "Immolation",
@@ -6481,7 +6481,7 @@
       {
         "name": "Emberlyn Phoenix",
         "features": "Emberlyn gains phoenix-like features; her wings shimmer with fiery hues, and she symbolizes rebirth.",
-        "recipe": "recipeName",
+        "recipe": "Rising Ritual",
         "enhancedAbilities": [
           {
             "name": "Rejuvenation Flames",
@@ -6632,7 +6632,7 @@
       {
         "name": "Frostia Ice Queen",
         "features": "Frostia's hair and wings are made of ice; she radiates cold.",
-        "recipe": "recipeName",
+        "recipe": "Shiva Ritual",
         "enhancedAbilities": [
           {
             "name": "Blizzard",
@@ -6673,7 +6673,7 @@
       {
         "name": "Frostia Blizzard",
         "features": "Frostia is enveloped in swirling snow and wind; her presence chills the air.",
-        "recipe": "recipeName",
+        "recipe": "Everfrost Ritual",
         "enhancedAbilities": [
           {
             "name": "Whiteout",
@@ -6714,7 +6714,7 @@
       {
         "name": "Frostia Winter's Embrace",
         "features": "Frostia's touch brings calm; her wings sparkle like fresh snow under moonlight.",
-        "recipe": "recipeName",
+        "recipe": "Cold warmth Ritual",
         "enhancedAbilities": [
           {
             "name": "Hibernate",
@@ -6865,7 +6865,7 @@
       {
         "name": "Storma Thunderlord",
         "features": "Storma's hair and wings crackle with electricity, and storm clouds swirl around her. Her eyes glow with a bright, electric blue, and her attire is adorned with lightning motifs that shimmer with arcane energy.",
-        "recipe": "recipeName",
+        "recipe": "Zeus Ritual",
         "enhancedAbilities": [
           {
             "name": "Lightning Mastery",
@@ -6906,7 +6906,7 @@
       {
         "name": "Storma Tempest",
         "features": "Storma is enveloped in swirling winds and rain; her wings appear as gusts of wind mixed with water droplets. Her presence brings about changes in weather, and her attire flows as if caught in a perpetual breeze.",
-        "recipe": "recipeName",
+        "recipe": "Valefor Ritual",
         "enhancedAbilities": [
           {
             "name": "Tempest Fury",
@@ -6947,7 +6947,7 @@
       {
         "name": "Storma Skybreaker",
         "features": "Storma embodies the raw power of the skies; her movements are swift, leaving trails of sparks and wind. Her wings are grand and feathered, resembling those of a mighty bird of prey, and her eyes reflect the endless expanse of the sky.",
-        "recipe": "recipeName",
+        "recipe": "Flocking Ritual",
         "enhancedAbilities": [
           {
             "name": "Sky's Wrath",
@@ -7098,7 +7098,7 @@
       {
         "name": "Nyxara Shadowflame",
         "features": "Nyxara's wings are enveloped in dark, ethereal flames that flicker with arcane energy. Her attire is adorned with shadowy runes that pulse with dark magic.",
-        "recipe": "recipeName",
+        "recipe": "Unexisting fire Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadowflame Blast",
@@ -7139,7 +7139,7 @@
       {
         "name": "Nyxara Voidbinder",
         "features": "Nyxara's wings blend seamlessly into the darkness, with void-like patterns that shimmer with arcane power. Her presence is enigmatic and commanding.",
-        "recipe": "recipeName",
+        "recipe": "Abyssal Ritual",
         "enhancedAbilities": [
           {
             "name": "Void Lash",
@@ -7180,7 +7180,7 @@
       {
         "name": "Nyxara Darkstar",
         "features": "Nyxara's wings shimmer with starlight obscured by shadows, and her attire is adorned with celestial and dark motifs that radiate arcane energy.",
-        "recipe": "recipeName",
+        "recipe": "Endless Night  Ritual",
         "enhancedAbilities": [
           {
             "name": "Starlight Curse",
@@ -7331,7 +7331,7 @@
       {
         "name": "Voidwing Abyssal",
         "features": "Voidwing's wings become vast and shadowy, absorbing light around them. Her eyes glow with an otherworldly darkness.",
-        "recipe": "recipeName",
+        "recipe": "Abyssal Ritual",
         "enhancedAbilities": [
           {
             "name": "Abyssal Blast",
@@ -7372,7 +7372,7 @@
       {
         "name": "Voidwing Netherwalker",
         "features": "Voidwing appears partially translucent, phasing in and out of reality. Her movements are swift and unpredictable.",
-        "recipe": "recipeName",
+        "recipe": "Split Ritual",
         "enhancedAbilities": [
           {
             "name": "Phase Shift",
@@ -7413,7 +7413,7 @@
       {
         "name": "Voidwing Soul Reaper",
         "features": "Voidwing's wings are adorned with spectral chains, and her eyes emit a haunting glow. She commands respect from both the living and the dead.",
-        "recipe": "recipeName",
+        "recipe": "Soulcutting Ritual",
         "enhancedAbilities": [
           {
             "name": "Reap Soul",
@@ -7564,7 +7564,7 @@
       {
         "name": "Eclipsa Lunar Witch",
         "features": "Eclipsa's wings reflect the phases of the moon, shimmering with a silvery glow. Her attire is adorned with lunar symbols.",
-        "recipe": "recipeName",
+        "recipe": "Moon Ritual",
         "enhancedAbilities": [
           {
             "name": "Moonbeam Spell",
@@ -7605,7 +7605,7 @@
       {
         "name": "Eclipsa Eclipse Mage",
         "features": "Eclipsa embodies the power of an eclipse; her wings display both light and darkness in harmony.",
-        "recipe": "recipeName",
+        "recipe": "Dark sky Ritual",
         "enhancedAbilities": [
           {
             "name": "Eclipse Sphere",
@@ -7646,7 +7646,7 @@
       {
         "name": "Eclipsa Star Weaver",
         "features": "Eclipsa's wings sparkle with constellations; she has a deep connection to the stars.",
-        "recipe": "recipeName",
+        "recipe": "Lightweaving Ritual",
         "enhancedAbilities": [
           {
             "name": "Starlight Blast",
@@ -7797,7 +7797,7 @@
       {
         "name": "Arcanis Archmage",
         "features": "Arcanis's robes are adorned with glowing arcane symbols; his wings shimmer with magical energy.",
-        "recipe": "recipeName",
+        "recipe": "Ancient Ritual",
         "enhancedAbilities": [
           {
             "name": "Spell Mastery",
@@ -7838,7 +7838,7 @@
       {
         "name": "Arcanis Spellbinder",
         "features": "Arcanis's staff and wings are entwined with magical runes that pulse with energy.",
-        "recipe": "recipeName",
+        "recipe": "Binding Ritual",
         "enhancedAbilities": [
           {
             "name": "Rune Magic",
@@ -7879,7 +7879,7 @@
       {
         "name": "Arcanis Chronomancer",
         "features": "Arcanis's appearance is slightly blurred, as if existing in multiple times simultaneously. His attire features clockwork designs.",
-        "recipe": "recipeName",
+        "recipe": "Temporal Ritual",
         "enhancedAbilities": [
           {
             "name": "Time Warp",
@@ -8030,7 +8030,7 @@
       {
         "name": "Mystara Illusionist",
         "features": "Mystara's form shimmers and changes, making it hard to discern her true appearance.",
-        "recipe": "recipeName",
+        "recipe": "Magic dust Ritual",
         "enhancedAbilities": [
           {
             "name": "Master of Illusions",
@@ -8071,7 +8071,7 @@
       {
         "name": "Mystara Enchanter",
         "features": "Mystara's attire is adorned with mystical symbols; her presence is captivating.",
-        "recipe": "recipeName",
+        "recipe": "Enchanting Ritual",
         "enhancedAbilities": [
           {
             "name": "Enchanting Aura",
@@ -8112,7 +8112,7 @@
       {
         "name": "Mystara Dreamweaver",
         "features": "Mystara appears ethereal; her eyes hold the expanse of dreams. She walks the line between reality and the dream world.",
-        "recipe": "recipeName",
+        "recipe": "Dreaming Ritual",
         "enhancedAbilities": [
           {
             "name": "Dreamwalk",
@@ -8263,7 +8263,7 @@
       {
         "name": "Enchantra Rune Master",
         "features": "Enchantra's robes and wings are covered in glowing runes; she exudes ancient wisdom.",
-        "recipe": "recipeName",
+        "recipe": "Carving Ritual",
         "enhancedAbilities": [
           {
             "name": "Rune Casting",
@@ -8304,7 +8304,7 @@
       {
         "name": "Enchantra Spellweaver",
         "features": "Enchantra manipulates magical threads; her movements weave spells seamlessly.",
-        "recipe": "recipeName",
+        "recipe": "Weaving Ritual",
         "enhancedAbilities": [
           {
             "name": "Spell Weaving",
@@ -8345,7 +8345,7 @@
       {
         "name": "Enchantra Arcane Sage",
         "features": "Enchantra exudes wisdom; her eyes glow with knowledge. Her presence is calming and authoritative.",
-        "recipe": "recipeName",
+        "recipe": "Arcaic magic Ritual",
         "enhancedAbilities": [
           {
             "name": "Sage's Wisdom",
@@ -8496,7 +8496,7 @@
       {
         "name": "Cogwyn Gearmaster",
         "features": "Cogwyn's wings are now embedded with intricate gears and cogs that rotate seamlessly, reflecting his mastery over machinery and constructs. His attire is adorned with mechanical embellishments that pulse with magical energy.",
-        "recipe": "recipeName",
+        "recipe": "Gearing Ritual",
         "enhancedAbilities": [
           {
             "name": "Mechanical Overdrive",
@@ -8537,7 +8537,7 @@
       {
         "name": "Cogwyn Flux Engineer",
         "features": "Fluxara's wings feature flowing, energy-infused circuits that pulse with magical currents. Her attire is adorned with dynamic patterns that shift with her inventive creations.",
-        "recipe": "recipeName",
+        "recipe": "Dive and Divide Ritual",
         "enhancedAbilities": [
           {
             "name": "Flux Infusion",
@@ -8578,7 +8578,7 @@
       {
         "name": "Cogwyn Mechanist",
         "features": "Cogwyn's wings showcase sturdy, gear-laden structures with intricate mechanical designs that emit a faint hum of magical energy. His attire is reinforced with additional protective plating.",
-        "recipe": "recipeName",
+        "recipe": "Ticking Ritual",
         "enhancedAbilities": [
           {
             "name": "Mechanist's Mastery",
@@ -8729,7 +8729,7 @@
       {
         "name": "Fluxara Energy Infuser",
         "features": "Fluxara's wings feature flowing, energy-infused circuits that pulse with magical currents. Her attire is adorned with dynamic patterns that shift with her inventive creations.",
-        "recipe": "recipeName",
+        "recipe": "Infusing Ritual",
         "enhancedAbilities": [
           {
             "name": "Energy Manipulation",
@@ -8770,7 +8770,7 @@
       {
         "name": "Fluxara Chrono Mechanic",
         "features": "Fluxara integrates temporal mechanisms into her wings; her attire includes clockwork designs that move in harmony with her inventions. Her presence exudes a blend of precision and dynamic energy.",
-        "recipe": "recipeName",
+        "recipe": "Temporal Ritual",
         "enhancedAbilities": [
           {
             "name": "Temporal Gearwork",
@@ -8811,7 +8811,7 @@
       {
         "name": "Fluxara Arcane Tinkerer",
         "features": "Fluxara's wings are embedded with intricate gears and magical conduits that shimmer with arcane energy. Her attire includes tool belts and gadget accessories that reflect her inventive prowess.",
-        "recipe": "recipeName",
+        "recipe": "Neo Ritual",
         "enhancedAbilities": [
           {
             "name": "Arcane Automation",
@@ -8962,7 +8962,7 @@
       {
         "name": "Gearlock Fortification Engineer",
         "features": "Gearlock's wings showcase sturdy, gear-laden structures with intricate mechanical designs that emit a faint hum of magical energy. His attire is reinforced with additional protective plating.",
-        "recipe": "recipeName",
+        "recipe": "Castle Ritual",
         "enhancedAbilities": [
           {
             "name": "Fortified Constructs",
@@ -9003,7 +9003,7 @@
       {
         "name": "Gearlock Arcane Smith",
         "features": "Gearlock's attire is adorned with arcane symbols and mechanical tools, reflecting his expertise in both magic and machinery. His wings are equipped with various tools and devices that assist in crafting and combat.",
-        "recipe": "recipeName",
+        "recipe": "Blacksmith Ritual",
         "enhancedAbilities": [
           {
             "name": "Arcane Forging",
@@ -9044,7 +9044,7 @@
       {
         "name": "Gearlock Elemental Constructor",
         "features": "Gearlock integrates elemental cores into his mechanical constructs; his wings contain compartments for elemental energies. His attire includes elemental motifs that glow with the corresponding elemental hues.",
-        "recipe": "recipeName",
+        "recipe": "Golem Ritual",
         "enhancedAbilities": [
           {
             "name": "Elemental Integration",
@@ -9196,7 +9196,7 @@
       {
         "name": "Crimsonis Blood Reaper",
         "features": "Crimsonis's eyes glow with a crimson hue; his wings are edged with sharp, blade-like feathers. His presence is both captivating and intimidating.",
-        "recipe": "recipeName",
+        "recipe": "Vampiric Ritual",
         "enhancedAbilities": [
           {
             "name": "Bloodlust",
@@ -9237,7 +9237,7 @@
       {
         "name": "Crimsonis Hemomancer",
         "features": "Crimsonis manipulates blood with ease; his wings flow like liquid, and his attire often drips with blood-like energy.",
-        "recipe": "recipeName",
+        "recipe": "Hemomancy Ritual",
         "enhancedAbilities": [
           {
             "name": "Blood Control",
@@ -9278,7 +9278,7 @@
       {
         "name": "Crimsonis Night Hunter",
         "features": "Crimsonis becomes more nocturnal; his eyes adjust to darkness, and his movements are silent and swift.",
-        "recipe": "recipeName",
+        "recipe": "Nocturnal Predator Ritual",
         "enhancedAbilities": [
           {
             "name": "Night Vision",
@@ -9430,7 +9430,7 @@
       {
         "name": "Hemoria Lifedrinker",
         "features": "Hemoria's aura drains vitality; her touch weakens foes.",
-        "recipe": "recipeName",
+        "recipe": "Vampiric Ritual",
         "enhancedAbilities": [
           {
             "name": "Vitality Drain",
@@ -9471,7 +9471,7 @@
       {
         "name": "Hemoria Sanguine Knight",
         "features": "Hemoria's armor is stained with the color of blood; she embodies the warrior spirit infused with blood magic.",
-        "recipe": "recipeName",
+        "recipe": "Transfusion Ritual",
         "enhancedAbilities": [
           {
             "name": "Blood Armor",
@@ -9512,7 +9512,7 @@
       {
         "name": "Hemoria Bloodshadow",
         "features": "Hemoria blends blood magic with shadow, becoming elusive and deadly.",
-        "recipe": "recipeName",
+        "recipe": "Syringe Ritual",
         "enhancedAbilities": [
           {
             "name": "Blood Mist",
@@ -9664,7 +9664,7 @@
       {
         "name": "Sanguis Bloodshadow",
         "features": "Sanguis's form becomes shadowy and fluid; she can move through shadows with ease. Her wings emit a faint crimson glow, and her presence is both alluring and menacing.",
-        "recipe": "recipeName",
+        "recipe": "Syringe Ritual",
         "enhancedAbilities": [
           {
             "name": "Shadow Step",
@@ -9705,7 +9705,7 @@
       {
         "name": "Sanguis Darkblood Reaver",
         "features": "Sanguis's wings are adorned with dark, blood-red feathers; her attire is enhanced with bone and crimson accents. Her presence radiates a sinister aura that weakens foes.",
-        "recipe": "recipeName",
+        "recipe": "Scalping Ritual",
         "enhancedAbilities": [
           {
             "name": "Darkblood Reave",
@@ -9746,7 +9746,7 @@
       {
         "name": "Sanguis Necrotic Assassin",
         "features": "Sanguis's presence becomes more spectral; her wings shimmer with necrotic energy. Her movements are swift and precise, making her a deadly assassin on the battlefield.",
-        "recipe": "recipeName",
+        "recipe": "Ghastly Ritual",
         "enhancedAbilities": [
           {
             "name": "Necrotic Blade",

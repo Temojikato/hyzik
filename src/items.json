@@ -3,498 +3,2275 @@
     "id": "Ember Fragment",
     "name": "Ember Fragment",
     "description": "Fragments of eternal flame, pulsating with a mysterious glow that whispers of ancient power.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Infernal Shard",
     "name": "Infernal Shard",
     "description": "Dark, fiery shards that shimmer with the essence of the abyss, emanating an unearthly heat.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Flame Essence",
     "name": "Flame Essence",
     "description": "Concentrated essence of pure flame, swirling with untamed energy and latent magic.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Ember Fragment", "Infernal Shard"]
   },
   {
     "id": "Dark Essence",
     "name": "Dark Essence",
     "description": "A vial of shadowed essence, thick with the whispers of the void and the secrets it holds.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Shadow Drop"]
   },
   {
     "id": "Shadow Drop",
     "name": "Shadow Drop",
     "description": "Droplets of shadow, shimmering with elusive darkness that dances on the edge of perception.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Petal of Life",
     "name": "Petal of Life",
     "description": "Enchanted petals that exude a vibrant energy, embodying the very essence of nature's vitality.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Storm Essence",
     "name": "Storm Essence",
     "description": "Essence infused with the raw power of tempestuous storms, crackling with untamed energy.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Wind Essence", "Storm Crystal"]
   },
   {
     "id": "Celestial Dew",
     "name": "Celestial Dew",
     "description": "Pure dew kissed by celestial light, glistening with ethereal radiance under the moonlit sky.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Radiant Fragment",
     "name": "Radiant Fragment",
     "description": "Shimmering fragments of light, capturing the brilliance of dawn and the promise of new beginnings.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Shard of Radiance",
     "name": "Shard of Radiance",
     "description": "Enhanced fragments that glow with an intensified brilliance, harboring secrets of luminous power.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Radiant Fragment", "Essence of Light"]
   },
   {
     "id": "Cogmetal Shard",
     "name": "Cogmetal Shard",
     "description": "Intricate fragments of enchanted metal, etched with ancient runes that hum with hidden energy.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Arcane Gear",
     "name": "Arcane Gear",
     "description": "Minor magical gears, each intricately crafted to resonate with the flow of arcane currents.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Cogmetal Shard", "Glowstone"]
   },
   {
     "id": "Pure Spring Water",
     "name": "Pure Spring Water",
     "description": "Crystal-clear spring water, imbued with the purity and vitality of untouched natural springs.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Enchanted Sap",
     "name": "Enchanted Sap",
     "description": "Sap from ancient, enchanted flora, thick with the lifeblood of mystical plants and hidden magic.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Holy Water",
     "name": "Holy Water",
     "description": "Blessed water that glows with a sacred light, emanating a sense of divine tranquility.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Pure Spring Water", "Essence of Light"]
   },
   {
     "id": "Arcane Oil",
     "name": "Arcane Oil",
     "description": "A vial of arcane-infused oil, shimmering with subtle magical currents and ethereal light.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Oil", "Glowstone"]
   },
   {
     "id": "Life Essence",
     "name": "Life Essence",
     "description": "Essence drawn from the very fabric of life, pulsating with vibrant energy and untapped potential.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Petal of Life"]
   },
   {
     "id": "Wind Essence",
     "name": "Wind Essence",
     "description": "Captured wind energy, swirling with invisible currents and the whispers of unseen breezes.",
-    "category": "Lesser Spirit Food"
+    "category": "Lesser Spirit Food",
+    "recipe": []
   },
   {
     "id": "Prism Reflecting Light",
     "name": "Prism Reflecting Light",
     "description": "A crystal prism that bends and refracts light into myriad colors, holding the secrets of illumination.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Glass", "Glowstone"]
   },
   {
     "id": "Shard from Magical Crystal",
     "name": "Shard from Magical Crystal",
     "description": "A fragment of a crystal imbued with innate magic, shimmering with untold mystical properties.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": []
   },
   {
     "id": "Star Fragment",
     "name": "Star Fragment",
     "description": "A celestial piece captured by arcane forces, glowing with the eternal light of distant stars.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": []
   },
   {
     "id": "Celestial Gemstone",
     "name": "Celestial Gemstone",
     "description": "A gemstone infused with the essence of the heavens, radiating a divine and otherworldly glow.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Star Fragment", "Essence of Light"]
   },
   {
     "id": "Rune Stone",
     "name": "Rune Stone",
     "description": "An inscribed stone bearing ancient runes, emanating a steady flow of arcane energy.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Stone", "Arcane Gear"]
   },
   {
     "id": "Enchantment Crystal",
     "name": "Enchantment Crystal",
     "description": "A crystal that pulses with enchantment and illusion, reflecting the subtle dance of magic.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Shard from Magical Crystal", "Glowstone"]
   },
   {
     "id": "Storm Crystal",
     "name": "Storm Crystal",
     "description": "A crystal infused with the essence of storms, crackling with latent electrical energy.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Shard from Magical Crystal", "Wind Essence"]
   },
   {
     "id": "Lightning-Infused Amulet",
     "name": "Lightning-Infused Amulet",
     "description": "An amulet charged with the raw power of lightning, sparking with untamed electrical energy.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Storm Crystal", "Metal Ore"]
   },
   {
     "id": "Energy Core",
     "name": "Energy Core",
     "description": "A core brimming with concentrated energy, pulsating with the lifeblood of the Tower’s power.",
-    "category": "Gemstones and Crystals"
+    "category": "Gemstones and Crystals",
+    "recipe": ["Storm Crystal", "Arcane Gear", "Glowstone"]
   },
   {
     "id": "Master Gear",
     "name": "Master Gear",
     "description": "A sophisticated gear, meticulously crafted and resonating with the essence of ancient machinery.",
-    "category": "Tools and Weapons"
+    "category": "Tools and Weapons",
+    "recipe": ["Arcane Gear", "Cogmetal Shard", "Glowstone"]
   },
   {
     "id": "Crown Forged in Infernal Forge",
     "name": "Crown Forged in Infernal Forge",
     "description": "A crown emanating dark allure, its infernal craftsmanship radiating an ominous elegance.",
-    "category": "Tools and Weapons/Gemstones and Crystals"
+    "category": "Tools and Weapons/Gemstones and Crystals",
+    "recipe": ["Infernal Shard", "Dark Essence", "Metal Ore"]
   },
   {
     "id": "Shadow Essence",
     "name": "Shadow Essence",
     "description": "A vial containing the essence of shadows, thick with the enigmatic power of the dark core.",
-    "category": "Vials and Essences/Organic Components"
+    "category": "Vials and Essences/Organic Components",
+    "recipe": ["Empty Vial", "Shadow Drop", "Dark Essence"]
   },
   {
     "id": "Vial of Moonlit Dew",
     "name": "Vial of Moonlit Dew",
     "description": "Dew collected under the silver gaze of the moon, shimmering with lunar mystique.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Moonlit Dew"]
   },
   {
     "id": "Vial of Pure Sunlight",
     "name": "Vial of Pure Sunlight",
     "description": "Sunlight captured at dawn, glowing with the first light of day and untapped potential.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Essence of Light"]
   },
   {
     "id": "Vial of Blessed Water",
     "name": "Vial of Blessed Water",
     "description": "Holy water purified in sacred rites, radiating a serene and divine luminescence.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Pure Spring Water", "Essence of Light"]
   },
   {
     "id": "Vial of Radiant Essence",
     "name": "Vial of Radiant Essence",
     "description": "A concentrated essence of radiant magic, shimmering with the promise of luminous power.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Radiant Fragment", "Essence of Light"]
   },
   {
     "id": "Vial of Pure Spring Water",
     "name": "Vial of Pure Spring Water",
     "description": "Water from a pristine spring, infused with the untouched purity of nature’s embrace.",
-    "category": "Vials and Essences/Organic Components"
+    "category": "Vials and Essences/Organic Components",
+    "recipe": ["Empty Vial", "Pure Spring Water"]
   },
   {
     "id": "Vial of Enchanted Sap",
     "name": "Vial of Enchanted Sap",
     "description": "Sap drawn from ancient, enchanted trees, pulsating with the lifeforce of mystical flora.",
-    "category": "Vials and Essences/Organic Components"
+    "category": "Vials and Essences/Organic Components",
+    "recipe": ["Empty Vial", "Enchanted Sap"]
   },
   {
     "id": "Vial of Dew Collected at Dawn",
     "name": "Vial of Dew Collected at Dawn",
     "description": "Dew harvested at the break of day, glowing with the first light and morning’s essence.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Morning Dew"]
   },
   {
     "id": "Vial of Molten Lava",
     "name": "Vial of Molten Lava",
     "description": "Molten lava captured and contained, swirling with the untamed fury of the earth’s core.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Molten Lava"]
   },
   {
     "id": "Vial of Storm Essence",
     "name": "Vial of Storm Essence",
     "description": "Essence harnessed from the heart of a storm, crackling with the energy of raging tempests.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Wind Essence", "Storm Crystal"]
   },
   {
     "id": "Vial of Infernal Oil",
     "name": "Vial of Infernal Oil",
     "description": "Oil infused with infernal energies, radiating a dark and potent aura of power.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Oil", "Infernal Shard"]
   },
   {
     "id": "Vial of Dark Essence",
     "name": "Vial of Dark Essence",
     "description": "A vial filled with dark essence, pulsating with the mysterious energy of the abyss.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Dark Essence"]
+  },
+  {
+    "id": "Empty Vial",
+    "name": "Empty Vial",
+    "description": "A small glass container used to hold various liquids and essences.",
+    "category": "Containers",
+    "recipe": ["Glass"]
+  },
+  {
+    "id": "Glass",
+    "name": "Glass",
+    "description": "Transparent material formed by melting silicates found within the Tower's volcanic vents, used in containers and lenses.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Glowstone",
+    "name": "Glowstone",
+    "description": "Bioluminescent stones found in the Tower's depths, emitting a steady glow used for illumination and magical purposes.",
+    "category": "Gemstones and Crystals",
+    "recipe": []
+  },
+  {
+    "id": "Oil",
+    "name": "Oil",
+    "description": "Viscous liquid extracted from the glands of Tower-dwelling creatures, used for lubrication, crafting, and alchemical purposes.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Metal Ore",
+    "name": "Metal Ore",
+    "description": "Raw metallic minerals mined from the Tower's deep caverns, serving as the foundation for tool and weapon forging.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Essence of Light",
+    "name": "Essence of Light",
+    "description": "A concentrated form of luminescence captured from Tower luminescent creatures, used in potions and illumination spells.",
+    "category": "Alchemical Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Stone",
+    "name": "Stone",
+    "description": "A basic stone collected from the Tower's foundation, used in construction and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Moonlit Dew",
+    "name": "Moonlit Dew",
+    "description": "Dew collected under moonlight, imbued with lunar energy.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Molten Lava",
+    "name": "Molten Lava",
+    "description": "Molten rock from the earth's core, extremely hot and volatile.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Morning Dew",
+    "name": "Morning Dew",
+    "description": "Fresh dew collected at dawn, carrying the essence of new beginnings.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Fishing Net",
+    "name": "Fishing Net",
+    "description": "A sturdy net used to catch fish, providing a sustainable source of food during expeditions.",
+    "category": "Tools and Equipment",
+    "recipe": ["Rope", "Rope", "Rope", "Leather"]
+  },
+  {
+    "id": "Rope",
+    "name": "Rope",
+    "description": "Bundles of strong hemp fibers spun from the Tower's hardy plants, indispensable for climbing, binding, and various construction needs.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Leather",
+    "name": "Leather",
+    "description": "Tanned hides obtained from various Tower beasts, employed in crafting armor, garments, and accessories.",
+    "category": "Basic Materials",
+    "recipe": []
   },
   {
     "id": "Vial of Dragonfire",
     "name": "Vial of Dragonfire",
     "description": "Captured dragonfire, flickering with ancient flames and the might of legendary beasts.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Dragonfire"]
+  },
+  {
+    "id": "Dragonfire",
+    "name": "Dragonfire",
+    "description": "The fierce flames exhaled by a dragon, imbued with ancient power.",
+    "category": "Other Magical Items",
+    "recipe": []
   },
   {
     "id": "Vial of Pure Flame Essence",
     "name": "Vial of Pure Flame Essence",
     "description": "Essence of untainted flame, glowing with the pure, relentless power of eternal fire.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Flame Essence"]
   },
   {
     "id": "Vial of Ethereal Essence",
     "name": "Vial of Ethereal Essence",
     "description": "Essence drawn from the ethereal plane, shimmering with otherworldly and spectral energy.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Ethereal Essence"]
+  },
+  {
+    "id": "Ethereal Essence",
+    "name": "Ethereal Essence",
+    "description": "A rare essence collected from the ethereal plane, imbued with spectral energies.",
+    "category": "Other Magical Items",
+    "recipe": []
   },
   {
     "id": "Vial of Arcane Oil",
     "name": "Vial of Arcane Oil",
     "description": "Oil imbued with arcane currents, glowing softly with the flow of magical energy.",
-    "category": "Vials and Essences"
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Arcane Oil"]
   },
   {
     "id": "Vial of Life Essence",
     "name": "Vial of Life Essence",
     "description": "Essence captured from the very breath of life, pulsating with vibrant and potent energy.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Life Essence"]
   },
   {
     "id": "Vial of Pure Illusion Essence",
     "name": "Vial of Pure Illusion Essence",
     "description": "Essence harvested from the realm of illusions, swirling with deceptive and mystical energies.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Pure Illusion Essence"]
+  },
+  {
+    "id": "Pure Illusion Essence",
+    "name": "Pure Illusion Essence",
+    "description": "A rare essence from the realm of illusions, embodying the essence of deception and mysticism.",
+    "category": "Other Magical Items",
+    "recipe": []
   },
   {
     "id": "Vial of Magical Essence",
     "name": "Vial of Magical Essence",
     "description": "A vial containing raw magical essence, glowing with untamed and versatile arcane power.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Magical Essence"]
+  },
+  {
+    "id": "Magical Essence",
+    "name": "Magical Essence",
+    "description": "Raw essence of magic, containing untamed arcane power.",
+    "category": "Other Magical Items",
+    "recipe": []
   },
   {
     "id": "Vial of Night Oil",
     "name": "Vial of Night Oil",
     "description": "Oil infused with the essence of night, dark and shimmering with shadowed enchantment.",
-    "category": "Vials and Essences/Other Magical Items"
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Night Oil"]
+  },
+  {
+    "id": "Night Oil",
+    "name": "Night Oil",
+    "description": "Oil infused with the essence of night, used in rituals involving darkness and shadows.",
+    "category": "Other Magical Items",
+    "recipe": ["Oil", "Essence of Shadow"]
   },
   {
     "id": "Luminescent Thread from Rare Silken Spider",
     "name": "Luminescent Thread from Rare Silken Spider",
     "description": "Shimmering silk spun by a rare spider, glowing with an inner light that dances in the darkness.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": []
   },
   {
     "id": "Ancient Arcane Tome",
     "name": "Ancient Arcane Tome",
     "description": "A forgotten tome filled with arcane symbols and cryptic knowledge, bound in time-worn leather.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": ["Heart Parchment", "Leather", "Ink"]
+  },
+  {
+    "id": "Ink",
+    "name": "Ink",
+    "description": "Dark liquid extracted from the glands of ink-producing Tower cephalopods, essential for writing and spell inscriptions.",
+    "category": "Basic Materials",
+    "recipe": []
   },
   {
     "id": "Feather from Celestial Bird",
     "name": "Feather from Celestial Bird",
     "description": "A delicate feather from a celestial avian, radiating a soft, otherworldly luminescence.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": []
   },
   {
     "id": "Heartwood Branch from Ancient Tree",
     "name": "Heartwood Branch from Ancient Tree",
     "description": "A sturdy branch from an ancient tree, imbued with the enduring magic of centuries past.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": []
   },
   {
     "id": "Rare Flower from Enchanted Gardens",
     "name": "Rare Flower from Enchanted Gardens",
     "description": "An uncommon flower from mystical gardens, its petals shimmering with enchanted hues.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": []
   },
   {
     "id": "Blossom from Sacred Garden",
     "name": "Blossom from Sacred Garden",
     "description": "A sacred blossom nurtured in hallowed grounds, emanating a gentle, magical fragrance.",
-    "category": "Organic Components"
+    "category": "Organic Components",
+    "recipe": []
   },
   {
     "id": "Ashes from a Phoenix",
     "name": "Ashes from a Phoenix",
     "description": "Ashes of a legendary phoenix, glowing with remnants of eternal flame and rebirth.",
-    "category": "Organic Components/Other Magical Items"
+    "category": "Organic Components/Other Magical Items",
+    "recipe": []
   },
   {
     "id": "Enchanted Quill",
     "name": "Enchanted Quill",
     "description": "A quill infused with arcane energy, its feathers shimmering with magical potential.",
-    "category": "Ritual Items/Tools and Weapons"
+    "category": "Ritual Items/Tools and Weapons",
+    "recipe": ["Feather from Celestial Bird", "Arcane Oil", "Glowstone"]
   },
   {
     "id": "Golden Chalice Filled with Holy Water",
     "name": "Golden Chalice Filled with Holy Water",
     "description": "A radiant chalice of pure gold, brimming with water that glows with divine light.",
-    "category": "Ritual Items/Tools and Weapons"
+    "category": "Ritual Items/Tools and Weapons",
+    "recipe": ["Golden Chalice", "Holy Water"]
+  },
+  {
+    "id": "Golden Chalice",
+    "name": "Golden Chalice",
+    "description": "A chalice made of pure gold, used in sacred rituals.",
+    "category": "Ritual Items",
+    "recipe": ["Gold Ingot"]
+  },
+  {
+    "id": "Gold Ingot",
+    "name": "Gold Ingot",
+    "description": "A bar of pure gold, used in crafting and trade.",
+    "category": "Basic Materials",
+    "recipe": ["Metal Ore"]
   },
   {
     "id": "Celestial Hymn Composed in Hymmnos",
     "name": "Celestial Hymn Composed in Hymmnos",
     "description": "A sacred hymn inscribed in Hymmnos, resonating with celestial harmonies and ancient power.",
-    "category": "Ritual Items"
+    "category": "Ritual Items",
+    "recipe": ["Heart Parchment", "Ink", "Essence of Light"]
   },
   {
     "id": "Healing Hymn Written in Hymmnos",
     "name": "Healing Hymn Written in Hymmnos",
     "description": "A soothing hymn crafted in Hymmnos, imbued with the restorative energies of the ancients.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Life Essence"]
   },
   {
     "id": "Sanctus Chant Written in Hymmnos",
     "name": "Sanctus Chant Written in Hymmnos",
     "description": "A sacred chant etched in Hymmnos, emanating divine resonance and holy purpose.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Holy Water"]
   },
   {
     "id": "Fortitude Chant Written in Hymmnos",
     "name": "Fortitude Chant Written in Hymmnos",
     "description": "A powerful chant inscribed in Hymmnos, radiating strength and unwavering determination.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Essence of Vitality"]
   },
   {
     "id": "Wind Chant Written in Hymmnos",
     "name": "Wind Chant Written in Hymmnos",
     "description": "A flowing chant composed in Hymmnos, echoing the whispers of the endless winds.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Wind Essence"]
   },
   {
     "id": "Mystara Chant Written in Hymmnos",
     "name": "Mystara Chant Written in Hymmnos",
     "description": "A mystical chant carved in Hymmnos, pulsating with arcane secrets and hidden lore.",
-    "category": "Ritual Items"
+    "category": "Ritual Items",
+    "recipe": ["Heart Parchment", "Ink", "Magical Essence"]
   },
   {
     "id": "Enchantra Chant Written in Hymmnos",
     "name": "Enchantra Chant Written in Hymmnos",
     "description": "An enchanting chant inscribed in Hymmnos, shimmering with illusionary magic and charm.",
-    "category": "Ritual Items"
+    "category": "Ritual Items",
+    "recipe": ["Heart Parchment", "Ink", "Pure Illusion Essence"]
   },
   {
     "id": "Gearmaster Chant Written in Hymmnos",
     "name": "Gearmaster Chant Written in Hymmnos",
-    "description": "A precise chant etched in Hymmnos, resonating with mechanical prowess and arcane ingenuity.",
-    "category": "Ritual Items/Musical Items"
+    "description": "A harmonious chant etched in Hymmnos, melding the rhythms of life and machinery.",
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Arcane Gear"]
   },
   {
     "id": "Emberlord Chant Written in Hymmnos",
     "name": "Emberlord Chant Written in Hymmnos",
     "description": "A fiery chant composed in Hymmnos, igniting the latent power of embers and flame.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Flame Essence"]
   },
   {
     "id": "Shadowflame Chant Written in Hymmnos",
     "name": "Shadowflame Chant Written in Hymmnos",
     "description": "A dark chant inscribed in Hymmnos, melding shadows with flickering flames in harmony.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Dark Essence", "Flame Essence"]
   },
   {
     "id": "Void Binder Chant Written in Hymmnos",
     "name": "Void Binder Chant Written in Hymmnos",
     "description": "A haunting chant etched in Hymmnos, binding the essence of the void with ethereal grace.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Shadow Essence"]
   },
   {
     "id": "Darkstar Chant Written in Hymmnos",
     "name": "Darkstar Chant Written in Hymmnos",
     "description": "A celestial chant composed in Hymmnos, intertwining dark and stellar energies seamlessly.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Star Fragment", "Dark Essence"]
   },
   {
     "id": "Beacon Chant Written in Hymmnos",
     "name": "Beacon Chant Written in Hymmnos",
     "description": "A radiant chant inscribed in Hymmnos, serving as a beacon of hope and guiding light.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Essence of Light", "Glowstone"]
   },
   {
     "id": "Fluxara Chant Written in Hymmnos",
     "name": "Fluxara Chant Written in Hymmnos",
     "description": "A dynamic chant carved in Hymmnos, flowing with the ever-changing currents of magic.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Magical Essence", "Wind Essence"]
   },
   {
     "id": "Gearlock Chant Written in Hymmnos",
     "name": "Gearlock Chant Written in Hymmnos",
     "description": "A harmonious chant etched in Hymmnos, melding the rhythms of life and machinery.",
-    "category": "Ritual Items/Musical Items"
+    "category": "Ritual Items/Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Master Gear"]
   },
   {
     "id": "Divine Hymn Written in Hymmnos",
     "name": "Divine Hymn Written in Hymmnos",
     "description": "A celestial hymn inscribed in Hymmnos, echoing with the pure essence of divine power.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Holy Water", "Essence of Light"]
   },
   {
     "id": "Battle Hymn Written in Hymmnos",
     "name": "Battle Hymn Written in Hymmnos",
     "description": "A fierce battle hymn composed in Hymmnos, resonating with the fiery spirit of combat.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Essence of Vitality", "Flame Essence"]
   },
   {
     "id": "Luminary Chant Written in Hymmnos",
     "name": "Luminary Chant Written in Hymmnos",
     "description": "A luminous chant etched in Hymmnos, capturing the radiant essence of celestial bodies.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Star Fragment", "Essence of Light"]
   },
   {
     "id": "Sylvan Chant Written in Hymmnos",
     "name": "Sylvan Chant Written in Hymmnos",
     "description": "A serene chant composed in Hymmnos, echoing the harmonious whispers of the forest.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Petal of Life", "Enchanted Sap"]
   },
   {
     "id": "Verdant Chant Written in Hymmnos",
     "name": "Verdant Chant Written in Hymmnos",
     "description": "A flourishing chant inscribed in Hymmnos, imbued with the vibrant energy of nature.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Life Essence", "Enchanted Sap"]
   },
   {
     "id": "Iron Chant Written in Hymmnos",
     "name": "Iron Chant Written in Hymmnos",
     "description": "A resolute chant carved in Hymmnos, resonating with the steadfast strength of iron.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Metal Ore"]
   },
   {
     "id": "Tempest Chant Written in Hymmnos",
     "name": "Tempest Chant Written in Hymmnos",
     "description": "A tumultuous chant composed in Hymmnos, capturing the wild essence of stormy skies.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Wind Essence", "Storm Essence"]
   },
   {
     "id": "Celestial Chant Written in Hymmnos",
     "name": "Celestial Chant Written in Hymmnos",
     "description": "A harmonious chant etched in Hymmnos, resonating with the ethereal melodies of the stars.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Celestial Gemstone"]
   },
   {
     "id": "Stealth Chant Written in Hymmnos",
     "name": "Stealth Chant Written in Hymmnos",
     "description": "A subtle chant inscribed in Hymmnos, blending seamlessly with the shadows and silence.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Shadow Essence"]
   },
   {
     "id": "Poison Chant Written in Hymmnos",
     "name": "Poison Chant Written in Hymmnos",
     "description": "A venomous chant composed in Hymmnos, dripping with the essence of hidden dangers.",
-    "category": "Musical Items"
+    "category": "Musical Items",
+    "recipe": ["Heart Parchment", "Ink", "Venom"]
+  },
+  {
+    "id": "Salt",
+    "name": "Salt",
+    "description": "Crystalline granules harvested from the saline pools within the Tower, essential for preserving food and enhancing potions.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Oil",
+    "name": "Oil",
+    "description": "Viscous liquid extracted from the glands of Tower-dwelling creatures, used for lubrication, crafting, and alchemical purposes.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Rope",
+    "name": "Rope",
+    "description": "Bundles of strong hemp fibers spun from the Tower's hardy plants, indispensable for climbing, binding, and various construction needs.",
+    "category": "Basic Materials",
+    "recipe": ["Hemp Fibers", "Hemp Fibers"]
+  },
+  {
+    "id": "Hemp Fibers",
+    "name": "Hemp Fibers",
+    "description": "Strong fibers extracted from hemp plants, used in crafting rope and textiles.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Herbs",
+    "name": "Herbs",
+    "description": "Varieties of medicinal and magical plants grown in potted gardens, utilized in potions, salves, and rituals.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Paper",
+    "name": "Paper",
+    "description": "Sheets crafted from the shaved skins of resilient Tower creatures, used for writing, spell inscriptions, and documentation.",
+    "category": "Basic Materials",
+    "recipe": ["Shredded Skin"]
+  },
+  {
+    "id": "Shredded Skin",
+    "name": "Shredded Skin",
+    "description": "Thin strips of skin shaved from Tower monsters, used in crafting, binding, and as a base for scrolls.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Leather",
+    "name": "Leather",
+    "description": "Tanned hides obtained from various Tower beasts, employed in crafting armor, garments, and accessories.",
+    "category": "Basic Materials",
+    "recipe": ["Beast Hide"]
+  },
+  {
+    "id": "Beast Hide",
+    "name": "Beast Hide",
+    "description": "Raw hides from Tower creatures, used to create leather after processing.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Bones",
+    "name": "Bones",
+    "description": "Remnants of fallen Tower creatures, used in crafting tools, weapons, and as components in rituals.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Fur",
+    "name": "Fur",
+    "description": "Soft pelts gathered from the Tower's animal inhabitants, utilized for clothing, blankets, and decorative items.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Cloth",
+    "name": "Cloth",
+    "description": "Woven fabrics produced from the fibers of Tower plants and animal textiles, essential for clothing and crafting.",
+    "category": "Basic Materials",
+    "recipe": ["Thread", "Thread"]
+  },
+  {
+    "id": "Thread",
+    "name": "Thread",
+    "description": "Fine strands spun from silken webs of Tower spiders, used for sewing, crafting, and magical embroidery.",
+    "category": "Basic Materials",
+    "recipe": ["Spider Silk"]
+  },
+  {
+    "id": "Spider Silk",
+    "name": "Spider Silk",
+    "description": "Strong, elastic threads spun by Tower spiders, indispensable for crafting ropes, nets, and magical bindings.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Glass",
+    "name": "Glass",
+    "description": "Transparent material formed by melting silicates found within the Tower's volcanic vents, used in containers and lenses.",
+    "category": "Basic Materials",
+    "recipe": ["Silica Sand"]
+  },
+  {
+    "id": "Silica Sand",
+    "name": "Silica Sand",
+    "description": "Fine sand rich in silicon dioxide, essential for glassmaking.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Metal Ore",
+    "name": "Metal Ore",
+    "description": "Raw metallic minerals mined from the Tower's deep caverns, serving as the foundation for tool and weapon forging.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Wood",
+    "name": "Wood",
+    "description": "Timber harvested from resilient trees that thrive in the Tower's harsh environment, utilized in construction and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Gemstones",
+    "name": "Gemstones",
+    "description": "Precious and semi-precious stones unearthed from the Tower's mineral-rich veins, prized for their beauty and magical properties.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Health Potion",
+    "name": "Health Potion",
+    "description": "A concoction that heals wounds and restores vitality.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Essence of Vitality"]
+  },
+  {
+    "id": "Mana Potion",
+    "name": "Mana Potion",
+    "description": "A potion that replenishes magical energy.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Magical Essence", "Herbs"]
+  },
+  {
+    "id": "Stamina Elixir",
+    "name": "Stamina Elixir",
+    "description": "Restores energy and reduces fatigue.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Beast Blood"]
+  },
+  {
+    "id": "Antidote",
+    "name": "Antidote",
+    "description": "Cures poison and nullifies toxins.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Venom Extract"]
+  },
+  {
+    "id": "Dried Meat",
+    "name": "Dried Meat",
+    "description": "Preserved meat that restores health and satiates hunger.",
+    "category": "Consumables",
+    "recipe": ["Raw Meat", "Salt"]
+  },
+  {
+    "id": "Bread",
+    "name": "Bread",
+    "description": "A staple food that restores a moderate amount of health and hunger.",
+    "category": "Consumables",
+    "recipe": ["Flour", "Water", "Salt"]
+  },
+  {
+    "id": "Berries",
+    "name": "Berries",
+    "description": "Wild berries that provide minimal health restoration.",
+    "category": "Consumables",
+    "recipe": []
+  },
+  {
+    "id": "Essence of Vitality",
+    "name": "Essence of Vitality",
+    "description": "A potent essence extracted from the life force of Tower creatures, used in healing potions and rejuvenating rituals.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Empty Vial", "Life Essence"]
+  },
+  {
+    "id": "Venom Extract",
+    "name": "Venom Extract",
+    "description": "Highly concentrated venom extracted from the fangs of Tower predators, essential for crafting poisons and antidotes.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Venom Glands", "Empty Vial"]
+  },
+  {
+    "id": "Raw Meat",
+    "name": "Raw Meat",
+    "description": "Fresh meat obtained from hunted animals.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Flour",
+    "name": "Flour",
+    "description": "Finely ground grains used in baking.",
+    "category": "Culinary Ingredients",
+    "recipe": ["Grain"]
+  },
+  {
+    "id": "Water",
+    "name": "Water",
+    "description": "Essential for hydration and cooking.",
+    "category": "Basic Materials",
+    "recipe": ["Empty Vial", "Pure Spring Water"]
+  },
+  {
+    "id": "Grain",
+    "name": "Grain",
+    "description": "Harvested grains used in cooking and baking.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Pickaxe",
+    "name": "Pickaxe",
+    "description": "Used for mining ores and minerals.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Metal Ingot"]
+  },
+  {
+    "id": "Torch",
+    "name": "Torch",
+    "description": "Provides light in dark areas.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Cloth", "Oil"]
+  },
+  {
+    "id": "Lockpick",
+    "name": "Lockpick",
+    "description": "Opens locked chests and doors.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Thread"]
+  },
+  {
+    "id": "Compass",
+    "name": "Compass",
+    "description": "Helps in navigation.",
+    "category": "Navigation Tools",
+    "recipe": ["Metal Ingot", "Glowstone"]
+  },
+  {
+    "id": "Backpack",
+    "name": "Backpack",
+    "description": "Increases inventory capacity.",
+    "category": "Survival Gear",
+    "recipe": ["Leather", "Thread", "Cloth"]
+  },
+  {
+    "id": "Fishing Rod",
+    "name": "Fishing Rod",
+    "description": "Used to catch fish.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Thread"]
+  },
+  {
+    "id": "Shovel",
+    "name": "Shovel",
+    "description": "Used for digging or uncovering buried items.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Metal Ingot"]
+  },
+  {
+    "id": "Grappling Hook",
+    "name": "Grappling Hook",
+    "description": "Allows reaching higher areas.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Rope"]
+  },
+  {
+    "id": "Bomb",
+    "name": "Bomb",
+    "description": "Destroys weak walls or damages groups of enemies.",
+    "category": "Tools and Equipment",
+    "recipe": ["Powdered Stone", "Oil", "Cloth"]
+  },
+  {
+    "id": "Metal Ingot",
+    "name": "Metal Ingot",
+    "description": "Refined metal used for crafting.",
+    "category": "Basic Materials",
+    "recipe": ["Metal Ore", "Coal"]
+  },
+  {
+    "id": "Coal",
+    "name": "Coal",
+    "description": "Used as fuel in smelting and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Powdered Stone",
+    "name": "Powdered Stone",
+    "description": "Fine particles crushed from Tower minerals, used in construction, alchemy, and as a crafting ingredient.",
+    "category": "Basic Materials",
+    "recipe": ["Stone"]
+  },
+  {
+    "id": "Cloth",
+    "name": "Cloth",
+    "description": "Woven fabrics produced from the fibers of Tower plants and animal textiles, essential for clothing and crafting.",
+    "category": "Basic Materials",
+    "recipe": ["Thread", "Thread"]
+  },
+  {
+    "id": "Enchanted Metal",
+    "name": "Enchanted Metal",
+    "description": "Metal imbued with magical properties.",
+    "category": "Advanced Materials",
+    "recipe": ["Metal Ingot", "Magical Essence"]
+  },
+  {
+    "id": "Dragon Scale",
+    "name": "Dragon Scale",
+    "description": "Rare material for high-tier crafting.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "Spell Scroll",
+    "name": "Spell Scroll",
+    "description": "Teaches or casts a spell when used.",
+    "category": "Magical Items",
+    "recipe": ["Paper", "Ink", "Magical Essence"]
+  },
+  {
+    "id": "Magic Wand",
+    "name": "Magic Wand",
+    "description": "Focuses magical energy for spellcasting.",
+    "category": "Magical Items",
+    "recipe": ["Heartwood Branch", "Glowstone", "Magical Essence"]
+  },
+  {
+    "id": "Runestone",
+    "name": "Runestone",
+    "description": "Enhances magical equipment or spells.",
+    "category": "Magical Items",
+    "recipe": ["Stone", "Rune Stone", "Essence of Light"]
+  },
+  {
+    "id": "Rune Stone",
+    "name": "Rune Stone",
+    "description": "An inscribed stone bearing ancient runes, emanating a steady flow of arcane energy.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Stone", "Arcane Gear"]
+  },
+  {
+    "id": "Ancient Key",
+    "name": "Ancient Key",
+    "description": "Opens ancient locks and doors.",
+    "category": "Quest Items",
+    "recipe": ["Metal Ingot", "Rune Stone"]
+  },
+  {
+    "id": "Map Fragment",
+    "name": "Map Fragment",
+    "description": "Pieces of a map leading to hidden treasures.",
+    "category": "Quest Items",
+    "recipe": []
+  },
+  {
+    "id": "Artifact Piece",
+    "name": "Artifact Piece",
+    "description": "Collect all pieces to assemble a powerful artifact.",
+    "category": "Quest Items",
+    "recipe": []
+  },
+  {
+    "id": "Coin Purse",
+    "name": "Coin Purse",
+    "description": "Holds currency used for trading.",
+    "category": "Miscellaneous",
+    "recipe": ["Cloth", "Thread"]
+  },
+  {
+    "id": "Empty Bottle",
+    "name": "Empty Bottle",
+    "description": "Can be filled with liquids.",
+    "category": "Containers",
+    "recipe": ["Glass"]
+  },
+  {
+    "id": "Fishing Rod",
+    "name": "Fishing Rod",
+    "description": "Used to catch fish.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Thread"]
+  },
+  {
+    "id": "Smoke Bomb",
+    "name": "Smoke Bomb",
+    "description": "Creates a smoke screen to escape or disorient enemies.",
+    "category": "Tools and Equipment",
+    "recipe": ["Powdered Stone", "Herbs", "Cloth"]
+  },
+  {
+    "id": "Paralysis Trap",
+    "name": "Paralysis Trap",
+    "description": "Immobilizes enemies when triggered.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Venom Glands", "Wood"]
+  },
+  {
+    "id": "Taming Collar",
+    "name": "Taming Collar",
+    "description": "Used to tame wild beasts.",
+    "category": "Tools and Equipment",
+    "recipe": ["Leather", "Metal Ingot", "Enchanted Sap"]
+  },
+  {
+    "id": "Forge",
+    "name": "Forge",
+    "description": "Required for smelting ores and forging items.",
+    "category": "Crafting Stations",
+    "recipe": ["Stone", "Metal Ingot", "Wood"]
+  },
+  {
+    "id": "Alchemy Table",
+    "name": "Alchemy Table",
+    "description": "Used for crafting potions and essences.",
+    "category": "Crafting Stations",
+    "recipe": ["Wood", "Glass", "Enchanted Sap"]
+  },
+  {
+    "id": "Enchanting Station",
+    "name": "Enchanting Station",
+    "description": "Allows the enchantment of items.",
+    "category": "Crafting Stations",
+    "recipe": ["Wood", "Glowstone", "Runestone"]
+  },
+  {
+    "id": "Coal",
+    "name": "Coal",
+    "description": "Used as fuel in smelting and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Raw Meat",
+    "name": "Raw Meat",
+    "description": "Fresh meat obtained from hunted animals.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Feather",
+    "name": "Feather",
+    "description": "Used in crafting arrows and quills.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Grain",
+    "name": "Grain",
+    "description": "Harvested grains used in cooking and baking.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Monster Eye",
+    "name": "Monster Eye",
+    "description": "Used in alchemy and crafting magical items.",
+    "category": "Alchemical Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Claw",
+    "name": "Claw",
+    "description": "Used to craft tools or enhancements.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Gold Coin",
+    "name": "Gold Coin",
+    "description": "Currency used to purchase items from merchants.",
+    "category": "Currency",
+    "recipe": ["Gold Ingot"]
+  },
+  {
+    "id": "Spices",
+    "name": "Spices",
+    "description": "Valuable trade goods used to enhance food.",
+    "category": "Trade Goods",
+    "recipe": ["Herbs", "Salt"]
+  },
+  {
+    "id": "Silk",
+    "name": "Silk",
+    "description": "Fine material prized for its quality.",
+    "category": "Trade Goods",
+    "recipe": ["Spider Silk", "Enchanted Sap"]
+  },
+  {
+    "id": "Precious Gem",
+    "name": "Precious Gem",
+    "description": "A valuable gemstone used in crafting and trade.",
+    "category": "Trade Goods",
+    "recipe": ["Gemstones"]
+  },
+  {
+    "id": "Ancient Manuscript",
+    "name": "Ancient Manuscript",
+    "description": "Contains lore and hints about the Tower.",
+    "category": "Collectibles",
+    "recipe": ["Paper", "Ink", "Enchanted Quill"]
+  },
+  {
+    "id": "Relic Fragment",
+    "name": "Relic Fragment",
+    "description": "A piece of a relic with historical significance.",
+    "category": "Collectibles",
+    "recipe": []
+  },
+  {
+    "id": "Stormcalling Ritual",
+    "name": "Stormcalling Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Skybreaking Ritual",
+    "name": "Skybreaking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Stormrender Ritual",
+    "name": "Stormrender Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Stonecrushing Ritual",
+    "name": "Stonecrushing Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Crystal Ritual",
+    "name": "Crystal Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Earthbreaking Ritual",
+    "name": "Earthbreaking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Flame and Anger Ritual",
+    "name": "Flame and Anger Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Hellish Ritual",
+    "name": "Hellish Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Sunbreaking Ritual",
+    "name": "Sunbreaking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Conduction Ritual",
+    "name": "Conduction Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Lyrical Ritual",
+    "name": "Lyrical Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Ascension Ritual",
+    "name": "Ascension Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Climactic Ritual",
+    "name": "Climactic Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Acapella Ritual",
+    "name": "Acapella Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Harmonic Ritual",
+    "name": "Harmonic Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Writing Ritual",
+    "name": "Writing Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Transcendance Ritual",
+    "name": "Transcendance Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Storyteller Ritual",
+    "name": "Storyteller Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Celestial Heaven Ritual",
+    "name": "Celestial Heaven Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Guiding Ritual",
+    "name": "Guiding Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Protective Ritual",
+    "name": "Protective Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Nightrender Ritual",
+    "name": "Nightrender Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Eternal Subjugation Ritual",
+    "name": "Eternal Subjugation Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Seer Ritual",
+    "name": "Seer Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Twillight Ritual",
+    "name": "Twillight Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Night Ward Ritual",
+    "name": "Night Ward Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Blinding Ritual",
+    "name": "Blinding Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Verdant Ritual",
+    "name": "Verdant Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Blooming Ritual",
+    "name": "Blooming Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Lifewarding Ritual",
+    "name": "Lifewarding Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Community Ritual",
+    "name": "Community Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Grove Ritual",
+    "name": "Grove Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Seasonal Ritual",
+    "name": "Seasonal Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Earthshaping Ritual",
+    "name": "Earthshaping Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Mountaineering Ritual",
+    "name": "Mountaineering Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Mineral Ritual",
+    "name": "Mineral Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "War Ritual",
+    "name": "War Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Armored Ritual",
+    "name": "Armored Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Bladeswimming Ritual",
+    "name": "Bladeswimming Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Bladesinge Ritual",
+    "name": "Bladesinge Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Destruction Ritual",
+    "name": "Destruction Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Subordination Ritual",
+    "name": "Subordination Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Breaching Ritual",
+    "name": "Breaching Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Dragonslaying Ritual",
+    "name": "Dragonslaying Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Colloseum Ritual",
+    "name": "Colloseum Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Meditation Ritual",
+    "name": "Meditation Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Disintigration Ritual",
+    "name": "Disintigration Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Dragon Communion Ritual",
+    "name": "Dragon Communion Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Flurry Ritual",
+    "name": "Flurry Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Ki Ritual",
+    "name": "Ki Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Echo Ritual",
+    "name": "Echo Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Relaxing Ritual",
+    "name": "Relaxing Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Flying Ritual",
+    "name": "Flying Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Fire eater Ritual",
+    "name": "Fire eater Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Crusading Ritual",
+    "name": "Crusading Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Light protection Ritual",
+    "name": "Light protection Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Royale Ritual",
+    "name": "Royale Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Oath Ritual",
+    "name": "Oath Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Vindicating Ritual",
+    "name": "Vindicating Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Justicial Ritual",
+    "name": "Justicial Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Darkslaying Ritual",
+    "name": "Darkslaying Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Pathforging Ritual",
+    "name": "Pathforging Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Self Harm Ritual",
+    "name": "Self Harm Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Stalking Ritual",
+    "name": "Stalking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Commandeering Ritual",
+    "name": "Commandeering Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Unseen Ritual",
+    "name": "Unseen Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Windstep Ritual",
+    "name": "Windstep Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Rain Dance Ritual",
+    "name": "Rain Dance Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Havok Ritual",
+    "name": "Havok Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Replacement Ritual",
+    "name": "Replacement Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Sky striker Ritual",
+    "name": "Sky striker Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Breath Ritual",
+    "name": "Breath Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Lurker Ritual",
+    "name": "Lurker Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Death Ritual",
+    "name": "Death Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Mirror Ritual",
+    "name": "Mirror Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Unheard Ritual",
+    "name": "Unheard Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Obscuration Ritual",
+    "name": "Obscuration Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Secret dancing Ritual",
+    "name": "Secret dancing Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Imbibement Ritual",
+    "name": "Imbibement Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Void Ritual",
+    "name": "Void Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Viper Ritual",
+    "name": "Viper Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Snake charmer Ritual",
+    "name": "Snake charmer Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Volcanic Ritual",
+    "name": "Volcanic Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Rising Ritual",
+    "name": "Rising Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Shiva Ritual",
+    "name": "Shiva Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Everfrost Ritual",
+    "name": "Everfrost Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Cold warmth Ritual",
+    "name": "Cold warmth Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Zeus Ritual",
+    "name": "Zeus Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Valefor Ritual",
+    "name": "Valefor Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Flocking Ritual",
+    "name": "Flocking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Unexisting fire Ritual",
+    "name": "Unexisting fire Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Abyssal Ritual",
+    "name": "Abyssal Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Endless Night Ritual",
+    "name": "Endless Night Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Split Ritual",
+    "name": "Split Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Soulcutting Ritual",
+    "name": "Soulcutting Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Moon Ritual",
+    "name": "Moon Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Dark sky Ritual",
+    "name": "Dark sky Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Lightweaving Ritual",
+    "name": "Lightweaving Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Ancient Ritual",
+    "name": "Ancient Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Binding Ritual",
+    "name": "Binding Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Magic dust Ritual",
+    "name": "Magic dust Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Enchanting Ritual",
+    "name": "Enchanting Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Dreaming Ritual",
+    "name": "Dreaming Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Carving Ritual",
+    "name": "Carving Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Weaving Ritual",
+    "name": "Weaving Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Arcaic magic Ritual",
+    "name": "Arcaic magic Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Gearing Ritual",
+    "name": "Gearing Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Dive and Divide Ritual",
+    "name": "Dive and Divide Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Ticking Ritual",
+    "name": "Ticking Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Neo Ritual",
+    "name": "Neo Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Castle Ritual",
+    "name": "Castle Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Blacksmith Ritual",
+    "name": "Blacksmith Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Golem Ritual",
+    "name": "Golem Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Vampiric Ritual",
+    "name": "Vampiric Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Hemomancy Ritual",
+    "name": "Hemomancy Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Nocturnal Predator Ritual",
+    "name": "Nocturnal Predator Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Transfusion Ritual",
+    "name": "Transfusion Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Syringe Ritual",
+    "name": "Syringe Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Scalping Ritual",
+    "name": "Scalping Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Ghastly Ritual",
+    "name": "Ghastly Ritual",
+    "description": "A ritual describing how to evolve a certain Reyvateil",
+    "category": "Ritual",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Rage",
+    "name": "Fragment of Rage",
+    "description": "Used to level up Barbarian class Reyvateils. This component represents the raw, untamed energy that fuels their rage.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Fury",
+    "name": "Shard of Fury",
+    "description": "A more potent version of the Fragment of Rage, required for higher-level Barbarians.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Melody",
+    "name": "Fragment of Melody",
+    "description": "Used to level up Bard class Reyvateils. It symbolizes the harmonious melodies and rhythms that empower their performances.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Harmony",
+    "name": "Shard of Harmony",
+    "description": "A refined version of the Fragment of Melody, representing a deeper understanding of musical harmony and its magical properties.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Faith",
+    "name": "Fragment of Faith",
+    "description": "Used to level up Cleric class Reyvateils. It represents the unwavering belief and devotion that fuel their divine magic.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Divinity",
+    "name": "Shard of Divinity",
+    "description": "A concentrated form of divine energy, reflecting the Cleric's growing connection to their deity.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Steel",
+    "name": "Fragment of Steel",
+    "description": "Used to level up Fighter class Reyvateils. This component embodies the strength, discipline, and resilience required for martial combat.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Valor (Fighter)",
+    "name": "Shard of Valor",
+    "description": "A symbol of courage and unwavering determination, reflecting the Fighter's mastery of combat skills.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Focus",
+    "name": "Fragment of Focus",
+    "description": "Used to level up Monk class Reyvateils. It represents the mental discipline, inner peace, and focused energy that empowers their martial arts.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Tranquility",
+    "name": "Shard of Tranquility",
+    "description": "A manifestation of inner harmony and perfect balance, signifying the Monk's mastery of their physical and spiritual energies.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Justice",
+    "name": "Fragment of Justice",
+    "description": "Used to level up Paladin class Reyvateils. It embodies the righteous ideals, unwavering conviction, and devotion to justice that empower their divine abilities.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Valor (Paladin)",
+    "name": "Shard of Valor",
+    "description": "A symbol of courage and selflessness, reflecting the Paladin's unwavering commitment to protecting the innocent and upholding their oaths.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Precision",
+    "name": "Fragment of Precision",
+    "description": "Used to level up Ranger class Reyvateils. It represents the keen senses, precise aim, and deep connection to nature that empower their skills.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Focus (Ranger)",
+    "name": "Shard of Focus",
+    "description": "Represents a heightened awareness and mastery of their chosen fighting style and favored terrain.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Stealth",
+    "name": "Fragment of Stealth",
+    "description": "Used to level up Rogue class Reyvateils. This component embodies the cunning, agility, and mastery of shadows that allow them to move unseen and strike with deadly precision.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Shadow",
+    "name": "Shard of Shadow",
+    "description": "Represents a deeper understanding of stealth and deception, allowing the Rogue to manipulate shadows and blend seamlessly into their surroundings.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Mana",
+    "name": "Fragment of Mana",
+    "description": "Used to level up Sorcerer class Reyvateils. It represents raw magical energy, symbolizing the Sorcerer's innate ability to manipulate arcane forces.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Arcana",
+    "name": "Shard of Arcana",
+    "description": "A refined form of magical energy, reflecting the Sorcerer's growing mastery and control over their innate magical abilities.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Shadows",
+    "name": "Fragment of Shadows",
+    "description": "Used to level up Warlock class Reyvateils. It represents the mysterious and often forbidden pact made with a powerful entity, granting them access to unique and potent magic.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Darkness",
+    "name": "Shard of Darkness",
+    "description": "A manifestation of the Warlock's deepening bond with their patron, granting them greater access to their patron's power and influence.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Arcane Power",
+    "name": "Fragment of Arcane Power",
+    "description": "Used to level up Wizard class Reyvateils. It represents the dedicated study and mastery of magical knowledge, reflecting the Wizard's ability to manipulate arcane forces through learned spells and rituals.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Mysticism",
+    "name": "Shard of Mysticism",
+    "description": "A culmination of years of study and magical practice, representing the Wizard's deep understanding of arcane principles and their ability to weave potent spells.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Cogmetal Shard",
+    "name": "Cogmetal Shard",
+    "description": "Used to level up Artificer class Reyvateils. Represents fragments of magically infused metal used in their creations.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Arcane Gear",
+    "name": "Arcane Gear",
+    "description": "A small, intricate gear infused with magical energy, essential for enhancing Artificer abilities and powering their inventions.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Ember Fragment",
+    "name": "Ember Fragment",
+    "description": "Used to level up Blood Hunter class Reyvateils. It embodies the volatile energy drawn from their own life force and the manipulation of blood magic.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Infernal Shard",
+    "name": "Infernal Shard",
+    "description": "A crystallized fragment of infernal energy, reflecting the Blood Hunter's dangerous pact and their growing mastery over dark and potent forces.",
+    "category": "Leveling Component",
+    "recipe": []
   }
 ]
