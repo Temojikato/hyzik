@@ -1,0 +1,500 @@
+[
+  {
+    "id": "Ember Fragment",
+    "name": "Ember Fragment",
+    "description": "Fragments of eternal flame, pulsating with a mysterious glow that whispers of ancient power.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Infernal Shard",
+    "name": "Infernal Shard",
+    "description": "Dark, fiery shards that shimmer with the essence of the abyss, emanating an unearthly heat.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Flame Essence",
+    "name": "Flame Essence",
+    "description": "Concentrated essence of pure flame, swirling with untamed energy and latent magic.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Dark Essence",
+    "name": "Dark Essence",
+    "description": "A vial of shadowed essence, thick with the whispers of the void and the secrets it holds.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Shadow Drop",
+    "name": "Shadow Drop",
+    "description": "Droplets of shadow, shimmering with elusive darkness that dances on the edge of perception.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Petal of Life",
+    "name": "Petal of Life",
+    "description": "Enchanted petals that exude a vibrant energy, embodying the very essence of nature's vitality.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Storm Essence",
+    "name": "Storm Essence",
+    "description": "Essence infused with the raw power of tempestuous storms, crackling with untamed energy.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Celestial Dew",
+    "name": "Celestial Dew",
+    "description": "Pure dew kissed by celestial light, glistening with ethereal radiance under the moonlit sky.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Radiant Fragment",
+    "name": "Radiant Fragment",
+    "description": "Shimmering fragments of light, capturing the brilliance of dawn and the promise of new beginnings.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Shard of Radiance",
+    "name": "Shard of Radiance",
+    "description": "Enhanced fragments that glow with an intensified brilliance, harboring secrets of luminous power.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Cogmetal Shard",
+    "name": "Cogmetal Shard",
+    "description": "Intricate fragments of enchanted metal, etched with ancient runes that hum with hidden energy.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Arcane Gear",
+    "name": "Arcane Gear",
+    "description": "Minor magical gears, each intricately crafted to resonate with the flow of arcane currents.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Pure Spring Water",
+    "name": "Pure Spring Water",
+    "description": "Crystal-clear spring water, imbued with the purity and vitality of untouched natural springs.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Enchanted Sap",
+    "name": "Enchanted Sap",
+    "description": "Sap from ancient, enchanted flora, thick with the lifeblood of mystical plants and hidden magic.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Holy Water",
+    "name": "Holy Water",
+    "description": "Blessed water that glows with a sacred light, emanating a sense of divine tranquility.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Arcane Oil",
+    "name": "Arcane Oil",
+    "description": "A vial of arcane-infused oil, shimmering with subtle magical currents and ethereal light.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Life Essence",
+    "name": "Life Essence",
+    "description": "Essence drawn from the very fabric of life, pulsating with vibrant energy and untapped potential.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Wind Essence",
+    "name": "Wind Essence",
+    "description": "Captured wind energy, swirling with invisible currents and the whispers of unseen breezes.",
+    "category": "Lesser Spirit Food"
+  },
+  {
+    "id": "Prism Reflecting Light",
+    "name": "Prism Reflecting Light",
+    "description": "A crystal prism that bends and refracts light into myriad colors, holding the secrets of illumination.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Shard from Magical Crystal",
+    "name": "Shard from Magical Crystal",
+    "description": "A fragment of a crystal imbued with innate magic, shimmering with untold mystical properties.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Star Fragment",
+    "name": "Star Fragment",
+    "description": "A celestial piece captured by arcane forces, glowing with the eternal light of distant stars.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Celestial Gemstone",
+    "name": "Celestial Gemstone",
+    "description": "A gemstone infused with the essence of the heavens, radiating a divine and otherworldly glow.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Rune Stone",
+    "name": "Rune Stone",
+    "description": "An inscribed stone bearing ancient runes, emanating a steady flow of arcane energy.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Enchantment Crystal",
+    "name": "Enchantment Crystal",
+    "description": "A crystal that pulses with enchantment and illusion, reflecting the subtle dance of magic.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Storm Crystal",
+    "name": "Storm Crystal",
+    "description": "A crystal infused with the essence of storms, crackling with latent electrical energy.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Lightning-Infused Amulet",
+    "name": "Lightning-Infused Amulet",
+    "description": "An amulet charged with the raw power of lightning, sparking with untamed electrical energy.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Energy Core",
+    "name": "Energy Core",
+    "description": "A core brimming with concentrated energy, pulsating with the lifeblood of the Tower’s power.",
+    "category": "Gemstones and Crystals"
+  },
+  {
+    "id": "Master Gear",
+    "name": "Master Gear",
+    "description": "A sophisticated gear, meticulously crafted and resonating with the essence of ancient machinery.",
+    "category": "Tools and Weapons"
+  },
+  {
+    "id": "Crown Forged in Infernal Forge",
+    "name": "Crown Forged in Infernal Forge",
+    "description": "A crown emanating dark allure, its infernal craftsmanship radiating an ominous elegance.",
+    "category": "Tools and Weapons/Gemstones and Crystals"
+  },
+  {
+    "id": "Shadow Essence",
+    "name": "Shadow Essence",
+    "description": "A vial containing the essence of shadows, thick with the enigmatic power of the dark core.",
+    "category": "Vials and Essences/Organic Components"
+  },
+  {
+    "id": "Vial of Moonlit Dew",
+    "name": "Vial of Moonlit Dew",
+    "description": "Dew collected under the silver gaze of the moon, shimmering with lunar mystique.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Pure Sunlight",
+    "name": "Vial of Pure Sunlight",
+    "description": "Sunlight captured at dawn, glowing with the first light of day and untapped potential.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Blessed Water",
+    "name": "Vial of Blessed Water",
+    "description": "Holy water purified in sacred rites, radiating a serene and divine luminescence.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Radiant Essence",
+    "name": "Vial of Radiant Essence",
+    "description": "A concentrated essence of radiant magic, shimmering with the promise of luminous power.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Pure Spring Water",
+    "name": "Vial of Pure Spring Water",
+    "description": "Water from a pristine spring, infused with the untouched purity of nature’s embrace.",
+    "category": "Vials and Essences/Organic Components"
+  },
+  {
+    "id": "Vial of Enchanted Sap",
+    "name": "Vial of Enchanted Sap",
+    "description": "Sap drawn from ancient, enchanted trees, pulsating with the lifeforce of mystical flora.",
+    "category": "Vials and Essences/Organic Components"
+  },
+  {
+    "id": "Vial of Dew Collected at Dawn",
+    "name": "Vial of Dew Collected at Dawn",
+    "description": "Dew harvested at the break of day, glowing with the first light and morning’s essence.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Molten Lava",
+    "name": "Vial of Molten Lava",
+    "description": "Molten lava captured and contained, swirling with the untamed fury of the earth’s core.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Storm Essence",
+    "name": "Vial of Storm Essence",
+    "description": "Essence harnessed from the heart of a storm, crackling with the energy of raging tempests.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Infernal Oil",
+    "name": "Vial of Infernal Oil",
+    "description": "Oil infused with infernal energies, radiating a dark and potent aura of power.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Dark Essence",
+    "name": "Vial of Dark Essence",
+    "description": "A vial filled with dark essence, pulsating with the mysterious energy of the abyss.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Dragonfire",
+    "name": "Vial of Dragonfire",
+    "description": "Captured dragonfire, flickering with ancient flames and the might of legendary beasts.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Pure Flame Essence",
+    "name": "Vial of Pure Flame Essence",
+    "description": "Essence of untainted flame, glowing with the pure, relentless power of eternal fire.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Ethereal Essence",
+    "name": "Vial of Ethereal Essence",
+    "description": "Essence drawn from the ethereal plane, shimmering with otherworldly and spectral energy.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Arcane Oil",
+    "name": "Vial of Arcane Oil",
+    "description": "Oil imbued with arcane currents, glowing softly with the flow of magical energy.",
+    "category": "Vials and Essences"
+  },
+  {
+    "id": "Vial of Life Essence",
+    "name": "Vial of Life Essence",
+    "description": "Essence captured from the very breath of life, pulsating with vibrant and potent energy.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Pure Illusion Essence",
+    "name": "Vial of Pure Illusion Essence",
+    "description": "Essence harvested from the realm of illusions, swirling with deceptive and mystical energies.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Magical Essence",
+    "name": "Vial of Magical Essence",
+    "description": "A vial containing raw magical essence, glowing with untamed and versatile arcane power.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Vial of Night Oil",
+    "name": "Vial of Night Oil",
+    "description": "Oil infused with the essence of night, dark and shimmering with shadowed enchantment.",
+    "category": "Vials and Essences/Other Magical Items"
+  },
+  {
+    "id": "Luminescent Thread from Rare Silken Spider",
+    "name": "Luminescent Thread from Rare Silken Spider",
+    "description": "Shimmering silk spun by a rare spider, glowing with an inner light that dances in the darkness.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Ancient Arcane Tome",
+    "name": "Ancient Arcane Tome",
+    "description": "A forgotten tome filled with arcane symbols and cryptic knowledge, bound in time-worn leather.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Feather from Celestial Bird",
+    "name": "Feather from Celestial Bird",
+    "description": "A delicate feather from a celestial avian, radiating a soft, otherworldly luminescence.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Heartwood Branch from Ancient Tree",
+    "name": "Heartwood Branch from Ancient Tree",
+    "description": "A sturdy branch from an ancient tree, imbued with the enduring magic of centuries past.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Rare Flower from Enchanted Gardens",
+    "name": "Rare Flower from Enchanted Gardens",
+    "description": "An uncommon flower from mystical gardens, its petals shimmering with enchanted hues.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Blossom from Sacred Garden",
+    "name": "Blossom from Sacred Garden",
+    "description": "A sacred blossom nurtured in hallowed grounds, emanating a gentle, magical fragrance.",
+    "category": "Organic Components"
+  },
+  {
+    "id": "Ashes from a Phoenix",
+    "name": "Ashes from a Phoenix",
+    "description": "Ashes of a legendary phoenix, glowing with remnants of eternal flame and rebirth.",
+    "category": "Organic Components/Other Magical Items"
+  },
+  {
+    "id": "Enchanted Quill",
+    "name": "Enchanted Quill",
+    "description": "A quill infused with arcane energy, its feathers shimmering with magical potential.",
+    "category": "Ritual Items/Tools and Weapons"
+  },
+  {
+    "id": "Golden Chalice Filled with Holy Water",
+    "name": "Golden Chalice Filled with Holy Water",
+    "description": "A radiant chalice of pure gold, brimming with water that glows with divine light.",
+    "category": "Ritual Items/Tools and Weapons"
+  },
+  {
+    "id": "Celestial Hymn Composed in Hymmnos",
+    "name": "Celestial Hymn Composed in Hymmnos",
+    "description": "A sacred hymn inscribed in Hymmnos, resonating with celestial harmonies and ancient power.",
+    "category": "Ritual Items"
+  },
+  {
+    "id": "Healing Hymn Written in Hymmnos",
+    "name": "Healing Hymn Written in Hymmnos",
+    "description": "A soothing hymn crafted in Hymmnos, imbued with the restorative energies of the ancients.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Sanctus Chant Written in Hymmnos",
+    "name": "Sanctus Chant Written in Hymmnos",
+    "description": "A sacred chant etched in Hymmnos, emanating divine resonance and holy purpose.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Fortitude Chant Written in Hymmnos",
+    "name": "Fortitude Chant Written in Hymmnos",
+    "description": "A powerful chant inscribed in Hymmnos, radiating strength and unwavering determination.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Wind Chant Written in Hymmnos",
+    "name": "Wind Chant Written in Hymmnos",
+    "description": "A flowing chant composed in Hymmnos, echoing the whispers of the endless winds.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Mystara Chant Written in Hymmnos",
+    "name": "Mystara Chant Written in Hymmnos",
+    "description": "A mystical chant carved in Hymmnos, pulsating with arcane secrets and hidden lore.",
+    "category": "Ritual Items"
+  },
+  {
+    "id": "Enchantra Chant Written in Hymmnos",
+    "name": "Enchantra Chant Written in Hymmnos",
+    "description": "An enchanting chant inscribed in Hymmnos, shimmering with illusionary magic and charm.",
+    "category": "Ritual Items"
+  },
+  {
+    "id": "Gearmaster Chant Written in Hymmnos",
+    "name": "Gearmaster Chant Written in Hymmnos",
+    "description": "A precise chant etched in Hymmnos, resonating with mechanical prowess and arcane ingenuity.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Emberlord Chant Written in Hymmnos",
+    "name": "Emberlord Chant Written in Hymmnos",
+    "description": "A fiery chant composed in Hymmnos, igniting the latent power of embers and flame.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Shadowflame Chant Written in Hymmnos",
+    "name": "Shadowflame Chant Written in Hymmnos",
+    "description": "A dark chant inscribed in Hymmnos, melding shadows with flickering flames in harmony.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Void Binder Chant Written in Hymmnos",
+    "name": "Void Binder Chant Written in Hymmnos",
+    "description": "A haunting chant etched in Hymmnos, binding the essence of the void with ethereal grace.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Darkstar Chant Written in Hymmnos",
+    "name": "Darkstar Chant Written in Hymmnos",
+    "description": "A celestial chant composed in Hymmnos, intertwining dark and stellar energies seamlessly.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Beacon Chant Written in Hymmnos",
+    "name": "Beacon Chant Written in Hymmnos",
+    "description": "A radiant chant inscribed in Hymmnos, serving as a beacon of hope and guiding light.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Fluxara Chant Written in Hymmnos",
+    "name": "Fluxara Chant Written in Hymmnos",
+    "description": "A dynamic chant carved in Hymmnos, flowing with the ever-changing currents of magic.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Gearlock Chant Written in Hymmnos",
+    "name": "Gearlock Chant Written in Hymmnos",
+    "description": "A harmonious chant etched in Hymmnos, melding the rhythms of life and machinery.",
+    "category": "Ritual Items/Musical Items"
+  },
+  {
+    "id": "Divine Hymn Written in Hymmnos",
+    "name": "Divine Hymn Written in Hymmnos",
+    "description": "A celestial hymn inscribed in Hymmnos, echoing with the pure essence of divine power.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Battle Hymn Written in Hymmnos",
+    "name": "Battle Hymn Written in Hymmnos",
+    "description": "A fierce battle hymn composed in Hymmnos, resonating with the fiery spirit of combat.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Luminary Chant Written in Hymmnos",
+    "name": "Luminary Chant Written in Hymmnos",
+    "description": "A luminous chant etched in Hymmnos, capturing the radiant essence of celestial bodies.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Sylvan Chant Written in Hymmnos",
+    "name": "Sylvan Chant Written in Hymmnos",
+    "description": "A serene chant composed in Hymmnos, echoing the harmonious whispers of the forest.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Verdant Chant Written in Hymmnos",
+    "name": "Verdant Chant Written in Hymmnos",
+    "description": "A flourishing chant inscribed in Hymmnos, imbued with the vibrant energy of nature.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Iron Chant Written in Hymmnos",
+    "name": "Iron Chant Written in Hymmnos",
+    "description": "A resolute chant carved in Hymmnos, resonating with the steadfast strength of iron.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Tempest Chant Written in Hymmnos",
+    "name": "Tempest Chant Written in Hymmnos",
+    "description": "A tumultuous chant composed in Hymmnos, capturing the wild essence of stormy skies.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Celestial Chant Written in Hymmnos",
+    "name": "Celestial Chant Written in Hymmnos",
+    "description": "A harmonious chant etched in Hymmnos, resonating with the ethereal melodies of the stars.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Stealth Chant Written in Hymmnos",
+    "name": "Stealth Chant Written in Hymmnos",
+    "description": "A subtle chant inscribed in Hymmnos, blending seamlessly with the shadows and silence.",
+    "category": "Musical Items"
+  },
+  {
+    "id": "Poison Chant Written in Hymmnos",
+    "name": "Poison Chant Written in Hymmnos",
+    "description": "A venomous chant composed in Hymmnos, dripping with the essence of hidden dangers.",
+    "category": "Musical Items"
+  }
+]

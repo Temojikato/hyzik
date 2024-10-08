@@ -59,6 +59,7 @@ export interface Item {
   name: string;
   quantity?: number;
   description: string; // Placeholder for item descriptions
+  category: string;
 }
 
 export interface DBItem {
