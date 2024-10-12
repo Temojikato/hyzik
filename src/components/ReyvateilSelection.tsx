@@ -69,17 +69,24 @@ const ReyvateilSelection: React.FC = () => {
         const reyvateilsWithImages = await Promise.all(
           reyvateilsList.map(async (reyvateil) => {
             const folderRef = ref(storage, `reyvateils/imgs/${reyvateil.name}`);
-            try {
-              const img1Url = await getDownloadURL(ref(folderRef, `${reyvateil.name}1.png`));
-              const img2Url = await getDownloadURL(ref(folderRef, `${reyvateil.name}2.png`));
-              return {
-                ...reyvateil,
-                images: [img1Url, img2Url],
-              };
-            } catch (error) {
-              console.error(`Error fetching images for ${reyvateil.name}:`, error);
-              return reyvateil;
+            const images: string[] = [];
+            let index = 1;
+
+            while (true) {
+              try {
+                const imgUrl = await getDownloadURL(ref(folderRef, `${reyvateil.name}${index}.png`));
+                images.push(imgUrl);
+                index++;
+              } catch (error) {
+                // Break the loop if an image is not found
+                break;
+              }
             }
+
+            return {
+              ...reyvateil,
+              images,
+            };
           })
         );
 
@@ -99,7 +106,7 @@ const ReyvateilSelection: React.FC = () => {
     const selected = reyvateils.find((r) => r.id === reyvateilId) || null;
     setSelectedReyvateil(selected);
     setSelectedReyvateilId(reyvateilId);
-    setSelectedImageUrl(selected?.images?.[0] || ''); 
+    setSelectedImageUrl(selected?.images?.[0] || '');
     onOpen();
   };
 
@@ -130,7 +137,7 @@ const ReyvateilSelection: React.FC = () => {
         userRef,
         {
           reyvateilId: selectedReyvateilId,
-          reyvateilLevel: 1, 
+          reyvateilLevel: 1,
           reyvateilImageUrl: selectedImageUrl || selectedReyvateilData.images?.[0],
         },
         { merge: true }
@@ -206,12 +213,12 @@ const ReyvateilSelection: React.FC = () => {
         </Button>
         <VStack spacing={6} align="stretch">
           <Flex direction="row" align="center" justify="center">
-          <Text fontSize="3xl" fontWeight="bold" textAlign="center" color="purple.300" textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)">
-            Choose Your
-          </Text>
-          <Text fontFamily="Hymmnos" fontSize="3xl" fontWeight="bold" textAlign="center" color="purple.300" textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)">
-             ((Reyvateil))
-          </Text>
+            <Text fontSize="3xl" fontWeight="bold" textAlign="center" color="purple.300" textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)">
+              Choose Your
+            </Text>
+            <Text fontFamily="Hymmnos" fontSize="3xl" fontWeight="bold" textAlign="center" color="purple.300" textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)">
+              ((Reyvateil))
+            </Text>
           </Flex>
 
           <FormControl id="search" mb={4}>
@@ -316,12 +323,14 @@ const ReyvateilSelection: React.FC = () => {
             <Text color="gray.300">No Reyvateils match your search.</Text>
           )}
 
-          <Modal isOpen={isImageSelectionOpen} onClose={onImageSelectionClose} size="lg" isCentered>
+          <Modal isOpen={isImageSelectionOpen} onClose={onImageSelectionClose} size="lg" scrollBehavior="inside">
             <ModalOverlay />
             <ModalContent bg="gray.800">
               <ModalHeader color="purple.300">Select an Image</ModalHeader>
               <ModalCloseButton color="gray.200" />
-              <ModalBody>
+              <ModalBody maxHeight="90vh" overflowY="auto" onWheel={(e) => {
+                e.stopPropagation();
+              }}>
                 <VStack spacing={4}>
                   {selectedReyvateil?.images?.map((image) => (
                     <Box
@@ -330,11 +339,12 @@ const ReyvateilSelection: React.FC = () => {
                       cursor="pointer"
                       _hover={{ boxShadow: '0 0 20px rgba(128, 90, 213, 0.5)' }}
                     >
-                      <Image src={image} alt="Reyvateil Image Option" boxSize="150px" />
+                      <Image src={image} alt="Reyvateil Image Option" />
                     </Box>
                   ))}
                 </VStack>
               </ModalBody>
+
             </ModalContent>
           </Modal>
 
