@@ -1,0 +1,68 @@
+{
+  "title": "Barbarian Reyvateil Companion Quiz",
+  "introduction": "As the storm clouds gather and the fires of determination burn within you...",
+  "questions": [
+    {
+      "question": "The Tower of Chaos presents you with a crossroads: a tumultuous stormy path or a scorched, fiery trail. You:",
+      "options": {
+        "A": "Embrace the storm, letting its energy fuel your resolve and drive you forward.",
+        "B": "Forge ahead through the fire, harnessing its heat to empower your strikes.",
+        "C": "Assess both paths carefully, seeking a balance between storm and fire to navigate effectively."
+      }
+    },
+    {
+      "question": "During a fierce battle, you notice your strength waning as your rage builds. You:",
+      "options": {
+        "A": "Channel your inner tempest, allowing the storm within to sustain your fury and resilience.",
+        "B": "Ignite your passion like molten lava, using the heat of your rage to fuel powerful attacks.",
+        "C": "Ground yourself, finding stability amidst chaos to maintain control over your rage."
+      }
+    },
+    {
+      "question": "A mystical artifact in the Tower offers a choice: a lightning-infused weapon, a stone-carved shield, or a flame-forged amulet. You:",
+      "options": {
+        "A": "Choose the lightning-infused weapon, drawn to its electrifying power and ability to intimidate foes.",
+        "B": "Select the stone-carved shield, valuing its steadfast protection and grounding presence.",
+        "C": "Opt for the flame-forged amulet, intrigued by its ability to enhance your fiery prowess."
+      }
+    },
+    {
+      "question": "A fellow Diver is conflicted between succumbing to overwhelming anger or maintaining composure for the group's sake. You:",
+      "options": {
+        "A": "Encourage them to unleash their fury, believing that strength through rage is essential for survival.",
+        "B": "Advise them to remain steadfast and grounded, emphasizing resilience and endurance.",
+        "C": "Help them find a balance, using their anger constructively while supporting the group's harmony."
+      }
+    },
+    {
+      "question": "The Reyvateil presents you with a choice during a ritual: invoke a storm to intimidate enemies, summon earth to stabilize the surroundings, or ignite flames to disorient adversaries. You:",
+      "options": {
+        "A": "Invoke the storm, letting its fierce power demonstrate your might and control.",
+        "B": "Summon the earth, using its solidity to protect and fortify your allies.",
+        "C": "Ignite the flames, creating chaos and confusion to gain the upper hand in battle."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "11 - 15",
+      "reyvateil": "Thundara",
+      "description": "Thundara's storm-infused wings and ability to amplify rage align perfectly with your affinity for harnessing the raw energy of the tempest..."
+    },
+    {
+      "scoreRange": "6 - 10",
+      "reyvateil": "Gronk",
+      "description": "Gronk's earth-etched form and strength-enhancing abilities resonate with your grounded and resilient nature..."
+    },
+    {
+      "scoreRange": "1 - 5",
+      "reyvateil": "Ragnor",
+      "description": "Ragnor's fiery essence and ability to unleash blazing strikes mirror your passion and determination in battle..."
+    }
+  ]
+}

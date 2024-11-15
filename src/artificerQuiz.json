@@ -1,0 +1,68 @@
+{
+  "title": "Artificer Reyvateil Companion Quiz",
+  "introduction": "As the intricate gears of innovation mesh with the arcane energies of Pandemonium, the Reyvateil discerns the essence of your inventive spirit. Within the dynamic realm of the Tower, where chaos and craftsmanship intertwine, your true nature seeks a companion that embodies your mastery of technology, magical ingenuity, and the relentless pursuit of creation. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a crucial experiment, a magical artifact malfunctions, causing unpredictable energy surges. Your immediate action is to:",
+      "options": {
+        "A": "Quickly tinker with the artifact, using your enhanced crafting abilities to stabilize and control the energy surge.",
+        "B": "Utilize your knowledge of magical currents to redirect the energy safely, preventing further disruption.",
+        "C": "Create a temporary energy shield to contain the surge while you formulate a plan to fix the artifact."
+      }
+    },
+    {
+      "question": "You discover a blueprint for a complex magical construct that could greatly aid your quests. However, assembling it requires rare materials and precise craftsmanship. You:",
+      "options": {
+        "A": "Immediately begin crafting the construct, believing that the benefits outweigh the challenges.",
+        "B": "Analyze the blueprint thoroughly, ensuring you understand every detail before proceeding with the construction.",
+        "C": "Gather resources and enlist the help of your allies, ensuring the construct is built efficiently and effectively."
+      }
+    },
+    {
+      "question": "A fellow Artificer is struggling to complete a critical invention under pressure. You choose to:",
+      "options": {
+        "A": "Offer your enhanced tinkering abilities to assist directly, speeding up the invention process.",
+        "B": "Provide strategic advice and optimize their workflow, ensuring they can work more efficiently.",
+        "C": "Create a magical enhancement to temporarily boost their crafting speed and precision."
+      }
+    },
+    {
+      "question": "The Tower presents you with a challenge: to create a device that can either amplify your spellcasting or provide defensive mechanisms for your team. You decide to:",
+      "options": {
+        "A": "Focus on amplifying your spellcasting, believing that stronger spells are crucial for overcoming obstacles.",
+        "B": "Develop defensive mechanisms, ensuring your team remains protected in the face of danger.",
+        "C": "Create a versatile device that balances both amplification and defense, providing comprehensive support."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal mission: deploy a magical gadget that can either enhance your team's equipment temporarily or create a distraction to mislead enemies. You choose to:",
+      "options": {
+        "A": "Enhance your team's equipment, ensuring they have the edge needed to succeed in the mission.",
+        "B": "Create the distraction, using deception to manipulate enemy movements and gain strategic advantages.",
+        "C": "Combine both actions, boosting your team's equipment while simultaneously misleading the enemies for maximum effectiveness."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Cogwyn",
+      "description": "Cogwyn's mechanical, gear-patterned wings and ability to enhance your tinkering and crafting perfectly align with your dedication to innovation and precision. Together, you engineer complex gadgets and magical items with unparalleled efficiency, ensuring your inventions are both effective and reliable within the chaotic environment of the Tower of Chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Fluxara",
+      "description": "Fluxara's fluid, energy-infused wings and mastery over magical currents resonate with your creative and adaptable nature. Together, you manipulate energy flows to repair and modify items on the fly, harnessing the dynamic forces of Pandemonium to overcome challenges and enhance your magical constructs with seamless ingenuity."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Gearlock",
+      "description": "Gearlock's sturdy, gear-laden wings and expertise in magical constructs complement your strategic and defensive approach to invention. Together, you create and control powerful magical constructs or golems, using defensive bonuses and energy shields to protect your allies and ensure the group's success through robust and reliable craftsmanship."
+    }
+  ]
+}

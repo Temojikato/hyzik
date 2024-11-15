@@ -1,0 +1,68 @@
+{
+  "title": "Bard Reyvateil Companion Quiz",
+  "introduction": "As you traverse the melodic paths within the Tower, your soul resonates with the harmonies of the realm. Answer these questions to discover the Reyvateil that best harmonizes with your essence.",
+  "questions": [
+    {
+      "question": "Amidst a chaotic expedition, you discover an ancient musical instrument that seems to resonate with the Tower’s energies. Your instinct is to:",
+      "options": {
+        "A": "Play the instrument, channeling its melodies to inspire and lead your companions.",
+        "B": "Study the instrument's intricate designs to unlock its magical properties.",
+        "C": "Use the instrument to create soothing sounds that calm and support your group during turmoil."
+      }
+    },
+    {
+      "question": "During a diplomatic negotiation with another faction, a misunderstanding arises that threatens the talks. You:",
+      "options": {
+        "A": "Use your charisma to redirect the conversation, ensuring a harmonious resolution.",
+        "B": "Employ subtle magical influences to steer the negotiations in your favor.",
+        "C": "Provide moral support and encouragement to maintain the group's unity and focus."
+      }
+    },
+    {
+      "question": "The Tower presents you with a dilemma: choose between uncovering a hidden truth that could disrupt the current balance or preserving the status quo to maintain harmony. You:",
+      "options": {
+        "A": "Reveal the truth through a powerful performance, believing that enlightenment is paramount.",
+        "B": "Investigate the truth further, using magical insights to understand its implications before acting.",
+        "C": "Find a way to address the truth discreetly, ensuring that harmony is preserved while acknowledging the new information."
+      }
+    },
+    {
+      "question": "A mystical aura surrounds an enchanted garden within the Tower, pulsating with vibrant energy. Your response is to:",
+      "options": {
+        "A": "Compose a melody that enhances the garden’s natural beauty and vitality.",
+        "B": "Analyze the magical properties of the garden to harness its energy for your spells.",
+        "C": "Coordinate with your allies to utilize the garden’s energy to support and protect the group."
+      }
+    },
+    {
+      "question": "Your Reyvateil offers a choice during a crucial moment: cast a spell that amplifies your performance to boost the group's morale or use a spell that creates illusions to deceive your enemies. You:",
+      "options": {
+        "A": "Amplify your performance, believing that the group's morale is essential for overcoming challenges.",
+        "B": "Create illusions, leveraging deception to gain a strategic advantage against foes.",
+        "C": "Balance both spells, using performance to inspire and illusions to manipulate when necessary."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Melodia",
+      "description": "Melodia's harmonious presence and ability to inspire through music resonate with your innate desire to lead and uplift your companions. Together, you create symphonies that bolster your group's spirit, turning each challenge into a grand performance within the Tower of Chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Harmonix",
+      "description": "Harmonix's vibrant, resonant wings and mastery over enchantment and illusion magic align with your analytical and creative nature. Together, you weave intricate spells and melodies that manipulate the environment, enhancing your group's capabilities and influencing outcomes subtly."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Lyra",
+      "description": "Lyra's serene melodies and ability to provide calm and inspiration complement your role as the group's heart and soul. Together, you ensure that harmony and support are ever-present, using your combined talents to maintain balance and defuse tension during the Tower's most chaotic moments."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "title": "Warlock Reyvateil Companion Quiz",
+  "introduction": "As the enigmatic shadows intertwine with the celestial lights of Pandemonium, the Reyvateil discerns the essence of your arcane spirit. Within the mystical confines of the Tower, where chaos and eldritch power converge, your true nature seeks a companion that embodies your dark pacts, mastery of forbidden knowledge, and the delicate balance between light and shadow. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a clandestine ritual to strengthen your pact, an unexpected surge of dark energy threatens to destabilize the process. Your immediate action is to:",
+      "options": {
+        "A": "Channel the dark energy into a powerful blast, eliminating the threat and reinforcing your connection.",
+        "B": "Use your knowledge of eldritch arts to absorb and redirect the energy, maintaining control over the ritual.",
+        "C": "Invoke a concealment spell, hiding the surge from others while quietly stabilizing the ritual."
+      }
+    },
+    {
+      "question": "You encounter a mysterious entity offering forbidden knowledge in exchange for a personal sacrifice. You:",
+      "options": {
+        "A": "Accept the offer, believing that the power gained will significantly enhance your abilities.",
+        "B": "Evaluate the potential benefits and risks, seeking a balanced decision that aligns with your goals.",
+        "C": "Seek to manipulate the terms, extracting maximum knowledge while minimizing personal loss."
+      }
+    },
+    {
+      "question": "The Tower's magic creates an illusionary maze that confuses intruders. You decide to:",
+      "options": {
+        "A": "Cast a dark energy blast to dispel the illusions, clearing the path with sheer force.",
+        "B": "Utilize your ability to summon minor dark entities to navigate and unravel the maze.",
+        "C": "Employ a stealthy approach, using shadows to move undetected through the illusions."
+      }
+    },
+    {
+      "question": "During a confrontation with a rival sorcerer, you have the opportunity to either strike directly or manipulate the environment to your advantage. You:",
+      "options": {
+        "A": "Launch a direct assault with a dark energy blast, overpowering your opponent swiftly.",
+        "B": "Use your ability to summon shadows to create barriers and control the battlefield.",
+        "C": "Cast a deceptive illusion to mislead and outmaneuver your rival without direct confrontation."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal moment: unleash a dark energy blast to devastate your foes or cast a concealment spell to evade detection and strategize. You choose to:",
+      "options": {
+        "A": "Unleash the dark energy blast, believing that overwhelming force is essential to secure victory.",
+        "B": "Cast the concealment spell, valuing stealth and the opportunity to plan your next move effectively.",
+        "C": "Combine both actions, using the blast to weaken enemies while maintaining concealment for strategic advantage."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Nyxara",
+      "description": "Nyxara's celestial yet shadow-infused wings and ability to amplify your eldritch invocations align perfectly with your pursuit of raw, destructive power. Together, you harness the chaotic energies of the Tower, unleashing devastating dark blasts and sapping your enemies' strength, embodying the relentless force of Pandemonium."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Voidwing",
+      "description": "Voidwing's nebulous, shadowy wings and mastery over teleportation and dark portals resonate with your strategic and elusive nature. Together, you navigate the shadows with ease, summoning dark entities and manipulating the battlefield through swift movements and tactical deployments, maintaining dominance through cunning and agility."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Eclipsa",
+      "description": "Eclipsa's balanced celestial wings and versatile spellcasting complement your adaptable and harmonious approach to magic. Together, you blend offensive and defensive strategies, using darkness and light to conceal movements and execute precise strikes, ensuring your group's success through balanced and versatile magical prowess."
+    }
+  ]
+}

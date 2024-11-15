@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Fighter Reyvateil Companion Quiz",
+  "introduction": "As the clang of steel and the pulse of kinetic energy resonate through the air, the Reyvateil discerns the essence of your warrior spirit. Within the formidable realm of Pandemonium, where chaos and order clash endlessly, your true nature seeks a companion that embodies your strength, strategy, and unwavering determination. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a strategic mission to secure a vital resource from the Tower, you encounter a fortified gate guarded by formidable defenses. Your approach is to:",
+      "options": {
+        "A": "Assess the structural integrity and devise a plan to breach the defenses with precision and efficiency.",
+        "B": "Channel your inner energy to disrupt the defenses swiftly, using kinetic force to overpower them.",
+        "C": "Coordinate with your team to create a unified assault, leveraging each member’s strengths to overcome the obstacle."
+      }
+    },
+    {
+      "question": "A fellow Diver faces overwhelming odds and is on the brink of defeat. You choose to:",
+      "options": {
+        "A": "Stand firm and use your enhanced weapon proficiency to turn the tide of battle decisively.",
+        "B": "Utilize your agility and swift maneuvers to flank the enemy, creating opportunities for your ally to recover.",
+        "C": "Raise a defensive barrier to protect both yourself and your ally, ensuring their safety amidst the chaos."
+      }
+    },
+    {
+      "question": "The Tower's magic causes the battlefield to shift unpredictably, altering terrain and dynamics. You decide to:",
+      "options": {
+        "A": "Adapt quickly, using your strategic mind to exploit the changing terrain to your advantage.",
+        "B": "Harness the kinetic energy around you to perform rapid maneuvers, staying one step ahead of the chaos.",
+        "C": "Focus on maintaining a strong defensive position, ensuring your team remains protected despite the changes."
+      }
+    },
+    {
+      "question": "During a confrontation with a powerful adversary, you notice an opportunity to either strike a decisive blow or secure your team's position. You:",
+      "options": {
+        "A": "Seize the moment to deliver a powerful attack, aiming to end the confrontation swiftly.",
+        "B": "Use your agility to create space and disrupt the enemy’s focus, making your next move more effective.",
+        "C": "Establish a defensive stance, prioritizing the safety of your team while looking for the right moment to act."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal battle: unleash a surge of kinetic energy to enhance your attacks or create a protective barrier to shield your allies. You choose to:",
+      "options": {
+        "A": "Unleash the kinetic energy, believing that enhancing your offensive capabilities is crucial to overcoming the threat.",
+        "B": "Channel the energy into swift maneuvers, increasing your speed and agility to outmaneuver the enemy.",
+        "C": "Create a protective barrier, ensuring that your allies remain safe and can continue fighting effectively."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Valora",
+      "description": "Valora's intricately engraved metallic wings and her ability to enhance weapon proficiency align perfectly with your strategic and decisive nature. Together, you form a formidable alliance, balancing offensive might with protective barriers to lead your allies through the fiercest battles within the Tower of Chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Arcanix",
+      "description": "Arcanix's energy-infused wings and kinetic abilities resonate with your agile and swift combat style. Together, you harness the power of motion and speed, executing rapid strikes and maneuvers that outpace and outsmart your adversaries, ensuring your team's success through dynamic and energetic tactics."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Sentora",
+      "description": "Sentora's shimmering, rune-adorned wings and defensive enhancements complement your focus on protection and precise strikes. Together, you create a resilient front, using defensive barriers and precise attacks to safeguard your allies while methodically dismantling enemy defenses within the chaotic environment of the Tower."
+    }
+  ]
+}

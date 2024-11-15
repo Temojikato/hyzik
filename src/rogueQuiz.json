@@ -1,0 +1,68 @@
+{
+  "title": "Rogue Reyvateil Companion Quiz",
+  "introduction": "As the moon casts elusive shadows through the dense foliage of the Tower, the Reyvateil discerns the essence of your stealthy spirit. Within the enigmatic realm of Pandemonium, where chaos and secrecy intertwine, your true nature seeks a companion that embodies your cunning, agility, and mastery of the unseen. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "While infiltrating a rival faction’s hideout, you discover a valuable artifact guarded by intricate traps. Your approach is to:",
+      "options": {
+        "A": "Carefully disarm the traps, using your keen perception and dexterity to retrieve the artifact without alerting the guards.",
+        "B": "Create a diversion with a shadow illusion, drawing the guards away while you swiftly secure the artifact.",
+        "C": "Blend into the shadows, patiently waiting for the perfect moment to snatch the artifact undetected."
+      }
+    },
+    {
+      "question": "A fellow Rogue is tempted to betray the group for personal gain. You choose to:",
+      "options": {
+        "A": "Confront them directly in the shadows, using your persuasive skills to remind them of the group's unity and trust.",
+        "B": "Gather discreet information about their intentions, planning a strategic intervention to prevent the betrayal.",
+        "C": "Provide subtle encouragement and support, helping them see the value in loyalty without direct confrontation."
+      }
+    },
+    {
+      "question": "The Tower presents you with a moral dilemma: Steal a critical resource that could save your town but harm another community, or leave it untouched, ensuring no immediate harm but risking your town's well-being. You:",
+      "options": {
+        "A": "Steal the resource discreetly, believing that the greater good of your town justifies the action.",
+        "B": "Find an alternative method to secure the resource without causing harm, using your ingenuity and stealth.",
+        "C": "Seek counsel from trusted allies, aiming to make a decision that balances both communities' needs."
+      }
+    },
+    {
+      "question": "During a covert operation, you need to gather intelligence without being noticed. Your strategy is to:",
+      "options": {
+        "A": "Utilize your stealth skills to move silently and observe from the shadows, ensuring no trace of your presence.",
+        "B": "Employ minor illusion magic to create distractions, diverting attention while you collect the necessary information.",
+        "C": "Blend seamlessly into the environment, using disguises and subtle movements to remain undetected while gathering intel."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a critical moment: cast a shadow illusion to mislead your enemies or perform a swift strike to eliminate a key threat. You choose to:",
+      "options": {
+        "A": "Cast the shadow illusion, using deception to create opportunities and manipulate the battlefield to your advantage.",
+        "B": "Perform the swift strike, leveraging your precision and agility to neutralize the threat quickly and efficiently.",
+        "C": "Combine both actions, creating a diversion with an illusion while executing a precise strike to ensure success."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Whisper",
+      "description": "Whisper's silken, muted wings and ability to create deceptive sounds and visuals resonate with your expertise in manipulation and subtlety. Together, you craft intricate illusions and distractions, enhancing your group's ability to gather intelligence and execute missions with finesse and grace."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Shadowlyn",
+      "description": "Shadowlyn's dark, elusive wings and ability to enhance your stealth and tracking perfectly align with your mastery of the shadows. Together, you navigate the Tower's hidden pathways with unparalleled stealth and precision, using shadow illusions to deceive foes and ensuring your presence remains undetected."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Nightshade",
+      "description": "Nightshade's smoky wings and ability to infuse attacks with debilitating effects complement your focus on evasion and strategic strikes. Together, you blend into the darkness, using poison and precise maneuvers to disrupt and dismantle enemy plans, ensuring your group's dominance through calculated and effective actions."
+    }
+  ]
+}

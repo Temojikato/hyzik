@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Paladin Reyvateil Companion Quiz",
+  "introduction": "As the radiant light of dawn pierces through the chaotic shadows of the Tower, the Reyvateil discerns the essence of your noble spirit. Within the hallowed halls of Pandemonium, where order and chaos vie for dominance, your true nature seeks a companion that embodies your unwavering dedication, protective strength, and divine purpose. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a sacred mission to cleanse a corrupted area within the Tower, you encounter a group of townsfolk in distress. Your immediate action is to:",
+      "options": {
+        "A": "Lead the charge to drive away the source of corruption, using your divine power to purge the evil.",
+        "B": "Establish a protective barrier around the townsfolk, ensuring their safety while you work to eliminate the threat.",
+        "C": "Offer blessings and support to the townsfolk, empowering them to stand strong against the corruption together."
+      }
+    },
+    {
+      "question": "A fellow Paladin is tempted to abandon their duty for personal glory. You choose to:",
+      "options": {
+        "A": "Confront them directly, reminding them of their oath and the importance of their role in maintaining order.",
+        "B": "Use your divine authority to shield them from further temptation, ensuring they remain steadfast in their commitment.",
+        "C": "Provide spiritual guidance and support, helping them find balance and reaffirm their dedication to the greater good."
+      }
+    },
+    {
+      "question": "The Tower's magic distorts the path ahead, creating illusions that confuse and mislead travelers. You decide to:",
+      "options": {
+        "A": "Channel your divine smite to dispel the illusions, clearing the path for your companions with righteous force.",
+        "B": "Cast a protective spell to safeguard your group from the illusions, ensuring no harm comes to them.",
+        "C": "Invoke a blessing to enhance your group's clarity and focus, allowing you to navigate the distorted path together."
+      }
+    },
+    {
+      "question": "During a diplomatic encounter with a rival faction, a crucial agreement is at stake. Your approach is to:",
+      "options": {
+        "A": "Assert your group's strength and readiness to defend their interests, ensuring the rival faction respects your stance.",
+        "B": "Provide protective blessings to your allies, fortifying their defenses and demonstrating your commitment to their safety.",
+        "C": "Extend a gesture of goodwill and blessings, fostering trust and cooperation to achieve a harmonious agreement."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal battle: unleash a powerful divine strike to vanquish your foe or cast a protective aura to shield your allies from harm. You choose to:",
+      "options": {
+        "A": "Unleash the divine strike, believing that eliminating the threat swiftly is crucial for victory.",
+        "B": "Cast the protective aura, ensuring your allies remain unharmed and can continue to fight effectively.",
+        "C": "Balance both actions, delivering a divine strike while maintaining a protective aura to support your team simultaneously."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Radiant",
+      "description": "Radiant's glorious, light-infused wings and ability to amplify divine smite align perfectly with your unwavering dedication to righteousness and offensive prowess. Together, you embody the beacon of divine justice, leading your allies with radiant power to vanquish evil and maintain order within the Tower of Chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Valorin",
+      "description": "Valorin's protective, rune-engraved wings and defensive enhancements resonate with your commanding presence and commitment to safeguarding your allies. Together, you form an unbreakable shield, using divine light and protective barriers to ensure your group's safety and resilience amidst the Tower's turmoil."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Etherea",
+      "description": "Etherea's serene, celestial wings and aura-enhancing abilities complement your role as the group's divine support. Together, you create an atmosphere of calm and strength, using blessings and protective auras to empower and protect your allies, fostering harmony and ensuring the group's success in chaotic environments."
+    }
+  ]
+}

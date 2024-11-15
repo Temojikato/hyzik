@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Monk Reyvateil Companion Quiz",
+  "introduction": "As the tranquil melodies of Hymmnos intertwine with the disciplined rhythms of your spirit, the Reyvateil discerns the essence of your martial harmony. Within the serene yet unpredictable realm of Pandemonium, your true nature seeks a companion that embodies your balance of strength, agility, and inner peace. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a meditative retreat within the Tower, you are faced with a sudden surge of chaotic energy that disrupts your focus. Your immediate reaction is to:",
+      "options": {
+        "A": "Channel your inner calm to stabilize your energy, allowing you to regain focus swiftly.",
+        "B": "Utilize the surge to enhance your physical abilities, turning the chaos into an opportunity for growth.",
+        "C": "Observe the energy flow, seeking to understand its patterns and how it can be harmonized with your movements."
+      }
+    },
+    {
+      "question": "A fellow Monk is struggling to maintain their balance between aggression and serenity during combat. You choose to:",
+      "options": {
+        "A": "Guide them through a series of controlled movements to help them find their inner peace.",
+        "B": "Encourage them to harness their aggression, transforming it into precise and powerful strikes.",
+        "C": "Assist them in observing their surroundings, using situational awareness to maintain equilibrium in battle."
+      }
+    },
+    {
+      "question": "The Tower's shifting pathways present you with an obstacle that requires both agility and strategic thinking. You decide to:",
+      "options": {
+        "A": "Leap gracefully over the obstacle, using your enhanced movement to navigate swiftly.",
+        "B": "Analyze the obstacle's structure, finding a way to manipulate it with your disciplined techniques.",
+        "C": "Flow around the obstacle, maintaining your balance and conserving energy while finding the most efficient path forward."
+      }
+    },
+    {
+      "question": "During a sacred ceremony, you are offered a choice between mastering a new martial technique or enhancing your ability to remain undetected. You:",
+      "options": {
+        "A": "Embrace the new martial technique, believing that refining your combat skills is paramount.",
+        "B": "Enhance your stealth abilities, valuing the power of moving unseen and striking with precision.",
+        "C": "Find a harmonious balance between mastering martial techniques and maintaining stealth, ensuring versatility in your approach."
+      }
+    },
+    {
+      "question": "The Reyvateil presents you with a choice during a critical moment: perform a series of rapid strikes to overwhelm your opponent or create a protective aura to shield your allies. You choose to:",
+      "options": {
+        "A": "Execute the rapid strikes, leveraging your enhanced unarmed strikes to gain the upper hand swiftly.",
+        "B": "Invoke the protective aura, ensuring your allies remain safe and can continue fighting effectively.",
+        "C": "Balance both actions, alternating between offensive strikes and defensive shields as the situation demands."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Zenara",
+      "description": "Zenara's graceful wings and ability to enhance your unarmed strikes align perfectly with your pursuit of martial precision and inner harmony. Together, you embody the perfect balance of strength and serenity, moving through the Tower of Chaos with calm determination and fluid grace."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Kinetix",
+      "description": "Kinetix's energetic wings and kinetic abilities resonate with your agile and swift combat style. Together, you harness the power of motion and speed, executing rapid strikes and maneuvers that outpace and outsmart your adversaries, ensuring your team's success through dynamic and energetic tactics."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Serenix",
+      "description": "Serenix's tranquil wings and focus-enhancing abilities complement your role as the group's peaceful anchor. Together, you maintain a serene presence amidst chaos, using your combined talents to defuse tension and protect your allies, ensuring harmony and balance within the turbulent environment of the Tower of Chaos."
+    }
+  ]
+}

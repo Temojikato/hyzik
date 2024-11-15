@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Druid Reyvateil Companion Quiz",
+  "introduction": "As the ancient whispers of the forest intertwine with the chaotic energies of the Tower, the Reyvateil discerns the essence of your spirit. Within the ever-changing realm of Pandemonium, your true nature seeks a companion that embodies your harmonious bond with nature. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During an expedition into the Tower, you stumble upon a dying sapling struggling to survive amidst the chaos. Your immediate action is to:",
+      "options": {
+        "A": "Nurture the sapling, using your connection to nature to restore its vitality.",
+        "B": "Analyze the environmental factors affecting the sapling to find a sustainable solution.",
+        "C": "Protect the sapling from further harm, ensuring it remains untouched by destructive forces."
+      }
+    },
+    {
+      "question": "A rival group seeks to exploit the Tower's resources without regard for the natural balance. You:",
+      "options": {
+        "A": "Confront them directly, using your influence over nature to impede their progress.",
+        "B": "Use your knowledge of the Tower's ecosystems to devise strategies that protect the natural order.",
+        "C": "Form alliances with like-minded individuals to collectively defend the Tower's integrity."
+      }
+    },
+    {
+      "question": "The Tower's magic begins to distort a once-thriving garden, causing plants to wither and chaos to spread. You decide to:",
+      "options": {
+        "A": "Channel your innate energy to revive the garden, restoring its natural harmony.",
+        "B": "Investigate the source of the distortion, seeking to understand and counteract its effects.",
+        "C": "Mobilize your allies to collectively stabilize the garden and prevent further decay."
+      }
+    },
+    {
+      "question": "You encounter a mysterious entity that offers you knowledge in exchange for disrupting the natural balance within the Tower. You:",
+      "options": {
+        "A": "Reject the offer, valuing the preservation of nature above all else.",
+        "B": "Seek to understand the entity's motives, finding a way to gain knowledge without causing harm.",
+        "C": "Find a compromise that allows you to harness the knowledge while minimizing environmental impact."
+      }
+    },
+    {
+      "question": "During a sacred ritual, you are given a choice to either enhance your abilities to control plant growth or to summon a protective barrier of earth. You choose to:",
+      "options": {
+        "A": "Enhance your abilities to control plant growth, believing that nurturing nature is essential.",
+        "B": "Summon a protective barrier of earth, ensuring the safety and stability of your group.",
+        "C": "Use both abilities in harmony, balancing growth and protection to maintain equilibrium."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Sylvane",
+      "description": "Sylvane's vibrant, leaf-patterned wings and ability to summon plant growth align perfectly with your nurturing and harmonious approach to nature. Together, you cultivate life and balance within the Tower, using your deep connection to the natural world to support and protect your allies amidst chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Faelith",
+      "description": "Faelith's wild, untamed wings intertwined with vines and blossoms resonate with your primal and resilient nature. Together, you embody the fierce spirit of the forest, using your ability to stabilize and protect the natural balance while embracing the untamed forces of nature within the Tower of Chaos."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Terralyn",
+      "description": "Terralyn's rugged, stone-textured wings and earth-manipulating abilities complement your steadfast and strategic approach to nature. Together, you harness the power of the land to create barriers and disrupt foes, ensuring the stability and protection of your group through the solid foundation of the earth."
+    }
+  ]
+}

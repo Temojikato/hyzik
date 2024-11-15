@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Cleric Reyvateil Companion Quiz",
+  "introduction": "As divine light intertwines with the shadows of Pandemonium, the Reyvateil discerns the essence of your spirit. Within the sacred realm of the Tower of Chaos, your true nature seeks a companion that embodies your divine purpose. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a dire mission to retrieve sacred artifacts from the Tower, you encounter a wounded Diver clinging to life amidst the chaos. Your immediate action is to:",
+      "options": {
+        "A": "Provide immediate divine healing to stabilize them, ensuring their survival.",
+        "B": "Cast a protective spell around the area, preventing further harm and preserving the mission's integrity.",
+        "C": "Encourage your team to create a safe haven, fostering a supportive environment for recovery."
+      }
+    },
+    {
+      "question": "A rival faction offers you forbidden knowledge in exchange for compromising your ethical codes. You:",
+      "options": {
+        "A": "Reject the offer outright, maintaining your moral integrity and divine principles.",
+        "B": "Evaluate the potential benefits and risks, seeking a balanced decision that aligns with your values.",
+        "C": "Find a way to use the knowledge to aid your allies without violating your ethical standards."
+      }
+    },
+    {
+      "question": "The Tower's magic begins to warp reality around a sacred temple, threatening its sanctity. You decide to:",
+      "options": {
+        "A": "Channel divine energy to cleanse and restore the temple’s purity.",
+        "B": "Investigate the source of the distortion, using your wisdom to understand and mitigate its effects.",
+        "C": "Gather your companions to collaboratively defend and protect the temple from the encroaching chaos."
+      }
+    },
+    {
+      "question": "A spirit within the Tower is corrupted by darkness, spreading fear and despair among the inhabitants. Your approach is to:",
+      "options": {
+        "A": "Invoke a blessing to dispel the darkness and restore the spirit’s purity.",
+        "B": "Utilize a combination of light magic and strategic planning to contain and neutralize the threat.",
+        "C": "Provide emotional and spiritual support to those affected, fostering resilience and hope within the community."
+      }
+    },
+    {
+      "question": "During a celestial alignment, you are granted the opportunity to perform a ritual that can either amplify your healing powers or enhance your protective spells. You choose to:",
+      "options": {
+        "A": "Amplify your healing powers, believing that the well-being of your allies is paramount.",
+        "B": "Enhance your protective spells, ensuring the safety and security of your group in perilous situations.",
+        "C": "Balance both enhancements, allowing flexibility to support and protect your allies as needed."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Serapha",
+      "description": "Serapha's radiant wings and protective abilities resonate with your unwavering dedication to healing and safeguarding your allies. Together, you embody divine grace and strength, ensuring that your companions remain resilient and protected amidst the Tower's chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Lumiel",
+      "description": "Lumiel's celestial patterns and enhancing divine spells align with your strategic and potent approach to clerical magic. Together, you amplify your divine interventions, casting powerful blessings and healing energies that sustain and empower your group throughout their perilous journeys."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Vespera",
+      "description": "Vespera's twilight wings and ability to dispel darkness complement your role as a versatile protector. Together, you balance light and shadow, using your divine powers to both shield your allies and combat the encroaching evil within the Tower, maintaining harmony and order amidst chaos."
+    }
+  ]
+}

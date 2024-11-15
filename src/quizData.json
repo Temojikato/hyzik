@@ -1,0 +1,265 @@
+{
+  "quiz": {
+    "title": "Quiz Questions",
+    "questions": [
+      {
+        "number": 1,
+        "question": "As you navigate the ever-shifting corridors of the Tower, you come across a collapsed passage blocking your path. Your first instinct is to:",
+        "options": {
+          "A": "Assess the structural integrity and find a way to stabilize the passage for safe passage.",
+          "B": "Call upon ancient melodies to harmonize the chaos and reveal a hidden path.",
+          "C": "Gather your companions to strategize the best approach to overcome the obstacle together.",
+          "D": "Seek out the faintest traces of movement to discover if there’s another way around."
+        }
+      },
+      {
+        "number": 2,
+        "question": "During a ritual to honor the Guardian, the fountain of rejuvenation starts to dim. You:",
+        "options": {
+          "A": "Channel your inner strength to reignite the fountain’s glow through sheer willpower.",
+          "B": "Recite an ancient chant in Hymmnos to restore the fountain’s vitality.",
+          "C": "Offer assistance to those around you, ensuring everyone remains calm and focused.",
+          "D": "Investigate the cause of the dimming, searching for hidden mechanisms or disturbances."
+        }
+      },
+      {
+        "number": 3,
+        "question": "A mysterious relic emits a faint, pulsating light in the depths of the Tower. Your approach is to:",
+        "options": {
+          "A": "Secure the relic, believing it holds untapped potential that can aid your journey.",
+          "B": "Study the relic’s inscriptions to uncover its magical properties and history.",
+          "C": "Use the relic to bolster the group’s defenses and support capabilities.",
+          "D": "Conceal the relic’s presence to prevent it from falling into unwanted hands."
+        }
+      },
+      {
+        "number": 4,
+        "question": "You encounter a Diver from a rival faction seeking an alliance. You:",
+        "options": {
+          "A": "Engage in a display of strength to establish dominance and secure your position.",
+          "B": "Initiate a dialogue to explore mutual benefits and share knowledge.",
+          "C": "Offer support and resources to build trust and foster a collaborative environment.",
+          "D": "Remain cautious, gathering information before deciding whether to trust them."
+        }
+      },
+      {
+        "number": 5,
+        "question": "The Tower’s magic distorts reality, presenting you with an illusion of your deepest fear. You:",
+        "options": {
+          "A": "Face the illusion head-on, using your resolve to dispel the distortion.",
+          "B": "Utilize magical means to alter the illusion and uncover its true nature.",
+          "C": "Seek the support of your companions to overcome the fear collectively.",
+          "D": "Analyze the illusion carefully to find any weaknesses or hidden truths within it."
+        }
+      },
+      {
+        "number": 6,
+        "question": "A sacred grove within the Tower begins to wither unexpectedly. Your response is to:",
+        "options": {
+          "A": "Use your physical prowess to protect the grove from external threats.",
+          "B": "Cast spells that rejuvenate the grove and restore its natural balance.",
+          "C": "Coordinate with others to tend to the grove and ensure its survival.",
+          "D": "Investigate the cause of the withering to prevent further decline."
+        }
+      },
+      {
+        "number": 7,
+        "question": "During an expedition, you discover a chamber filled with conflicting symbols of chaos and order. You:",
+        "options": {
+          "A": "Assert control over the chamber, using your presence to impose order.",
+          "B": "Decipher the symbols to harness their combined power for your advantage.",
+          "C": "Maintain harmony within your group, ensuring everyone remains balanced.",
+          "D": "Observe and analyze the symbols, seeking hidden meanings and secrets."
+        }
+      },
+      {
+        "number": 8,
+        "question": "The Order of Valor requests your assistance in a noble quest. You:",
+        "options": {
+          "A": "Accept eagerly, driven by a sense of honor and duty.",
+          "B": "Agree, seeing it as an opportunity to expand your knowledge and abilities.",
+          "C": "Support the quest by providing necessary resources and strategic advice.",
+          "D": "Assess the situation carefully before committing, ensuring it aligns with your goals."
+        }
+      },
+      {
+        "number": 9,
+        "question": "A natural disaster strikes the Tower, threatening your party. You:",
+        "options": {
+          "A": "Lead the charge to mitigate the disaster, using your strength to protect everyone.",
+          "B": "Employ magical skills to control or reverse the disaster’s effects.",
+          "C": "Organize and support your allies, ensuring everyone remains safe and effective.",
+          "D": "Find a hidden safe zone or an alternative route to avoid the disaster’s impact."
+        }
+      },
+      {
+        "number": 10,
+        "question": "You are offered forbidden knowledge by a shadowy figure. You:",
+        "options": {
+          "A": "Embrace the knowledge, believing it will enhance your capabilities.",
+          "B": "Consider the ethical implications before deciding to accept it.",
+          "C": "Use your wisdom to reject the offer, prioritizing the group's well-being.",
+          "D": "Investigate the figure’s intentions and the true nature of the knowledge before making a choice."
+        }
+      },
+      {
+        "number": 11,
+        "question": "The Cult of the Chaotic Tower proposes a new ritual to harness the Tower’s energies. Your stance is to:",
+        "options": {
+          "A": "Participate actively, seeing it as a way to gain power and influence.",
+          "B": "Analyze the ritual’s components to understand and potentially control it.",
+          "C": "Support the ritual in a way that ensures the safety and harmony of the group.",
+          "D": "Observe from a distance, determining its effects before deciding to engage."
+        }
+      },
+      {
+        "number": 12,
+        "question": "A member of your party is tempted to abandon their duty for personal gain. You:",
+        "options": {
+          "A": "Confront them directly, asserting the importance of their role.",
+          "B": "Use persuasive tactics to help them see the value of their duty.",
+          "C": "Provide support and alternatives to help them stay committed.",
+          "D": "Monitor the situation quietly, intervening only if necessary to maintain harmony."
+        }
+      },
+      {
+        "number": 13,
+        "question": "The Tower reveals a hidden passage leading deeper into its mysteries. You:",
+        "options": {
+          "A": "Venture in boldly, eager to explore and conquer new challenges.",
+          "B": "Use magical means to safely navigate and unlock the passage’s secrets.",
+          "C": "Ensure the entire group is prepared and coordinated before proceeding.",
+          "D": "Scout the area first, gathering information before committing to the passage."
+        }
+      },
+      {
+        "number": 14,
+        "question": "You find an artifact that can either amplify your personal abilities or enhance the group’s cohesion. You choose to:",
+        "options": {
+          "A": "Enhance your personal abilities to lead and protect the group more effectively.",
+          "B": "Amplify the group's cohesion, ensuring better teamwork and support.",
+          "C": "Use it in a balanced manner, benefiting both your abilities and the group’s unity.",
+          "D": "Secure the artifact for future use, keeping its potential hidden from others."
+        }
+      },
+      {
+        "number": 15,
+        "question": "A Guardian’s Blade is offered to you as a token of trust. You:",
+        "options": {
+          "A": "Accept it immediately, symbolizing your commitment and strength.",
+          "B": "Examine its properties to understand how it can aid your journey.",
+          "C": "Use it to protect and support your allies, ensuring collective safety.",
+          "D": "Guard it carefully, recognizing its significance and potential risks."
+        }
+      },
+      {
+        "number": 16,
+        "question": "The Silent Shadows request your assistance in a covert operation. You:",
+        "options": {
+          "A": "Agree, valuing the strategic advantage it could provide.",
+          "B": "Assess how your unique skills can contribute to the mission’s success.",
+          "C": "Support the operation by ensuring the group remains unified and focused.",
+          "D": "Proceed with caution, understanding the delicate nature of covert work."
+        }
+      },
+      {
+        "number": 17,
+        "question": "You witness an ancient deity’s influence causing turmoil within the Tower. Your reaction is to:",
+        "options": {
+          "A": "Confront the deity’s manifestation with determination and strength.",
+          "B": "Study the deity’s influence to find a way to counteract or harness it.",
+          "C": "Work with your companions to stabilize the situation and protect the community.",
+          "D": "Investigate the origins and intentions behind the deity’s influence."
+        }
+      },
+      {
+        "number": 18,
+        "question": "The Tower offers a chance to gain a unique ability by undergoing a transformative ritual. You decide to:",
+        "options": {
+          "A": "Undergo the ritual immediately, seeking to enhance your capabilities.",
+          "B": "Prepare thoroughly for the ritual, ensuring you understand its effects.",
+          "C": "Encourage your group to participate collectively, strengthening your bond.",
+          "D": "Observe others who undergo the ritual before deciding to participate."
+        }
+      },
+      {
+        "number": 19,
+        "question": "A faction proposes a pact to share resources and knowledge. You:",
+        "options": {
+          "A": "Embrace the pact, seeing it as a means to strengthen your position.",
+          "B": "Evaluate the benefits and potential risks before committing to the pact.",
+          "C": "Support the pact, prioritizing the collective well-being and harmony.",
+          "D": "Proceed with caution, ensuring the pact aligns with your group’s goals."
+        }
+      },
+      {
+        "number": 20,
+        "question": "During a critical moment in the Tower, your Reyvateil offers a song that can either shield the group or reveal hidden paths. You choose to:",
+        "options": {
+          "A": "Shield the group, ensuring immediate protection from impending threats.",
+          "B": "Reveal hidden paths, providing strategic advantages and new opportunities.",
+          "C": "Balance the song’s use, providing both protection and strategic insights as needed.",
+          "D": "Delay the decision, observing the unfolding situation to determine the best use of the song."
+        }
+      }
+    ],
+    "scoring": {
+      "A": 3,
+      "B": 2,
+      "C": 4,
+      "D": 1
+    },
+    "classMapping": [
+      {
+        "scoreRange": "74 - 80",
+        "class": "Barbarian",
+        "description": "You embody the raw strength and unyielding spirit necessary to confront the Tower’s fiercest challenges. Your resilience and determination make you a formidable force within the chaos."
+      },
+      {
+        "scoreRange": "68 - 73",
+        "class": "Sorcerer",
+        "description": "Your innate magical prowess allows you to manipulate the Tower’s chaotic energies. You harness arcane power to shape your destiny and influence the environment around you."
+      },
+      {
+        "scoreRange": "62 - 67",
+        "class": "Cleric",
+        "description": "You are a beacon of hope and support, using your divine connection to heal and protect your allies. Your presence ensures the group remains steadfast amidst the Tower’s turmoil."
+      },
+      {
+        "scoreRange": "56 - 61",
+        "class": "Druid",
+        "description": "You are deeply connected to the natural cycles within the Tower, using your bond with nature to adapt and sustain your group. Your understanding of growth and decay is vital for survival."
+      },
+      {
+        "scoreRange": "50 - 55",
+        "class": "Fighter",
+        "description": "Your tactical acumen and combat readiness make you an essential frontline defender. You excel in adapting to the Tower’s unpredictable threats, ensuring your group’s safety."
+      },
+      {
+        "scoreRange": "44 - 49",
+        "class": "Monk",
+        "description": "Your disciplined approach and inner focus allow you to navigate the Tower’s chaos with grace and precision. Your agility and control make you a versatile asset in any situation."
+      },
+      {
+        "scoreRange": "38 - 43",
+        "class": "Paladin",
+        "description": "You stand as a paragon of righteousness and protection, upholding moral integrity within the Tower’s chaos. Your unwavering dedication ensures the safety and honor of your companions."
+      },
+      {
+        "scoreRange": "32 - 37",
+        "class": "Ranger",
+        "description": "Your expertise in tracking and survival skills enables you to navigate the Tower’s ever-changing landscape effectively. You excel in resource management and strategic positioning."
+      },
+      {
+        "scoreRange": "26 - 31",
+        "class": "Rogue",
+        "description": "Your stealth and cunning allow you to move unseen and strike precisely within the Tower’s depths. You excel in gathering information and executing covert operations."
+      },
+      {
+        "scoreRange": "20 - 25",
+        "class": "Wizard",
+        "description": "Your mastery of arcane knowledge empowers you to manipulate the Tower’s magic and uncover its deepest secrets. You are a scholar of the mystical forces that govern Pandemonium."
+      }
+    ]
+  }
+}

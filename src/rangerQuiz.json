@@ -1,0 +1,68 @@
+{
+  "title": "Pandemonium's Path: Ranger Reyvateil Companion Quiz",
+  "introduction": "As the whispering winds intertwine with the rustling leaves, the Reyvateil discerns the essence of your hunter's spirit. Within the untamed wilderness of Pandemonium, where chaos and nature coexist in delicate balance, your true nature seeks a companion that embodies your mastery of the wild, stealth, and precision. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "While tracking a mysterious creature through the Tower's dense foliage, you come across a hidden clearing illuminated by moonlight. Your immediate action is to:",
+      "options": {
+        "A": "Blend into the surroundings, using your camouflage to observe the creature without being detected.",
+        "B": "Quickly scout the area, utilizing your heightened agility to gather information before the creature notices you.",
+        "C": "Set up a strategic vantage point, using your keen eyesight to monitor the creature's movements from a distance."
+      }
+    },
+    {
+      "question": "During a reconnaissance mission, you discover an area where the Tower's magic has disrupted the natural balance, causing plants to grow uncontrollably. You:",
+      "options": {
+        "A": "Use your survival skills to navigate through the overgrowth, finding a path to your objective while maintaining stealth.",
+        "B": "Harness the energy of the wind to disperse the excess plants, restoring balance and clearing your path.",
+        "C": "Mark the location for future reference and report the anomaly to your team for a coordinated effort to manage it."
+      }
+    },
+    {
+      "question": "A rival faction attempts to ambush your party in the forest. Your response is to:",
+      "options": {
+        "A": "Summon minor forest creatures to distract and hinder the attackers, allowing your team to gain the upper hand.",
+        "B": "Create a sudden gust of wind to disorient the ambushers, disrupting their formation and plans.",
+        "C": "Take a precise shot from a distance to neutralize key threats, minimizing confrontation and maintaining your party's safety."
+      }
+    },
+    {
+      "question": "You come across a rare, enchanted bow that could significantly enhance your ranged attacks. However, obtaining it requires navigating a series of intricate traps. You:",
+      "options": {
+        "A": "Carefully track and analyze the traps, using your perception skills to safely retrieve the bow without triggering them.",
+        "B": "Utilize your agility and swift movements to bypass the traps quickly, securing the bow before danger arises.",
+        "C": "Assess the traps from a distance, planning a precise and strategic approach to acquire the bow efficiently."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a critical hunt: summon a flock of minor forest creatures to aid in tracking your prey or create a powerful gust of wind to flush the target out. You choose to:",
+      "options": {
+        "A": "Summon the forest creatures, leveraging their collective abilities to enhance your tracking and hunt effectively.",
+        "B": "Create the gust of wind, using the disruption to gain a tactical advantage and force your prey into a vulnerable position.",
+        "C": "Combine both abilities, summoning creatures to assist while using the wind to control the environment and optimize your hunt."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Windrunner",
+      "description": "Windrunner's aerodynamic wings and kinetic abilities resonate with your agile and swift combat style. Together, you harness the power of the wind to outmaneuver enemies and control the battlefield, using gusts to disrupt foes and your enhanced movement speed to maintain strategic advantages during hunts."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Sylvanna",
+      "description": "Sylvanna's camouflaged, leaf-patterned wings and ability to enhance your tracking and stealth perfectly align with your harmonious bond with nature. Together, you navigate the Tower's wilderness with unparalleled stealth and precision, summoning forest creatures to aid in your hunts and ensuring your presence remains subtle and protected."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Falconis",
+      "description": "Falconis's sharp, talon-like wings and precision-enhancing abilities complement your focus on ranged attacks and reconnaissance. Together, you execute flawless strikes from afar and gather invaluable intelligence through invisible scouting, ensuring your team's success with each precise and calculated move within the chaotic environment of Pandemonium."
+    }
+  ]
+}

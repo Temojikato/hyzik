@@ -1,0 +1,68 @@
+{
+  "title": "Sorcerer Reyvateil Companion Quiz",
+  "introduction": "As the raw elemental forces of Pandemonium surge through the chaotic energies of the Tower, the Reyvateil discerns the essence of your innate magical prowess. Within this volatile realm, where chaos and creation intertwine, your true nature seeks a companion that embodies your elemental affinity, mastery, and unbridled power. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During an intense magical duel, you notice the environment reacting to your spells, causing unpredictable elemental disturbances. Your immediate action is to:",
+      "options": {
+        "A": "Harness the chaotic energy to amplify your offensive spells, overwhelming your opponent with sheer power.",
+        "B": "Focus on controlling and stabilizing the elemental disturbances, ensuring your spells remain precise and effective.",
+        "C": "Adapt swiftly, using the disturbances to your advantage by redirecting your spells to exploit new opportunities."
+      }
+    },
+    {
+      "question": "You come across an ancient tome that can either unlock forbidden fire rituals, reveal secret ice enchantments, or detail advanced storm incantations. Your instinct is to:",
+      "options": {
+        "A": "Dive into the fire rituals, eager to unleash and master the destructive and transformative power of fire.",
+        "B": "Study the ice enchantments, seeking to understand and control the intricate and resilient nature of ice magic.",
+        "C": "Explore the storm incantations, fascinated by the dynamic and unpredictable forces of lightning and wind."
+      }
+    },
+    {
+      "question": "A natural disaster within the Tower threatens to devastate a key area. You decide to:",
+      "options": {
+        "A": "Summon a fiery barrier to contain the disaster, using fire's transformative power to mitigate the damage.",
+        "B": "Create an ice shield to stabilize the environment, preserving the area from further chaos.",
+        "C": "Unleash a storm to disperse the disaster's energy, redirecting its force away from vulnerable zones."
+      }
+    },
+    {
+      "question": "During a peaceful moment, you are presented with a choice to either ignite a ceremonial flame, cast a frost spell to preserve the moment, or call forth a lightning storm to celebrate. You:",
+      "options": {
+        "A": "Ignite the ceremonial flame, using fire's warmth and light to honor the occasion.",
+        "B": "Cast a frost spell, ensuring the moment remains preserved and undisturbed by external forces.",
+        "C": "Call forth a lightning storm, embracing the electrifying energy to amplify the celebration's impact."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal battle: unleash a torrent of fire to scorch your enemies or conjure a blizzard to freeze the battlefield. You choose to:",
+      "options": {
+        "A": "Unleash the torrent of fire, believing that overwhelming your foes with relentless flames is the key to victory.",
+        "B": "Conjure the blizzard, using ice to immobilize and control the flow of the battle strategically.",
+        "C": "Balance both elements, alternating between fire and ice to adapt to the evolving dynamics of the fight."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Emberlyn",
+      "description": "Emberlyn's fiery wings and ability to amplify your fire-based spells align perfectly with your passionate and aggressive approach to magic. Together, you harness the transformative and destructive power of fire, overwhelming your enemies with intense heat and relentless assaults, embodying the fierce spirit of Pandemonium."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Frostia",
+      "description": "Frostia's icy wings and mastery over ice enchantments resonate with your strategic and resilient nature. Together, you control the battlefield with precision, using frost to immobilize foes and stabilize chaotic environments, ensuring your spells remain effective and your allies protected amidst the turmoil of Pandemonium."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Storma",
+      "description": "Storma's electrifying wings and ability to harness storm-based spells complement your dynamic and adaptable magical style. Together, you unleash the unpredictable and powerful forces of lightning and wind, manipulating the flow of battle with swift strikes and strategic disruptions, maintaining your dominance in the chaotic landscape of Pandemonium."
+    }
+  ]
+}

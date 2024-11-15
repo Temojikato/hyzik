@@ -1,0 +1,68 @@
+{
+  "title": "Wizard Reyvateil Companion Quiz",
+  "introduction": "As the arcane energies of Pandemonium swirl around you, the Reyvateil discerns the essence of your scholarly spirit. Within the enigmatic halls of the Tower, where chaos and magic intertwine, your true nature seeks a companion that embodies your mastery of the arcane, strategic intellect, and the subtle art of enchantment. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "While deciphering an ancient spellbook, you encounter a complex enchantment that could either enhance your spellcasting efficiency or allow you to manipulate magical defenses. Your approach is to:",
+      "options": {
+        "A": "Focus on streamlining your spellcasting, aiming to cast spells more effectively with reduced effort.",
+        "B": "Investigate the enchantment's potential to bolster your defenses, ensuring your spells remain protected from interference.",
+        "C": "Explore both aspects, seeking a balance between efficient spellcasting and the ability to counteract magical barriers."
+      }
+    },
+    {
+      "question": "During a magical experiment, an unexpected surge of energy threatens to destabilize the area. You decide to:",
+      "options": {
+        "A": "Channel the excess energy into your spell repertoire, enhancing the potency of your current spells.",
+        "B": "Contain the surge by reinforcing your magical barriers, preventing further disruption.",
+        "C": "Redirect the energy to create a temporary storage for later use, maintaining control over its effects."
+      }
+    },
+    {
+      "question": "A rival wizard challenges you to a duel of wits and magic. Your strategy is to:",
+      "options": {
+        "A": "Utilize your extensive knowledge to outmaneuver their spells, focusing on casting efficiently and effectively.",
+        "B": "Employ defensive magic to protect yourself while seeking opportunities to disrupt their enchantments.",
+        "C": "Blend offensive and defensive tactics, balancing powerful spells with strategic protections to gain the upper hand."
+      }
+    },
+    {
+      "question": "You discover a hidden chamber filled with arcane symbols and potential spell enhancements. Your action is to:",
+      "options": {
+        "A": "Study the symbols meticulously, aiming to incorporate their efficiencies into your own spellcasting methods.",
+        "B": "Analyze the chamber for defensive enchantments, seeking ways to fortify your magical defenses.",
+        "C": "Research the chamber's secrets to understand how to harmonize both enhanced spellcasting and defensive magic."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a critical mission: enhance your spellcasting efficiency to cast more spells or augment your enchantment abilities to manipulate and influence your surroundings. You choose to:",
+      "options": {
+        "A": "Enhance your spellcasting efficiency, allowing you to cast a greater number of spells with ease.",
+        "B": "Augment your enchantment abilities, enabling you to exert more control and influence over your environment.",
+        "C": "Combine both enhancements, balancing the ability to cast multiple spells while manipulating your surroundings effectively."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Arcanis",
+      "description": "Arcanis's rune-etched wings and ability to enhance your arcane spellcasting align perfectly with your dedication to mastering the efficiency and potency of your magic. Together, you delve deeper into the complexities of the arcane, streamlining your spellcasting process and maximizing your magical output within the Tower of Chaos."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Mystara",
+      "description": "Mystara's shifting glyphs and bonuses to spell attack rolls and spell save DCs resonate with your strategic approach to magic. Together, you refine your offensive capabilities, ensuring your spells strike true and have lasting effects, enhancing your presence and effectiveness in every magical endeavor within Pandemonium."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Enchantra",
+      "description": "Enchantra's enchanting wings and ability to bolster enchantment and illusion spells complement your focus on manipulating and influencing your surroundings. Together, you weave intricate spells that captivate and control, ensuring your magical influence remains potent and resistant to opposition within the chaotic environment of the Tower."
+    }
+  ]
+}

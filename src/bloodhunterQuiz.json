@@ -1,0 +1,68 @@
+{
+  "title": "Blood Hunter Reyvateil Companion Quiz",
+  "introduction": "As the crimson moon casts its eerie glow over the chaotic landscape of the Tower, the Reyvateil discerns the essence of your blood-soaked spirit. Within the tumultuous realm of Pandemonium, where life and death dance in precarious balance, your true nature seeks a companion that embodies your relentless pursuit of vengeance, mastery of blood magic, and the intricate dance between survival and power. Engage with these introspective scenarios, allowing the echoes of the Tower to guide your bond with your destined Reyvateil.",
+  "questions": [
+    {
+      "question": "During a relentless pursuit of a formidable foe within the Tower, you stumble upon a wounded creature that could either provide valuable information or pose a threat if left unattended. Your immediate action is to:",
+      "options": {
+        "A": "Use your blood magic to stabilize the creature, extracting any useful information before ensuring it can no longer pose a threat.",
+        "B": "Stealthily observe the creature from the shadows, determining whether it can be an asset or must be eliminated.",
+        "C": "Decide to leave the creature alone, prioritizing the pursuit over potential risks and rewards."
+      }
+    },
+    {
+      "question": "A fellow Blood Hunter is grappling with the moral implications of their blood rituals. You choose to:",
+      "options": {
+        "A": "Confront them directly, emphasizing the importance of their oath and the necessity of their methods for survival.",
+        "B": "Offer guidance on refining their techniques to minimize harm while maintaining effectiveness in their hunts.",
+        "C": "Encourage them to seek a balance between their rituals and their conscience, fostering a more harmonious approach to their practices."
+      }
+    },
+    {
+      "question": "The Tower's chaotic magic creates an area where life force is unstable, causing both beneficial and harmful effects. You decide to:",
+      "options": {
+        "A": "Harness the volatile energy to amplify your blood magic, accepting the risks for greater power.",
+        "B": "Stabilize the area using your mastery over blood rituals, ensuring that only controlled effects influence the environment.",
+        "C": "Navigate through the unstable zone carefully, using your senses to avoid harmful fluctuations while capitalizing on beneficial opportunities."
+      }
+    },
+    {
+      "question": "During a strategic mission, you have the option to either siphon health from a group of enemies to heal your allies or perform a blood ritual that grants temporary buffs to your team. You:",
+      "options": {
+        "A": "Siphon health from the enemies, prioritizing the immediate restoration of your allies' vitality.",
+        "B": "Perform the blood ritual, enhancing your team's combat capabilities to ensure a decisive victory.",
+        "C": "Combine both actions, siphoning health while also granting buffs to maximize your team's overall effectiveness."
+      }
+    },
+    {
+      "question": "The Reyvateil offers you a choice during a pivotal battle: unleash a dark energy blast to devastate your foes or perform a blood ritual to bolster your allies' defenses. You choose to:",
+      "options": {
+        "A": "Unleash the dark energy blast, believing that overwhelming your enemies swiftly is essential for victory.",
+        "B": "Perform the blood ritual, enhancing your allies' resilience and ensuring their survival amidst the chaos.",
+        "C": "Balance both actions, delivering a dark energy blast while simultaneously bolstering your allies' defenses to maintain a strategic advantage."
+      }
+    }
+  ],
+  "scoring": {
+    "A": 3,
+    "B": 2,
+    "C": 1
+  },
+  "reyvateilMapping": [
+    {
+      "scoreRange": "13 - 15",
+      "reyvateil": "Crimsonis",
+      "description": "Crimsonis's menacing, blood-infused wings and ability to enhance your blood magic perfectly align with your aggressive and relentless pursuit of power. Together, you channel the raw, destructive forces of blood magic to devastate your enemies and sustain your allies, embodying the fierce and dangerous essence of Pandemonium."
+    },
+    {
+      "scoreRange": "9 - 12",
+      "reyvateil": "Hemoria",
+      "description": "Hemoria's vein-patterned wings and bonuses to tracking and hunting abilities resonate with your strategic and precise nature. Together, you excel in tracking down your targets with heightened senses and stealth, infusing your weapons with blood magic to maximize your effectiveness in combat and survival within the Tower."
+    },
+    {
+      "scoreRange": "5 - 8",
+      "reyvateil": "Sanguis",
+      "description": "Sanguis's sinister, rune-lined wings and ability to curse and weaken foes complement your focus on evasion and debilitating effects. Together, you manipulate dark rituals to reduce enemy effectiveness and perform blood rituals that provide crucial buffs or debuffs, ensuring your group's dominance through calculated and potent actions."
+    }
+  ]
+}
