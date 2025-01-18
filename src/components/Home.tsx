@@ -21,7 +21,11 @@ import ReyvateilInfo from './ReyvateilInfo';
 import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../contexts/ThemeContext';
 import InventoryModal from './InventoryModal';
+import FullScreenMapModal from './FullScreenMapModal';
+
 import PlayerInfo from './PlayerInfo';
+import FullScreenBestiaryModal from './FullScreenBestiaryModal';
+import { color } from 'framer-motion';
 
 const Home: React.FC = () => {
   const { currentUser } = useAuth();
@@ -31,6 +35,16 @@ const Home: React.FC = () => {
   const { currentTheme } = useThemeContext();
   const [inventory, setInventory] = useState<Item[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // Controls for the inventory modal
+  const {
+    isOpen: isOpenMaps,
+    onOpen: onOpenMaps,
+    onClose: onCloseMaps
+  } = useDisclosure();
+  const {
+    isOpen: isOpenBestiary,
+    onOpen: onOpenBestiary,
+    onClose: onCloseBestiary
+  } = useDisclosure();
   const navigate = useNavigate();
   const [unlockedRecipes, setUnlockedRecipes] = useState<string[]>([]);
   const toast = useToast();
@@ -273,7 +287,13 @@ const Home: React.FC = () => {
           Hyzik
         </Heading>
         <Flex>
-          <Button colorScheme="blue" fontFamily="Hymmnos" onClick={onOpen} mr={2}>
+          <Button colorScheme="red" variant="outline" fontFamily="Hymmnos" onClick={onOpenBestiary} mr={2}>
+            Open Bestiary
+          </Button>
+          <Button colorScheme="green" variant="outline" fontFamily="Hymmnos" onClick={onOpenMaps} mr={2}>
+            Open Maps
+          </Button>
+          <Button colorScheme="blue" variant="outline" fontFamily="Hymmnos" onClick={onOpen} mr={2}>
             Open Inventory
           </Button>
           <Button colorScheme="red" fontFamily="Hymmnos" onClick={handleLogout}>
@@ -292,6 +312,8 @@ const Home: React.FC = () => {
         reyvateil={reyvateil}
         unlockedRecipes={unlockedRecipes}
         setUnlockedRecipes={handleRecipeUnlock} />
+      <FullScreenMapModal isOpen={isOpenMaps} onClose={onCloseMaps} />
+      <FullScreenBestiaryModal isOpen={isOpenBestiary} onClose={onCloseBestiary} />
     </Box>
   );
 };
