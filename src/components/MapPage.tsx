@@ -1,4 +1,5 @@
 // MapPage.tsx
+
 import React, { useState } from 'react';
 import { Box, Heading } from '@chakra-ui/react';
 import MapSelector from './MapSelector';
@@ -26,7 +27,7 @@ const MapPage: React.FC = () => {
   };
 
   return (
-    <Box p={5}>
+    <Box p={5} height="100%">
       <Heading size="lg" mb={4}>
         Map Selection
       </Heading>
@@ -35,7 +36,7 @@ const MapPage: React.FC = () => {
 
       {/* Step 2: Render the map if a floor is selected */}
       {selectedFloor && (
-        <Box mt={8}>
+        <Box mt={8} height="calc(100% - 200px)"> {/* Adjust height as needed */}
           <InteractiveMap
             floor={selectedFloor}
             onAreaClick={(area) => setSelectedArea(area)}

@@ -1,3 +1,5 @@
+// FullScreenMapModal.tsx
+
 import React from 'react';
 import {
   Modal,
@@ -19,14 +21,13 @@ interface FullScreenMapModalProps {
 
 const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="full">
+    <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered motionPreset="slideInBottom">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Map</ModalHeader>
-        {/* This automatically places an "X" button in the top-right corner */}
         <ModalCloseButton />
-        <ModalBody p={0}>
-          {/* You can render your entire MapPage here */}
+        <ModalBody p={0} height="100vh">
+          {/* Render the entire MapPage here */}
           <MapPage />
         </ModalBody>
         <ModalFooter>

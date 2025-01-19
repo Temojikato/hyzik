@@ -1,0 +1,22 @@
+/* InteractiveMap.css */
+
+.image-mapper-shape {
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.image-mapper-shape.unlocked:hover {
+  fill-opacity: 0.5; /* Increase opacity on hover */
+  stroke: white;      /* Change stroke color on hover */
+}
+
+.image-mapper-shape.locked:hover {
+  fill-opacity: 0.3; /* Maintain opacity for locked areas */
+  stroke: gray;       /* Change stroke color for consistency */
+}
+
+/* Optional: Style for the point labels */
+svg text {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 100px; /* Ensure this matches the SVG fontSize */
+}

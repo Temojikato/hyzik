@@ -12,8 +12,6 @@ import {
   Alert,
   AlertIcon,
   Box,
-  Button,
-  Heading,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -22,10 +20,9 @@ import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../contexts/ThemeContext';
 import InventoryModal from './InventoryModal';
 import FullScreenMapModal from './FullScreenMapModal';
-
 import PlayerInfo from './PlayerInfo';
 import FullScreenBestiaryModal from './FullScreenBestiaryModal';
-import { color } from 'framer-motion';
+import Header from './Header'; // Import the Header component
 
 const Home: React.FC = () => {
   const { currentUser } = useAuth();
@@ -34,21 +31,24 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string>('');
   const { currentTheme } = useThemeContext();
   const [inventory, setInventory] = useState<Item[]>([]);
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Controls for the inventory modal
+  const {
+    isOpen,
+    onOpen,
+    onClose,
+  } = useDisclosure(); // Controls for the inventory modal
   const {
     isOpen: isOpenMaps,
     onOpen: onOpenMaps,
-    onClose: onCloseMaps
+    onClose: onCloseMaps,
   } = useDisclosure();
   const {
     isOpen: isOpenBestiary,
     onOpen: onOpenBestiary,
-    onClose: onCloseBestiary
+    onClose: onCloseBestiary,
   } = useDisclosure();
   const navigate = useNavigate();
   const [unlockedRecipes, setUnlockedRecipes] = useState<string[]>([]);
   const toast = useToast();
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -73,7 +73,6 @@ const Home: React.FC = () => {
           }
 
           setUnlockedRecipes(userData.unlockedRecipes || []);
-
 
           const reyvateilRef = doc(db, 'reyvateils', userData.reyvateilId);
           const reyvateilSnap = await getDoc(reyvateilRef);
@@ -144,74 +143,6 @@ const Home: React.FC = () => {
     }
   };
 
-  // const handleRitualUnlock = async (ritual: string): Promise<void> => {
-  //   if (!currentUser || !reyvateil) {
-  //     toast({
-  //       title: 'Error',
-  //       description: 'No user or Reyvateil found.',
-  //       status: 'error',
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     return;
-  //   }
-
-  //   const userRef = doc(db, 'users', currentUser.uid);
-  //   try {
-  //     let newInventory = [...inventory];
-  //     await runTransaction(db, async (transaction) => {
-  //       const userSnap = await transaction.get(userRef);
-  //       if (!userSnap.exists()) {
-  //         throw new Error('User data not found.');
-  //       }
-
-  //       const userData = userSnap.data();
-
-  //       const itemIndex = newInventory.findIndex((item) => item.name === ritual);
-  //       if (
-  //         itemIndex !== -1 &&
-  //         newInventory !== undefined &&
-  //         newInventory[itemIndex] !== undefined &&
-  //         newInventory[itemIndex].quantity !== undefined
-  //       ) {
-  //         const item = newInventory[itemIndex];
-  //         item.quantity = (item.quantity || 0) - 1;
-  //         if (item.quantity <= 0) {
-  //           newInventory.splice(itemIndex, 1);
-  //         }
-  //       }
-
-  //       transaction.update(userRef, {
-  //         inventory: newInventory.map((item) => ({
-  //           reference: doc(db, 'items', item.id),
-  //           quantity: item.quantity,
-  //         })),
-  //         unlockedRituals: [...(userData.unlockedRituals || []), ritual],
-  //       });
-  //     });
-
-  //     setInventory(newInventory);
-  //     setUnlockedRituals([...unlockedRecipes, ritual]);
-
-  //     toast({
-  //       title: 'Success',
-  //       description: `${ritual} has been unlocked!`,
-  //       status: 'success',
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   } catch (error: any) {
-  //     console.error('Transaction failed:', error);
-  //     toast({
-  //       title: 'Error',
-  //       description: `Failed to unlock ritual. Please try again :: ${error.message}`,
-  //       status: 'error',
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
-  // };
-
   const handleRecipeUnlock = async (recipe: string): Promise<void> => {
     if (!currentUser || !reyvateil) {
       toast({
@@ -260,7 +191,6 @@ const Home: React.FC = () => {
     }
   };
 
-
   if (loading) {
     return (
       <Flex justify="center" align="center" height="100vh">
@@ -282,26 +212,20 @@ const Home: React.FC = () => {
 
   return (
     <Box p={4} bg="background">
-      <Flex justify="space-between" align="center" mb={4}>
-        <Heading as="h1" fontSize="4xl" fontWeight="bold" fontFamily="Hymmnos" color="textHeader">
-          Hyzik
-        </Heading>
-        <Flex>
-          <Button colorScheme="red" variant="outline" fontFamily="Hymmnos" onClick={onOpenBestiary} mr={2}>
-            Open Bestiary
-          </Button>
-          <Button colorScheme="green" variant="outline" fontFamily="Hymmnos" onClick={onOpenMaps} mr={2}>
-            Open Maps
-          </Button>
-          <Button colorScheme="blue" variant="outline" fontFamily="Hymmnos" onClick={onOpen} mr={2}>
-            Open Inventory
-          </Button>
-          <Button colorScheme="red" fontFamily="Hymmnos" onClick={handleLogout}>
-            Log Out
-          </Button>
-        </Flex>
-      </Flex>
-      <ReyvateilInfo reyvateil={reyvateil} inventory={inventory} setInventory={setInventory} />
+      {/* Header Component */}
+      <Header
+        onOpenBestiary={onOpenBestiary}
+        onOpenMaps={onOpenMaps}
+        onOpenInventory={onOpen}
+        handleLogout={handleLogout}
+      />
+
+      {/* Rest of your components */}
+      <ReyvateilInfo
+        reyvateil={reyvateil}
+        inventory={inventory}
+        setInventory={setInventory}
+      />
       <PlayerInfo />
       <InventoryModal
         isOpen={isOpen}
@@ -311,7 +235,8 @@ const Home: React.FC = () => {
         currentUser={currentUser}
         reyvateil={reyvateil}
         unlockedRecipes={unlockedRecipes}
-        setUnlockedRecipes={handleRecipeUnlock} />
+        setUnlockedRecipes={handleRecipeUnlock}
+      />
       <FullScreenMapModal isOpen={isOpenMaps} onClose={onCloseMaps} />
       <FullScreenBestiaryModal isOpen={isOpenBestiary} onClose={onCloseBestiary} />
     </Box>
