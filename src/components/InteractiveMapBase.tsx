@@ -149,8 +149,15 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
         doubleClick={{ disabled: true }}
         wheel={{ step: 0.1 }}
         pinch={{ step: 0.1 }}
+
       >
-        <TransformComponent>
+        <TransformComponent
+          wrapperStyle={{
+            width: "100%",
+            height: "100%",
+          }}
+          contentStyle={{ width: "100%", height: "100%" }}
+        >
           <Box position="relative" width="100%" height="100%">
             {/* 1) The base floor image */}
             <Box
