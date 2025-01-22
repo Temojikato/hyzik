@@ -1,100 +1,81 @@
-// MapAreaModal.tsx
+// src/components/MapAreaModal.tsx
 import React from 'react';
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  ModalCloseButton,
   ModalBody,
   ModalFooter,
-  ModalCloseButton,
   Button,
-  Text,
-  Image,
-  BoxProps,
   Box,
+  Text,
+  Flex,
 } from '@chakra-ui/react';
-import { MapArea } from '../mapdata';
-import { useNavigate } from 'react-router-dom';
+import { MapArea, MapFloor } from '../mapdata';
+import InteractiveMapArea from './InteractiveMapArea';
 
 interface MapAreaModalProps {
   area: MapArea;
+  floor: MapFloor;
   isOpen: boolean;
   onClose: () => void;
-  onUnlock: (areaId: string) => void; // e.g., to handle unlocking externally
+  floorImageUrl: string;
 }
 
-const MapAreaModal: React.FC<MapAreaModalProps> = ({ area, isOpen, onClose, onUnlock }) => {
-  const navigate = useNavigate();
-
-  // If locked, blur everything below
-  const isLocked = area.locked;
-  const blurStyle: React.CSSProperties = {
-    filter: 'blur(4px)',
-    userSelect: 'none',
-    pointerEvents: 'none',
-  };
-
-  const handleMonsterClick = (monster: string) => {
-    if (area.monstersDocumented) {
-      // Navigate to bestiary if we have docs
-      navigate(`/bestiary/${monster}`);
-    } else {
-      alert('Monster not documented yet!');
-    }
-  };
-
+const MapAreaModal: React.FC<MapAreaModalProps> = ({
+  area,
+  floor,
+  isOpen,
+  onClose,
+  floorImageUrl,
+}) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
+    <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt="2rem" maxHeight="90vh">
         <ModalHeader>{area.name}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          {isLocked && (
-            <Text color="red.400" fontWeight="bold" mb={2}>
-              This area is currently locked!
-            </Text>
-          )}
+        <ModalBody p={0}>
+          <Flex direction="column" height="70vh">
+            {/* Top: the pinch/zoom map container */}
+            <Box flex="1" position="relative" overflow="hidden">
+              <InteractiveMapArea
+                imageUrl={floorImageUrl}
+                area={area}
+                // This triggers the bounding box auto-centering:
+                autoFocusArea={true}
+                desiredScale={2}
+              />
+            </Box>
 
-          <Box style={isLocked ? blurStyle : undefined}>
-            {area.image && (
-              <Image src={area.image} alt={area.name} mb={4} />
-            )}
-            <Text fontWeight="bold" mb={2}>Monsters in this area:</Text>
-            {area.monsters && area.monsters.length > 0 ? (
-              <>
-                {area.monsters.map((monster: string) => (
-                  <Text
-                    key={monster}
-                    color="blue.400"
-                    textDecoration="underline"
-                    cursor={area.monstersDocumented ? 'pointer' : 'not-allowed'}
-                    onClick={() => handleMonsterClick(monster)}
-                  >
-                    {monster}
-                  </Text>
-                ))}
-              </>
-            ) : (
-              <Text>No monsters here!</Text>
-            )}
+            {/* Bottom: textual info */}
+            <Box
+              flex="1"
+              p={4}
+              bg="gray.50"
+              overflowY="auto"
+            >
+              <Text fontWeight="bold" fontSize="lg" mb={2}>
+                Area Details
+              </Text>
+              <Text fontWeight="semibold">Description:</Text>
+              <Text mb={3}>{area.description || 'No description.'}</Text>
 
-            {/* Any other objects or details you want to show */}
-          </Box>
+              {area.monsters.length > 0 && (
+                <Box mb={3}>
+                  <Text fontWeight="semibold">Monsters:</Text>
+                  <Text>{area.monsters.join(', ')}</Text>
+                </Box>
+              )}
+              {/* ... more fields if needed */}
+            </Box>
+          </Flex>
         </ModalBody>
 
         <ModalFooter>
-          {isLocked && (
-            <Button
-              colorScheme="yellow"
-              mr={3}
-              onClick={() => onUnlock(area.id)}
-            >
-              Reveal (Unlock)
-            </Button>
-          )}
-          <Button onClick={onClose} colorScheme="blue">
+          <Button variant="ghost" onClick={onClose}>
             Close
           </Button>
         </ModalFooter>

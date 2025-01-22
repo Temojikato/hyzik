@@ -1,4 +1,5 @@
-// MapSelector.tsx
+// src/components/MapSelector.tsx
+
 import React, { useState } from 'react';
 import { VStack, Select, Text } from '@chakra-ui/react';
 import { mapData, MapCategory, MapFloor } from '../mapdata';

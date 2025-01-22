@@ -1,22 +1,20 @@
-/* InteractiveMap.css */
+/* src/InteractiveMap.css */
 
-.image-mapper-shape {
-  transition: fill 0.3s, stroke 0.3s;
+.image-mapper-shape:hover {
+  fill-opacity: 0.6;
 }
 
-.image-mapper-shape.unlocked:hover {
-  fill-opacity: 0.5; /* Increase opacity on hover */
-  stroke: white;      /* Change stroke color on hover */
+.image-mapper-shape.locked {
+  fill: rgba(128, 128, 128, 0.3);
 }
 
-.image-mapper-shape.locked:hover {
-  fill-opacity: 0.3; /* Maintain opacity for locked areas */
-  stroke: gray;       /* Change stroke color for consistency */
+.image-mapper-shape.unlocked {
+  fill: rgba(0, 0, 0, 0); /* Transparent */
 }
 
-/* Optional: Style for the point labels */
-svg text {
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 100px; /* Ensure this matches the SVG fontSize */
+.image-mapper-shape.focused {
+  fill-opacity: 0.5;
+  stroke: orange;
+  stroke-width: 3;
 }
+

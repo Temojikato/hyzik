@@ -1,56 +1,95 @@
-// MapPage.tsx
+// src/components/MapPage.tsx
 
-import React, { useState } from 'react';
-import { Box, Heading } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Box, Heading, Flex, Spinner, Text } from '@chakra-ui/react';
 import MapSelector from './MapSelector';
-import InteractiveMap from './InteractiveMap';
 import MapAreaModal from './MapAreaModal';
 import { MapFloor, MapArea } from '../mapdata';
+import { storage } from '../Firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
+import InteractiveMapBase from './InteractiveMapBase';
 
 const MapPage: React.FC = () => {
   const [selectedFloor, setSelectedFloor] = useState<MapFloor | null>(null);
   const [selectedArea, setSelectedArea] = useState<MapArea | null>(null);
 
-  // Handle unlocking an area by toggling locked = false
-  // In a real app, you'd store floors in some global state or context.
-  const handleUnlockArea = (areaId: string) => {
-    if (!selectedFloor) return;
+  const [floorImageUrl, setFloorImageUrl] = useState<string>('');
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
+  const [imageError, setImageError] = useState<boolean>(false);
 
-    const updatedAreas = selectedFloor.areas.map((area) =>
-      area.id === areaId ? { ...area, locked: false } : area
-    );
+  function handleFloorSelect(floor: MapFloor) {
+    setSelectedFloor(floor);
+    setSelectedArea(null);
 
-    // Set new floor state
-    setSelectedFloor({ ...selectedFloor, areas: updatedAreas });
+    setLoadingImage(true);
+    setImageError(false);
 
-    // Optionally close the modal or re-open it so changes apply
-  };
+    // Single fetch for the entire floor's image
+    const imageRef = ref(storage, "maps/" + floor.name + ".jpg");
+    getDownloadURL(imageRef)
+      .then((url) => {
+        setFloorImageUrl(url);
+        setLoadingImage(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching map image:', error);
+        setFloorImageUrl('');
+        setLoadingImage(false);
+        setImageError(true);
+      });
+  }
 
+  function handleAreaClick(area: MapArea) {
+    // Open the area modal
+    setSelectedArea(area);
+  }
+
+  useEffect(() => {
+    if (selectedArea) {
+      console.log("selectedArea changed =>", selectedArea);
+    }
+  }, [selectedArea]);
+
+  
   return (
-    <Box p={5} height="100%">
-      <Heading size="lg" mb={4}>
-        Map Selection
-      </Heading>
-      {/* Step 1: Category & Floor Selector */}
-      <MapSelector onMapSelect={setSelectedFloor} />
+    <Box p={5} height="100vh">
+      <Heading size="lg" mb={4}>Map Selection</Heading>
+      <MapSelector onMapSelect={handleFloorSelect} />
 
-      {/* Step 2: Render the map if a floor is selected */}
       {selectedFloor && (
-        <Box mt={8} height="calc(100% - 200px)"> {/* Adjust height as needed */}
-          <InteractiveMap
-            floor={selectedFloor}
-            onAreaClick={(area) => setSelectedArea(area)}
-          />
+        <Box mt={8} height="calc(100% - 200px)" position="relative">
+          {loadingImage ? (
+            <Flex align="center" justify="center" height="100%">
+              <Spinner size="xl" />
+            </Flex>
+          ) : imageError ? (
+            <Flex align="center" justify="center" height="100%">
+              <Text color="red.500">Failed to load map image.</Text>
+            </Flex>
+          ) : floorImageUrl ? (
+            <InteractiveMapBase
+              imageUrl={floorImageUrl}
+              width="100%"
+              height="100%"
+              onAreaClick={handleAreaClick}
+              viewBoxWidth={8192}
+              viewBoxHeight={6416}
+              floor={selectedFloor}
+            />
+          ) : null}
         </Box>
       )}
 
-      {/* Step 3: Area Modal when a polygon is clicked */}
-      {selectedArea && (
+      {/* Open the area modal if an area is selected */}
+      {selectedArea && selectedFloor && (
         <MapAreaModal
           area={selectedArea}
-          isOpen={true}
+          isOpen={!!selectedArea}
           onClose={() => setSelectedArea(null)}
-          onUnlock={handleUnlockArea}
+          floor={selectedFloor}
+
+          // Pass the EXACT same floorImageUrl we loaded
+          floorImageUrl={floorImageUrl}
         />
       )}
     </Box>

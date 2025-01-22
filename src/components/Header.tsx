@@ -14,7 +14,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
 
 interface HeaderProps {
   onOpenBestiary: () => void;
