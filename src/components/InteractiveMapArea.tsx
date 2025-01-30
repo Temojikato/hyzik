@@ -19,10 +19,6 @@ interface InteractiveMapAreaProps {
   width?: string | number;
   height?: string | number;
 
-  // ViewBox dimensions corresponding to the floor/image
-  viewBoxWidth?: number;
-  viewBoxHeight?: number;
-
   // Auto-focus props
   autoFocusArea?: boolean;   // default=false
   desiredScale?: number;     // default=2
@@ -34,8 +30,6 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
   onRegionClick,
   width = '100%',
   height = '100%',
-  viewBoxWidth = 8192,
-  viewBoxHeight = 6416,
 
   autoFocusArea = false,
   desiredScale = 2,
@@ -45,6 +39,16 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const imageRef = useRef<HTMLImageElement>(null);
+
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      setDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+  }, []);
 
   // Hide the map until the custom transform is applied
   const [didCustomTransform, setDidCustomTransform] = useState(false);
@@ -122,8 +126,8 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
       }
 
       // Calculate shrink factors based on objectFit="contain"
-      const shrinkFactorX = renderedImgWidth  / viewBoxWidth;
-      const shrinkFactorY = renderedImgHeight / viewBoxHeight;
+      const shrinkFactorX = renderedImgWidth  / dimensions.width;
+      const shrinkFactorY = renderedImgHeight / dimensions.height;
 
       // Calculate bounding box in rendered coordinates
       const renderedMinX = minX * shrinkFactorX;
@@ -167,7 +171,7 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
     autoFocusArea,
     desiredScale,
     minX, maxX, minY, maxY,
-    viewBoxWidth, viewBoxHeight
+    dimensions.width, dimensions.height
   ]);
 
   // Convert the area's polygon to a string suitable for SVG
@@ -239,7 +243,7 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
 
             {/* SVG Overlay for Masking and Highlighting */}
             <svg
-              viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+              viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
               width="100%"
               height="100%"
               style={{
@@ -257,7 +261,7 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
                   <feMorphology in="SourceGraphic" operator="dilate" radius="150" />
                 </filter>
 
-                <mask id="darkMask" maskUnits="userSpaceOnUse" x="0" y="0" width={viewBoxWidth} height={viewBoxHeight}>
+                <mask id="darkMask" maskUnits="userSpaceOnUse" x="0" y="0" width={dimensions.width} height={dimensions.height}>
                   {/* White background: everything is shown (dark overlay applied) */}
                   <rect width="100%" height="100%" fill="white" />
 

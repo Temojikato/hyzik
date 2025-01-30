@@ -72,8 +72,6 @@ const MapPage: React.FC = () => {
               width="100%"
               height="100%"
               onAreaClick={handleAreaClick}
-              viewBoxWidth={8192}
-              viewBoxHeight={6416}
               floor={selectedFloor}
             />
           ) : null}

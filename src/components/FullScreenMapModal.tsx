@@ -10,7 +10,8 @@ import {
   ModalCloseButton,
   ModalFooter,
   Button,
-  useDisclosure
+  useDisclosure,
+  background
 } from '@chakra-ui/react';
 import MapPage from './MapPage'; // your existing MapPage
 

@@ -28,7 +28,6 @@ export interface MapArea {
 export interface MapFloor {
   id: string;
   name: string;
-  imageUrl: string;
   areas: MapArea[];
 }
 
@@ -62,7 +61,6 @@ export const mapData: MapCategory[] = [
       {
         id: "town-floor",
         name: "The Town",
-        imageUrl: "/images/town-center.png",
         areas: [
           {
             id: 'medical-ward',
@@ -387,48 +385,178 @@ export const mapData: MapCategory[] = [
       name: "Tower",
       floors: [
         {
-          id: "tower-floor-1",
+          id: "floor 1",
           name: "Floor 1",
-          imageUrl: "/images/tower-floor-1.png",
           areas: [
             {
-              id: "goblin-room",
-              name: "Goblin Room",
-              locked: true,
-              monstersDocumented: true,
-              monsters: ["Goblin", "Goblin Archer"],
-              image: "/images/goblin-room.png",
-              polygon: [
-                [300, 300],
-                [400, 300],
-                [400, 400],
-                [300, 400]
-              ],
-              color: 'rgba(255, 215, 0, 0.3)', // Gold
-              regions: [ // Add Regions within the Area
-                {
-                  id: 'region1',
-                  name: 'region1',
-                  locked: false,
-                  monstersDocumented: false,
-                  monsters: [],
-                  polygon: parseCoordsToPolygon(
-                    '2000,2500,2200,2500,2200,2700,2000,2700'
-                  ),
-                  color: 'rgba(255, 255, 0, 0.3)', // Yellow
-                },
-                {
-                  id: 'region2',
-                  name: 'region2',
-                  locked: true,
-                  monstersDocumented: true,
-                  monsters: [],
-                  polygon: parseCoordsToPolygon(
-                    '2300,2500,2500,2500,2500,2700,2300,2700'
-                  ),
-                  color: 'rgba(0, 255, 255, 0.3)', // Cyan
-                },
-              ],
+              id: "storm-treasure-room",
+              name: "Storm Treasure Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                // (x, y), (x+width, y), (x+width, y+height), (x, y+height)
+                "85.57644824311491,38.89838556505223,964.6799620132954,38.89838556505223,964.6799620132954,956.900284900285,85.57644824311491,956.900284900285"
+              ),
+              // Add any image/color or other properties as needed
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "storm-crystal-room",
+              name: "Storm Crystal Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "4784.5014245014245,77.79677113010446,5655.825261158595,77.79677113010446,5655.825261158595,972.4596391263058,4784.5014245014245,972.4596391263058"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "cleared-out-slime-habitat-earth",
+              name: "Cleared out slime habitat - Earth",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "2061.614434947768,910.2222222222222,3617.5498575498577,910.2222222222222,3617.5498575498577,4208.805318138651,2061.614434947768,4208.805318138651"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "magma-slime-room",
+              name: "Magma Slime Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "793.5270655270655,1236.968660968661,1789.325736,1236.968660968661,1789.325736,3407.4985754985755,793.5270655270655,3407.4985754985755"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "fire-crystal-room",
+              name: "Fire Crystal Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "941.340930674264,544.5773979107313,1695.9696106362774,544.5773979107313,1695.9696106362774,1236.968660968661,941.340930674264,1236.968660968661"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "cleared-out-slime-habitat-fire",
+              name: "Cleared out slime habitat - Fire",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "93.35612535612536,995.7986704653372,824.6457739791073,995.7986704653372,824.6457739791073,3640.8888888888887,93.35612535612536,3640.8888888888887"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "mysterious-water-shrine",
+              name: "Mysterious Water Shrine",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "4029.8727445394106,544.5773979107312,4831.179487179487,544.5773979107312,4831.179487179487,1299.2060778727457,4029.8727445394106,1299.2060778727457"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "platform-challenge-rewards-1",
+              name: "Platform Challenge Rewards",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "4854.518518518518,972.4596391263059,5609.147198480531,972.4596391263059,5609.147198480531,1470.3589743589746,4854.518518518518,1470.3589743589746"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "perpetual-slime-room",
+              name: "Perpetual Slime Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "5663.604938271605,855.7644824311492,8153.101614434948,855.7644824311492,8153.101614434948,2839.582146248813,5663.604938271605,2839.582146248813"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "platform-challenge",
+              name: "Platform Challenge",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "4092.1101614434947,1447.019943019943,5624.706552706552,1447.019943019943,5624.706552706552,3555.312440645774,4092.1101614434947,3555.312440645774"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "old-camp",
+              name: "Old Camp",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "4068.7711301044633,3570.871794871795,5982.571699905033,3570.871794871795,5982.571699905033,4177.68660968661,4068.7711301044633,4177.68660968661"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "golden-door-dragon",
+              name: "Golden Door (Dragon)",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "5235.7226970560305,7001.709401709401,7079.506172839507,7001.709401709401,7079.506172839507,7880.812915479582,5235.7226970560305,7880.812915479582"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "golden-dragon-lair",
+              name: "Golden Dragon Lair",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "5297.960113960114,4558.890788224122,6822.776828110162,4558.890788224122,6822.776828110162,6978.3703703703705,5297.960113960114,6978.3703703703705"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
+            },
+            {
+              id: "venestrias-room",
+              name: "Venestria's Room",
+              locked: false,
+              monstersDocumented: false,
+              monsters: [],
+              polygon: parseCoordsToPolygon(
+                "630.1538461538462,4807.840455840455,3578.6514719848056,4807.840455840455,3578.6514719848056,8013.067426400759,630.1538461538462,8013.067426400759"
+              ),
+              color: "rgba(0,0,0,0.3)",
+              regions: []
             },
             // ... other areas
           ]

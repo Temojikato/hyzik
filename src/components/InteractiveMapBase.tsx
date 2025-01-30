@@ -1,6 +1,6 @@
 // src/components/InteractiveMapBase.tsx
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Box,
   IconButton,
@@ -19,8 +19,6 @@ interface InteractiveMapBaseProps {
   width?: string | number;
   height?: string | number;
   onAreaClick?: (area: MapArea) => void;
-  viewBoxWidth?: number;
-  viewBoxHeight?: number;
   showPoints?: boolean;
   showOverlays?: boolean;
   children?: React.ReactNode;
@@ -34,8 +32,6 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
   width = '100%',
   height = '100%',
   onAreaClick,
-  viewBoxWidth = 8192,
-  viewBoxHeight = 6416,
   showPoints = false,
   showOverlays = false,
   children,
@@ -45,6 +41,16 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
   const [isFullscreen, setIsFullscreen] = React.useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
+
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      setDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+  }, []);
 
   const mouseDownRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -173,7 +179,7 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
             {/* 2) Polygons for the floor's areas, if floor is given */}
             {floor && floor.areas && (
               <svg
-                viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+                viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
                 width="100%"
                 height="100%"
                 style={{
