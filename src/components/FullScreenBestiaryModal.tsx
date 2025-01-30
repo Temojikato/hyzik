@@ -20,6 +20,7 @@ import {
   VStack,
   Heading,
   Image,
+  Switch
 } from '@chakra-ui/react';
 
 import { fetchAllMonstersFromNestedDocs, fetchAllCategories, MonsterCategory } from '../utils/fetchAllMonsters';
@@ -43,7 +44,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
   // Filters
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [showLocked, setShowLocked] = useState(false);
   // Secondary modal to view details
   const [selectedMonster, setSelectedMonster] = useState<MonsterSpecies | null>(null);
   const {
@@ -103,8 +104,12 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
       );
     }
 
+    if (!showLocked) {
+      filtered = filtered.filter((monster) => !monster.locked);
+    }
+
     return filtered;
-  }, [allSpecies, selectedCategoryId, searchTerm]);
+  }, [allSpecies, selectedCategoryId, searchTerm, showLocked]);
 
   // Handle category selection
   const handleCategorySelect = (categoryId: string) => {
@@ -115,7 +120,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
   // Click on monster card
   const handleSpeciesClick = (species: MonsterSpecies) => {
     if (species.locked) {
-    return;
+      return;
     }
     setSelectedMonster(species);
     openDetails();
@@ -177,6 +182,16 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                   <Button onClick={() => setSelectedCategoryId(null)} colorScheme="purple">
                     &larr; Back to Categories
                   </Button>
+
+                  <Flex align="center">
+                    <Switch
+                      isChecked={showLocked}
+                      onChange={(e) => setShowLocked(e.target.checked)} // ADDED
+                      colorScheme="purple"
+                      mr={2}
+                    />
+                    <Text color="gray.100">Show locked entries</Text>
+                  </Flex>
                   <Input
                     placeholder="Search Monsters..."
                     value={searchTerm}
@@ -279,30 +294,31 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
           )}
         </ModalContent>
       </Modal>
-    </>)}
+    </>)
+}
 
-    // Utility Functions
+// Utility Functions
 
-    function getRandomUnlockedTierName(monster: MonsterSpecies): string | null {
-      if (!monster.Tiers) return null;
-      // Convert from Record<string, MonsterTier> to MonsterTier[]
-      const tiersArray = Object.values(monster.Tiers);
+function getRandomUnlockedTierName(monster: MonsterSpecies): string | null {
+  if (!monster.Tiers) return null;
+  // Convert from Record<string, MonsterTier> to MonsterTier[]
+  const tiersArray = Object.values(monster.Tiers);
 
-      // Filter out locked ones
-      const unlocked = tiersArray.filter((t) => !t.Locked);
+  // Filter out locked ones
+  const unlocked = tiersArray.filter((t) => !t.Locked);
 
-      if (unlocked.length === 0) {
-        // No unlocked tiers => fallback
-        return null;
-      }
+  if (unlocked.length === 0) {
+    // No unlocked tiers => fallback
+    return null;
+  }
 
-      // Pick a random index
-      return unlocked[unlocked.length-1].Name || null;
-    }
+  // Pick a random index
+  return unlocked[unlocked.length - 1].Name || null;
+}
 
-    function capitalizeFirstLetter(str: string): string {
-      if (!str) return '';
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+function capitalizeFirstLetter(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-    export default FullScreenBestiaryModal;
+export default FullScreenBestiaryModal;
