@@ -1,4 +1,5 @@
 // src/components/TierImage.tsx
+
 import React, { useEffect, useState } from 'react';
 import { Box, Image, Spinner } from '@chakra-ui/react';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -8,9 +9,10 @@ interface TierImageProps {
   tierName: string;  // e.g. "Minor Fire Slime"
   alt?: string;
   boxSize?: string;  // optional: how big the image should be
+  show?: boolean;
 }
 
-const TierImage: React.FC<TierImageProps> = ({ tierName, alt, boxSize }) => {
+const TierImage: React.FC<TierImageProps> = ({ tierName, alt, boxSize, show = true }) => {
   const [imageUrl, setImageUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,26 +36,49 @@ const TierImage: React.FC<TierImageProps> = ({ tierName, alt, boxSize }) => {
   }, [tierName]);
 
   if (loading) {
-    return <Spinner size="md" />;
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        boxSize={boxSize || '300px'}
+      >
+        <Spinner size="md" />
+      </Box>
+    );
   }
 
-  // If we couldn't find an image or got an error, you might want to show a fallback image
+  // If we couldn't find an image or got an error, show a fallback image
   return (
-    <Box>
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt={alt || tierName}
-          boxSize={boxSize || '300px'}
-          objectFit="cover"
-        />
-      ) : (
-        <Image
-          src="https://via.placeholder.com/300"
-          alt="Fallback"
-          boxSize={boxSize || '300px'}
-          objectFit="cover"
-        />
+    <Box
+      boxSize={boxSize || '300px'}
+      overflow="hidden"
+      borderRadius="md"
+      position="relative"
+    >
+      <Image
+        src={imageUrl || 'https://via.placeholder.com/300'}
+        alt={alt || tierName}
+        boxSize="100%"
+        objectFit="cover"
+        filter={!show ? 'blur(15px)' : 'none'} // Apply extreme blur when show is false
+        transition="filter 0.3s ease-in-out" // Smooth transition
+      />
+      {/* Optional: Add an overlay or icon when blurred */}
+      {!show && (
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          bg="rgba(0, 0, 0, 0.2)" // Semi-transparent overlay
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner size="lg" color="whiteAlpha.700" />
+        </Box>
       )}
     </Box>
   );

@@ -12,21 +12,14 @@ export async function fetchAllMonstersFromNestedDocs(): Promise<MonsterSpecies[]
     const categoryId = categoryDoc.id; // e.g. "Slime"
     const data = categoryDoc.data();   // an object with speciesName => speciesData
 
-    // data might look like:
-    // {
-    //   "Fire Slime": { locked: false, loreLocked: true, Lore: {...}, Tiers: {...} },
-    //   "Earth Slime": { ... }
-    // }
 
-    // Now we iterate over each speciesName in this doc
     for (const [speciesName, speciesData] of Object.entries(data)) {
-      // speciesName is "Fire Slime", speciesData is { locked: false, loreLocked: true, ... }
-      // Convert to MonsterSpecies
+
       const speciesObj: MonsterSpecies = {
         categoryId,
         name: speciesName,
-        locked: (speciesData as any).locked,
-        loreLocked: (speciesData as any).loreLocked,
+        locked: (speciesData as any).Locked,
+        loreLocked: (speciesData as any).LoreLocked,
         Lore: (speciesData as any).Lore,
         Tiers: (speciesData as any).Tiers
       };
@@ -35,4 +28,39 @@ export async function fetchAllMonstersFromNestedDocs(): Promise<MonsterSpecies[]
   }
 
   return result;
+}
+
+
+export async function fetchAllCategories(): Promise<MonsterCategory[]> {
+  const categories: MonsterCategory[] = [];
+
+  const categoriesSnap = await getDocs(collection(db, 'bestiary'));
+  for (const categoryDoc of categoriesSnap.docs) {
+    const categoryId = categoryDoc.id; // e.g., "slime"
+    const data = categoryDoc.data();
+
+    // Assuming each category document has a 'description' field
+    const categoryObj: MonsterCategory = {
+      id: categoryId,
+      name: capitalizeFirstLetter(categoryId), // Optional: Modify as needed
+      description: data.description || 'No description available.',
+    };
+
+    categories.push(categoryObj);
+  }
+
+  return categories;
+}
+
+export interface MonsterCategory {
+  id: string; // Category ID (e.g., "slime")
+  name: string; // Display name (e.g., "Slime")
+  description: string; // Description of the category
+  // Add more fields if necessary
+}
+
+
+function capitalizeFirstLetter(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

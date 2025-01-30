@@ -10,12 +10,14 @@ import TierImage from './TierImage';
 interface TiersSwiperProps {
   monsterName?: string;
   monsterLore?: MonsterLore;
+  loreLocked: boolean;
   tiers: MonsterTier[];
 }
 
 const TiersSwiper: React.FC<TiersSwiperProps> = ({
   monsterName,
   monsterLore,
+  loreLocked,
   tiers,
 }) => {
   /** We store a reordered array in state so we can put the selected tier first. */
@@ -23,6 +25,14 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
   // Keep track of the Swiper’s active index (slideIndex) and the displayed index (if you’re still preventing locked updates).
   const [slideIndex, setSlideIndex] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
+  
+  const blurStyleLore: React.CSSProperties = loreLocked
+    ? {
+        filter: 'blur(4px)',
+        pointerEvents: 'none',
+        userSelect: 'none',
+      }
+    : {};
 
   // The tier shown in the top image area
   const currentTier = reorderedTiers[displayIndex] || null;
@@ -97,7 +107,7 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
             </Heading>
           )}
           {monsterLore && (
-            <Box>
+            <Box style={blurStyleLore}>
               <Heading size="md" color="purple.200" mb={2}>Lore</Heading>
               {monsterLore.Formation && (
                 <Text color="gray.200" mb={2}>

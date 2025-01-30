@@ -12,9 +12,8 @@ admin.initializeApp({
 // Firestore instance
 const db = admin.firestore();
 
-// Import the Slime data (the object above)
 const slimeData = require(path.resolve(__dirname, '../slimes.js'));
-// or if you have slimeData.json, use: require('../slimeData.json')
+const constructData = require(path.resolve(__dirname, '../constructs.js'));
 
 async function uploadSlimes() {
   try {
@@ -30,4 +29,19 @@ async function uploadSlimes() {
   }
 }
 
+async function uploadConstructs() {
+  try {
+    // We'll store this under: bestiary / Slime (doc)
+    const constructDocRef = db.collection('bestiary').doc('Construct');
+
+    // 'set' to replace or 'merge: true' to partially merge
+    await constructDocRef.set(constructData, { merge: true });
+
+    console.log('Successfully uploaded Construct data to bestiary/Construct!');
+  } catch (error) {
+    console.error('Error uploading Construct data:', error);
+  }
+}
+
 uploadSlimes();
+uploadConstructs();
