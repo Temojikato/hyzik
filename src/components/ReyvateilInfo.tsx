@@ -444,7 +444,6 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                   (reyvateil ? reyvateil.image : 'placeholder-image.png')
                 }
                 alt={reyvateil ? reyvateil.name : 'Unknown Reyvateil'}
-                boxSize={{ base: '150px', md: '200px' }}
                 objectFit="cover"
                 borderRadius="md"
                 mr={{ base: 0, md: 4 }}
