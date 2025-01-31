@@ -37,6 +37,7 @@ import { db } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Conditions';
 import { Item } from '../types/Reyvateils';
+import { color } from 'framer-motion';
 
 // Define pulsate animation for Progress bar
 const pulsate = keyframes`
@@ -51,12 +52,6 @@ const borderGlow = keyframes`
   50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
   100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
 `;
-
-// Define a mapping from condition names to color schemes
-const conditionColorMap: { [key: string]: string } = {
-  madness: 'yellow',
-  // Add more mappings as needed
-};
 
 const PlayerInfo: React.FC = () => {
   const { currentUser } = useAuth();
@@ -219,7 +214,7 @@ const PlayerInfo: React.FC = () => {
     }
     const userRef = doc(db, 'users', currentUser.uid);
     // Prepare the condition to add or update
-    const conditionToAdd: UserCondition = { name: selectedCondition, amount: conditionValue };
+    const conditionToAdd: UserCondition = { name: selectedCondition, amount: conditionValue, color: conditions.find(con => con.name.toLowerCase() === currentCondition.toLowerCase())?.color!! };
 
     try {
       let newConditions = [...conditions]; // Clone the current conditions
@@ -249,7 +244,8 @@ const PlayerInfo: React.FC = () => {
           }
         } else {
           // Add new condition
-          newConditions.push(conditionToAdd);
+          console.log(conditionToAdd)
+          newConditions.push({name: conditionToAdd.name, amount: conditionToAdd.amount});
         }
 
         // Update Firestore with the new conditions array
@@ -396,9 +392,16 @@ const PlayerInfo: React.FC = () => {
                 bg="gray.700" // Darker background for Select
                 color="white" // White text
                 _placeholder={{ color: 'gray.400' }} // Placeholder color
+                sx={{
+                  // Style the <option> elements
+                  "option": {
+                    background: "gray.700",
+                    color: "white",
+                  }
+                }}
               >
-                {conditionDefinitions.map(cond => (
-                  <option key={cond.name} value={cond.name.toLowerCase()}>
+                {conditionDefinitions.sort((condA, condB) => condA.name.localeCompare(condB.name)).map(cond => (
+                  <option key={cond.name} value={cond.name.toLowerCase()} color='grey'>
                     {cond.name}
                   </option>
                 ))}
@@ -449,7 +452,7 @@ const PlayerInfo: React.FC = () => {
                 p={4}
                 bg="secondary"
                 borderWidth="1px"
-                borderColor={isActive ? (conditionColorMap[condition.name.toLowerCase()] || 'purple') : 'black'}
+                borderColor={isActive ? (condition.color || 'purple') : 'black'}
                 borderRadius="md"
                 onClick={() => openConditionDetails(condition.name)}
                 cursor="pointer"
@@ -467,7 +470,7 @@ const PlayerInfo: React.FC = () => {
                 ) : (
                   <Progress
                     value={percentage}
-                    colorScheme={conditionColorMap[condition.name.toLowerCase()]}
+                    colorScheme={condition.color}
                     mt={2}
                     // Apply pulsate animation if active
                     animation={isActive ? `${pulsate} 2s infinite` : undefined}
@@ -525,7 +528,7 @@ const PlayerInfo: React.FC = () => {
                           p={4}
                           bg="gray.700" // Slightly lighter dark background
                           borderWidth="1px"
-                          borderColor={isActiveEffect ? (conditionColorMap[currentCondition.toLowerCase()] || 'purple') : 'black'}
+                          borderColor={isActiveEffect ? conditions.find(con => con.name.toLowerCase() === currentCondition.toLowerCase())?.color : 'black'}
                           borderRadius="md"
                           boxShadow="md"
                           _hover={{ boxShadow: 'lg' }}

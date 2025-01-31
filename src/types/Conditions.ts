@@ -14,4 +14,5 @@ export interface ConditionDefinition {
 export interface UserCondition {
   amount: number;
   name: string;
+  color?: string;
 }

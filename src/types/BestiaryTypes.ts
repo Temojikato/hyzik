@@ -1,10 +1,14 @@
 // src/types/BestiaryTypes.ts
 export interface MonsterLore {
+  Habitat: string;
+  Behavior: string;
+  Rarity: string;
   Formation?: string;
   'Social Tendencies'?: string;
 }
 
 export interface MonsterTier {
+  Abilities: string[];
   id: string;
   Name?: string;                  // e.g. "Minor Fire Slime"
   imageUrl?: string;

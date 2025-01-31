@@ -524,69 +524,68 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
             </Text>
             <ErrorBoundary>
               <Grid
-                templateColumns="repeat(auto-fit, minmax(120px, max-content))"
+                templateColumns="repeat(3, 1fr)"  // 3 columns
+                templateRows="repeat(2, 1fr)"    // 2 rows, total 6 cells
                 gap={4}
-                justifyContent="start"
+                justifyItems="center"
+                alignItems="center"
               >
-                <Flex flexWrap="wrap" direction="row" align="center">
-                  {reyvateil &&
-                    abilities?.map((ability) => {
-                      const cooldownEndTime = cooldowns[ability.name] || 0;
-                      const currentTime = Date.now();
-                      const isCooldownActive = cooldownEndTime > currentTime;
-                      const remainingTime = isCooldownActive
-                        ? Math.ceil((cooldownEndTime - currentTime) / 1000)
-                        : 0;
+                {abilities?.map((ability) => {
+                  const cooldownEndTime = cooldowns[ability.name] || 0;
+                  const currentTime = Date.now();
+                  const isCooldownActive = cooldownEndTime > currentTime;
+                  const remainingTime = isCooldownActive
+                    ? Math.ceil((cooldownEndTime - currentTime) / 1000)
+                    : 0;
 
-                      return (
-                        <GridItem key={ability.name}>
-                          <VStack spacing={2} align="center">
-                            <Text fontSize="sm" textAlign="center" fontWeight="medium" color="text">
-                              {ability.name}
-                            </Text>
-                            <Tooltip label={ability.name} aria-label={ability.name}>
-                              <Button
-                                onClick={() => handleAbilityClick(ability)}
-                                variant="outline"
-                                borderRadius="full"
-                                width="80px"
-                                height="80px"
-                                padding="0"
-                                _hover={{ bg: 'gray.100' }}
-                                _active={{ bg: 'gray.200' }}
-                                disabled={isCooldownActive}
-                                opacity={isCooldownActive ? 0.6 : 1}
-                                position="relative"
+                  return (
+                    <GridItem key={ability.name}>
+                      <VStack spacing={2} align="center">
+                        <Text fontSize="sm" textAlign="center" fontWeight="medium" color="text">
+                          {ability.name}
+                        </Text>
+                        <Tooltip label={ability.name} aria-label={ability.name}>
+                          <Button
+                            onClick={() => handleAbilityClick(ability)}
+                            variant="outline"
+                            borderRadius="full"
+                            width="80px"
+                            height="80px"
+                            padding="0"
+                            _hover={{ bg: 'gray.100' }}
+                            _active={{ bg: 'gray.200' }}
+                            disabled={isCooldownActive}
+                            opacity={isCooldownActive ? 0.6 : 1}
+                            position="relative"
+                          >
+                            <Image
+                              src={ability.icon || 'https://via.placeholder.com/100'}
+                              alt={ability.name}
+                              boxSize="60px"
+                              objectFit="cover"
+                              filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
+                            />
+                            {isCooldownActive && (
+                              <Text
+                                position="absolute"
+                                bottom="2px"
+                                right="2px"
+                                bg="blackAlpha.700"
+                                color="white"
+                                fontSize="xs"
+                                borderRadius="md"
+                                px={1}
                               >
-                                <Image
-                                  src={ability.icon || 'https://via.placeholder.com/100'}
-                                  alt={ability.name}
-                                  boxSize="60px"
-                                  objectFit="cover"
-                                  filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
-                                />
-                                {isCooldownActive && (
-                                  <Text
-                                    position="absolute"
-                                    bottom="2px"
-                                    right="2px"
-                                    bg="blackAlpha.700"
-                                    color="white"
-                                    fontSize="xs"
-                                    borderRadius="md"
-                                    px={1}
-                                  >
-                                    {remainingTime}s
-                                  </Text>
-                                )}
-                              </Button>
-                            </Tooltip>
-                          </VStack>
-                        </GridItem>
-                      );
-                    })}
-                </Flex>
-              </Grid>
+                                {remainingTime}s
+                              </Text>
+                            )}
+                          </Button>
+                        </Tooltip>
+                      </VStack>
+                    </GridItem>
+                  );
+                })}
+                </Grid>
             </ErrorBoundary>
           </VStack>
         </Box>

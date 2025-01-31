@@ -6,21 +6,36 @@
     "features": "Rugged, storm-cloud patterned wings and a sturdy, muscular frame.",
     "image": "images/thundara.png",
     "stats": {
-      "acrobatics": 1,
-      "athletics": 2,
-      "perception": 2,
-      "intimidation": 1
+      "mining": 2,
+      "scavenging": 3,
+      "butchery": 4,
+      "cooking": 1
     },
     "abilities": [
       {
-        "name": "Rage Amplification",
-        "description": "Amplifies the Barbarian's rage, granting resistance to lightning and thunder damage while raging.",
-        "cooldown": 0
+        "name": "Cloud Catcher",
+        "description": "Gather static-charged clouds overhead to create a light drizzle, refilling water containers or cooling the area.",
+        "cooldown": 1200
       },
       {
-        "name": "Electrical Discharge",
-        "description": "Can summon minor electrical discharges to intimidate foes.",
-        "cooldown": 60
+        "name": "Spark Sense",
+        "description": "Detect metal objects or hidden power lines within a short radius, useful for scavenging in mechanical ruins.",
+        "cooldown": 600
+      },
+      {
+        "name": "Static Pulse",
+        "description": "Briefly charge the air, causing hair and fur to stand on end, potentially revealing hidden enemies or secret passages.",
+        "cooldown": 1800
+      },
+      {
+        "name": "Storm’s Storytime",
+        "description": "Conjure a mild thunder rumble that can enthrall NPCs or provide immersive ambiance for storytelling around camp.",
+        "cooldown": 2400
+      },
+      {
+        "name": "Lightning Lantern",
+        "description": "Cause your feathers to glow with electric arcs, acting like a lantern for exploration (non-damaging).",
+        "cooldown": 900
       }
     ],
     "levelUpRequirements": [
@@ -115,17 +130,17 @@
           {
             "name": "Lightning Rage",
             "description": "Amplifies the Barbarian's rage to deal additional lightning damage.",
-            "cooldown": 0
+            "cooldown": 1200
           },
           {
             "name": "Thunderclap",
             "description": "Unleashes a thunderous shockwave that stuns nearby enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Storm Shield",
             "description": "Grants the party resistance to lightning and thunder damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -156,17 +171,17 @@
           {
             "name": "Wind Fury",
             "description": "Increases movement speed and grants swift aerial attacks.",
-            "cooldown": 0
+            "cooldown": 1200
           },
           {
             "name": "Aerial Assault",
             "description": "Performs powerful dive attacks from above.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Gale Barrier",
             "description": "Generates wind shields that deflect ranged attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -197,18 +212,16 @@
           {
             "name": "Electric Slash",
             "description": "Melee attacks deal additional lightning damage and can paralyze foes.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Charged Leap",
             "description": "Leaps great distances, leaving a trail of static electricity.",
-            "cooldown": 90
+            "cooldown": 900
           },
           {
             "name": "Static Aura",
             "description": "Nearby enemies take minor lightning damage over time.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -239,20 +252,36 @@
     "features": "Earth-toned, stone-like skin with crystalline structures.",
     "image": "images/gronk.png",
     "stats": {
-      "athletics": 3,
-      "survival": 2,
-      "perception": 1
+      "mining": 4,
+      "skinning": 2,
+      "blacksmithing": 3,
+      "butchery": 2
     },
     "abilities": [
       {
-        "name": "Stone Endurance",
-        "description": "Enhances physical strength and endurance, allowing for increased damage output and longer periods of rage.",
-        "cooldown": 0
+        "name": "Mineral Sniffer",
+        "description": "Sense nearby veins of ore or stone, aiding in mining or resource gathering.",
+        "cooldown": 1800
       },
       {
-        "name": "Tremor",
-        "description": "Provides tremors that can unbalance enemies.",
-        "cooldown": 60
+        "name": "Boulder Shunt",
+        "description": "Temporarily shift a large stone or debris to clear a path (non-damaging to creatures).",
+        "cooldown": 3000
+      },
+      {
+        "name": "Stony Remembrance",
+        "description": "Recall geological histories, letting you identify ancient ruins or fault lines with a touch.",
+        "cooldown": 2400
+      },
+      {
+        "name": "Earth Echo",
+        "description": "Tap the ground to create subtle vibrations, revealing hollows, tunnels, or hidden cavities in the earth.",
+        "cooldown": 1200
+      },
+      {
+        "name": "Crystalline Campfire",
+        "description": "Grow a ring of small crystals that glow warmly for light. They last a short while before crumbling.",
+        "cooldown": 3600
       }
     ],
     "levelUpRequirements": [
@@ -347,18 +376,17 @@
           {
             "name": "Earthshatter",
             "description": "Smashes the ground to create shockwaves knocking down enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Stone Skin",
             "description": "Grants significant damage resistance to the party.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Immovable Stance",
             "description": "Becomes unmovable, resisting pushes or knockbacks.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -388,17 +416,16 @@
           {
             "name": "Crystal Spikes",
             "description": "Projects crystal spikes from the ground to impale enemies.",
-            "cooldown": 150
+            "cooldown": 1500
           },
           {
             "name": "Reflective Armor",
             "description": "Reflects a portion of damage back to attackers.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Radiant Shield",
             "description": "Provides protection against magical attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -429,18 +456,16 @@
           {
             "name": "Seismic Slam",
             "description": "Creates localized earthquakes to disrupt enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Tremor Sense",
             "description": "Detects enemies through ground vibrations.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Fortress Aura",
             "description": "Increases party defense when near Gronk.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -471,22 +496,39 @@
     "features": "Fiery wings with ember-like trails and a fierce, glowing presence.",
     "image": "images/ragnor.png",
     "stats": {
-      "athletics": 2,
-      "intimidation": 2,
-      "perception": 1
+      "scavenging": 4,
+      "cooking": 2,
+      "mining": 3,
+      "occult": 1
     },
     "abilities": [
-      {
-        "name": "Fiery Rage",
-        "description": "Grants the ability to unleash fiery strikes and grants temporary hit points when entering a rage.",
-        "cooldown": 0
-      },
-      {
-        "name": "Blinding Flash",
-        "description": "Can emit a blinding flash to disorient adversaries.",
-        "cooldown": 90
-      }
-    ],
+  {
+    "name": "Ember Oven",
+    "description": "Generate stable heat around your hands or wings to cook small meals or warm allies in cold climates.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Firelight Glow",
+    "description": "Produce a soft ember-like glow to illuminate dark environments, comforting travelers.",
+    "cooldown": 600
+  },
+  {
+    "name": "Ash Cloud",
+    "description": "Release a harmless cloud of ash that can obscure your presence during stealthy approaches or hunts.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Flame Sketch",
+    "description": "Trace lines of heat in the air, creating temporary fiery symbols (useful for messages or warding signals).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Spark of Warmth",
+    "description": "Boost the morale of nearby NPCs or allies by slightly raising body temperature and spirit (non-damaging).",
+    "cooldown": 3000
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -579,18 +621,16 @@
           {
             "name": "Blazing Rage",
             "description": "Melee attacks deal additional fire damage, igniting enemies.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Fire Nova",
             "description": "Unleashes a burst of flames damaging surrounding foes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Heat Aura",
             "description": "Enemies nearby suffer fire damage over time.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -620,17 +660,16 @@
           {
             "name": "Inferno Strike",
             "description": "Attacks cause explosive fire damage.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Lava Shield",
             "description": "Surrounds the party with protective flames harming attackers.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Phoenix Revival",
             "description": "Revives once upon defeat, emerging from flames.",
-            "cooldown": 86400
+            "cooldown": 860400
           }
         ],
         "upgradeRequirements": {
@@ -661,18 +700,17 @@
           {
             "name": "Solar Flare",
             "description": "Releases blinding light damaging and disorienting enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Sun's Blessing",
             "description": "Heals the party over time and removes debuffs.",
-            "cooldown": 600
+            "cooldown": 6000
           },
           {
             "name": "Radiant Strike",
             "description": "Attacks deal radiant damage effective against undead.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -703,23 +741,39 @@
     "features": "Translucent, iridescent wings adorned with musical notes.",
     "image": "images/melodia.png",
     "stats": {
-      "performance": 3,
-      "persuasion": 2,
-      "insight": 1,
-      "deception": 1
+      "linguistics": 4,
+      "cooking": 3,
+      "fletching": 1,
+      "runecraft": 2
     },
     "abilities": [
-      {
-        "name": "Performance Enhancement",
-        "description": "Enhances bardic performances, increasing the range and effectiveness of Bard spells.",
-        "cooldown": 0
-      },
-      {
-        "name": "Inspire Courage",
-        "description": "Can cast Inspire Courage without expending a Bardic Inspiration die.",
-        "cooldown": 0
-      }
-    ],
+  {
+    "name": "Soothing Harmony",
+    "description": "Play a gentle tune that eases tension in wildlife and NPCs, encouraging peaceful interaction.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Chorus Echo",
+    "description": "Project melodic echoes around you, lifting the mood and helping allies stay alert during long travels.",
+    "cooldown": 600
+  },
+  {
+    "name": "Harmony Ward",
+    "description": "Generate a pleasant resonance that repels minor pests or insects from your camp area.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Mellow Memory",
+    "description": "Playing certain chords can nudge an NPC’s recall of forgotten lore or details, aiding in investigations.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Lullaby Lightshow",
+    "description": "Accompany your songs with faint dancing lights, a captivating spectacle useful for storytelling or diplomacy.",
+    "cooldown": 2400
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -812,17 +866,16 @@
           {
             "name": "Symphony of Power",
             "description": "Enhances bardic spells' range and potency.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Inspiring Anthem",
             "description": "Boosts allies' morale and skill checks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Echo Spell",
             "description": "Allows spells to affect additional targets.",
-            "cooldown": 60
+            "cooldown": 600
           }
         ],
         "upgradeRequirements": {
@@ -853,17 +906,17 @@
           {
             "name": "Healing Melody",
             "description": "Restores allies' health over time.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Song of Silence",
             "description": "Mutes enemies, preventing spellcasting.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Melodic Barrier",
             "description": "Creates sound-based shields that absorb damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -894,17 +947,16 @@
           {
             "name": "Masterpiece Performance",
             "description": "Bardic spells are more potent and harder to resist.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Captivating Tune",
             "description": "Charms multiple enemies simultaneously.",
-            "cooldown": 150
+            "cooldown": 1500
           },
           {
             "name": "Encore",
             "description": "Recasts a spell without expending a Bardic Inspiration die once per day.",
-            "cooldown": 86400
+            "cooldown": 860400
           }
         ],
         "upgradeRequirements": {
@@ -936,23 +988,39 @@
     "features": "Delicate, shimmering wings that resonate with vibrant colors.",
     "image": "images/harmonix.png",
     "stats": {
-      "performance": 2,
-      "persuasion": 3,
-      "insight": 2,
-      "deception": 1
+      "linguistics": 3,
+      "cooking": 1,
+      "alchemy": 4,
+      "fishing": 2
     },
     "abilities": [
-      {
-        "name": "Enchantment Mastery",
-        "description": "Allows the Bard to cast additional enchantment or illusion spells through Reyvateil's Song Magic.",
-        "cooldown": 0
-      },
-      {
-        "name": "Soothing Melody",
-        "description": "Can create soothing melodies that grant advantage on Charisma-based checks.",
-        "cooldown": 0
-      }
-    ],
+  {
+    "name": "Melodic Infusion",
+    "description": "Use harmonic chanting to stabilize alchemical brews, boosting potion potency slightly.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Aquatic Lullaby",
+    "description": "Hum a tranquil tune that calms fish or amphibians, improving fishing or aquatic resource gathering.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Resonant Bond",
+    "description": "Tie a sonic link between allies, helping them locate each other via a subtle hum in crowded or dark places.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Cacophony Trap",
+    "description": "Create a burst of harmless but startling noise that may distract roaming beasts or draw them away.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Song of Strata",
+    "description": "Send a gentle pulse into the ground, revealing loose or fragile terrain to avoid accidents.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -1045,17 +1113,16 @@
           {
             "name": "Empowering Chorus",
             "description": "Increases allies' attack and damage rolls.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Resonant Pulse",
             "description": "Deals sonic damage to enemies and disrupts spellcasting.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Harmony Field",
             "description": "Creates an area where allies receive continuous healing.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -1086,17 +1153,17 @@
           {
             "name": "Ballad of Courage",
             "description": "Removes fear effects and boosts allies' bravery.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Lament of Weakness",
             "description": "Weakens enemies' resolve and reduces their defenses.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Narrative Control",
             "description": "Manipulates battlefield events through song.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -1127,17 +1194,16 @@
           {
             "name": "Chorus of Strength",
             "description": "Grants allies enhanced physical abilities.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Discordant Note",
             "description": "Disorients enemies, causing confusion.",
-            "cooldown": 90
+            "cooldown": 900
           },
           {
             "name": "Unity Anthem",
             "description": "Synchronizes the party's actions for coordinated attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -1169,23 +1235,39 @@
     "features": "Harp-shaped wings with ethereal strings that produce harmonious sounds.",
     "image": "images/lyra.png",
     "stats": {
-      "performance": 3,
-      "persuasion": 2,
-      "insight": 2,
-      "deception": 1
+      "linguistics": 4,
+      "stillness": 2,
+      "herbalism": 1,
+      "cooking": 3
     },
     "abilities": [
-      {
-        "name": "Inspiration Grant",
-        "description": "Provides inspiration to party members, granting bonuses to skill checks or saving throws.",
-        "cooldown": 0
-      },
-      {
-        "name": "Calm Emotions",
-        "description": "Can cast Calm Emotions to defuse tense situations.",
-        "cooldown": 180
-      }
-    ],
+  {
+    "name": "Harmonic Calm",
+    "description": "Play delicate harp-tones that soothe nervous locals or skittish animals.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Quiet Strings",
+    "description": "Mask subtle movements or footsteps with gentle strumming, aiding stealth for a short duration.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Enchanted Ditty",
+    "description": "Briefly enchant a small item (like a necklace) with restful vibes, easing an ally's stress.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Traveling Tune",
+    "description": "Perform a bright melody that slightly reduces fatigue for a group marching long distances.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Reverie Recall",
+    "description": "Cast a gentle harp harmony that helps an NPC remember or recount detailed memories.",
+    "cooldown": 1800
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -1278,17 +1360,16 @@
           {
             "name": "Melodic Healing",
             "description": "Can cast healing spells to restore allies' health over time.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Inspiring Anthem",
             "description": "Boosts allies' morale, granting bonuses to their next actions.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Resonant Echo",
             "description": "Allows spells to have increased range and potency.",
-            "cooldown": 60
+            "cooldown": 600
           }
         ],
         "upgradeRequirements": {
@@ -1319,17 +1400,16 @@
           {
             "name": "Masterpiece Performance",
             "description": "Increases the effectiveness and difficulty of resisting Bard spells.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Captivating Melody",
             "description": "Charms multiple enemies simultaneously, causing them to lose focus.",
-            "cooldown": 150
+            "cooldown": 1500
           },
           {
             "name": "Encore",
             "description": "Allows Lyra to recast a spell without expending a Bardic Inspiration die once per day.",
-            "cooldown": 86400
+            "cooldown": 860400
           }
         ],
         "upgradeRequirements": {
@@ -1360,17 +1440,17 @@
           {
             "name": "Ballad of Valor",
             "description": "Removes fear effects from allies and boosts their courage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Lament of Weakness",
             "description": "Weakens enemies' resolve, reducing their defenses.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Narrative Control",
             "description": "Manipulates battlefield events through her enchanting songs, such as diverting enemy movements or enhancing ally actions.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -1402,23 +1482,39 @@
     "features": "Radiant, angelic wings with a halo-like glow.",
     "image": "images/serapha.png",
     "stats": {
-      "medicine": 3,
-      "insight": 2,
-      "persuasion": 2,
-      "religion": 1
+      "occult": 3,
+      "cooking": 1,
+      "herbalism": 2,
+      "tanning": 4
     },
     "abilities": [
-      {
-        "name": "Healing Enhancement",
-        "description": "Enhances healing spells, allowing Clerics to restore additional hit points.",
-        "cooldown": 0
-      },
-      {
-        "name": "Sanctuary",
-        "description": "Can cast Sanctuary to protect allies from harm.",
-        "cooldown": 60
-      }
-    ],
+  {
+    "name": "Radiant Ward",
+    "description": "Produce a soft glow that purifies food or water in a small radius.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Halo Insight",
+    "description": "Sense hidden curses or negative energies affecting people, helpful for diagnosing supernatural ailments.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Gentle Blessing",
+    "description": "Bestow a short-lived boon that comforts distressed travelers or NPCs, easing their anxieties.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Sunlit Beacon",
+    "description": "Create a pillar of warm light visible from afar, useful as a guiding landmark or rescue signal.",
+    "cooldown": 3600
+  },
+  {
+    "name": "Soothe the Weary",
+    "description": "Calming aura that helps insomniac allies sleep more restfully, quickening their recovery in safe areas.",
+    "cooldown": 1200
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -1511,18 +1607,16 @@
           {
             "name": "Holy Smite",
             "description": "Attacks deal additional radiant damage to evil creatures.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Divine Shield",
             "description": "Grants the party resistance to necrotic damage and increases their armor class.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Blessed Strike",
             "description": "Can heal allies when dealing damage to enemies.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -1552,17 +1646,16 @@
           {
             "name": "Healing Light",
             "description": "Greatly enhances healing spells, restoring more hit points.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Aura of Purity",
             "description": "Removes negative conditions from allies within range.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Divine Guidance",
             "description": "Grants advantage on wisdom checks and saving throws to the party.",
-            "cooldown": 60
+            "cooldown": 600
           }
         ],
         "upgradeRequirements": {
@@ -1593,18 +1686,16 @@
           {
             "name": "Sanctified Ground",
             "description": "Creates an area where allies are healed, and enemies are damaged over time.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Divine Intervention",
             "description": "Once per day, can call upon higher powers for aid.",
-            "cooldown": 86400
+            "cooldown": 860400
           },
           {
             "name": "Blessing of Protection",
             "description": "Grants immunity to certain conditions for the party.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -1635,23 +1726,39 @@
     "features": "Glowing, light-infused wings with celestial patterns.",
     "image": "images/lumiel.png",
     "stats": {
-      "medicine": 3,
-      "insight": 3,
-      "persuasion": 2,
-      "religion": 1
+      "occult": 2,
+      "scavenging": 3,
+      "linguistics": 4,
+      "fishing": 1
     },
     "abilities": [
-      {
-        "name": "Divine Amplification",
-        "description": "Amplifies divine spells, increasing their potency and duration.",
-        "cooldown": 0
-      },
-      {
-        "name": "Healing Burst",
-        "description": "Can emit a burst of healing light, restoring health to nearby allies.",
-        "cooldown": 120
-      }
-    ],
+  {
+    "name": "Crystal Reflection",
+    "description": "Project faint illusions of starlight, aiding nighttime travel or giving illusions for misdirection.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Gentle Current",
+    "description": "Summon a mild breeze to assist in drying clothes or shifting small floating objects on water.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Aurora Drizzle",
+    "description": "Produce color-shifting lights overhead, a comforting phenomenon that can rally or calm NPCs.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Lunar Compass",
+    "description": "Briefly attune to moonlit sky patterns, granting a sense of direction even underground or in cloudy weather.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Star Lull",
+    "description": "Hum a cosmic lullaby that aids rest, granting mild stress relief to a weary companion or NPC.",
+    "cooldown": 2400
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -1744,17 +1851,16 @@
           {
             "name": "Morning Light",
             "description": "Deals radiant damage to undead and fiends.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Renewal Aura",
             "description": "Gradually heals allies over time.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Inspiration of Dawn",
             "description": "Increases allies' initiative and morale.",
-            "cooldown": 60
+            "cooldown": 600
           }
         ],
         "upgradeRequirements": {
@@ -1785,18 +1891,16 @@
           {
             "name": "Angelic Chorus",
             "description": "Enhances healing and protective spells.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Wings of Salvation",
             "description": "Grants temporary flight to the party.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Divine Presence",
             "description": "Enemies are less likely to attack the party.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -1826,17 +1930,16 @@
           {
             "name": "Light of Truth",
             "description": "Reveals hidden enemies and objects.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Purifying Radiance",
             "description": "Removes curses and negative effects.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Radiant Barrier",
             "description": "Shields allies with light, reducing damage taken.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -1868,23 +1971,39 @@
     "features": "Dark, twilight-colored wings that shimmer with divine energy.",
     "image": "images/vespera.png",
     "stats": {
-      "medicine": 2,
-      "insight": 3,
-      "persuasion": 2,
-      "religion": 2
+      "runecraft": 4,
+      "occult": 3,
+      "cooking": 2,
+      "alchemy": 1
     },
     "abilities": [
-      {
-        "name": "Turn Undead",
-        "description": "Grants the ability to dispel undead or evil entities with enhanced Turn Undead abilities.",
-        "cooldown": 0
-      },
-      {
-        "name": "Bless",
-        "description": "Can cast Bless without using a spell slot.",
-        "cooldown": 0
-      }
-    ],
+  {
+    "name": "Twilight Shroud",
+    "description": "Dim ambient light around you, creating safe low visibility for subtle movements.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Moonlit Brew",
+    "description": "Use lunar essence in alchemy, boosting potion clarity or reducing negative side effects.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Astral Reflection",
+    "description": "Reflect subtle cosmic patterns onto cave walls, revealing hidden inscriptions or runes.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Dusk’s Whisper",
+    "description": "Share quiet messages with nearby allies or NPCs, as if carried by a gentle night breeze.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Dreamlight Pocket",
+    "description": "Store or conceal small fragile items in a faint twilight bubble that repels moisture or dust.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -1977,18 +2096,16 @@
           {
             "name": "Veil of Shadows",
             "description": "Grants the party enhanced stealth.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Twilight Shield",
             "description": "Reduces damage from both radiant and necrotic sources.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Balance Strike",
             "description": "Deals damage while healing allies.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -2018,17 +2135,16 @@
           {
             "name": "Starlight Blessing",
             "description": "Heals and strengthens allies under the night sky.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Lunar Protection",
             "description": "Shields the party from enchantments and illusions.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Dreamwalk",
             "description": "Allows communication through dreams.",
-            "cooldown": 120
+            "cooldown": 1200
           }
         ],
         "upgradeRequirements": {
@@ -2059,17 +2175,15 @@
           {
             "name": "Shadow Ward",
             "description": "Protects allies from necrotic damage.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Banish Darkness",
             "description": "Dispels magical darkness and wards off evil entities.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Eclipsing Strike",
             "description": "Attacks weaken enemies' defenses.",
-            "cooldown": 120
+            "cooldown": 1200
           }
         ],
         "upgradeRequirements": {
@@ -2101,23 +2215,39 @@
     "features": "Leaf-covered wings with vibrant green hues and floral accents.",
     "image": "images/sylvane.png",
     "stats": {
-      "nature": 3,
-      "survival": 2,
-      "animal_handling": 1,
-      "medicine": 1
+      "herbalism": 4,
+      "mining": 1,
+      "cooking": 2,
+      "foraging": 3
     },
     "abilities": [
-      {
-        "name": "Nature's Enhancement",
-        "description": "Enhances nature-based spells, increasing their range and effectiveness.",
-        "cooldown": 0
-      },
-      {
-        "name": "Entangle Plants",
-        "description": "Can summon minor plant growth to entangle enemies or provide cover.",
-        "cooldown": 120
-      }
-    ],
+  {
+    "name": "Root Path",
+    "description": "Encourage vines to weave a narrow, temporary bridge over small gaps or ravines.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Seed Whisper",
+    "description": "Stimulate certain seeds to sprout instantly, aiding foraging or creating quick plant cover.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Petal Cloak",
+    "description": "Conjure a swirl of petals around yourself or an ally, mildly camouflaging them in forest terrain.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Floral Scent",
+    "description": "Release a fragrant aura that repels minor insects or pests from your campsite.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Verdant Memory",
+    "description": "Tap into local plant life’s subtle memories, gleaning info about recent passersby or environmental changes.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -2210,17 +2340,16 @@
           {
             "name": "Nature's Embrace",
             "description": "Heals allies and removes poisons.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Entangling Roots",
             "description": "Immobilizes enemies with vines.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Forest Guardian",
             "description": "Summons woodland creatures to assist in battle.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -2251,17 +2380,17 @@
           {
             "name": "Floral Shield",
             "description": "Creates protective barriers of petals.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Pollen Burst",
             "description": "Releases spores that heal allies and hinder foes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Blooming Step",
             "description": "Plants grow wherever she moves, hindering enemies.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -2292,17 +2421,17 @@
           {
             "name": "Revitalize",
             "description": "Can revive fallen allies.",
-            "cooldown": 86400
+            "cooldown": 860400
           },
           {
             "name": "Life Surge",
             "description": "Temporarily increases allies' maximum hit points.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Harmony with Nature",
             "description": "Communicates and controls plant life extensively.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -2334,23 +2463,39 @@
     "features": "Antlered wings intertwined with vines and blossoms.",
     "image": "images/faelith.png",
     "stats": {
-      "nature": 2,
-      "animal_handling": 3,
-      "survival": 2,
-      "medicine": 1
+      "herbalism": 3,
+      "skinning": 4,
+      "cooking": 1,
+      "tanning": 2
     },
     "abilities": [
-      {
-        "name": "Animal Communication",
-        "description": "Grants the ability to communicate with animals and plants more effectively.",
-        "cooldown": 0
-      },
-      {
-        "name": "Enhanced Entangle",
-        "description": "Can cast Entangle with extended duration and area.",
-        "cooldown": 180
-      }
-    ],
+  {
+    "name": "Wildlife Kinship",
+    "description": "Calm or befriend small animals, encouraging them to help gather resources or deliver messages.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Grove Harvest",
+    "description": "Improve success when collecting organic materials like berries or hides, ensuring higher-quality yields.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Antler Beacon",
+    "description": "Channel faint nature magic through your antler-like wings, acting as a glowing guide in dense forests.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Burrow Sense",
+    "description": "Briefly sense burrowing creatures or tunnels near you, useful for locating hidden warrens or safe spots.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Soothing Spores",
+    "description": "Release a harmless pollen cloud that relaxes local fauna, reducing aggression and easing taming.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -2443,17 +2588,16 @@
           {
             "name": "Beast Summon",
             "description": "Calls powerful animals to aid in battle.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Animal Communication",
             "description": "Influences beasts to gather information or assist.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Primal Roar",
             "description": "Frightens enemies and boosts allies' courage.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -2484,17 +2628,17 @@
           {
             "name": "Grove Shield",
             "description": "Creates a sanctuary that heals allies and hinders enemies.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Rooted Stance",
             "description": "Increases her defense and resistance when stationary.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Nature's Wrath",
             "description": "Commands plants to attack foes.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -2525,17 +2669,16 @@
           {
             "name": "Seasonal Shift",
             "description": "Changes her abilities based on the current season, offering versatility.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Cycle of Life",
             "description": "Can accelerate plant growth or induce decay.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Weather Control",
             "description": "Influences minor weather patterns to aid the party.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -2567,23 +2710,39 @@
     "features": "Earth-toned wings with rocky textures and mossy growths.",
     "image": "images/terralyn.png",
     "stats": {
-      "nature": 3,
-      "survival": 2,
-      "perception": 2,
-      "medicine": 1
+      "mining": 4,
+      "herbalism": 2,
+      "stillness": 1,
+      "fishing": 3
     },
     "abilities": [
-      {
-        "name": "Earth and Stone Enhancement",
-        "description": "Increases the potency of earth and stone-based spells.",
-        "cooldown": 0
-      },
-      {
-        "name": "Stone Barrier",
-        "description": "Can create barriers of stone or summon minor earthquakes to disrupt foes.",
-        "cooldown": 180
-      }
-    ],
+  {
+    "name": "Rockwalk",
+    "description": "Step lightly on unstable rock, granting you safe footing on crumbly or shifting terrain.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Moss Blanket",
+    "description": "Grow soft moss over hard surfaces, forming natural bedding or padding for silent movement.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Petrify Mushrooms",
+    "description": "Temporarily strengthen local fungi into sturdy, stepping-stone-like platforms to cross small gaps.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Earth’s Embrace",
+    "description": "Sense vibrations of underground water sources, aiding in well-digging or finding hidden springs.",
+    "cooldown": 3600
+  },
+  {
+    "name": "Stalagmite Shaping",
+    "description": "Adjust the shape of small stalagmites or stalactites, creating improvised hooks or climbing grips.",
+    "cooldown": 1200
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -2676,17 +2835,17 @@
           {
             "name": "Stonewall",
             "description": "Raises barriers of stone for defense.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Earthquake",
             "description": "Causes tremors to disrupt and damage enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Earthen Armor",
             "description": "Increases the party's physical defenses.",
-            "cooldown": 120
+            "cooldown": 1200
           }
         ],
         "upgradeRequirements": {
@@ -2717,17 +2876,15 @@
           {
             "name": "Immovable Object",
             "description": "Becomes resistant to physical forces that move or knock back.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Mountain's Endurance",
             "description": "Greatly increases hit points and stamina.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Rockslide",
             "description": "Unleashes a cascade of rocks upon enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -2758,17 +2915,17 @@
           {
             "name": "Crystal Growth",
             "description": "Manipulates crystals to entrap or damage foes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Reflective Shield",
             "description": "Deflects magical attacks back at the caster.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Gemstone Healing",
             "description": "Uses crystals to heal and rejuvenate allies.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -2800,23 +2957,39 @@
     "features": "Metallic wings with intricate engravings and a sturdy build.",
     "image": "images/valora.png",
     "stats": {
-      "athletics": 3,
-      "perception": 2,
-      "intimidation": 2,
-      "acrobatics": 1
+      "blacksmithing": 4,
+      "skinning": 2,
+      "tanning": 3,
+      "fletching": 1
     },
     "abilities": [
-      {
-        "name": "Weapon Proficiency Enhancement",
-        "description": "Enhances weapon proficiency, granting bonuses to attack and damage rolls.",
-        "cooldown": 0
-      },
-      {
-        "name": "Defensive Barrier",
-        "description": "Can create defensive barriers to protect allies.",
-        "cooldown": 120
-      }
-    ],
+  {
+    "name": "Metal Meld",
+    "description": "Briefly soften small metal objects for reshaping or repair, assisting quick blacksmithing tasks.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Engraved Guidance",
+    "description": "Carve runes or patterns into gear to track or identify items, preventing theft in certain towns.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Guarded Camp",
+    "description": "Erect a partial metal barrier around your campsite for basic shelter from weather or small critters.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Clang of Summons",
+    "description": "Strike your metal wing plates together to produce a resounding alarm signal heard far away by allies.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Scrap Salvage",
+    "description": "Quickly dismantle metallic debris or leftover scrap to gather usable metal parts.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -2909,18 +3082,17 @@
           {
             "name": "Battle Cry",
             "description": "Increases allies' attack power and morale.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Valor's Shield",
             "description": "Grants damage resistance to the party.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Martial Mastery",
             "description": "Enhances proficiency with all weapons.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -2950,17 +3122,16 @@
           {
             "name": "Iron Wall",
             "description": "Significantly increases her own defense.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Guardian Stance",
             "description": "Absorbs damage intended for nearby allies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Fortress Aura",
             "description": "Enhances the party's resistance to physical attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -2991,18 +3162,17 @@
           {
             "name": "Whirlwind Attack",
             "description": "Strikes multiple enemies in rapid succession.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Blade Barrier",
             "description": "Creates a defensive zone that damages foes who enter.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Swift Reflexes",
             "description": "Grants increased evasion and initiative in combat.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -3033,23 +3203,39 @@
     "features": "Sleek, energy-infused wings that pulse with kinetic force.",
     "image": "images/arcanix.png",
     "stats": {
-      "athletics": 2,
-      "perception": 3,
-      "intimidation": 1,
-      "acrobatics": 2
+      "scavenging": 2,
+      "machinery": 4,
+      "carpentry": 3,
+      "cooking": 1
     },
     "abilities": [
-      {
-        "name": "Kinetic Channeling",
-        "description": "Grants the ability to channel kinetic energy into attacks, increasing damage output.",
-        "cooldown": 0
-      },
-      {
-        "name": "Swift Maneuver",
-        "description": "Can perform swift maneuvers, granting advantage on initiative rolls.",
-        "cooldown": 180
-      }
-    ],
+  {
+    "name": "Kinetic Spark",
+    "description": "Harness kinetic force to power small devices or jump-start a mechanical contraption (no combat effect).",
+    "cooldown": 1200
+  },
+  {
+    "name": "Forceful Cart",
+    "description": "Temporarily push a disabled wagon or heavy chest using subtle kinetic pulses.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Dampened Footfall",
+    "description": "Absorb your own kinetic impact, making your steps quieter during stealth or scouting.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Momentum Shift",
+    "description": "Assist a friend scaling a wall or climbing by giving them a slight upward force.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Rebound Raft",
+    "description": "Channel kinetic energy to keep a small raft or boat stable in rough waters for a short period.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -3142,17 +3328,16 @@
           {
             "name": "Arcane Strike",
             "description": "Infuses attacks with magical energy.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Spell Parry",
             "description": "Deflects magical attacks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Enchanted Arsenal",
             "description": "Weapons gain additional elemental properties.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -3183,17 +3368,16 @@
           {
             "name": "Battle Spells",
             "description": "Casts offensive spells alongside melee attacks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Mage Armor",
             "description": "Increases magical defenses.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Runic Empowerment",
             "description": "Temporarily enhances physical abilities with magic.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -3224,17 +3408,16 @@
           {
             "name": "Elemental Strike",
             "description": "Attacks deal additional elemental damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Elemental Resistance",
             "description": "Gains resistance to elemental damage types.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Elemental Aura",
             "description": "Surrounds himself with elemental energy that harms enemies.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -3266,23 +3449,39 @@
     "features": "Shimmering wings with patterns resembling armor plating.",
     "image": "images/sentora.png",
     "stats": {
-      "athletics": 3,
-      "perception": 2,
-      "intimidation": 2,
-      "acrobatics": 1
+      "blacksmithing": 3,
+      "linguistics": 2,
+      "tanning": 4,
+      "fishing": 1
     },
     "abilities": [
-      {
-        "name": "Defensive Enhancement",
-        "description": "Enhances defensive capabilities, providing temporary hit points or reducing incoming damage.",
-        "cooldown": 0
-      },
-      {
-        "name": "Precise Strike",
-        "description": "Can execute precise strikes that bypass enemy defenses.",
-        "cooldown": 120
-      }
-    ],
+  {
+    "name": "Armor Polish",
+    "description": "Apply a quick polish that preserves metal surfaces and prevents minor rust buildup on gear.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Iron Inscription",
+    "description": "Etch simple patterns or lettering into metal objects, useful for labeling or discreet messages.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Diplomatic Bearing",
+    "description": "Adopt a poised stance and calm demeanor, aiding in formal negotiations or linguistic exchanges.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Tanned Hideworks",
+    "description": "Convert raw hides into rudimentary coverings or containers, useful for short-term storage or repairs.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Fishing Line Lash",
+    "description": "Reinforce lines or nets with a special knot technique, improving fishing success in calm waters.",
+    "cooldown": 600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -3375,17 +3574,17 @@
           {
             "name": "Shield Wall",
             "description": "Creates a defensive barrier for allies.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Vigilant Defender",
             "description": "Gains bonuses when protecting others.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Defensive Aura",
             "description": "Reduces damage allies take when near her.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -3416,18 +3615,15 @@
           {
             "name": "Dragon's Bane",
             "description": "Deals increased damage to large and powerful enemies.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Scale Armor",
             "description": "Provides resistance to elemental damage.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Fearless Charge",
             "description": "Immune to fear effects.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -3457,18 +3653,17 @@
           {
             "name": "Heroic Strike",
             "description": "Deals significant damage with a chance to stun.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Inspiring Presence",
             "description": "Boosts allies' combat abilities.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Unyielding Spirit",
             "description": "Increases resilience and recovers from conditions faster.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -3499,23 +3694,39 @@
     "features": "Graceful, translucent wings with flowing patterns.",
     "image": "images/zenara.png",
     "stats": {
-      "acrobatics": 3,
-      "perception": 2,
-      "stealth": 2,
-      "athletics": 1
+      "stillness": 4,
+      "linguistics": 3,
+      "herbalism": 2,
+      "fishing": 1
     },
-    "abilities": [
-      {
-        "name": "Unarmed Strike Enhancement",
-        "description": "Enhances unarmed strikes, allowing Monks to deal additional damage or effects such as stunning foes.",
-        "cooldown": 0
-      },
-      {
-        "name": "Speed Boost",
-        "description": "Can grant temporary movement speed boosts.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Silent Perception",
+    "description": "Deepen your focus to notice subtle sounds or movements, useful when scouting or meditating on clues.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Tranquil Presence",
+    "description": "Project a calm aura that eases tension in NPCs, preventing minor hostilities or arguments.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Stillness Ritual",
+    "description": "Meditate briefly, reducing personal fatigue or stress in harsh environments (non-combat).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Herb Insight",
+    "description": "Identify beneficial or harmful plants on sight, improving herbal foraging or avoiding toxic flora.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Quiet Waters",
+    "description": "Sit in serene focus near water, attracting fish or calming aquatic life for easier fishing.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -3608,17 +3819,16 @@
           {
             "name": "Inner Peace",
             "description": "Reduces incoming damage and resists mental attacks.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Zen Strike",
             "description": "Attacks disrupt enemy abilities.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Meditative Aura",
             "description": "Restores allies' ki or spell slots over time.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -3649,17 +3859,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Silent Fist",
             "description": "Attacks are undetectable until they land.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Cloak of Darkness",
             "description": "Becomes invisible in dim light.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -3690,18 +3900,17 @@
           {
             "name": "Dragon Strike",
             "description": "Attacks deal elemental damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Breath of the Dragon",
             "description": "Emits a breath weapon attack.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Scales of Resilience",
             "description": "Gains resistance to a chosen element.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -3732,23 +3941,39 @@
     "features": "Energetic, vibrant wings that shimmer with motion.",
     "image": "images/kinetix.png",
     "stats": {
-      "acrobatics": 2,
-      "perception": 3,
-      "stealth": 2,
-      "athletics": 2
+      "stillness": 4,
+      "cooking": 1,
+      "fletching": 2,
+      "foraging": 3
     },
-    "abilities": [
-      {
-        "name": "Ki Efficiency",
-        "description": "Grants the ability to harness ki more efficiently, allowing for additional ki points or enhanced abilities.",
-        "cooldown": 0
-      },
-      {
-        "name": "Evasion Bonus",
-        "description": "Can perform swift dodges that grant evasion bonuses.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Evasive Step",
+    "description": "Perform a quick footwork technique that helps avoid natural hazards or traps without engaging in combat.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Kinetic Pulse",
+    "description": "Gently push light objects or debris away, clearing narrow pathways or small blockages.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Momentum Boost",
+    "description": "Grant a short burst of speed to an ally, aiding in sprinting or climbing (purely movement-based).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Rhythmic Foraging",
+    "description": "Use measured, flowing motions to gather herbs or small game stealthily, minimizing disturbance to wildlife.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Flutter Balance",
+    "description": "Channel subtle wing motions to maintain perfect balance on narrow ledges or slippery terrain.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -3841,17 +4066,16 @@
           {
             "name": "Lightning Reflexes",
             "description": "Greatly increased evasion.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Rapid Blows",
             "description": "Multiple attacks in a single action.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Time Dilation",
             "description": "Perceives time slower, acting faster than others.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -3882,17 +4106,17 @@
           {
             "name": "Force Push",
             "description": "Moves enemies or objects without touching them.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Barrier of Force",
             "description": "Creates invisible protective shields.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Energy Redirection",
             "description": "Absorbs and redirects kinetic energy from attacks.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -3923,17 +4147,17 @@
           {
             "name": "Afterimage Strike",
             "description": "Confuses enemies with illusory duplicates.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Echoing Steps",
             "description": "Footsteps create disorienting sounds.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Mirror Image",
             "description": "Creates multiple illusory copies of herself.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -3965,23 +4189,39 @@
     "features": "Calm, pastel-colored wings with serene designs.",
     "image": "images/serenix.png",
     "stats": {
-      "acrobatics": 2,
-      "perception": 3,
-      "insight": 2,
-      "athletics": 1
+      "stillness": 4,
+      "occult": 2,
+      "cooking": 3,
+      "fishing": 1
     },
-    "abilities": [
-      {
-        "name": "Enhanced Focus",
-        "description": "Provides enhanced focus and concentration, reducing penalties from distractions.",
-        "cooldown": 0
-      },
-      {
-        "name": "Calm Emotions",
-        "description": "Can cast Calm Emotions to maintain tranquility during combat.",
-        "cooldown": 180
-      }
-    ],
+"abilities": [
+  {
+    "name": "Serene Glow",
+    "description": "Emit a faint pastel light from your wings, comforting allies and gently illuminating dark areas.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Occult Attunement",
+    "description": "Momentarily sense supernatural energies, helpful for detecting hidden curses or wards (non-damaging).",
+    "cooldown": 3000
+  },
+  {
+    "name": "Gourmet Harmony",
+    "description": "Stir a tranquil vibe into camp cooking, slightly enhancing flavor and boosting morale.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Mindful Meditation",
+    "description": "Guide allies through a brief mental exercise, reducing stress or fear from previous encounters.",
+    "cooldown": 2400
+  },
+  {
+    "name": "River Silence",
+    "description": "Inspire stillness around water, making fish less startled and aiding calm, stealthy crossing.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -4074,17 +4314,16 @@
           {
             "name": "Tranquil Mind",
             "description": "Immune to mind-altering effects.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Healing Touch",
             "description": "Restores health to allies through touch.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Aura of Peace",
             "description": "Reduces aggression in nearby creatures.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -4115,17 +4354,16 @@
           {
             "name": "Levitation",
             "description": "Can float and move effortlessly.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Wind Step",
             "description": "Moves with great speed and agility.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Air Shield",
             "description": "Deflects projectiles with gusts of wind.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -4156,17 +4394,17 @@
           {
             "name": "Fiery Strikes",
             "description": "Attacks deal additional fire damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Heat Aura",
             "description": "Damages nearby enemies with intense heat.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Flame Dash",
             "description": "Moves rapidly, leaving a trail of fire.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4198,23 +4436,39 @@
     "features": "Glorious, shining wings with a divine aura.",
     "image": "images/radiant.png",
     "stats": {
-      "athletics": 3,
-      "persuasion": 2,
-      "intimidation": 2,
-      "religion": 1
+      "occult": 3,
+      "blacksmithing": 2,
+      "tanning": 1,
+      "linguistics": 4
     },
-    "abilities": [
-      {
-        "name": "Divine Smite Enhancement",
-        "description": "Amplifies divine smite, increasing damage against evil creatures.",
-        "cooldown": 0
-      },
-      {
-        "name": "Shield of Faith",
-        "description": "Can cast Shield of Faith to bolster allies' defenses.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Blessed Forge",
+    "description": "Lightly enchant a smithy station or anvil, improving the quality of blacksmithing for a short period.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Occult Safeguard",
+    "description": "Ward off minor eldritch influences on equipment or areas, preventing small-scale corruption.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Hide Purification",
+    "description": "Use a gentle radiant glow to cleanse fresh hides or tans, reducing spoilage or foul odors.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Guided Speech",
+    "description": "Enhance your linguistic clarity, making it easier to converse with foreign NPCs or decode texts.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Holy Beacon",
+    "description": "Project a tall column of soft light that can be seen for miles, ideal for guiding lost allies.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -4307,17 +4561,16 @@
           {
             "name": "Divine Smite",
             "description": "Significantly increases smite damage against evil-aligned creatures.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Crusader's Shield",
             "description": "Grants the party increased defense and resistance to fear effects.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Holy Aura",
             "description": "Radiates an aura that heals allies and damages undead or fiends within range.",
-            "cooldown": 600
+            "cooldown": 6000
           }
         ],
         "upgradeRequirements": {
@@ -4348,17 +4601,16 @@
           {
             "name": "Beacon of Light",
             "description": "Illuminates dark areas, revealing hidden enemies and dispelling illusions.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Ward of Radiance",
             "description": "Creates protective barriers of light around allies, absorbing damage.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Blinding Flash",
             "description": "Emits a flash of light that blinds enemies temporarily.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -4389,17 +4641,17 @@
           {
             "name": "Champion's Strike",
             "description": "Attacks deal extra radiant damage and can heal nearby allies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Divine Resolve",
             "description": "Grants immunity to charm and fear effects for the party.",
-            "cooldown": 600
+            "cooldown": 6000
           },
           {
             "name": "Aura of Courage",
             "description": "Increases allies' attack rolls and saving throws against spells and effects from evil creatures.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4431,23 +4683,39 @@
     "features": "Sturdy, armor-like wings with protective runes.",
     "image": "images/valorin.png",
     "stats": {
-      "athletics": 3,
-      "persuasion": 2,
-      "intimidation": 2,
-      "religion": 1
+      "tanning": 3,
+      "scavenging": 2,
+      "herbalism": 4,
+      "runecraft": 1
     },
-    "abilities": [
-      {
-        "name": "Enhanced Protection",
-        "description": "Grants enhanced protection, allowing Paladins to resist damage or provide buffs to nearby allies.",
-        "cooldown": 0
-      },
-      {
-        "name": "Divine Light",
-        "description": "Can emit a divine light that blinds enemies temporarily.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Hide Preservation",
+    "description": "Anoint skins or pelts with a mild blessing, extending their freshness for easier tanning later.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Scavenger’s Grace",
+    "description": "Briefly sense leftover items or hidden caches in debris, aiding quick salvage or survival hunts.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Herbal Benediction",
+    "description": "Purify gathered herbs from parasites or toxins, improving their medicinal or culinary value.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Sigil Engraving",
+    "description": "Etch a small holy rune into an object, marking it as guarded (social effect in certain towns).",
+    "cooldown": 1800
+  },
+  {
+    "name": "Humble Vigil",
+    "description": "Stand silent watch over a campsite, preventing minor nighttime disturbances or theft attempts.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -4540,18 +4808,17 @@
           {
             "name": "Shield of Faith",
             "description": "Enhances the party's armor class significantly.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Guardian's Bulwark",
             "description": "Absorbs a portion of damage dealt to nearby allies.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Unbreakable Stance",
             "description": "Cannot be moved against her will and gains resistance to physical damage.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -4581,17 +4848,17 @@
           {
             "name": "Judgment Strike",
             "description": "Deals significant damage to enemies who have harmed allies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Eye of Truth",
             "description": "Detects lies and reveals disguised or invisible foes.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Retribution Aura",
             "description": "Enemies attacking the party receive retaliatory damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4622,17 +4889,17 @@
           {
             "name": "Hammer of Justice",
             "description": "Summons a spectral weapon to strike down foes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Lawbringer's Command",
             "description": "Can compel enemies to surrender or cease hostility.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Aura of Order",
             "description": "Enhances allies' discipline and resistance to chaos-based effects.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4664,23 +4931,39 @@
     "features": "Graceful, light-infused wings with celestial motifs.",
     "image": "images/etherea.png",
     "stats": {
-      "athletics": 3,
-      "persuasion": 2,
-      "insight": 2,
-      "religion": 1
+      "linguistics": 3,
+      "cooking": 4,
+      "alchemy": 1,
+      "occult": 2
     },
-    "abilities": [
-      {
-        "name": "Aura Enhancement",
-        "description": "Enhances aura abilities, expanding their range or potency.",
-        "cooldown": 0
-      },
-      {
-        "name": "Blessed Recovery",
-        "description": "Can cast Bless or Blessed Recovery to aid allies in battle.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Celestial Translation",
+    "description": "Momentarily decode archaic symbols or foreign script, bridging minor language gaps.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Hearty Culinary Blessing",
+    "description": "Instill a warm aura into meals, boosting their nutritional value or taste for a short period.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Alchemical Filter",
+    "description": "Project faint divine sparks that remove impurities in certain brews or potions, improving results.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Reverent Reflection",
+    "description": "Create a gentle light that reveals illusions or hidden runes when cast on a surface or wall.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Soft Ward",
+    "description": "Bestow a mild protective glow on an ally, discouraging certain malevolent interactions (non-combat).",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -4773,18 +5056,17 @@
           {
             "name": "Celestial Strike",
             "description": "Attacks bypass enemy defenses and deal radiant damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Heavenly Grace",
             "description": "Grants the party increased movement speed and the ability to ignore difficult terrain.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Divine Insight",
             "description": "Provides advantage on intelligence and wisdom checks.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -4814,17 +5096,17 @@
           {
             "name": "Beacon of Hope",
             "description": "Enhances healing received by allies and removes fear.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Guiding Light",
             "description": "Can lead the party through mazes or confusing terrains without error.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Blessed Visions",
             "description": "Grants the party night vision and the ability to see invisible entities.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4855,17 +5137,17 @@
           {
             "name": "Sanctuary Field",
             "description": "Creates an area where allies are protected from harm.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Divine Ward",
             "description": "Absorbs a portion of magical damage directed at the party.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Healing Wings",
             "description": "Can heal all allies simultaneously with a gesture.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -4897,23 +5179,39 @@
     "features": "Leaf-patterned wings with camouflaging abilities.",
     "image": "images/sylvanna.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 2,
-      "survival": 2
+      "fletching": 4,
+      "skinning": 3,
+      "scavenging": 2,
+      "foraging": 1
     },
-    "abilities": [
-      {
-        "name": "Tracking Enhancement",
-        "description": "Enhances tracking and stealth, granting bonuses to perception and survival checks.",
-        "cooldown": 0
-      },
-      {
-        "name": "Summon Forest Creatures",
-        "description": "Can summon minor forest creatures to assist in hunts.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Arrow Carving",
+    "description": "Quickly craft or modify arrows in the field using nearby twigs, improving fletching yield.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Silent Skinning",
+    "description": "Perform near-silent skinning tasks, preserving hide quality while avoiding noise in the wild.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Trail Scavenger",
+    "description": "Scan the ground for leftover gear or hidden caches from past travelers or creatures.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Forest Forager",
+    "description": "Identify edible plants or mushrooms while on the move, boosting short-term foraging success.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Leaf Veil",
+    "description": "Create a light camouflage of leaves that helps you blend in natural greenery (non-combat stealth).",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -5006,17 +5304,17 @@
           {
             "name": "Camouflage Cloak",
             "description": "Grants the party enhanced stealth and the ability to move silently through natural terrains.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Nature's Mark",
             "description": "Marks a target, making them easier to track and increasing attack accuracy against them.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Silent Arrow",
             "description": "Fires arrows that are nearly undetectable, surprising enemies and dealing extra damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5047,17 +5345,17 @@
           {
             "name": "Summon Companion",
             "description": "Calls a powerful beast to fight alongside the party.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Beast Empathy",
             "description": "Communicate with animals and influence their behavior.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Wild Senses",
             "description": "Enhances perception, granting advantage on perception checks and detecting hidden threats.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5088,17 +5386,17 @@
           {
             "name": "Shadow Shot",
             "description": "Fires arrows that can pass through solid objects to hit targets.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Veil of Shadows",
             "description": "Grants invisibility in low-light conditions.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Silent Hunter",
             "description": "Increases critical hit chances when attacking from stealth.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5130,23 +5428,39 @@
     "features": "Aerodynamic wings with swift, flowing designs.",
     "image": "images/windrunner.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 2,
-      "survival": 2
+      "fishing": 1,
+      "fletching": 4,
+      "butchery": 2,
+      "tanning": 3
     },
-    "abilities": [
-      {
-        "name": "Agility Enhancement",
-        "description": "Increases movement speed and agility, allowing Rangers to reposition quickly in combat.",
-        "cooldown": 0
-      },
-      {
-        "name": "Gust of Wind",
-        "description": "Can create gusts of wind to disorient foes.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Wind-Fletch",
+    "description": "Enhance arrow flights with a short gust, improving range or accuracy outside of combat scenarios.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Butcher’s Breeze",
+    "description": "Create a gentle air current that helps keep fresh kills or butchered meats cool and less likely to spoil.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Hide Drying Draft",
+    "description": "Blow warm gusts that help expedite tanning processes on simple hides.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Crosswind Mapping",
+    "description": "Detect subtle wind patterns to gauge the best path across difficult terrain or locate hidden passages.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Gale Gust",
+    "description": "Briefly propel a small raft or push drifting objects to assist crossing a calm lake or pool.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -5239,17 +5553,17 @@
           {
             "name": "Wind Dash",
             "description": "Increases movement speed significantly; can move swiftly through difficult terrain.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Gale Arrow",
             "description": "Arrows fired are carried by the wind, increasing their range and accuracy.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Whispering Wind",
             "description": "Communicate silently with allies over distances.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5280,17 +5594,17 @@
           {
             "name": "Thunder Shot",
             "description": "Arrows deal lightning damage and can stun targets.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Call Lightning",
             "description": "Summons a localized storm to strike enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Storm's Eye",
             "description": "Grants resistance to lightning and thunder damage for the party.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5321,17 +5635,16 @@
           {
             "name": "Aerial Mastery",
             "description": "Grants the ability to fly and perform aerial maneuvers.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Skystrike",
             "description": "Performs diving attacks from above for extra damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Eagle Eye",
             "description": "Enhances vision, allowing detection of distant or hidden enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           }
         ],
         "upgradeRequirements": {
@@ -5363,23 +5676,39 @@
     "features": "Sharp, talon-like wings resembling those of a falcon.",
     "image": "images/falconis.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 2,
-      "survival": 2
+      "fletching": 4,
+      "linguistics": 1,
+      "scavenging": 2,
+      "cooking": 3
     },
-    "abilities": [
-      {
-        "name": "Ranged Attack Enhancement",
-        "description": "Enhances ranged attacks, granting bonuses to attack rolls or increasing range.",
-        "cooldown": 0
-      },
-      {
-        "name": "Invisibility Scout",
-        "description": "Can scout ahead invisibly, providing reconnaissance information.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Sky Fletch",
+    "description": "Harvest high-quality feathers or adapt them into specialized arrows (no direct damage).",
+    "cooldown": 1800
+  },
+  {
+    "name": "Avian Linguistics",
+    "description": "Mimic birdcalls or whistles to interact with friendly avian creatures or signal allies discreetly.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Scavenger’s Glimpse",
+    "description": "Scan the horizon for glints of metal, identifying salvageable items or hidden campsite gear.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Campfire Cuisine",
+    "description": "Use warm drafts from your wings to help cook or smoke small amounts of food swiftly.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Feather Glide",
+    "description": "Momentarily reduce falling impact for yourself or one ally, preventing minor injuries.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -5472,17 +5801,17 @@
           {
             "name": "Precision Shot",
             "description": "Greatly increases accuracy and critical hit chance.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Far Sight",
             "description": "Can see over vast distances and through certain obstacles.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Target Lock",
             "description": "Marks an enemy, making them easier to hit and revealing their weaknesses.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5513,18 +5842,17 @@
           {
             "name": "Wind Barrier",
             "description": "Generates gusts of wind to deflect projectiles.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Guardian's Dive",
             "description": "Quickly intercepts attacks aimed at allies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Alertness",
             "description": "Cannot be surprised; always aware of surroundings.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -5554,17 +5882,17 @@
           {
             "name": "Sniper's Focus",
             "description": "Increases range and damage of ranged attacks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Breath Control",
             "description": "Steadies aim regardless of environmental conditions.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Stealth Glide",
             "description": "Moves silently through the air, avoiding detection.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5596,23 +5924,39 @@
     "features": "Dark, shadow-infused wings with stealth-enhancing properties.",
     "image": "images/shadowlyn.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 4,
-      "sleight_of_hand": 3
+      "thievery": 4,
+      "poisoncraft": 3,
+      "tanning": 2,
+      "foraging": 1
     },
-    "abilities": [
-      {
-        "name": "Stealth Enhancement",
-        "description": "Grants advantage on stealth checks and the ability to become invisible for short durations.",
-        "cooldown": 0
-      },
-      {
-        "name": "Shadow Illusion",
-        "description": "Can create distractions with shadow illusions.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Nighttime Lift",
+    "description": "Perform delicate lifts of small objects or keys in low-light conditions, aided by your wings’ silent flutter.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Poisonbrew Savvy",
+    "description": "Quickly analyze basic toxins or venoms to see if they’re safe to handle or store.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Subtle Tannery",
+    "description": "Quietly process small hides using minimal odor, reducing the chance of attracting predators.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Foraging Flicker",
+    "description": "Create tiny shadow illusions that distract small animals while you gather resources.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Shadewalk",
+    "description": "Briefly blend with darkness to slip past unsuspecting NPCs or guard animals (non-combat).",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -5705,17 +6049,17 @@
           {
             "name": "Shadow Strike",
             "description": "Deals extra damage when attacking from stealth.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Cloak of Darkness",
             "description": "Can become invisible for a short duration.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Silent Step",
             "description": "Movement does not provoke opportunity attacks.",
-            "cooldown": 0
+            "cooldown": 1100
           }
         ],
         "upgradeRequirements": {
@@ -5746,17 +6090,17 @@
           {
             "name": "Phase Shift",
             "description": "Can move through walls or obstacles for a short distance.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Ethereal Touch",
             "description": "Attacks can ignore armor and deal damage directly.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Fear Aura",
             "description": "Enemies within close proximity may become frightened.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5787,17 +6131,17 @@
           {
             "name": "Spectral Veil",
             "description": "Can become incorporeal, reducing physical damage taken.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Shadow Meld",
             "description": "Blends perfectly with shadows, becoming nearly invisible.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Life Drain",
             "description": "Attacks can steal a portion of the enemy's life to heal herself.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5829,23 +6173,39 @@
     "features": "Silken, muted-colored wings that blend into the darkness.",
     "image": "images/whisper.png",
     "stats": {
-      "athletics": 2,
-      "perception": 3,
-      "stealth": 4,
-      "sleight_of_hand": 4
+      "thievery": 4,
+      "linguistics": 2,
+      "occult": 3,
+      "poisoncraft": 1
     },
-    "abilities": [
-      {
-        "name": "Sleight of Hand Enhancement",
-        "description": "Enhances sleight of hand and pickpocketing abilities.",
-        "cooldown": 0
-      },
-      {
-        "name": "Minor Illusion",
-        "description": "Can cast Minor Illusion to create deceptive sounds or visuals.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Silent Pilfer",
+    "description": "Lift small items from a surface without drawing attention, useful for retrieving lost trinkets or clues.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Lost Tongues",
+    "description": "Murmur cryptic phrases that help decode minor occult or forgotten languages (doesn't handle complex texts).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Wisp of Darkness",
+    "description": "Generate a faint swirl of shadow around yourself, aiding stealth but not harming foes.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Minor Hexbreak",
+    "description": "Briefly disrupt small curses or illusions on objects, revealing their true nature.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Poison Pinch",
+    "description": "Identify the potency of a mild toxin or poison quickly, ensuring safer handling (non-damaging).",
+    "cooldown": 600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -5938,17 +6298,17 @@
           {
             "name": "Assassin's Strike",
             "description": "Deals massive damage when attacking unaware enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Deathly Silence",
             "description": "Eliminates all noise made by herself and nearby allies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Poison Mastery",
             "description": "Applies potent poisons to weapons with enhanced effects.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -5979,18 +6339,17 @@
           {
             "name": "Mist Form",
             "description": "Can become mist, allowing passage through small openings.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Concealing Fog",
             "description": "Creates areas of mist that obscure vision.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Evasion",
             "description": "Greatly increases ability to dodge attacks.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -6020,17 +6379,17 @@
           {
             "name": "Dance of Shadows",
             "description": "Confuses enemies, making it difficult for them to target her.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Charm",
             "description": "Can temporarily sway the minds of weak-willed enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Distraction",
             "description": "Creates illusory copies to divert attention.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6062,23 +6421,39 @@
     "features": "Dark, smoky wings with a mysterious presence.",
     "image": "images/nightshade.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 4,
-      "evasion": 3
+      "thievery": 3,
+      "skinning": 4,
+      "poisoncraft": 2,
+      "foraging": 1
     },
-    "abilities": [
-      {
-        "name": "Evasion Enhancement",
-        "description": "Provides bonuses to evasion, allowing Rogues to dodge area effects more effectively.",
-        "cooldown": 0
-      },
-      {
-        "name": "Debilitating Infusion",
-        "description": "Can infuse attacks with poison or other debilitating effects.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Streetwise Thievery",
+    "description": "Instantly appraise the value of trinkets or small goods, helpful in trading or bartering.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Expert Skinning",
+    "description": "Flawlessly remove hides or scales, improving resource yields without spoiling them.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Poison Crop",
+    "description": "Grow or cultivate small venomous plants in a hidden patch for later use (no direct damage).",
+    "cooldown": 3000
+  },
+  {
+    "name": "Foraging Fade",
+    "description": "Conceal yourself among foliage when gathering plants or mushrooms, staying unnoticed by casual observers.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Nocturnal Silence",
+    "description": "Move swiftly and noiselessly at night, leaving minimal trace for trackers or wildlife.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -6171,18 +6546,17 @@
           {
             "name": "Deadly Poison",
             "description": "Enhances poisons applied to weapons, increasing potency.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Toxic Cloud",
             "description": "Releases a cloud of poison that affects multiple enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Immunity",
             "description": "Gains immunity to poisons and toxins.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -6212,17 +6586,16 @@
           {
             "name": "Darkvision",
             "description": "Can see perfectly in total darkness.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Stalker's Step",
             "description": "Moves silently and leaves no traces.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Fear Induction",
             "description": "Causes dread in enemies, reducing their effectiveness.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -6253,17 +6626,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows over short distances.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Venom Strike",
             "description": "Combines poison with shadow magic for enhanced attacks.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Shadow Cloak",
             "description": "Becomes nearly invisible in darkness.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6295,23 +6668,39 @@
     "features": "Fiery, radiant wings with blazing patterns.",
     "image": "images/emberlyn.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 3,
-      "persuasion": 2
+      "alchemy": 4,
+      "herbalism": 2,
+      "linguistics": 1,
+      "fletching": 3
     },
-    "abilities": [
-      {
-        "name": "Fire Amplification",
-        "description": "Amplifies fire-based spells, increasing damage and area of effect.",
-        "cooldown": 0
-      },
-      {
-        "name": "Ignite Touch",
-        "description": "Can ignite enemies or objects with a touch.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Alchemical Flame",
+    "description": "Conjure a small controlled fire to accelerate certain reaction steps in potions or mixtures.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Botanical Warmth",
+    "description": "Gently heat herbal bundles, enhancing extraction of beneficial qualities (non-damaging).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Language Spark",
+    "description": "Briefly spark clarity in a conversation, bridging a minor language gap or clarifying instructions.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Burning Engrave",
+    "description": "Etch fiery runes or markings onto wooden surfaces, labeling them or leaving a harmless glow.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Flame-Fletch Aid",
+    "description": "Temporarily harden arrow shafts or fletching with mild heat, preventing warping from moisture.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -6404,17 +6793,16 @@
           {
             "name": "Inferno Blast",
             "description": "Casts powerful fire spells dealing massive area damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Fire Immunity",
             "description": "Grants immunity to fire damage for herself and resistance for the party.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Blazing Aura",
             "description": "Damages enemies who come too close.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -6445,18 +6833,17 @@
           {
             "name": "Immolation",
             "description": "Surrounds herself with flames, damaging enemies in melee range.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Firestorm",
             "description": "Summons a storm of fire over a wide area.",
-            "cooldown": 300
+            "cooldown": 3000
           },
           {
             "name": "Phoenix Rebirth",
             "description": "Upon defeat, can revive herself once, emerging from flames.",
-            "cooldown": 0
-          }
+            "cooldown": 1200          }
         ],
         "upgradeRequirements": {
           "components": [
@@ -6486,17 +6873,16 @@
           {
             "name": "Rejuvenation Flames",
             "description": "Heals allies over time with fire-based magic.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Wings of Rebirth",
             "description": "Grants the party the ability to revive once if defeated.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Purifying Fire",
             "description": "Removes negative conditions from allies.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -6528,23 +6914,39 @@
     "features": "Icy, crystalline wings that shimmer with frost.",
     "image": "images/frostia.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 3,
-      "insight": 2
+      "alchemy": 3,
+      "occult": 2,
+      "cooking": 4,
+      "mining": 1
     },
-    "abilities": [
-      {
-        "name": "Ice Amplification",
-        "description": "Enhances ice and cold-based spells, allowing for extended duration or larger areas.",
-        "cooldown": 0
-      },
-      {
-        "name": "Ice Barrier",
-        "description": "Can create barriers of ice to block paths or protect allies.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Chill Catalyst",
+    "description": "Cool down alchemical brews, preventing them from overheating or spoiling mid-creation.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Occult Frost",
+    "description": "Coat small ritual items in a thin layer of frost, helpful for certain arcane or cleansing ceremonies.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Icy Preservation",
+    "description": "Briefly freeze raw ingredients or perishable meals, prolonging freshness during travel.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Frostbit Cuisine",
+    "description": "Flash-chill cooked food to lock in flavor, giving it a unique cold twist (purely culinary).",
+    "cooldown": 1200
+  },
+  {
+    "name": "Crystal Mining Pulse",
+    "description": "Send a chill pulse that makes certain ore veins or crystals glimmer faintly, aiding in mining.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -6637,17 +7039,17 @@
           {
             "name": "Blizzard",
             "description": "Summons a severe snowstorm to damage and slow enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Ice Barrier",
             "description": "Creates protective walls of ice.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Frozen Touch",
             "description": "Attacks can freeze enemies, immobilizing them.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6678,17 +7080,17 @@
           {
             "name": "Whiteout",
             "description": "Reduces visibility for enemies, giving advantage to allies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Frost Nova",
             "description": "Releases a burst of cold, damaging and slowing enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Permafrost",
             "description": "Creates icy terrains that hinder enemy movement.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6719,17 +7121,17 @@
           {
             "name": "Hibernate",
             "description": "Puts enemies into a deep sleep.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Chill Armor",
             "description": "Increases the party's defenses and reflects a portion of melee damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Winter's Grace",
             "description": "Heals allies and removes burn effects.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6761,23 +7163,39 @@
     "features": "Electrically charged wings with dynamic, shifting patterns.",
     "image": "images/storma.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 3,
-      "insight": 2
+      "alchemy": 4,
+      "runecraft": 1,
+      "cooking": 2,
+      "linguistics": 3
     },
-    "abilities": [
-      {
-        "name": "Lightning Amplification",
-        "description": "Boosts lightning and storm-based spells, increasing their intensity and speed.",
-        "cooldown": 0
-      },
-      {
-        "name": "Electrical Barrier",
-        "description": "Can summon temporary electrical barriers or lightning bolts.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Alchemical Spark",
+    "description": "Release tiny electrical surges that can accelerate or stabilize brewing reactions.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Rune Shock",
+    "description": "Give a mild jolt to runic inscriptions or wards, briefly revealing their pattern without harming them.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Sky Kitchen",
+    "description": "Use faint static friction to heat cookware for simple meal prep in the wild.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Electro-Linguistics",
+    "description": "Send subtle arcs between you and a conversation partner, clarifying mispronunciations or tone.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Storm Hum",
+    "description": "Hum a gentle tune that resonates with distant thunder, sensing changes in weather from afar.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -6870,17 +7288,17 @@
           {
             "name": "Lightning Mastery",
             "description": "Can cast Chain Lightning and Call Lightning through her Song Magic with increased damage and area of effect.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Storm Shield",
             "description": "Creates a protective barrier of electrical energy around the party, reducing incoming damage and shocking attackers.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Thunderclap",
             "description": "Emits a powerful burst of thunder that can stun or deafen nearby enemies, disrupting their actions.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6911,17 +7329,17 @@
           {
             "name": "Tempest Fury",
             "description": "Can cast Hurricane and Tsunami through her Song Magic, unleashing powerful wind and water spells that damage and displace enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Wind Walk",
             "description": "Grants the party increased movement speed and the ability to move silently, becoming partially insubstantial like the wind.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Weather Control",
             "description": "Manipulates weather conditions to the party's advantage, such as summoning fog for concealment or calming storms to ensure safe passage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -6952,17 +7370,16 @@
           {
             "name": "Sky's Wrath",
             "description": "Can cast Storm of Vengeance and Control Weather through her Song Magic, calling upon the full fury of the skies to devastate foes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Aerial Supremacy",
             "description": "Grants herself and allies the ability to fly, maneuvering effortlessly through the air and gaining advantages against ground-bound enemies.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Zephyr's Grace",
             "description": "Increases the party's agility and reflexes, improving evasion and granting advantage on dexterity-based checks and saving throws.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -6994,23 +7411,39 @@
     "features": "Dark, ethereal wings with star-like sparkles.",
     "image": "images/nyxara.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 4,
-      "persuasion": 2
+      "occult": 4,
+      "runecraft": 3,
+      "alchemy": 2,
+      "fishing": 1
     },
-    "abilities": [
-      {
-        "name": "Eldritch Enhancement",
-        "description": "Enhances eldritch invocations, granting additional effects or increasing their potency.",
-        "cooldown": 0
-      },
-      {
-        "name": "Dark Energy Blast",
-        "description": "Can create dark energy blasts that saps enemies' strength.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Occult Candle",
+    "description": "Manifest a small dark flame that illuminates hidden inscriptions or magical illusions (harmless).",
+    "cooldown": 1800
+  },
+  {
+    "name": "Rune Pulse",
+    "description": "Briefly empower carved sigils or circles, letting them glow so you can study or decode them.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Witch’s Infusion",
+    "description": "Channel minor warlock energies to fortify an alchemical mixture or brewing process, boosting success chance.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Deepsea Sense",
+    "description": "Tune into faint astral echoes in water, aiding in fishing or exploring watery caverns.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Veil of Shadows",
+    "description": "Conjure a non-combat gloom that dims bright lights around you, making stealth or subtle gatherings easier.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -7103,17 +7536,17 @@
           {
             "name": "Shadowflame Blast",
             "description": "Can cast Shadow of Moil and Hurl Through Hell through her Song Magic, dealing both necrotic and fire damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Dark Barrier",
             "description": "Creates a protective shield of shadow and flame around the party, granting resistance to necrotic and fire damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Infernal Chains",
             "description": "Binds enemies with dark energy, restricting their movements and dealing ongoing damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7144,17 +7577,17 @@
           {
             "name": "Void Lash",
             "description": "Can cast Eldritch Blast and Blight through her Song Magic, dealing necrotic and force damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Dark Binding",
             "description": "Creates bindings of void energy that immobilize enemies and absorb magical energy.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Shadowstep",
             "description": "Grants the ability to teleport short distances through shadows, allowing for quick repositioning and surprise attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7185,17 +7618,17 @@
           {
             "name": "Starlight Curse",
             "description": "Can cast Hex and Finger of Death through her Song Magic, cursing enemies with both necrotic and radiant damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Celestial Veil",
             "description": "Creates a veil of darkness and starlight that obscures the party from enemies, granting advantage on Charisma-based checks and making the party harder to detect.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Eclipse Overlord",
             "description": "Summons a solar eclipse that weakens enemies and empowers the party’s spells, increasing their effectiveness.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7227,23 +7660,39 @@
     "features": "Shadowy, nebulous wings that blend into the darkness.",
     "image": "images/voidwing.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 4,
-      "perception": 2
+      "occult": 4,
+      "linguistics": 3,
+      "alchemy": 2,
+      "cooking": 1
     },
-    "abilities": [
-      {
-        "name": "Teleportation",
-        "description": "Grants the ability to teleport short distances or create dark portals.",
-        "cooldown": 0
-      },
-      {
-        "name": "Summon Dark Entities",
-        "description": "Can summon minor dark entities to aid in combat.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Void Lantern",
+    "description": "Hold a gentle void glow in your palm, revealing outlines in pitch-black darkness (no combat effect).",
+    "cooldown": 1800
+  },
+  {
+    "name": "Dark Whisper",
+    "description": "Convey short messages in a hushed tone that cannot be overheard by non-target listeners.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Alchemical Shadow",
+    "description": "Wrap flasks or potions in a mild darkness that stabilizes volatile ingredients while mixing.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Eerie Translation",
+    "description": "Temporarily decode obscure scripts or hints left by ancient cults, using your warlock insight.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Nocturne Sustenance",
+    "description": "Infuse cooking with void energies to produce a unique dish that has slightly longer shelf life.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -7336,17 +7785,17 @@
           {
             "name": "Abyssal Blast",
             "description": "Unleashes dark energy that deals significant necrotic damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Void Shield",
             "description": "Creates a barrier that absorbs magic and reflects spells back at the caster.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Soul Drain",
             "description": "Steals life energy from enemies to heal herself and allies.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7377,17 +7826,17 @@
           {
             "name": "Phase Shift",
             "description": "Allows brief intangibility, avoiding physical attacks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Nether Step",
             "description": "Teleports through the nether realm over short distances.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Ethereal Grasp",
             "description": "Attacks can reduce enemy defenses and disrupt spellcasting.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7418,17 +7867,17 @@
           {
             "name": "Reap Soul",
             "description": "Can cast Soul Cage and Circle of Death through her Song Magic.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Wraith Form",
             "description": "Temporarily transforms into a wraith, increasing mobility and resistances.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Necrotic Aura",
             "description": "Weakens enemies nearby, reducing their attack and defense.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7460,23 +7909,39 @@
     "features": "Celestial wings with a mix of light and dark hues.",
     "image": "images/eclipsa.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 4,
-      "insight": 2
+      "occult": 3,
+      "runecraft": 4,
+      "linguistics": 2,
+      "mining": 1
     },
-    "abilities": [
-      {
-        "name": "Versatile Spellcasting",
-        "description": "Balances offensive and defensive warlock spells, allowing for versatile spellcasting.",
-        "cooldown": 0
-      },
-      {
-        "name": "Concealment",
-        "description": "Can cast Darkness or Invisibility to conceal movements.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Eclipse Gaze",
+    "description": "Momentarily read faint star or sun patterns on surfaces, revealing hidden runes or cosmic clues.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Runic Phase",
+    "description": "Briefly highlight runic scripts around you, letting them glow under your eclipse aura for study.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Bilingual Eclipse",
+    "description": "Smooth out minor language barriers with cosmic whispers, bridging small linguistic gaps.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Mining Moonlight",
+    "description": "Shine a sliver of pale light onto cave walls, making certain ore veins faintly glimmer for easier extraction.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Twilight Shift",
+    "description": "Dim the immediate vicinity to dusk-like lighting, helpful for stealth or calming rowdy gatherings.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -7569,17 +8034,17 @@
           {
             "name": "Moonbeam Spell",
             "description": "Can cast Moonbeam and Dream through her Song Magic.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Lunar Blessing",
             "description": "Increases the party's magical abilities during the night.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Night's Shield",
             "description": "Provides resistance to radiant and necrotic damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7610,17 +8075,17 @@
           {
             "name": "Eclipse Sphere",
             "description": "Combines radiant and necrotic damage in her spells.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Balance of Shadows",
             "description": "Can manipulate light and darkness to her advantage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Solar Flare",
             "description": "Blinds enemies temporarily, reducing their accuracy.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7651,17 +8116,17 @@
           {
             "name": "Starlight Blast",
             "description": "Can cast Starfall and Astral Projection through her Song Magic.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Constellation Shield",
             "description": "Creates protective barriers inspired by constellations.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Astral Guidance",
             "description": "Enhances the party's navigation and perception abilities.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7693,23 +8158,39 @@
     "features": "Intricate, rune-etched wings that glow with magical energy.",
     "image": "images/arcanis.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 3,
-      "charisma": 3,
-      "persuasion": 2
+      "runecraft": 4,
+      "alchemy": 3,
+      "linguistics": 2,
+      "herbalism": 1
     },
-    "abilities": [
-      {
-        "name": "Arcane Efficiency",
-        "description": "Enhances arcane spellcasting, allowing Wizards to cast spells with greater efficiency or reduced components.",
-        "cooldown": 0
-      },
-      {
-        "name": "Spell Slot Reservoir",
-        "description": "Can store additional spell slots temporarily.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Rune-Lore",
+    "description": "Briefly analyze and interpret unknown runes or glyphs to learn their general function.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Alchemical Draft",
+    "description": "Stabilize brewing ingredients with mild arcane waves, reducing chance of potion failure.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Arcane Lexicon",
+    "description": "Temporarily recall linguistic knowledge, aiding in decoding mystical texts or archaic phrases.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Herbal Sigil",
+    "description": "Draw quick sigils in herbal ink that preserve the potency of fresh-cut plants.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Spelllight Survey",
+    "description": "Project a faint magical glow across a room or campsite, highlighting hazards or magical anomalies.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -7802,17 +8283,16 @@
           {
             "name": "Spell Mastery",
             "description": "Can cast high-level spells like Meteor Swarm and Time Stop more efficiently.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Arcane Shield",
             "description": "Creates a magical barrier that absorbs spell damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Mana Infusion",
             "description": "Increases the party's spellcasting abilities and regenerates spell slots faster.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7843,17 +8323,17 @@
           {
             "name": "Rune Magic",
             "description": "Can inscribe runes that enhance spells or trap enemies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Spell Reflection",
             "description": "Reflects spells back to their casters.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Enchantment Mastery",
             "description": "Enhances the party's equipment with temporary magical properties.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7884,17 +8364,17 @@
           {
             "name": "Time Warp",
             "description": "Can manipulate time to slow enemies or hasten allies.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Temporal Shield",
             "description": "Reduces damage by briefly rewinding time upon being hit.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Future Sight",
             "description": "Grants glimpses of possible future events, aiding decision-making.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -7926,23 +8406,39 @@
     "features": "Mystical, symbol-covered wings that shimmer with arcane symbols.",
     "image": "images/mystara.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 4,
-      "charisma": 2,
-      "insight": 3
+      "runecraft": 3,
+      "alchemy": 4,
+      "occult": 2,
+      "cooking": 1
     },
-    "abilities": [
-      {
-        "name": "Spell Attack Boost",
-        "description": "Grants bonuses to spell attack rolls and spell save DCs.",
-        "cooldown": 0
-      },
-      {
-        "name": "Enhanced Mage Hand",
-        "description": "Can cast Mage Hand with increased range and strength.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Arcane Cookfire",
+    "description": "Summon a mild magical flame to gently heat or cook meals without smoke or smell.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Illusionary Overlay",
+    "description": "Temporarily project illusions onto an area, helpful for hiding camp or blending with the environment.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Occult Detector",
+    "description": "Pulse out a short-range wave that identifies faint traces of hidden curses or magic (non-combat).",
+    "cooldown": 1200
+  },
+  {
+    "name": "Alchemical Focus",
+    "description": "Sharpen your mind to reduce mistakes when mixing complex potions, slightly improving success rate.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Mystic Meal",
+    "description": "Add a hint of arcane flavor to simple dishes, making them more palatable or last slightly longer.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -8035,17 +8531,17 @@
           {
             "name": "Master of Illusions",
             "description": "Creates complex illusions that can deceive all senses.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Phantom Reality",
             "description": "Illusions can cause real damage or effects.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Cloak of Deception",
             "description": "Renders the party invisible or alters their appearance.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8076,17 +8572,17 @@
           {
             "name": "Enchanting Aura",
             "description": "Influences the emotions and thoughts of others.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Charm Mastery",
             "description": "Can charm multiple targets simultaneously.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Mind Shield",
             "description": "Protects the party from mental attacks.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8117,17 +8613,17 @@
           {
             "name": "Dreamwalk",
             "description": "Can enter and manipulate dreams, affecting targets even when they sleep.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Nightmare Pulse",
             "description": "Sends waves of fear and confusion to enemies.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Lucid Barrier",
             "description": "Creates shields that absorb magical damage.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8159,23 +8655,39 @@
     "features": "Graceful, shimmering wings with enchanting patterns.",
     "image": "images/enchantra.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 4,
-      "charisma": 4,
-      "insight": 3
+      "runecraft": 4,
+      "linguistics": 3,
+      "alchemy": 2,
+      "foraging": 1
     },
-    "abilities": [
-      {
-        "name": "Enchantment Enhancement",
-        "description": "Enhances enchantment and illusion spells, making them harder to resist and more potent.",
-        "cooldown": 0
-      },
-      {
-        "name": "Counterspell Boost",
-        "description": "Can cast Counterspell or Dispel Magic with greater effectiveness.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Rune Weave",
+    "description": "Briefly weave strands of runic magic into cloth or thread, strengthening them for repairs.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Lexicon Whisper",
+    "description": "Enhance your voice to better negotiate or decipher tricky dialects, smoothing out language barriers.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Alchemical Tweak",
+    "description": "Gently modify potion color or flavor with magical essence, helpful for disguising or personalizing brews.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Forager’s Glamour",
+    "description": "Cast a minor illusion to make local fauna less wary while you gather resources.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Enchanting Hush",
+    "description": "Prevent small distractions or background noise from disrupting delicate tasks like crafting.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -8268,17 +8780,17 @@
           {
             "name": "Rune Casting",
             "description": "Uses runes to cast powerful spells or seal away enemies' abilities.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Sigil Ward",
             "description": "Sets traps that activate upon enemy approach.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Rune Empowerment",
             "description": "Enhances the party's weapons and armor with runes.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8309,17 +8821,17 @@
           {
             "name": "Spell Weaving",
             "description": "Combines spells for unique effects.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Mana Threads",
             "description": "Manipulates magical energy directly, disrupting enemy spells.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Arcane Net",
             "description": "Traps enemies in a web of magic, restricting movement and spellcasting.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8350,17 +8862,16 @@
           {
             "name": "Sage's Wisdom",
             "description": "Increases the party's intelligence and wisdom stats temporarily.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Arcane Insight",
             "description": "Identifies magical properties of items and creatures instantly.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Spell Recall",
             "description": "Allows casting spells without expending spell slots a limited number of times.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -8392,23 +8903,39 @@
     "features": "Mechanical, gear-patterned wings with metallic hues.",
     "image": "images/cogwyn.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 4,
-      "perception": 2,
-      "crafting": 3
+      "machinery": 4,
+      "blacksmithing": 3,
+      "alchemy": 1,
+      "carpentry": 2
     },
-    "abilities": [
-      {
-        "name": "Tinkering Enhancement",
-        "description": "Enhances tinkering and crafting abilities, allowing for quicker creation of gadgets or magical items.",
-        "cooldown": 0
-      },
-      {
-        "name": "Equipment Enhancement",
-        "description": "Can provide temporary enhancements to allies' equipment.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Gear Tinker",
+    "description": "Quickly adjust or fix a simple mechanism, like a door lock or small contraption, without harming it.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Smithing Surge",
+    "description": "Infuse your blacksmithing station with short-lived mechanical energy, improving forging speed (non-combat).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Alchemical Tray",
+    "description": "Deploy a small mechanical tray that can hold unstable alchemical mixtures safely for mixing.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Carpentry Jig",
+    "description": "Assemble a foldable jig that helps shape wooden pieces more precisely, boosting carpentry results.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Mechanical Glowfly",
+    "description": "Release a clockwork firefly to illuminate an area, track mild motion, or signal allies discreetly.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -8501,17 +9028,17 @@
           {
             "name": "Mechanical Overdrive",
             "description": "Can cast Animate Objects and Steel Wind Strike through his Song Magic, controlling multiple constructs and performing swift, powerful strikes.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Arcane Forge",
             "description": "Enhances the party’s equipment, allowing for temporary magical enhancements and repairs.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Construct Mastery",
             "description": "Grants the ability to summon and control powerful magical constructs that assist in combat and exploration.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8542,17 +9069,17 @@
           {
             "name": "Flux Infusion",
             "description": "Can cast Creation and Wall of Force through his Song Magic, creating tangible magical constructs and barriers.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Energy Manipulation",
             "description": "Grants the ability to manipulate magical energy, enhancing the party’s spellcasting and granting resistance to magical damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Adaptive Constructs",
             "description": "Creates versatile magical constructs that can adapt to different combat scenarios, providing both offense and defense.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8583,17 +9110,17 @@
           {
             "name": "Mechanist's Mastery",
             "description": "Can cast Bigby's Hand and Animate Dead through his Song Magic, controlling massive constructs and manipulating life forces.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Protective Engineering",
             "description": "Creates impenetrable barriers around the party, granting immunity to certain damage types and enhancing defenses.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Life Infusion",
             "description": "Enhances the party's ability to sustain life, allowing for rapid healing and resistance to debilitating effects.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8625,23 +9152,39 @@
     "features": "Fluid, energy-infused wings that pulse with magical currents.",
     "image": "images/fluxara.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 4,
-      "perception": 2,
-      "crafting": 3
+      "machinery": 4,
+      "alchemy": 3,
+      "runecraft": 2,
+      "cooking": 1
     },
-    "abilities": [
-      {
-        "name": "Arcane Infusion",
-        "description": "Enhances infusions and magical constructs, allowing for more powerful or versatile creations.",
-        "cooldown": 0
-      },
-      {
-        "name": "Energy Repair",
-        "description": "Can manipulate energy to repair or modify items on the fly.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Circuit Channel",
+    "description": "Redirect small magical currents through a device, temporarily powering or stabilizing it.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Alchemical Conduction",
+    "description": "Use flickers of energy to quicken certain chemical reactions, helpful for advanced potion-making.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Rune Rewire",
+    "description": "Rearrange the runic etchings on a gadget, granting it a brief new function or form.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Cook’s Spark",
+    "description": "Generate small electric arcs to maintain even heat on a cooking plate, preventing burnt or underdone meals.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Energy Overcast",
+    "description": "Emit a faint aura that repels mild weather inconveniences (like drizzle), keeping gear drier.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -8734,17 +9277,17 @@
           {
             "name": "Energy Manipulation",
             "description": "Grants the ability to manipulate magical energy, enhancing the party’s spellcasting and granting resistance to magical damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Flux Infusion",
             "description": "Can cast Creation and Wall of Force through his Song Magic, creating tangible magical constructs and barriers.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Adaptive Constructs",
             "description": "Creates versatile magical constructs that can adapt to different combat scenarios, providing both offense and defense.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8775,17 +9318,17 @@
           {
             "name": "Temporal Gearwork",
             "description": "Can manipulate time to slow enemies or hasten allies, enhancing the party's actions in combat.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Time Warp",
             "description": "Grants the ability to create temporary time distortions, affecting the flow of battle.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Chrono Shield",
             "description": "Creates a shield that briefly rewinds time to negate damage or negative effects.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8816,17 +9359,17 @@
           {
             "name": "Arcane Automation",
             "description": "Can create automated magical devices that perform tasks or assist in combat.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Runic Enhancement",
             "description": "Enhances the party’s equipment with temporary magical properties, improving their effectiveness.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Golem Mastery",
             "description": "Summons and controls golems or other magical constructs to aid the party in various situations.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -8858,23 +9401,39 @@
     "features": "Sturdy, gear-laden wings with intricate mechanical designs.",
     "image": "images/gearlock.png",
     "stats": {
-      "arcana": 4,
-      "intelligence": 4,
-      "perception": 2,
-      "crafting": 3
+      "machinery": 4,
+      "blacksmithing": 3,
+      "carpentry": 2,
+      "alchemy": 1
     },
-    "abilities": [
-      {
-        "name": "Construct Enhancement",
-        "description": "Enhances the creation and control of magical constructs or golems.",
-        "cooldown": 0
-      },
-      {
-        "name": "Defensive Barrier",
-        "description": "Can generate energy shields or barriers to provide defensive bonuses.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Machinery Tune-Up",
+    "description": "Provide routine maintenance on small machines or contraptions, preventing breakdown.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Blacksmith’s Aid",
+    "description": "Briefly boost forging synergy with mechanical attachments, improving metalwork speed (non-combat).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Woodcarver Setup",
+    "description": "Assemble a foldable carving bench to shape wooden parts or boards quickly in the field.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Alchemic Lockdown",
+    "description": "Fix a fragile brew or chemical in place with a gear clamp, stabilizing reaction mishaps.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Gear-Driven Light",
+    "description": "Crank a small gear module that produces a steady glow, serving as a portable lamp for hours.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -8967,17 +9526,17 @@
           {
             "name": "Fortified Constructs",
             "description": "Can create and control durable magical constructs that provide both offensive and defensive capabilities.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Protective Engineering",
             "description": "Creates impenetrable barriers around the party, granting immunity to certain damage types and enhancing defenses.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Shield Integration",
             "description": "Enhances the party’s armor and shields with magical protections, increasing their resilience in battle.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9008,17 +9567,17 @@
           {
             "name": "Arcane Forging",
             "description": "Can enchant weapons and armor on the fly, providing temporary magical enhancements during combat.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Runic Repair",
             "description": "Instantly repairs and upgrades the party’s equipment, ensuring they remain battle-ready.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Magical Constructs",
             "description": "Summons specialized constructs tailored to specific tasks, such as healing or combat support.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9049,17 +9608,17 @@
           {
             "name": "Elemental Integration",
             "description": "Can infuse constructs with elemental properties (fire, ice, lightning) to adapt to various combat scenarios.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Elemental Shields",
             "description": "Creates barriers that provide resistance or immunity to specific elemental damage types.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Elemental Fury",
             "description": "Channels elemental energies into attacks, increasing their damage and effects based on the chosen element.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9091,24 +9650,39 @@
     "features": "Dark red, blood-like wings with sharp, menacing edges.",
     "image": "images/crimsonis.png",
     "stats": {
-      "athletics": 3,
-      "perception": 3,
-      "stealth": 4,
-      "intimidation": 3,
-      "medicine": 2
+      "occult": 4,
+      "skinning": 3,
+      "butchery": 2,
+      "scavenging": 1
     },
-    "abilities": [
-      {
-        "name": "Blood Magic Amplification",
-        "description": "Enhances blood magic, increasing damage output and providing resistance to certain types of damage.",
-        "cooldown": 5000
-      },
-      {
-        "name": "Health Siphon",
-        "description": "Can siphon health from enemies to heal allies.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Occult Venesection",
+    "description": "Use mild blood-magic knowledge to check a creature’s health or identify basic ailments (no harm).",
+    "cooldown": 1800
+  },
+  {
+    "name": "Fleshcraft Prep",
+    "description": "Improve butchery yield by chanting a ritual that keeps meat fresh for slightly longer.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Sanguine Sniff",
+    "description": "Detect traces of old blood spills or injuries, useful for tracking lost travelers or animals.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Skinning Aid",
+    "description": "Quick incantation that makes hide or pelt removal smoother, avoiding accidental tears.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Scavenger’s Vein",
+    "description": "Sense leftover remains or camp scraps from a scene, possibly leading to lost valuables or supply caches.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -9201,17 +9775,17 @@
           {
             "name": "Bloodlust",
             "description": "Increases attack power as health decreases.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Hemorrhage",
             "description": "Attacks cause enemies to bleed, dealing damage over time.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Life Steal",
             "description": "Heals himself for a portion of the damage dealt to enemies.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9242,17 +9816,17 @@
           {
             "name": "Blood Control",
             "description": "Can manipulate the blood within enemies, causing paralysis or damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Crimson Shield",
             "description": "Forms protective barriers made of solidified blood.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Blood Puppet",
             "description": "Temporarily control the actions of weakened foes.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9283,17 +9857,16 @@
           {
             "name": "Night Vision",
             "description": "Sees perfectly in the dark.",
-            "cooldown": 0
-          },
+            "cooldown": 1200          },
           {
             "name": "Silent Predator",
             "description": "Moves undetected, increasing stealth.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Shadow Strike",
             "description": "Deals extra damage when attacking from darkness.",
-            "cooldown": 180
+            "cooldown": 1800
           }
         ],
         "upgradeRequirements": {
@@ -9325,24 +9898,39 @@
     "features": "Vein-patterned wings that pulsate with life energy.",
     "image": "images/hemoria.png",
     "stats": {
-      "athletics": 3,
-      "perception": 4,
-      "stealth": 3,
-      "intimidation": 2,
-      "medicine": 4
+      "occult": 3,
+      "skinning": 4,
+      "scavenging": 1,
+      "butchery": 2
     },
-    "abilities": [
-      {
-        "name": "Tracking Enhancement",
-        "description": "Grants bonuses to tracking and hunting abilities, allowing for heightened senses and stealth.",
-        "cooldown": 0
-      },
-      {
-        "name": "Blood Magic Infusion",
-        "description": "Can infuse weapons with blood magic for added effects.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Vital Tether",
+    "description": "Use mild blood magic to safely store or preserve raw materials (like meat) for a short time.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Flawless Skinning",
+    "description": "Perform extremely precise skinning on hunted creatures, maximizing pelt quality.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Blood Scent Ward",
+    "description": "Mask the scent of fresh kills or butchered carcasses so predators are less likely to gather.",
+    "cooldown": 2400
+  },
+  {
+    "name": "Scavenger’s Eye",
+    "description": "Briefly gain heightened vision for spotting dropped items or hidden remains in the wild.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Butcher’s Grace",
+    "description": "Chant softly to reduce the mess or gore when carving meat, easing disposal and preserving hygiene.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -9435,17 +10023,17 @@
           {
             "name": "Vitality Drain",
             "description": "Absorbs health from enemies to heal herself.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Weakening Gaze",
             "description": "Reduces enemies' strength and endurance.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Aura of Decay",
             "description": "Slowly saps the life of nearby enemies.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9476,17 +10064,17 @@
           {
             "name": "Blood Armor",
             "description": "Increases defense and absorbs damage.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Sanguine Strike",
             "description": "Attacks deal extra damage based on missing health.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Battle Frenzy",
             "description": "Gains strength as the battle prolongs.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9517,17 +10105,17 @@
           {
             "name": "Blood Mist",
             "description": "Transforms into a mist to avoid attacks and move through spaces.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Shadow Veil",
             "description": "Becomes nearly invisible in darkness, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Hemorrhaging Shadows",
             "description": "Attacks cause bleeding and conceal the enemy's vision.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9559,24 +10147,39 @@
     "features": "Deep red, leathery wings with a sinister aura.",
     "image": "images/sanguis.png",
     "stats": {
-      "athletics": 4,
-      "perception": 3,
-      "stealth": 4,
-      "intimidation": 4,
-      "medicine": 3
+      "occult": 4,
+      "skinning": 3,
+      "tanning": 2,
+      "butchery": 1
     },
-    "abilities": [
-      {
-        "name": "Curse Enhancement",
-        "description": "Enhances the ability to curse and weaken foes, reducing their combat effectiveness.",
-        "cooldown": 0
-      },
-      {
-        "name": "Blood Ritual",
-        "description": "Can perform blood rituals that provide temporary buffs or debuffs.",
-        "cooldown": 120
-      }
-    ],
+"abilities": [
+  {
+    "name": "Occult Mark",
+    "description": "Place a faint sigil on your own hide or clothing, preventing mild curses from latching onto you.",
+    "cooldown": 1800
+  },
+  {
+    "name": "Shadow Tanning",
+    "description": "Tan leathers under dim light with minimal odor, avoiding detection by certain beasts.",
+    "cooldown": 3000
+  },
+  {
+    "name": "Butcher’s Finesse",
+    "description": "Precisely cut meat from bone, preserving maximum nutritional or trade value (non-combat).",
+    "cooldown": 2400
+  },
+  {
+    "name": "Blood Attunement",
+    "description": "In a brief ritual, sense faint leftover emotions in spilled blood, gleaning hints about the event’s mood.",
+    "cooldown": 1200
+  },
+  {
+    "name": "Crimson Douse",
+    "description": "Extinguish small fires or embers by channeling a subtle blood-based dampening effect.",
+    "cooldown": 3600
+  }
+]
+,
     "levelUpRequirements": [
       {
         "level": 2,
@@ -9669,17 +10272,17 @@
           {
             "name": "Shadow Step",
             "description": "Teleports between shadows over short distances, allowing for quick repositioning and surprise attacks.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Venom Strike",
             "description": "Combines poison with shadow magic for enhanced attacks, dealing both poison and necrotic damage.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Shadow Cloak",
             "description": "Becomes nearly invisible in darkness, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9710,17 +10313,17 @@
           {
             "name": "Darkblood Reave",
             "description": "Performs powerful melee attacks that drain life from enemies, healing Sanguis with each successful strike.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Crimson Aura",
             "description": "Emits an aura that saps the strength of nearby enemies, reducing their attack and defense capabilities.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Blood Ritual",
             "description": "Can perform blood rituals that provide temporary buffs to allies or debilitating effects to enemies, such as increased strength or reduced speed.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {
@@ -9751,17 +10354,17 @@
           {
             "name": "Necrotic Blade",
             "description": "Infuses her weapons with necrotic energy, increasing damage and applying debilitating effects such as reducing enemy movement speed.",
-            "cooldown": 120
+            "cooldown": 1200
           },
           {
             "name": "Shadow Veil",
             "description": "Creates a veil of necrotic energy that obscures her presence, granting advantage on stealth checks and making her harder to target.",
-            "cooldown": 180
+            "cooldown": 1800
           },
           {
             "name": "Death's Embrace",
             "description": "Can perform a lethal strike that deals massive necrotic damage and potentially kills weakened enemies instantly.",
-            "cooldown": 300
+            "cooldown": 3000
           }
         ],
         "upgradeRequirements": {

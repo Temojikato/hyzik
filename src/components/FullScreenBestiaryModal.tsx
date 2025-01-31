@@ -221,7 +221,6 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                 ) : (
                   <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
                     {filteredSpecies.map((species) => {
-                      // 1) pick a random unlocked tier name
                       const randomTierName = getRandomUnlockedTierName(species);
 
                       return (
@@ -233,14 +232,21 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                           transition="transform 0.2s"
                           _hover={{ transform: 'scale(1.03)', cursor: 'pointer' }}
                           onClick={() => handleSpeciesClick(species)}
+                          /* Center the contents */
+                          display="flex"
+                          flexDirection="column"
+                          alignItems="center"
+                          justifyContent="center"
                         >
+                          {/* Centered TierImage */}
                           {randomTierName ? (
                             <TierImage tierName={randomTierName} show={!species.locked} />
                           ) : (
                             <TierImage tierName={''} />
                           )}
 
-                          <Box p={3}>
+                          {/* Centered Text */}
+                          <Box p={3} textAlign="center">
                             <Text fontSize="lg" fontWeight="bold" mb={1} color="purple.300">
                               {species.name}
                             </Text>
@@ -250,6 +256,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                       );
                     })}
                   </SimpleGrid>
+
                 )}
               </Box>
             )}
@@ -263,7 +270,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
       </Modal>
 
       {/* Secondary modal for monster details */}
-      <Modal isOpen={isDetailsOpen} onClose={closeDetails} size="6xl" isCentered>
+      <Modal isOpen={isDetailsOpen} onClose={closeDetails} size="full" isCentered scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent
           bg="gray.800"

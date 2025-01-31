@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Text, Badge, Heading } from '@chakra-ui/react';
+import { Box, Flex, Text, Badge, Heading, useBreakpointValue, Grid } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
@@ -20,29 +20,22 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
   loreLocked,
   tiers,
 }) => {
-  /** We store a reordered array in state so we can put the selected tier first. */
   const [reorderedTiers, setReorderedTiers] = useState<MonsterTier[]>([]);
-  // Keep track of the Swiper’s active index (slideIndex) and the displayed index (if you’re still preventing locked updates).
   const [slideIndex, setSlideIndex] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
-  
+
+  const slidesPerView = useBreakpointValue({ base: 1.0, md: 1.4 });
+
   const blurStyleLore: React.CSSProperties = loreLocked
     ? {
-        filter: 'blur(4px)',
-        pointerEvents: 'none',
-        userSelect: 'none',
-      }
+      filter: 'blur(4px)',
+      pointerEvents: 'none',
+      userSelect: 'none',
+    }
     : {};
 
-  // The tier shown in the top image area
   const currentTier = reorderedTiers[displayIndex] || null;
 
-  /**
-   * On mount or whenever `tiers` changes:
-   *  - Find the first UNLOCKED tier
-   *  - Move it to the front of the array
-   *  - Start the swiper at index 0
-   */
   useEffect(() => {
     if (!tiers || tiers.length === 0) {
       setReorderedTiers([]);
@@ -52,20 +45,15 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
     }
 
     const newArr = [...tiers];
-    // Find first UNLOCKED tier
+    // Move first unlocked tier to the front
     const firstUnlockedIdx = newArr.findIndex(t => !t.Locked);
 
     if (firstUnlockedIdx > 0) {
-      // Remove that tier from its position...
       const [unlockedTier] = newArr.splice(firstUnlockedIdx, 1);
-      // ...and insert it at the front
       newArr.unshift(unlockedTier);
-
       setSlideIndex(0);
       setDisplayIndex(0);
     } else {
-      // If the first tier is already unlocked at index 0,
-      // or all are locked (firstUnlockedIdx === -1), we do nothing special
       setSlideIndex(Math.max(0, firstUnlockedIdx));
       setDisplayIndex(Math.max(0, firstUnlockedIdx));
     }
@@ -73,33 +61,34 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
     setReorderedTiers(newArr);
   }, [tiers]);
 
-  // Swiper slide change logic (if you still want to block locked updates)
   const handleSlideChange = (swiper: SwiperType) => {
     const newIdx = swiper.activeIndex;
     setSlideIndex(newIdx);
 
     const newTier = reorderedTiers[newIdx];
-    // If not locked, update the displayed tier
     if (newTier && !newTier.Locked) {
       setDisplayIndex(newIdx);
     }
   };
 
+  function formatStatKey(statKey: string): string {
+    const spaced = statKey.replace(/([A-Z])/g, ' $1'); // e.g. "DexterityScore" => "Dexterity Score"
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+  }
+
   return (
-    <Flex direction="column" w="100%" h="100%">
+    <Flex direction="column" w="100%">
       {/* TOP ROW */}
       <Flex
-        flex="0 0 60%"
         w="100%"
-        borderBottom="1px solid #444"
         direction={{ base: 'column', md: 'row' }}
+        borderBottom="1px solid #444"
       >
-        {/* LEFT: monster info */}
+        {/* LEFT: Lore */}
         <Box
           width={{ base: '100%', md: '70%' }}
           p={4}
-          overflowY="auto"
-          borderRight={{ base: "none", md: "1px solid #444" }}
+          borderRight={{ base: 'none', md: '1px solid #444' }}
         >
           {monsterName && (
             <Heading size="lg" color="purple.300" mb={4}>
@@ -108,28 +97,45 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
           )}
           {monsterLore && (
             <Box style={blurStyleLore}>
-              <Heading size="md" color="purple.200" mb={2}>Lore</Heading>
+              <Heading size="md" color="purple.200" mb={2}>
+                Lore
+              </Heading>
+              {/* Example additional fields */}
               {monsterLore.Formation && (
                 <Text color="gray.200" mb={2}>
                   <strong>Formation:</strong> {monsterLore.Formation}
                 </Text>
               )}
               {monsterLore['Social Tendencies'] && (
-                <Text color="gray.200">
+                <Text color="gray.200" mb={2}>
                   <strong>Social Tendencies:</strong> {monsterLore['Social Tendencies']}
+                </Text>
+              )}
+              {monsterLore.Habitat && (
+                <Text color="gray.200" mb={2}>
+                  <strong>Habitat:</strong> {monsterLore.Habitat}
+                </Text>
+              )}
+              {monsterLore.Behavior && (
+                <Text color="gray.200" mb={2}>
+                  <strong>Behavior:</strong> {monsterLore.Behavior}
+                </Text>
+              )}
+              {monsterLore.Rarity && (
+                <Text color="gray.200" mb={2}>
+                  <strong>Rarity:</strong> {monsterLore.Rarity}
                 </Text>
               )}
             </Box>
           )}
         </Box>
 
-        {/* RIGHT: top-tier image */}
+        {/* RIGHT: Current Tier Image */}
         <Flex
           width={{ base: '100%', md: '30%' }}
           p={4}
           align="center"
           justify="center"
-          borderLeft={{ base: "none", md: "1px solid #444" }}
         >
           {currentTier ? (
             <Box textAlign="center">
@@ -150,23 +156,23 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
       </Flex>
 
       {/* BOTTOM: Swiper */}
-      <Box flex="1" p={4} overflowY="auto">
+      <Box p={4}>
         <Swiper
           spaceBetween={20}
-          slidesPerView={1.4}
+          slidesPerView={slidesPerView}
           centeredSlides
           onSlideChange={handleSlideChange}
-          initialSlide={0} // We forcibly place the first unlocked tier at index 0
-          style={{ width: '100%', height: '100%' }}
+          initialSlide={0}
+          style={{ width: '100%' }}
         >
           {reorderedTiers.map((tier, idx) => {
             const isLocked = tier.Locked === true;
             const blurStyle: React.CSSProperties = isLocked
               ? {
-                  filter: 'blur(4px)',
-                  pointerEvents: 'none',
-                  userSelect: 'none',
-                }
+                filter: 'blur(4px)',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }
               : {};
 
             return (
@@ -177,26 +183,51 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
                   borderRadius="md"
                   textAlign="center"
                   transition="background-color 0.3s"
-                  height="100%"
                   position="relative"
                 >
                   <Box style={blurStyle}>
                     <Text fontWeight="bold" color="white" noOfLines={1}>
                       {tier.Name || `Tier ${idx + 1}`}
                     </Text>
+
                     {tier.Description && (
                       <Text mt={2} fontSize="sm" color="gray.200">
                         {tier.Description}
                       </Text>
                     )}
+
                     {tier.Stats && (
-                      <Box mt={2} textAlign="left">
-                        <Text color="gray.300" fontWeight="bold">
+                      <Box mt={3} textAlign="left">
+                        <Text color="gray.300" fontWeight="bold" mb={2}>
                           Stats:
                         </Text>
-                        {Object.entries(tier.Stats).map(([statKey, statVal]) => (
-                          <Text key={statKey} color="gray.400">
-                            {statKey}: {statVal}
+                        <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+                          {Object.entries(tier.Stats).map(([statKey, statVal]) => (
+                            <Box
+                              key={statKey}
+                              p={2}
+                              bg="gray.600"      // or "accent" if you have a theme color named 'accent'
+                              borderRadius="md"
+                              border="1px solid"
+                              borderColor="gray.500"
+                            >
+                              <Text color="gray.100" fontWeight="medium">
+                                {formatStatKey(statKey)}: {statVal}
+                              </Text>
+                            </Box>
+                          ))}
+                        </Grid>
+                      </Box>
+                    )}
+
+                    {tier.Abilities && tier.Abilities.length > 0 && (
+                      <Box mt={2} textAlign="left">
+                        <Text color="gray.300" fontWeight="bold">
+                          Abilities:
+                        </Text>
+                        {tier.Abilities.map((ability, i) => (
+                          <Text key={i} color="gray.400" fontSize="sm" ml={2}>
+                            • {ability}
                           </Text>
                         ))}
                       </Box>
