@@ -150,32 +150,39 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
           <ModalCloseButton color="text" />
           <ModalBody>
             {/* Filter and Add Item Button */}
-            <HStack mb={4}>
-              <Input
-                placeholder="Search..."
-                value={filterText}
-                onChange={(e) => setFilterText(e.target.value)}
-                bg="white"
-              />
-              <Select
-                placeholder="Filter by Category"
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-                bg="white"
-                maxW="200px"
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </Select>
-              <Spacer />
-              <Button onClick={onAddItemOpen} colorScheme="blue">
-                Add Item
-              </Button>
-              <Button fontFamily="hymmnos" colorScheme="green" ml={2} onClick={onCraftingOpen}>Crafting</Button>
-            </HStack>
+            <VStack spacing={4} align="stretch" marginBottom="1rem">
+              <HStack justifyContent="flex-end">
+                <Button onClick={onAddItemOpen} colorScheme="blue">
+                  Add Item
+                </Button>
+                <Button fontFamily="hymmnos" colorScheme="green" ml={2} onClick={onCraftingOpen}>
+                  Crafting
+                </Button>
+              </HStack>
+
+              <HStack>
+                <Input
+                  placeholder="Search..."
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                  bg="white"
+                />
+                <Select
+                  placeholder="Filter by Category"
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  bg="white"
+                  maxW="200px"
+                >
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </Select>
+              </HStack>
+            </VStack>
+
 
             {/* Inventory Grid */}
             {loading ? (
