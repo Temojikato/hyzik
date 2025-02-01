@@ -14,13 +14,18 @@ import {
   background
 } from '@chakra-ui/react';
 import MapPage from './MapPage'; // your existing MapPage
+import { Item } from '../types/Reyvateils';
+import { User } from 'firebase/auth';
 
 interface FullScreenMapModalProps {
   isOpen: boolean;
   onClose: () => void;
+  inventory: Item[];
+  setInventory: React.Dispatch<React.SetStateAction<Item[]>>;
+  currentUser: User | null;
 }
 
-const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose }) => {
+const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose, inventory, setInventory, currentUser }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered motionPreset="slideInBottom">
       <ModalOverlay />
@@ -29,7 +34,7 @@ const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose
         <ModalCloseButton />
         <ModalBody p={0} height="100vh">
           {/* Render the entire MapPage here */}
-          <MapPage />
+          <MapPage inventory={inventory} setInventory={setInventory} currentUser={currentUser}/>
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose} colorScheme="blue">

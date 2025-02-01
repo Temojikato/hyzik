@@ -27,15 +27,23 @@ import { fetchAllMonstersFromNestedDocs, fetchAllCategories, MonsterCategory } f
 import { MonsterSpecies, MonsterTier } from '../types/BestiaryTypes';
 import TiersSwiper from './TiersSwiper';
 import TierImage from './TierImage';
+import { Item } from '../types/Reyvateils';
+import { User } from 'firebase/auth';
 
 interface FullScreenBestiaryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  inventory: Item[];
+  setInventory: React.Dispatch<React.SetStateAction<Item[]>>;
+  currentUser: User | null;
 }
 
 const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
   isOpen,
   onClose,
+  inventory,
+  setInventory,
+  currentUser
 }) => {
   const [allSpecies, setAllSpecies] = useState<MonsterSpecies[]>([]);
   const [allCategories, setAllCategories] = useState<MonsterCategory[]>([]);
@@ -289,6 +297,9 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                   monster={selectedMonster}
                   loreLocked={selectedMonster.loreLocked!!}
                   tiers={tiersArray}
+                  inventory={inventory}
+                  setInventory={setInventory}
+                  currentUser={currentUser}
                 />
               </ModalBody>
               <ModalFooter>

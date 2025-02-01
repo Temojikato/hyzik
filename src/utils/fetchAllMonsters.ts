@@ -52,6 +52,31 @@ export async function fetchAllCategories(): Promise<MonsterCategory[]> {
   return categories;
 }
 
+export async function getMonsterByName(name: string): Promise<MonsterSpecies | null> {
+  try {
+    const monsters = await fetchAllMonstersFromNestedDocs();
+    const searchLower = name.toLowerCase();
+
+    // Filter the monsters where the base name appears as a substring
+    const matches = monsters.filter(monster =>
+      searchLower.includes(monster.name.toLowerCase())
+    );
+
+    if (matches.length === 1) {
+      return matches[0];
+    } else if (matches.length > 1) {
+      // If there are multiple, try to find an exact match (ignoring tier text)
+      const exactMatch = matches.find(monster => monster.name.toLowerCase() === searchLower);
+      return exactMatch || matches[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error in getMonsterByName:", error);
+    return null;
+  }
+}
+
 export interface MonsterCategory {
   id: string; // Category ID (e.g., "slime")
   name: string; // Display name (e.g., "Slime")

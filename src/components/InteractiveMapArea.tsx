@@ -289,12 +289,11 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
                 const regionPoints = region.polygon
                   .map(([rx, ry]) => `${rx},${ry}`)
                   .join(' ');
-                const fillColor = region.color || 'rgba(0, 255, 0, 0.3)';
                 return (
                   <polygon
                     key={region.id}
                     points={regionPoints}
-                    fill={showOverlays ? fillColor : 'transparent'}
+                    fill={'transparent'}
                     stroke="black"
                     strokeWidth={2}
                     style={{ cursor: 'pointer' }}

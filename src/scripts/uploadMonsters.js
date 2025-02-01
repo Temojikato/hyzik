@@ -12,8 +12,10 @@ admin.initializeApp({
 // Firestore instance
 const db = admin.firestore();
 
-const slimeData = require(path.resolve(__dirname, '../slimes.js'));
-const constructData = require(path.resolve(__dirname, '../constructs.js'));
+const slimeData = require(path.resolve(__dirname, '../dataSets/slimes.js'));
+const constructData = require(path.resolve(__dirname, '../dataSets/constructs.js'));
+const avatarData = require(path.resolve(__dirname, '../dataSets/avatars.js'));
+const reyvateilData = require(path.resolve(__dirname, '../dataSets/reyvateils.js'));
 
 async function uploadSlimes() {
   try {
@@ -43,5 +45,34 @@ async function uploadConstructs() {
   }
 }
 
+async function uploadAvatars() {
+  try {
+    // We'll store this under: bestiary / Slime (doc)
+    const avatarDocRef = db.collection('bestiary').doc('Avatar');
+
+    // 'set' to replace or 'merge: true' to partially merge
+    await avatarDocRef.set(avatarData, { merge: true });
+
+    console.log('Successfully uploaded Construct data to bestiary/Avatar!');
+  } catch (error) {
+    console.error('Error uploading Avatar data:', error);
+  }
+}
+async function uploadReyvateils() {
+  try {
+    // We'll store this under: bestiary / Slime (doc)
+    const reyvateilDocRef = db.collection('bestiary').doc('Reyvateil');
+
+    // 'set' to replace or 'merge: true' to partially merge
+    await reyvateilDocRef.set(reyvateilData, { merge: true });
+
+    console.log('Successfully uploaded Reyvateil data to bestiary/Reyvateil!');
+  } catch (error) {
+    console.error('Error uploading Reyvateil data:', error);
+  }
+}
+
 uploadSlimes();
 uploadConstructs();
+uploadAvatars();
+uploadReyvateils();

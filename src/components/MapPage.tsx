@@ -8,8 +8,15 @@ import { MapFloor, MapArea } from '../mapdata';
 import { storage } from '../Firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 import InteractiveMapBase from './InteractiveMapBase';
+import { Item } from '../types/Reyvateils';
+import { User } from 'firebase/auth';
 
-const MapPage: React.FC = () => {
+interface MapPageProps {
+  inventory: Item[];
+  setInventory: React.Dispatch<React.SetStateAction<Item[]>>;
+  currentUser: User | null;
+}
+const MapPage: React.FC<MapPageProps> = ( {inventory, setInventory, currentUser }) => {
   const [selectedFloor, setSelectedFloor] = useState<MapFloor | null>(null);
   const [selectedArea, setSelectedArea] = useState<MapArea | null>(null);
 
@@ -85,9 +92,11 @@ const MapPage: React.FC = () => {
           isOpen={!!selectedArea}
           onClose={() => setSelectedArea(null)}
           floor={selectedFloor}
-
           // Pass the EXACT same floorImageUrl we loaded
           floorImageUrl={floorImageUrl}
+          currentUser={currentUser}
+          inventory={inventory}
+          setInventory={setInventory}
         />
       )}
     </Box>

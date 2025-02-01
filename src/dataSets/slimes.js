@@ -12,9 +12,13 @@ module.exports = {
     Name: "Fire Slime",
     Tiers: {
       Minor: {
-        Loot: {
-          
-        }
+        // The three valid fire-themed drops sum to 75% and the "Nothing" entry makes up the remaining 25%.
+        Loot: [
+          { itemName: "Infernal Shard", itemChance: 30 },
+          { itemName: "Flame Essence", itemChance: 20 },
+          { itemName: "Ember Fragment", itemChance: 25 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Locked: false,
         Name: "Minor Fire Slime",
         Stats: {
@@ -34,7 +38,12 @@ module.exports = {
           "Minor Fire Slimes are living flickers of flame. They rely on surrounding heat sources to thrive, and can quickly set foes ablaze if approached carelessly. Divers harvest them for cooking or warmth, capturing the crystallized flames they leave behind."
       },
       Regular: {
-        // Kept your existing data but shifted to "Stats: { ... }" style
+        Loot: [
+          { itemName: "Infernal Shard", itemChance: 35 },
+          { itemName: "Flame Essence", itemChance: 25 },
+          { itemName: "Ember Fragment", itemChance: 30 },
+          { itemName: "Nothing", itemChance: 10 }
+        ],
         Description: "A standard Fire Slime that glows a warm orange.",
         Locked: true,
         Name: "Regular Fire Slime",
@@ -59,6 +68,12 @@ module.exports = {
     Name: "Earth Slime",
     Tiers: {
       Minor: {
+        Loot: [
+          // For Earth Slime we use drops that already exist (“Stone” and “Powdered Stone”) and a fallback.
+          { itemName: "Stone", itemChance: 35 },
+          { itemName: "Powdered Stone", itemChance: 40 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Locked: false,
         Name: "Minor Earth Slime",
         Stats: {
@@ -78,6 +93,12 @@ module.exports = {
           "Minor Earth Slimes are composed of dense rock and soil, making them sturdy foes despite a sluggish nature. They are often found feeding on mineral deposits. Divers collect the rocky remains of defeated Earth Slimes for construction and crafting."
       },
       Regular: {
+        Loot: [
+          // For Earth Slime we use drops that already exist (“Stone” and “Powdered Stone”) and a fallback.
+          { itemName: "Stone", itemChance: 40 },
+          { itemName: "Powdered Stone", itemChance: 50 },
+          { itemName: "Nothing", itemChance: 10 }
+        ],
         Description: "A mid-level Earth Slime with rocky exterior patches.",
         Locked: true,
         Name: "Regular Earth Slime",
@@ -102,6 +123,12 @@ module.exports = {
     Name: "Water Slime",
     Tiers: {
       Minor: {
+        Loot: [
+          // For Water Slime we use drops that exist (“Pure Spring Water” and “Water”) plus fallback.
+          { itemName: "Pure Spring Water", itemChance: 30 },
+          { itemName: "Water", itemChance: 45 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Locked: false,
         Name: "Minor Water Slime",
         Stats: {
@@ -121,6 +148,12 @@ module.exports = {
           "Minor Water Slimes are fluid beings, usually peaceful unless disturbed. Divers prize the pristine water left behind when these slimes are slain, stored in a slimy sac that helps preserve its purity."
       },
       Regular: {
+        Loot: [
+          // For Water Slime we use drops that exist (“Pure Spring Water” and “Water”) plus fallback.
+          { itemName: "Pure Spring Water", itemChance: 40 },
+          { itemName: "Water", itemChance: 50 },
+          { itemName: "Nothing", itemChance: 10 }
+        ],
         Description: "A fluid Water Slime that can deliver mild aquatic attacks.",
         Locked: true,
         Name: "Regular Water Slime",
@@ -145,6 +178,12 @@ module.exports = {
     Name: "Lightning Slime",
     Tiers: {
       Minor: {
+        Loot: [
+          // Lacking a dedicated lightning item in our database, we repurpose "Glowstone" and "Wind Essence" for a stormy feel.
+          { itemName: "Glowstone", itemChance: 35 },
+          { itemName: "Wind Essence", itemChance: 40 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Description: "A tiny spark-like slime with a flicker of electrical energy.",
         Locked: false,
         Name: "Minor Lightning Slime",
@@ -154,6 +193,12 @@ module.exports = {
         }
       },
       Regular: {
+        Loot: [
+          // Lacking a dedicated lightning item in our database, we repurpose "Glowstone" and "Wind Essence" for a stormy feel.
+          { itemName: "Glowstone", itemChance: 40 },
+          { itemName: "Wind Essence", itemChance: 50 },
+          { itemName: "Nothing", itemChance: 10 }
+        ],
         Description: "A crackling slime radiating constant static discharge.",
         Locked: true,
         Name: "Regular Lightning Slime",
@@ -178,6 +223,11 @@ module.exports = {
     Name: "Wind Slime",
     Tiers: {
       Minor: {
+        // For Wind Slime, we use the one clearly thematic drop.
+        Loot: [
+          { itemName: "Wind Essence", itemChance: 75 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Locked: false,
         Name: "Minor Wind Slime",
         Stats: {
@@ -212,6 +262,14 @@ module.exports = {
     Name: "Chaos Slime",
     Tiers: {
       Minor: {
+        Loot: [
+          // For a chaotic creature, we mix drops from several elements.
+          { itemName: "Flame Essence", itemChance: 20 },
+          { itemName: "Wind Essence", itemChance: 20 },
+          { itemName: "Stone", itemChance: 15 },
+          { itemName: "Pure Spring Water", itemChance: 20 },
+          { itemName: "Nothing", itemChance: 25 }
+        ],
         Locked: false,
         Name: "Minor Chaos Slime",
         Stats: {

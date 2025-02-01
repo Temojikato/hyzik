@@ -10,13 +10,13 @@ export interface MonsterLore {
 export interface MonsterTier {
   Abilities: string[];
   id: string;
-  Name?: string;                  // e.g. "Minor Fire Slime"
+  Name?: string; // e.g. "Minor Fire Slime"
   imageUrl?: string;
   locked?: boolean;
   Description?: string;
   Stats?: Record<string, string>; // e.g. { Strength: "10", Dexterity: "10" }
   Locked?: boolean;
-  loot?: Record<string, number>;
+  Loot?: LootEntry[];
 }
 
 export interface MonsterSpecies {
@@ -26,4 +26,9 @@ export interface MonsterSpecies {
   loreLocked?: boolean;
   Lore?: MonsterLore;
   Tiers?: Record<string, MonsterTier>;  // "Minor" => { locked, ... }
+}
+
+export interface LootEntry {
+  itemName: string;
+  itemChance: number;
 }

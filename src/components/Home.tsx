@@ -237,8 +237,8 @@ const Home: React.FC = () => {
         unlockedRecipes={unlockedRecipes}
         setUnlockedRecipes={handleRecipeUnlock}
       />
-      <FullScreenMapModal isOpen={isOpenMaps} onClose={onCloseMaps} />
-      <FullScreenBestiaryModal isOpen={isOpenBestiary} onClose={onCloseBestiary} />
+      <FullScreenMapModal inventory={inventory} setInventory={setInventory} currentUser={currentUser} isOpen={isOpenMaps} onClose={onCloseMaps} />
+      <FullScreenBestiaryModal inventory={inventory} setInventory={setInventory} currentUser={currentUser} isOpen={isOpenBestiary} onClose={onCloseBestiary} />
     </Box>
   );
 };

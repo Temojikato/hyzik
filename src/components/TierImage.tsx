@@ -60,7 +60,7 @@ const TierImage: React.FC<TierImageProps> = ({ tierName, alt, boxSize, show = tr
         src={imageUrl || 'https://via.placeholder.com/300'}
         alt={alt || tierName}
         boxSize="100%"
-        objectFit="cover"
+        objectFit="contain"
         filter={!show ? 'blur(15px)' : 'none'} // Apply extreme blur when show is false
         transition="filter 0.3s ease-in-out" // Smooth transition
       />

@@ -17,17 +17,26 @@ import 'swiper/css';
 
 import { MonsterTier, MonsterLore, MonsterSpecies } from '../types/BestiaryTypes';
 import TierImage from './TierImage';
+import { addLootToInventory, rollLoot } from '../utils/lootLogic';
+import { Item } from '../types/Reyvateils';
+import { User } from 'firebase/auth';
 
 interface TiersSwiperProps {
   monster: MonsterSpecies;
   loreLocked: boolean;
   tiers: MonsterTier[];
+  inventory: Item[];
+  setInventory: React.Dispatch<React.SetStateAction<Item[]>>;
+  currentUser: User | null;
 }
 
 const TiersSwiper: React.FC<TiersSwiperProps> = ({
   monster,
   loreLocked,
   tiers,
+  inventory,
+  setInventory,
+  currentUser
 }) => {
   const [reorderedTiers, setReorderedTiers] = useState<MonsterTier[]>([]);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -87,24 +96,8 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
     return spaced.charAt(0).toUpperCase() + spaced.slice(1);
   }
 
-  // Helper: roll loot based on weighted odds from loot table.
-  function rollLoot(lootTable: Record<string, number>): string {
-    const entries = Object.entries(lootTable);
-    const totalWeight = entries.reduce((sum, [item, weight]) => sum + weight, 0);
-    const randomRoll = Math.floor(Math.random() * totalWeight);
-    let runningSum = 0;
-    for (const [item, weight] of entries) {
-      runningSum += weight;
-      if (randomRoll < runningSum) {
-        return item;
-      }
-    }
-    return "Nothing";
-  }
-
-  // Handle Loot button click
-  const handleLoot = () => {
-    if (!currentTier || !currentTier.loot) {
+  const handleLoot = async () => {
+    if (!currentTier || !currentTier.Loot) {
       toast({
         title: "No Loot Available",
         description: "This tier does not offer any loot.",
@@ -114,16 +107,11 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
       });
       return;
     }
-    const lootItem = rollLoot(currentTier.loot);
-    toast({
-      title: "Loot Found",
-      description: `You found: ${lootItem}`,
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
+    const lootItems = rollLoot(currentTier.Loot);
 
+    await addLootToInventory(lootItems, currentUser!!, toast, setInventory, inventory);
+  };
+  
   return (
     <Flex direction="column" w="100%">
       {/* TOP ROW */}
