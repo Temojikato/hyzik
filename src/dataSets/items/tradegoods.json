@@ -1,0 +1,23 @@
+[
+  {
+    "id": "Precious Gem",
+    "name": "Precious Gem",
+    "description": "A valuable gemstone used in crafting and trade.",
+    "category": "Trade Goods",
+    "recipe": ["Gemstones"]
+  },
+  {
+    "id": "Silk",
+    "name": "Silk",
+    "description": "Fine material prized for its quality.",
+    "category": "Trade Goods",
+    "recipe": ["Spider Silk", "Enchanted Sap"]
+  },
+  {
+    "id": "Spices",
+    "name": "Spices",
+    "description": "Valuable trade goods used to enhance food.",
+    "category": "Trade Goods",
+    "recipe": ["Herbs", "Salt"]
+  }
+]

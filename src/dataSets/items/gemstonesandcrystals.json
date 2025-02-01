@@ -1,0 +1,72 @@
+[
+  {
+    "id": "Celestial Gemstone",
+    "name": "Celestial Gemstone",
+    "description": "A gemstone infused with the essence of the heavens, radiating a divine and otherworldly glow.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Star Fragment", "Essence of Light"]
+  },
+  {
+    "id": "Energy Core",
+    "name": "Energy Core",
+    "description": "A core brimming with concentrated energy, pulsating with the lifeblood of the Tower’s power.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Storm Crystal", "Arcane Gear", "Glowstone"]
+  },
+  {
+    "id": "Enchantment Crystal",
+    "name": "Enchantment Crystal",
+    "description": "A crystal that pulses with enchantment and illusion, reflecting the subtle dance of magic.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Shard from Magical Crystal", "Glowstone"]
+  },
+  {
+    "id": "Glowstone",
+    "name": "Glowstone",
+    "description": "Bioluminescent stones found in the Tower's depths, emitting a steady glow used for illumination and magical purposes.",
+    "category": "Gemstones and Crystals",
+    "recipe": []
+  },
+  {
+    "id": "Lightning-Infused Amulet",
+    "name": "Lightning-Infused Amulet",
+    "description": "An amulet charged with the raw power of lightning, sparking with untamed electrical energy.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Storm Crystal", "Metal Ore"]
+  },
+  {
+    "id": "Prism Reflecting Light",
+    "name": "Prism Reflecting Light",
+    "description": "A crystal prism that bends and refracts light into myriad colors, holding the secrets of illumination.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Glass", "Glowstone"]
+  },
+  {
+    "id": "Rune Stone",
+    "name": "Rune Stone",
+    "description": "An inscribed stone bearing ancient runes, emanating a steady flow of arcane energy.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Stone", "Arcane Gear"]
+  },
+  {
+    "id": "Shard from Magical Crystal",
+    "name": "Shard from Magical Crystal",
+    "description": "A fragment of a crystal imbued with innate magic, shimmering with untold mystical properties.",
+    "category": "Gemstones and Crystals",
+    "recipe": []
+  },
+  {
+    "id": "Star Fragment",
+    "name": "Star Fragment",
+    "description": "A celestial piece captured by arcane forces, glowing with the eternal light of distant stars.",
+    "category": "Gemstones and Crystals",
+    "recipe": []
+  },
+  {
+    "id": "Storm Crystal",
+    "name": "Storm Crystal",
+    "description": "A crystal infused with the essence of storms, crackling with latent electrical energy.",
+    "category": "Gemstones and Crystals",
+    "recipe": ["Shard from Magical Crystal", "Wind Essence"]
+  }
+]

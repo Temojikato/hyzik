@@ -1,0 +1,170 @@
+[
+  {
+    "id": "Fragment of Arcane Power",
+    "name": "Fragment of Arcane Power",
+    "description": "Used to level up Wizard class Reyvateils. It represents the dedicated study and mastery of magical knowledge, reflecting the Wizard's ability to manipulate arcane forces through learned spells and rituals.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Faith",
+    "name": "Fragment of Faith",
+    "description": "Used to level up Cleric class Reyvateils. It represents the unwavering belief and devotion that fuel their divine magic.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Focus",
+    "name": "Fragment of Focus",
+    "description": "Used to level up Monk class Reyvateils. It represents the mental discipline, inner peace, and focused energy that empowers their martial arts.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Mana",
+    "name": "Fragment of Mana",
+    "description": "Used to level up Sorcerer class Reyvateils. It represents raw magical energy, symbolizing the Sorcerer's innate ability to manipulate arcane forces.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Melody",
+    "name": "Fragment of Melody",
+    "description": "Used to level up Bard class Reyvateils. It symbolizes the harmonious melodies and rhythms that empower their performances.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Rage",
+    "name": "Fragment of Rage",
+    "description": "Used to level up Barbarian class Reyvateils. This component represents the raw, untamed energy that fuels their rage.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Justice",
+    "name": "Fragment of Justice",
+    "description": "Used to level up Paladin class Reyvateils. It embodies the righteous ideals, unwavering conviction, and devotion to justice that empower their divine abilities.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Precision",
+    "name": "Fragment of Precision",
+    "description": "Used to level up Ranger class Reyvateils. It represents the keen senses, precise aim, and deep connection to nature that empower their skills.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Steel",
+    "name": "Fragment of Steel",
+    "description": "Used to level up Fighter class Reyvateils. This component embodies the strength, discipline, and resilience required for martial combat.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Stealth",
+    "name": "Fragment of Stealth",
+    "description": "Used to level up Rogue class Reyvateils. This component embodies the cunning, agility, and mastery of shadows that allow them to move unseen and strike with deadly precision.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Arcana",
+    "name": "Shard of Arcana",
+    "description": "A refined form of magical energy, reflecting the Sorcerer's growing mastery and control over their innate magical abilities.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Darkness",
+    "name": "Shard of Darkness",
+    "description": "A manifestation of the Warlock's deepening bond with their patron, granting them greater access to their patron's power and influence.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Divinity",
+    "name": "Shard of Divinity",
+    "description": "A concentrated form of divine energy, reflecting the Cleric's growing connection to their deity.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Focus (Ranger)",
+    "name": "Shard of Focus (Ranger)",
+    "description": "Represents a heightened awareness and mastery of their chosen fighting style and favored terrain.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Fury",
+    "name": "Shard of Fury",
+    "description": "A more potent version of the Fragment of Rage, required for higher-level Barbarians.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Harmony",
+    "name": "Shard of Harmony",
+    "description": "A refined version of the Fragment of Melody, representing a deeper understanding of musical harmony and its magical properties.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Mysticism",
+    "name": "Shard of Mysticism",
+    "description": "A culmination of years of study and magical practice, representing the Wizard's deep understanding of arcane principles and their ability to weave potent spells.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Shadow",
+    "name": "Shard of Shadow",
+    "description": "Represents a deeper understanding of stealth and deception, allowing the Rogue to manipulate shadows and blend seamlessly into their surroundings.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Tranquility",
+    "name": "Shard of Tranquility",
+    "description": "A manifestation of inner harmony and perfect balance, signifying the Monk's mastery of their physical and spiritual energies.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Valor (Fighter)",
+    "name": "Shard of Valor (Fighter)",
+    "description": "A symbol of courage and unwavering determination, reflecting the Fighter's mastery of combat skills.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Valor (Paladin)",
+    "name": "Shard of Valor (Paladin)",
+    "description": "A symbol of courage and selflessness, reflecting the Paladin's unwavering commitment to protecting the innocent and upholding their oaths.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Fragment of Stealth",
+    "name": "Fragment of Stealth",
+    "description": "Used to level up Rogue class Reyvateils. This component embodies the cunning, agility, and mastery of shadows that allow them to move unseen and strike with deadly precision.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Ember Fragment",
+    "name": "Ember Fragment",
+    "description": "Used to level up Blood Hunter class Reyvateils. It embodies the volatile energy drawn from their own life force and the manipulation of blood magic.",
+    "category": "Leveling Component",
+    "recipe": []
+  },
+  {
+    "id": "Infernal Shard",
+    "name": "Infernal Shard",
+    "description": "A crystallized fragment of infernal energy, reflecting the Blood Hunter's dangerous pact and their growing mastery over dark and potent forces.",
+    "category": "Leveling Component",
+    "recipe": []
+  }
+]

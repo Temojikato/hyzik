@@ -286,8 +286,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
               <ModalCloseButton color="gray.100" />
               <ModalBody>
                 <TiersSwiper
-                  monsterName={selectedMonster.name}
-                  monsterLore={selectedMonster.Lore}
+                  monster={selectedMonster}
                   loreLocked={selectedMonster.loreLocked!!}
                   tiers={tiersArray}
                 />

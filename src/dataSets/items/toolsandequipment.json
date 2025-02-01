@@ -1,0 +1,100 @@
+[
+  {
+    "id": "Bomb",
+    "name": "Bomb",
+    "description": "Destroys weak walls or damages groups of enemies.",
+    "category": "Tools and Equipment",
+    "recipe": ["Powdered Stone", "Oil", "Cloth"]
+  },
+  {
+    "id": "Fishing Net",
+    "name": "Fishing Net",
+    "description": "A sturdy net used to catch fish, providing a sustainable source of food during expeditions.",
+    "category": "Tools and Equipment",
+    "recipe": ["Rope", "Rope", "Rope", "Leather"]
+  },
+  {
+    "id": "Fishing Rod",
+    "name": "Fishing Rod",
+    "description": "Used to catch fish.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Thread"]
+  },
+  {
+    "id": "Grappling Hook",
+    "name": "Grappling Hook",
+    "description": "Allows reaching higher areas.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Rope"]
+  },
+  {
+    "id": "Lockpick",
+    "name": "Lockpick",
+    "description": "Opens locked chests and doors.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Thread"]
+  },
+  {
+    "id": "Master Gear",
+    "name": "Master Gear",
+    "description": "A sophisticated gear, meticulously crafted and resonating with the essence of ancient machinery.",
+    "category": "Tools and Equipment",
+    "recipe": ["Arcane Gear", "Cogmetal Shard", "Glowstone"]
+  },
+  {
+    "id": "Paralysis Trap",
+    "name": "Paralysis Trap",
+    "description": "Immobilizes enemies when triggered.",
+    "category": "Tools and Equipment",
+    "recipe": ["Metal Ingot", "Venom Glands", "Wood"]
+  },
+  {
+    "id": "Pickaxe",
+    "name": "Pickaxe",
+    "description": "Used for mining ores and minerals.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Metal Ingot"]
+  },
+  {
+    "id": "Shovel",
+    "name": "Shovel",
+    "description": "Used for digging or uncovering buried items.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Metal Ingot"]
+  },
+  {
+    "id": "Smoke Bomb",
+    "name": "Smoke Bomb",
+    "description": "Creates a smoke screen to escape or disorient enemies.",
+    "category": "Tools and Equipment",
+    "recipe": ["Powdered Stone", "Herbs", "Cloth"]
+  },
+  {
+    "id": "Torch",
+    "name": "Torch",
+    "description": "Provides light in dark areas.",
+    "category": "Tools and Equipment",
+    "recipe": ["Wood", "Cloth", "Oil"]
+  },
+  {
+    "id": "Taming Collar",
+    "name": "Taming Collar",
+    "description": "Used to tame wild beasts.",
+    "category": "Tools and Equipment",
+    "recipe": ["Leather", "Metal Ingot", "Enchanted Sap"]
+  },
+  {
+    "id": "Enchanted Quill",
+    "name": "Enchanted Quill",
+    "description": "A quill infused with arcane energy, its feathers shimmering with magical potential.",
+    "category": "Ritual Items/Tools and Equipment",
+    "recipe": ["Feather from Celestial Bird", "Arcane Oil", "Glowstone"]
+  },
+  {
+    "id": "Crown Forged in Infernal Forge",
+    "name": "Crown Forged in Infernal Forge",
+    "description": "A crown emanating dark allure, its infernal craftsmanship radiating an ominous elegance.",
+    "category": "Tools and Weapons/Gemstones and Crystals",
+    "recipe": ["Infernal Shard", "Dark Essence", "Metal Ore"]
+  }
+]

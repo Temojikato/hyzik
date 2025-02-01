@@ -1,0 +1,16 @@
+[
+  {
+    "id": "Ancient Manuscript",
+    "name": "Ancient Manuscript",
+    "description": "Contains lore and hints about the Tower.",
+    "category": "Collectibles",
+    "recipe": ["Paper", "Ink", "Enchanted Quill"]
+  },
+  {
+    "id": "Relic Fragment",
+    "name": "Relic Fragment",
+    "description": "A piece of a relic with historical significance.",
+    "category": "Collectibles",
+    "recipe": ["Paper", "Ink", "Enchanted Quill"]
+  }
+]

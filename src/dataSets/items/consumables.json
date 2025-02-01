@@ -1,0 +1,51 @@
+[
+  {
+    "id": "Antidote",
+    "name": "Antidote",
+    "description": "Cures poison and nullifies toxins.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Venom Extract"]
+  },
+  {
+    "id": "Berries",
+    "name": "Berries",
+    "description": "Wild berries that provide minimal health restoration.",
+    "category": "Consumables",
+    "recipe": []
+  },
+  {
+    "id": "Bread",
+    "name": "Bread",
+    "description": "A staple food that restores a moderate amount of health and hunger.",
+    "category": "Consumables",
+    "recipe": ["Flour", "Water", "Salt"]
+  },
+  {
+    "id": "Dried Meat",
+    "name": "Dried Meat",
+    "description": "Preserved meat that restores health and satiates hunger.",
+    "category": "Consumables",
+    "recipe": ["Raw Meat", "Salt"]
+  },
+  {
+    "id": "Health Potion",
+    "name": "Health Potion",
+    "description": "A concoction that heals wounds and restores vitality.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Essence of Vitality"]
+  },
+  {
+    "id": "Mana Potion",
+    "name": "Mana Potion",
+    "description": "A potion that replenishes magical energy.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Magical Essence", "Herbs"]
+  },
+  {
+    "id": "Stamina Elixir",
+    "name": "Stamina Elixir",
+    "description": "Restores energy and reduces fatigue.",
+    "category": "Consumables",
+    "recipe": ["Empty Vial", "Herbs", "Beast Blood"]
+  }
+]

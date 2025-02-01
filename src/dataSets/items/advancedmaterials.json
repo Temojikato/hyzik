@@ -1,0 +1,16 @@
+[
+  {
+    "id": "Dragon Scale",
+    "name": "Dragon Scale",
+    "description": "Rare material for high-tier crafting.",
+    "category": "Advanced Materials",
+    "recipe": ["Metal Ingot", "Magical Essence"]
+  },
+  {
+    "id": "Enchanted Metal",
+    "name": "Enchanted Metal",
+    "description": "Metal imbued with magical properties.",
+    "category": "Advanced Materials",
+    "recipe": ["Metal Ingot", "Magical Essence"]
+  }
+]

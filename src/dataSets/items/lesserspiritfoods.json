@@ -1,0 +1,121 @@
+[
+  {
+    "id": "Arcane Gear",
+    "name": "Arcane Gear",
+    "description": "Minor magical gears, each intricately crafted to resonate with the flow of arcane currents.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Cogmetal Shard", "Glowstone"]
+  },
+  {
+    "id": "Arcane Oil",
+    "name": "Arcane Oil",
+    "description": "A vial of arcane‐infused oil, shimmering with subtle magical currents and ethereal light.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Oil", "Glowstone"]
+  },
+  {
+    "id": "Celestial Dew",
+    "name": "Celestial Dew",
+    "description": "Pure dew kissed by celestial light, glistening with ethereal radiance under the moonlit sky.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Cogmetal Shard",
+    "name": "Cogmetal Shard",
+    "description": "Intricate fragments of enchanted metal, etched with ancient runes that hum with hidden energy.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Dark Essence",
+    "name": "Dark Essence",
+    "description": "A vial of shadowed essence, thick with the whispers of the void and the secrets it holds.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Shadow Drop"]
+  },
+  {
+    "id": "Ember Fragment",
+    "name": "Ember Fragment",
+    "description": "Fragments of eternal flame, pulsating with a mysterious glow that whispers of ancient power.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Flame Essence",
+    "name": "Flame Essence",
+    "description": "Concentrated essence of pure flame, swirling with untamed energy and latent magic.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Ember Fragment", "Infernal Shard"]
+  },
+  {
+    "id": "Holy Water",
+    "name": "Holy Water",
+    "description": "Blessed water that glows with a sacred light, emanating a sense of divine tranquility.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Pure Spring Water", "Essence of Light"]
+  },
+  {
+    "id": "Infernal Shard",
+    "name": "Infernal Shard",
+    "description": "Dark, fiery shards that shimmer with the essence of the abyss, emanating an unearthly heat.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Life Essence",
+    "name": "Life Essence",
+    "description": "Essence drawn from the very fabric of life, pulsating with vibrant energy and untapped potential.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Petal of Life"]
+  },
+  {
+    "id": "Petal of Life",
+    "name": "Petal of Life",
+    "description": "Enchanted petals that exude a vibrant energy, embodying the very essence of nature's vitality.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Pure Spring Water",
+    "name": "Pure Spring Water",
+    "description": "Crystal-clear spring water, imbued with the purity and vitality of untouched natural springs.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Radiant Fragment",
+    "name": "Radiant Fragment",
+    "description": "Shimmering fragments of light, capturing the brilliance of dawn and the promise of new beginnings.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Shard of Radiance",
+    "name": "Shard of Radiance",
+    "description": "Enhanced fragments that glow with an intensified brilliance, harboring secrets of luminous power.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Radiant Fragment", "Essence of Light"]
+  },
+  {
+    "id": "Shadow Drop",
+    "name": "Shadow Drop",
+    "description": "Droplets of shadow, shimmering with elusive darkness that dances on the edge of perception.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  },
+  {
+    "id": "Storm Essence",
+    "name": "Storm Essence",
+    "description": "Essence infused with the raw power of tempestuous storms, crackling with untamed energy.",
+    "category": "Lesser Spirit Food",
+    "recipe": ["Empty Vial", "Wind Essence", "Storm Crystal"]
+  },
+  {
+    "id": "Wind Essence",
+    "name": "Wind Essence",
+    "description": "Captured wind energy, swirling with invisible currents and the whispers of unseen breezes.",
+    "category": "Lesser Spirit Food",
+    "recipe": []
+  }
+]

@@ -1,0 +1,184 @@
+[
+  {
+    "id": "Beast Hide",
+    "name": "Beast Hide",
+    "description": "Raw hides from Tower creatures, used to create leather after processing.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Bones",
+    "name": "Bones",
+    "description": "Remnants of fallen Tower creatures, used in crafting tools, weapons, and as components in rituals.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Cloth",
+    "name": "Cloth",
+    "description": "Woven fabrics produced from the fibers of Tower plants and animal textiles, essential for clothing and crafting.",
+    "category": "Basic Materials",
+    "recipe": ["Thread", "Thread"]
+  },
+  {
+    "id": "Coal",
+    "name": "Coal",
+    "description": "Used as fuel in smelting and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Feather",
+    "name": "Feather",
+    "description": "Used in crafting arrows and quills.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Gemstones",
+    "name": "Gemstones",
+    "description": "Precious and semi-precious stones unearthed from the Tower's mineral-rich veins, prized for their beauty and magical properties.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Glass",
+    "name": "Glass",
+    "description": "Transparent material formed by melting silicates found within the Tower's volcanic vents, used in containers and lenses.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Gold Ingot",
+    "name": "Gold Ingot",
+    "description": "A bar of pure gold, used in crafting and trade.",
+    "category": "Basic Materials",
+    "recipe": ["Metal Ore", "Coal"]
+  },
+  {
+    "id": "Grain",
+    "name": "Grain",
+    "description": "Harvested grains used in cooking and baking.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Herbs",
+    "name": "Herbs",
+    "description": "Varieties of medicinal and magical plants grown in potted gardens, utilized in potions, salves, and rituals.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Hemp Fibers",
+    "name": "Hemp Fibers",
+    "description": "Strong fibers extracted from hemp plants, used in crafting rope and textiles.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Ink",
+    "name": "Ink",
+    "description": "Dark liquid extracted from the glands of ink-producing Tower cephalopods, essential for writing and spell inscriptions.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Leather",
+    "name": "Leather",
+    "description": "Tanned hides obtained from various Tower beasts, employed in crafting armor, garments, and accessories.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Metal Ore",
+    "name": "Metal Ore",
+    "description": "Raw metallic minerals mined from the Tower's deep caverns, serving as the foundation for tool and weapon forging.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Morning Dew",
+    "name": "Morning Dew",
+    "description": "Fresh dew collected at dawn, carrying the essence of new beginnings.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Molten Lava",
+    "name": "Molten Lava",
+    "description": "Molten rock from the earth's core, extremely hot and volatile.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Moonlit Dew",
+    "name": "Moonlit Dew",
+    "description": "Dew collected under moonlight, imbued with lunar energy.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Oil",
+    "name": "Oil",
+    "description": "Viscous liquid extracted from the glands of Tower-dwelling creatures, used for lubrication, crafting, and alchemical purposes.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Paper",
+    "name": "Paper",
+    "description": "Sheets crafted from the shaved skins of resilient Tower creatures, used for writing, spell inscriptions, and documentation.",
+    "category": "Basic Materials",
+    "recipe": ["Shredded Skin"]
+  },
+  {
+    "id": "Powdered Stone",
+    "name": "Powdered Stone",
+    "description": "Fine particles crushed from Tower minerals, used in construction, alchemy, and as a crafting ingredient.",
+    "category": "Basic Materials",
+    "recipe": ["Stone"]
+  },
+  {
+    "id": "Rope",
+    "name": "Rope",
+    "description": "Bundles of strong hemp fibers spun from the Tower's hardy plants, indispensable for climbing, binding, and various construction needs.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Shredded Skin",
+    "name": "Shredded Skin",
+    "description": "Thin strips of skin shaved from Tower monsters, used in crafting, binding, and as a base for scrolls.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Silica Sand",
+    "name": "Silica Sand",
+    "description": "Fine sand rich in silicon dioxide, essential for glassmaking.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Spider Silk",
+    "name": "Spider Silk",
+    "description": "Strong, elastic threads spun by Tower spiders, indispensable for crafting ropes, nets, and magical bindings.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Stone",
+    "name": "Stone",
+    "description": "A basic stone collected from the Tower's foundation, used in construction and crafting.",
+    "category": "Basic Materials",
+    "recipe": []
+  },
+  {
+    "id": "Water",
+    "name": "Water",
+    "description": "Essential for hydration and cooking.",
+    "category": "Basic Materials",
+    "recipe": ["Empty Vial", "Pure Spring Water"]
+  }
+]

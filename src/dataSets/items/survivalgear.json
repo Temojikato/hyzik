@@ -1,0 +1,9 @@
+[
+  {
+    "id": "Backpack",
+    "name": "Backpack",
+    "description": "Increases inventory capacity.",
+    "category": "Survival Gear",
+    "recipe": ["Leather", "Thread", "Cloth"]
+  }
+]

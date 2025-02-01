@@ -1,0 +1,121 @@
+[
+  {
+    "id": "Vial of Blessed Water",
+    "name": "Vial of Blessed Water",
+    "description": "Holy water purified in sacred rites, radiating a serene and divine luminescence.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Pure Spring Water", "Essence of Light"]
+  },
+  {
+    "id": "Vial of Dew Collected at Dawn",
+    "name": "Vial of Dew Collected at Dawn",
+    "description": "Dew harvested at the break of day, glowing with the first light and morning’s essence.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Morning Dew"]
+  },
+  {
+    "id": "Vial of Infernal Oil",
+    "name": "Vial of Infernal Oil",
+    "description": "Oil infused with infernal energies, radiating a dark and potent aura of power.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Oil", "Infernal Shard"]
+  },
+  {
+    "id": "Vial of Molten Lava",
+    "name": "Vial of Molten Lava",
+    "description": "Molten lava captured and contained, swirling with the untamed fury of the earth’s core.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Molten Lava"]
+  },
+  {
+    "id": "Vial of Moonlit Dew",
+    "name": "Vial of Moonlit Dew",
+    "description": "Dew collected under the silver gaze of the moon, shimmering with lunar mystique.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Moonlit Dew"]
+  },
+  {
+    "id": "Vial of Pure Sunlight",
+    "name": "Vial of Pure Sunlight",
+    "description": "Sunlight captured at dawn, glowing with the first light of day and untapped potential.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Essence of Light"]
+  },
+  {
+    "id": "Vial of Radiant Essence",
+    "name": "Vial of Radiant Essence",
+    "description": "A concentrated essence of radiant magic, shimmering with the promise of luminous power.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Radiant Fragment", "Essence of Light"]
+  },
+  {
+    "id": "Vial of Storm Essence",
+    "name": "Vial of Storm Essence",
+    "description": "Essence harnessed from the heart of a storm, crackling with the energy of raging tempests.",
+    "category": "Vials and Essences",
+    "recipe": ["Empty Vial", "Wind Essence", "Storm Crystal"]
+  },
+  {
+    "id": "Vial of Enchanted Sap",
+    "name": "Vial of Enchanted Sap",
+    "description": "Sap drawn from ancient, enchanted trees, pulsating with the lifeforce of mystical flora.",
+    "category": "Vials and Essences/Organic Components",
+    "recipe": ["Empty Vial", "Enchanted Sap"]
+  },
+  {
+    "id": "Vial of Pure Spring Water",
+    "name": "Vial of Pure Spring Water",
+    "description": "Water from a pristine spring, infused with the untouched purity of nature’s embrace.",
+    "category": "Vials and Essences/Organic Components",
+    "recipe": ["Empty Vial", "Pure Spring Water"]
+  },
+  {
+    "id": "Vial of Dark Essence",
+    "name": "Vial of Dark Essence",
+    "description": "A vial filled with dark essence, pulsating with the mysterious energy of the abyss.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Dark Essence"]
+  },
+  {
+    "id": "Vial of Dragonfire",
+    "name": "Vial of Dragonfire",
+    "description": "Captured dragonfire, flickering with ancient flames and the might of legendary beasts.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Dragonfire"]
+  },
+  {
+    "id": "Vial of Life Essence",
+    "name": "Vial of Life Essence",
+    "description": "Essence captured from the very breath of life, pulsating with vibrant and potent energy.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Life Essence"]
+  },
+  {
+    "id": "Vial of Magical Essence",
+    "name": "Vial of Magical Essence",
+    "description": "A vial containing raw magical essence, glowing with untamed and versatile arcane power.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Magical Essence"]
+  },
+  {
+    "id": "Vial of Night Oil",
+    "name": "Vial of Night Oil",
+    "description": "Oil infused with the essence of night, dark and shimmering with shadowed enchantment.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Night Oil"]
+  },
+  {
+    "id": "Vial of Pure Flame Essence",
+    "name": "Vial of Pure Flame Essence",
+    "description": "Essence of untainted flame, glowing with the pure, relentless power of eternal fire.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Flame Essence"]
+  },
+  {
+    "id": "Vial of Pure Illusion Essence",
+    "name": "Vial of Pure Illusion Essence",
+    "description": "Essence harvested from the realm of illusions, swirling with deceptive and mystical energies.",
+    "category": "Vials and Essences/Other Magical Items",
+    "recipe": ["Empty Vial", "Pure Illusion Essence"]
+  }
+]

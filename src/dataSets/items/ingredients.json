@@ -1,0 +1,30 @@
+[
+  {
+    "id": "Beast Blood",
+    "name": "Beast Blood",
+    "description": "Automatically added ingredient.",
+    "category": "Ingredient",
+    "recipe": []
+  },
+  {
+    "id": "Essence of Shadow",
+    "name": "Essence of Shadow",
+    "description": "Automatically added ingredient.",
+    "category": "Ingredient",
+    "recipe": []
+  },
+  {
+    "id": "Heart Parchment",
+    "name": "Heart Parchment",
+    "description": "Automatically added ingredient.",
+    "category": "Ingredient",
+    "recipe": []
+  },
+  {
+    "id": "Venom Glands",
+    "name": "Venom Glands",
+    "description": "Automatically added ingredient.",
+    "category": "Ingredient",
+    "recipe": []
+  }
+]

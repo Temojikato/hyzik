@@ -1,0 +1,16 @@
+[
+  {
+    "id": "Flour",
+    "name": "Flour",
+    "description": "Finely ground grains used in baking.",
+    "category": "Culinary Ingredients",
+    "recipe": ["Grain"]
+  },
+  {
+    "id": "Raw Meat",
+    "name": "Raw Meat",
+    "description": "Fresh meat obtained from hunted animals.",
+    "category": "Culinary Ingredients",
+    "recipe": ["Grain"]
+  }
+]

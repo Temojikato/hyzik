@@ -12,6 +12,9 @@ module.exports = {
     Name: "Fire Slime",
     Tiers: {
       Minor: {
+        Loot: {
+          
+        }
         Locked: false,
         Name: "Minor Fire Slime",
         Stats: {

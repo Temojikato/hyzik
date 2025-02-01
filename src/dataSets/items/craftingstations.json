@@ -1,0 +1,23 @@
+[
+  {
+    "id": "Alchemy Table",
+    "name": "Alchemy Table",
+    "description": "Used for crafting potions and essences.",
+    "category": "Crafting Stations",
+    "recipe": ["Wood", "Glass", "Enchanted Sap"]
+  },
+  {
+    "id": "Enchanting Station",
+    "name": "Enchanting Station",
+    "description": "Allows the enchantment of items.",
+    "category": "Crafting Stations",
+    "recipe": ["Wood", "Glowstone", "Runestone"]
+  },
+  {
+    "id": "Forge",
+    "name": "Forge",
+    "description": "Required for smelting ores and forging items.",
+    "category": "Crafting Stations",
+    "recipe": ["Stone", "Metal Ingot", "Wood"]
+  }
+]

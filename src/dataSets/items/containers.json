@@ -1,0 +1,16 @@
+[
+  {
+    "id": "Empty Bottle",
+    "name": "Empty Bottle",
+    "description": "Can be filled with liquids.",
+    "category": "Containers",
+    "recipe": ["Glass"]
+  },
+  {
+    "id": "Empty Vial",
+    "name": "Empty Vial",
+    "description": "A small glass container used to hold various liquids and essences.",
+    "category": "Containers",
+    "recipe": ["Glass"]
+  }
+]

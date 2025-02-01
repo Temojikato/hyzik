@@ -16,6 +16,7 @@ export interface MonsterTier {
   Description?: string;
   Stats?: Record<string, string>; // e.g. { Strength: "10", Dexterity: "10" }
   Locked?: boolean;
+  loot?: Record<string, number>;
 }
 
 export interface MonsterSpecies {

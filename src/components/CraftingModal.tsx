@@ -39,7 +39,6 @@ interface CraftingModalProps {
   currentUser: User | null;
 }
 
-
 const CraftingModal: React.FC<CraftingModalProps> = ({
   isOpen,
   onClose,
@@ -118,7 +117,6 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
     }
   }, [isOpen, currentUser, unlockedRecipes, db, toast]);
 
-
   // Filtered recipes based on search text and category
   const filteredRecipes = recipes.filter((recipe) => {
     const matchesText = recipe.name.toLowerCase().includes(filterText.toLowerCase());
@@ -130,37 +128,37 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered scrollBehavior="inside">
+        {/* By setting ModalContent to use flex column layout and a max height, 
+            we ensure that ModalBody can expand and scroll as needed */}
         <ModalOverlay />
-        <ModalContent bg="secondary" maxH="80vh">
+        <ModalContent bg="secondary" maxH="80vh" display="flex" flexDirection="column">
           <ModalHeader color="textHeader">Crafting</ModalHeader>
           <ModalCloseButton color="text" />
-          <ModalBody>
-            {/* Filter */}
-            <HStack mb={4}>
-              <Input
-                placeholder="Search..."
-                value={filterText}
-                onChange={(e) => setFilterText(e.target.value)}
-                bg="white"
-              />
-              <Select
-                placeholder="Filter by Category"
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-                bg="white"
-                maxW="200px"
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </Select>
-              <Spacer />
-              <Button onClick={onClose} colorScheme="gray">
-                Close
-              </Button>
-            </HStack>
+          <ModalBody overflowY="auto" flex="1">
+            {/* Filter controls */}
+            <VStack mb={4} spacing={4} align="stretch">
+              <HStack>
+                <Input
+                  placeholder="Search..."
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                  bg="white"
+                />
+                <Select
+                  placeholder="Filter by Category"
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  bg="white"
+                  maxW="200px"
+                >
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </Select>
+              </HStack>
+            </VStack>
 
             {/* Recipes Grid */}
             {loading ? (
@@ -180,7 +178,10 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
                     }}
                     position="relative"
                   >
-                    <RecipeImage imagePath={"items/" + recipe.name.toLowerCase() + ".png"} recipeName={recipe.name} />
+                    <RecipeImage
+                      imagePath={'items/' + recipe.name.toLowerCase() + '.png'}
+                      recipeName={recipe.name}
+                    />
                     <Box
                       position="absolute"
                       top="0"

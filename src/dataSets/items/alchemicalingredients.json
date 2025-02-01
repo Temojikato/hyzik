@@ -1,0 +1,30 @@
+[
+  {
+    "id": "Essence of Light",
+    "name": "Essence of Light",
+    "description": "A concentrated form of luminescence captured from Tower luminescent creatures, used in potions and illumination spells.",
+    "category": "Alchemical Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Essence of Vitality",
+    "name": "Essence of Vitality",
+    "description": "A potent essence extracted from the life force of Tower creatures, used in healing potions and rejuvenating rituals.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Empty Vial", "Life Essence"]
+  },
+  {
+    "id": "Monster Eye",
+    "name": "Monster Eye",
+    "description": "Used in alchemy and crafting magical items.",
+    "category": "Alchemical Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Venom Extract",
+    "name": "Venom Extract",
+    "description": "Highly concentrated venom extracted from the fangs of Tower predators, essential for crafting poisons and antidotes.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Venom Glands", "Empty Vial"]
+  }
+]
