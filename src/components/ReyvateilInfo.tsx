@@ -34,6 +34,7 @@ import {
   clearCooldown,
   getAllCooldowns,
 } from '../CooldownUtils';
+import FeedModal from './FeedModal';
 
 interface ReyvateilInfoProps {
   reyvateil: Reyvateil | null;
@@ -54,6 +55,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
   const [unlockedRecipes, setUnlockedRecipes] = useState<string[]>([]);
   const [abilities, setAbilities] = useState<Ability[]>([]);
   const [cooldowns, setCooldowns] = useState<Record<string, number>>({});
+  const [isFeedModalOpen, setIsFeedModalOpen] = useState<boolean>(false);
   const toast = useToast();
 
   // Initialize cooldowns from localStorage
@@ -190,46 +192,90 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
   );
 
   // Handle feeding the Reyvateil
-  const handleFeed = async () => {
-    if (currentUser && reyvateil) {
-      try {
-        const cooldownsRef = collection(db, 'users', currentUser.uid, 'cooldowns');
-        const abilitiesRef = collection(db, 'reyvateils', reyvateil.id, 'abilities');
-        const abilitiesSnapshot = await getDocs(abilitiesRef);
+  const handleFeedConfirmed = async (feedItem: Item) => {
+    if (!currentUser || !reyvateil) {
+      toast({
+        title: 'Error',
+        description: 'No user or Reyvateil found.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
 
-        const batch = writeBatch(db);
+    try {
+      // First, remove one unit of the selected feed item from the user’s inventory.
+      const userRef = doc(db, 'users', currentUser.uid);
+      await runTransaction(db, async (transaction) => {
+        const userSnap = await transaction.get(userRef);
+        if (!userSnap.exists()) {
+          throw new Error('User data not found.');
+        }
+        // Copy local inventory and update
+        const newInventory = [...inventory];
+        const itemIndex = newInventory.findIndex((item) => item.id === feedItem.id);
+        if (itemIndex !== -1) {
+          const item = newInventory[itemIndex];
+          if (item.quantity && item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            newInventory.splice(itemIndex, 1);
+          }
+          // Update the Firestore user document’s inventory.
+          transaction.update(userRef, {
+            inventory: newInventory.map((item) => ({
+              reference: doc(db, 'items', item.id),
+              quantity: item.quantity,
+            })),
+          });
+        }
+      });
 
-        abilitiesSnapshot.forEach((abilityDoc) => {
-          const cooldownDocRef = doc(cooldownsRef, abilityDoc.id);
-          batch.set(cooldownDocRef, { lastUsed: null }, { merge: true });
-        });
+      // Now perform the feed action: reset all ability cooldowns.
+      const cooldownsRef = collection(db, 'users', currentUser.uid, 'cooldowns');
+      const abilitiesRef = collection(db, 'reyvateils', reyvateil.id, 'abilities');
+      const abilitiesSnapshot = await getDocs(abilitiesRef);
 
-        await batch.commit();
+      const batch = writeBatch(db);
+      abilitiesSnapshot.forEach((abilityDoc) => {
+        const cooldownDocRef = doc(cooldownsRef, abilityDoc.id);
+        batch.set(cooldownDocRef, { lastUsed: null }, { merge: true });
+      });
 
-        toast({
-          title: 'Reyvateil Fed',
-          description: `${reyvateil.name} has been fed and all ability cooldowns have been reset!`,
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
+      await batch.commit();
 
-        // Clear all cooldowns from state and localStorage
-        const allCooldowns = Object.keys(cooldowns);
-        allCooldowns.forEach((abilityName) => clearCooldown(abilityName));
-        setCooldowns({});
-      } catch (error: any) {
-        console.error('Error feeding Reyvateil:', error);
-        toast({
-          title: 'Feeding Failed',
-          description: 'Failed to feed Reyvateil. Please try again.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: 'Reyvateil Fed',
+        description: `${reyvateil.name} has been fed and all ability cooldowns have been reset!`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+
+      // Clear all cooldowns from state and localStorage.
+      Object.keys(cooldowns).forEach((abilityName) => clearCooldown(abilityName));
+      setCooldowns({});
+
+      // Close the feed modal.
+      setIsFeedModalOpen(false);
+    } catch (error: any) {
+      console.error('Error feeding Reyvateil:', error);
+      toast({
+        title: 'Feeding Failed',
+        description: 'Failed to feed Reyvateil. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
+
+  // Instead of immediately feeding the Reyvateil, open the feed modal.
+  const handleFeedClick = () => {
+    setIsFeedModalOpen(true);
+  };
+
 
   // Utility function to capitalize first letter and add spaces before capitals
   const capitalizeFirstLetter = (str: string): string => {
@@ -597,7 +643,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           boxShadow="sm"
         >
           <HStack spacing={4}>
-            <Button colorScheme="green" fontFamily="Hymmnos" onClick={handleFeed}>
+            <Button colorScheme="green" fontFamily="Hymmnos" onClick={handleFeedClick}>
               Feed
             </Button>
             <Button colorScheme="purple" fontFamily="Hymmnos" onClick={handleRitual}>
@@ -606,6 +652,14 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           </HStack>
         </Box>
       </VStack>
+
+      {/* Feed Modal */}
+      <FeedModal
+        isOpen={isFeedModalOpen}
+        onClose={() => setIsFeedModalOpen(false)}
+        inventory={inventory}
+        onConfirm={handleFeedConfirmed}
+      />
 
       {/* Ability Modal */}
       {selectedAbility && (
