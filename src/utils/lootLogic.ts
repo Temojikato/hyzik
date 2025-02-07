@@ -50,15 +50,27 @@ export async function addLootToInventory(
     const userRef = doc(db, 'users', currentUser.uid);
     // Clone your local inventory array.
     let newInventory = [...inventory];
-    
+
     await runTransaction(db, async (transaction) => {
       const userSnap = await transaction.get(userRef);
       if (!userSnap.exists()) {
         throw new Error('User data not found.');
       }
-      
+
       // For each loot item, update the inventory.
       for (const itemName of lootItems) {
+        // Check if the item name is "nothing" and skip it
+        if (itemName.toLowerCase() === 'nothing') {
+          toast({
+            title: 'Loot Contained Nothing',
+            description: 'The loot contained nothing useful.',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+          });
+          continue; // Skip this item and move on to the next one
+        }
+
         // Get a reference to the item document. We assume the document id is the same as the item name.
         const itemRef = doc(db, 'items', itemName);
         const itemSnap = await transaction.get(itemRef);
@@ -66,37 +78,50 @@ export async function addLootToInventory(
           console.warn(`Item "${itemName}" not found in items collection.`);
           continue;
         }
+
         // Check if the item already exists in the inventory.
         const existingItemIndex = newInventory.findIndex(
-          (item) => item.reference.id === itemName
+          (item) => item.id === itemName
         );
         if (existingItemIndex !== -1) {
           // Increase quantity by 1.
           newInventory[existingItemIndex].quantity += 1;
+          // Ensure we have a valid reference.
+          if (!newInventory[existingItemIndex].reference) {
+            newInventory[existingItemIndex].reference = itemRef;
+          }
         } else {
           // Otherwise, add the new item with quantity 1.
-          newInventory.push({ ...itemSnap.data() as Item, reference: itemRef, quantity: 1 });
+          newInventory.push({
+            ...(itemSnap.data() as Item),
+            reference: itemRef,
+            quantity: 1,
+          });
         }
       }
-      
       // Update the user's inventory in Firestore.
       transaction.update(userRef, {
         inventory: newInventory.map((item) => ({
-          reference: item.reference,
+          // Ensure the reference is valid.
+          reference: item.reference || doc(db, 'items', item.id),
           quantity: item.quantity,
         })),
       });
     });
-    
+
+
     // Update local inventory state.
     setInventory(newInventory);
-    toast({
-      title: 'Loot Added',
-      description: `Added: ${lootItems.join(', ')}`,
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
-    });
+    const filteredLootItems = lootItems.filter(item => item.toLowerCase() !== 'nothing');
+    if (filteredLootItems.length != 0) {
+      toast({
+        title: 'Loot Added',
+        description: `Added: ${lootItems.join(', ')}`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   } catch (error: any) {
     console.error('Failed to add loot to inventory:', error);
     toast({
