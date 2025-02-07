@@ -35,13 +35,6 @@
     "recipe": ["Empty Vial", "Shadow Drop"]
   },
   {
-    "id": "Ember Fragment",
-    "name": "Ember Fragment",
-    "description": "Fragments of eternal flame, pulsating with a mysterious glow that whispers of ancient power.",
-    "category": "Lesser Spirit Food",
-    "recipe": []
-  },
-  {
     "id": "Flame Essence",
     "name": "Flame Essence",
     "description": "Concentrated essence of pure flame, swirling with untamed energy and latent magic.",
@@ -54,13 +47,6 @@
     "description": "Blessed water that glows with a sacred light, emanating a sense of divine tranquility.",
     "category": "Lesser Spirit Food",
     "recipe": ["Pure Spring Water", "Essence of Light"]
-  },
-  {
-    "id": "Infernal Shard",
-    "name": "Infernal Shard",
-    "description": "Dark, fiery shards that shimmer with the essence of the abyss, emanating an unearthly heat.",
-    "category": "Lesser Spirit Food",
-    "recipe": []
   },
   {
     "id": "Life Essence",
@@ -89,13 +75,6 @@
     "description": "Shimmering fragments of light, capturing the brilliance of dawn and the promise of new beginnings.",
     "category": "Lesser Spirit Food",
     "recipe": []
-  },
-  {
-    "id": "Shard of Radiance",
-    "name": "Shard of Radiance",
-    "description": "Enhanced fragments that glow with an intensified brilliance, harboring secrets of luminous power.",
-    "category": "Lesser Spirit Food",
-    "recipe": ["Radiant Fragment", "Essence of Light"]
   },
   {
     "id": "Shadow Drop",

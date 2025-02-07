@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// src/components/ReyvateilTest.tsx
+
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   RadioGroup,
@@ -22,110 +24,76 @@ import {
 } from '@chakra-ui/react';
 import { Reyvateil } from '../types/Reyvateils';
 import quizDataJson from '../quizData.json';
+import {
+  ClassSpecificQuiz,
+  ClassSpecificOptionKey,
+  QuizData,
+  QuizQuestion,
+} from '../types/ReyvateilsQuizzes';
 
-// Define the OptionKey type
-type OptionKey = 'A' | 'B' | 'C' | 'D';
-// Define the option keys for class-specific quizzes
-type ClassSpecificOptionKey = 'A' | 'B' | 'C';
-
-// Define the structure of quiz options
-type ClassSpecificQuizOption = {
-  [key in ClassSpecificOptionKey]: string;
-}
-
-// Define the structure of quiz questions
-interface ClassSpecificQuizQuestion {
-  question: string;
-  options: ClassSpecificQuizOption;
-}
-
-// Define the mapping from scores to Reyvateils
-interface ReyvateilMapping {
-  scoreRange: string;
-  reyvateil: string;
-  description: string;
-}
-
-// Define the overall structure of a class-specific quiz
-interface ClassSpecificQuiz {
-  title: string;
-  introduction: string;
-  questions: ClassSpecificQuizQuestion[];
-  scoring: { [key in ClassSpecificOptionKey]: number };
-  reyvateilMapping: ReyvateilMapping[];
-}
-
-
-// Define interfaces for the quiz data
-type QuizOption = {
-  [key in OptionKey]: string;
+// ─── DYNAMIC IMPORTS FOR CLASS-SPECIFIC QUIZZES ─────────────────────────
+const classSpecificQuizzes: { [key: string]: () => Promise<any> } = {
+  Artificer: () => import('../artificerQuiz.json'),
+  Barbarian: () => import('../barbarianQuiz.json'),
+  Bard: () => import('../bardQuiz.json'),
+  Bloodhunter: () => import('../bloodhunterQuiz.json'),
+  Cleric: () => import('../clericQuiz.json'),
+  Druid: () => import('../druidQuiz.json'),
+  Fighter: () => import('../fighterQuiz.json'),
+  Monk: () => import('../monkQuiz.json'),
+  Paladin: () => import('../paladinQuiz.json'),
+  Ranger: () => import('../rangerQuiz.json'),
+  Rogue: () => import('../rogueQuiz.json'),
+  Sorcerer: () => import('../sorcererQuiz.json'),
+  Warlock: () => import('../warlockQuiz.json'),
+  Wizard: () => import('../wizardQuiz.json'),
 };
 
-interface QuizQuestion {
-  number: number;
-  question: string;
-  options: QuizOption;
-}
-
-interface ClassMapping {
-  scoreRange: string;
-  class: string;
-  description: string;
-}
-
-type Scoring = {
-  [key in OptionKey]: number;
-};
-
-interface QuizData {
-  quiz: {
-    title: string;
-    questions: QuizQuestion[];
-    scoring: Scoring;
-    classMapping: ClassMapping[];
-  };
-}
-
-// Cast the imported JSON to QuizData
 const quizData: QuizData = quizDataJson;
 
-// Map class names to their specific quizzes
-const classSpecificQuizzes: { [key: string]: () => Promise<any> } = {
-  'Artificer': () => import('../artificerQuiz.json'),
-  'Barbarian': () => import('../barbarianQuiz.json'),
-  'Bard': () => import('../bardQuiz.json'),
-  'Bloodhunter': () => import('../bloodhunterQuiz.json'),
-  'Cleric': () => import('../clericQuiz.json'),
-  'Druid': () => import('../druidQuiz.json'),
-  'Fighter': () => import('../fighterQuiz.json'),
-  'Monk': () => import('../monkQuiz.json'),
-  'Paladin': () => import('../paladinQuiz.json'),
-  'Ranger': () => import('../rangerQuiz.json'),
-  'Rogue': () => import('../rogueQuiz.json'),
-  'Sorcerer': () => import('../sorcererQuiz.json'),
-  'Warlock': () => import('../warlockQuiz.json'),
-  'Wizard': () => import('../wizardQuiz.json'),
-};
+// ─── CONFIGURATION ──────────────────────────────────────────────────────
+const totalQuizQuestions = 9;
+const numOptionsPerQuestion = 6;
 
-
+// ─── COMPONENT PROPS ────────────────────────────────────────────────────
 interface ReyvateilTestProps {
   reyvateils: Reyvateil[];
   onAccept: (reyvateil: Reyvateil, selectedImageUrl: string) => void;
   onSelectYourself: () => void;
 }
 
+// ─── THE COMPONENT ──────────────────────────────────────────────────────
 const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
   reyvateils,
   onAccept,
   onSelectYourself,
 }) => {
+  // STATES FOR THE INITIAL (CLASS-DETERMINING) QUIZ
+  const [selectedQuestions, setSelectedQuestions] = useState<QuizQuestion[]>([]);
+  const [balancedOptions, setBalancedOptions] = useState<string[][]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<OptionKey[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
   const [testResult, setTestResult] = useState<{
     className: string;
     description: string;
     totalScore: number;
   } | null>(null);
+
+  // STATES FOR THE TIE-BREAKER, CLASS-SPECIFIC QUIZ & FINAL RESULT
+  const [quizStage, setQuizStage] = useState<
+    'initial' | 'tieBreaker' | 'classSpecific' | 'result'
+  >('initial');
+  const [tieBreakerOptions, setTieBreakerOptions] = useState<string[]>([]);
+  const [classSpecificQuiz, setClassSpecificQuiz] =
+    useState<ClassSpecificQuiz | null>(null);
+  const [classSpecificAnswers, setClassSpecificAnswers] = useState<string[]>([]);
+  const [finalResult, setFinalResult] = useState<{
+    reyvateil: string;
+    description: string;
+    totalScore: number;
+  } | null>(null);
+
+  // STATE FOR IMAGE SELECTION (FINAL RESULT)
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
   const {
     isOpen: isImageSelectionOpen,
@@ -133,110 +101,198 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     onClose: onImageSelectionClose,
   } = useDisclosure();
 
-  // New state variables
-  const [quizStage, setQuizStage] = useState<'initial' | 'classSpecific' | 'result'>('initial');
-  const [classSpecificQuiz, setClassSpecificQuiz] = useState<ClassSpecificQuiz | null>(null);
-  const [classSpecificAnswers, setClassSpecificAnswers] = useState<ClassSpecificOptionKey[]>([]);
-  const [finalResult, setFinalResult] = useState<{
-    reyvateil: string;
-    description: string;
-    totalScore: number;
-  } | null>(null);
+  // ─── UTILITY: SHUFFLE AN ARRAY ─────────────────────────────────────────
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
 
-  const questions = quizData.quiz.questions;
+  // ─── SIMPLE BALANCED ASSIGNMENT ALGORITHM ─────────────────────────────
+  /**
+   * Instead of heavy recursion, build a pool of classes (repeated according to targetCounts),
+   * shuffle it, and then split it into chunks. Each chunk must have unique classes.
+   */
+  const generateBalancedAssignmentSimple = (
+    numQuestions: number,
+    numOptions: number,
+    classes: string[],
+    targetCounts: { [key: string]: number }
+  ): string[][] | null => {
+    const totalSlots = numQuestions * numOptions;
+    const pool: string[] = [];
+    classes.forEach((cls) => {
+      const count = targetCounts[cls] || 0;
+      for (let i = 0; i < count; i++) {
+        pool.push(cls);
+      }
+    });
+    if (pool.length !== totalSlots) return null;
+    const maxAttempts = 1000;
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const shuffledPool = shuffleArray(pool);
+      const assignment: string[][] = [];
+      let valid = true;
+      for (let i = 0; i < numQuestions; i++) {
+        const chunk = shuffledPool.slice(i * numOptions, (i + 1) * numOptions);
+        if (new Set(chunk).size !== numOptions) {
+          valid = false;
+          break;
+        }
+        assignment.push(chunk);
+      }
+      if (valid) return assignment;
+    }
+    return null;
+  };
 
-  const handleTestAnswer = (answer: OptionKey) => {
+  // ─── SETUP: SELECT QUESTIONS & PRECOMPUTE BALANCED OPTIONS ─────────────
+  useEffect(() => {
+    const shuffledQuestions = shuffleArray(quizData.quiz.questions);
+    const selected = shuffledQuestions.slice(0, totalQuizQuestions);
+    setSelectedQuestions(selected);
+
+    // Get the list of classes from the classMapping.
+    const classes = quizData.quiz.classMapping.map((mapping) => mapping.class);
+    const totalSlots = totalQuizQuestions * numOptionsPerQuestion;
+    const numClasses = classes.length;
+    const base = Math.floor(totalSlots / numClasses);
+    const remainder = totalSlots % numClasses;
+    const targetCounts: { [key: string]: number } = {};
+    classes.forEach((cls, index) => {
+      targetCounts[cls] = base + (index < remainder ? 1 : 0);
+    });
+
+    const assignment = generateBalancedAssignmentSimple(
+      totalQuizQuestions,
+      numOptionsPerQuestion,
+      classes,
+      targetCounts
+    );
+    if (assignment) {
+      setBalancedOptions(assignment);
+    } else {
+      // Fallback: random options for each question.
+      const fallback: string[][] = [];
+      for (let i = 0; i < totalQuizQuestions; i++) {
+        fallback.push(shuffleArray(classes).slice(0, numOptionsPerQuestion));
+      }
+      setBalancedOptions(fallback);
+    }
+  }, []);
+
+  // ─── HANDLER FOR THE INITIAL QUIZ ─────────────────────────────────────────
+  const handleTestAnswer = (selectedClass: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestionIndex] = answer;
+    updatedAnswers[currentQuestionIndex] = selectedClass;
     setAnswers(updatedAnswers);
 
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < selectedQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Test completed, compute the result
       computeTestResult(updatedAnswers);
     }
   };
 
-  const computeTestResult = async (answersArray: OptionKey[]) => {
-    let totalScore = 0;
-
-    // Calculate total score based on the user's answers
-    for (let i = 0; i < questions.length; i++) {
-      const answer = answersArray[i];
-      if (!answer) continue;
-      const score = quizData.quiz.scoring[answer];
-      totalScore += score;
-    }
-
-    // Determine the class based on the total score
-    const classInfo = quizData.quiz.classMapping.find((mapping) => {
-      const [min, max] = mapping.scoreRange.split(' - ').map(Number);
-      return totalScore >= min && totalScore <= max;
+  // ─── NEW COMPUTE TEST RESULT (USING FREQUENCY) ───────────────────────────
+  const computeTestResult = (answersArray: string[]) => {
+    // Count how many times each class was selected.
+    const frequency: { [key: string]: number } = {};
+    answersArray.forEach((answer) => {
+      frequency[answer] = (frequency[answer] || 0) + 1;
     });
-
-    if (classInfo) {
+    const maxCount = Math.max(...Object.values(frequency));
+    const winners = Object.keys(frequency).filter(
+      (cls) => frequency[cls] === maxCount
+    );
+    if (winners.length === 1) {
+      // Clear winner.
+      const winningClass = winners[0];
+      const classInfo = quizData.quiz.classMapping.find(
+        (mapping) => mapping.class === winningClass
+      );
       setTestResult({
-        className: classInfo.class,
-        description: classInfo.description,
-        totalScore,
+        className: winningClass,
+        description: classInfo ? classInfo.description : '',
+        totalScore: maxCount,
       });
-
-      // Dynamically load the class-specific quiz
-      const loadQuiz = classSpecificQuizzes[classInfo.class];
+      const loadQuiz = classSpecificQuizzes[winningClass];
       if (loadQuiz) {
-        const module = await loadQuiz();
+        loadQuiz().then((module) => {
+          const specificQuiz = module.default as ClassSpecificQuiz;
+          setClassSpecificQuiz(specificQuiz);
+          setQuizStage('classSpecific');
+          setCurrentQuestionIndex(0);
+          setClassSpecificAnswers([]);
+        });
+      } else {
+        setQuizStage('result');
+      }
+    } else {
+      // Tie detected: ask a tie-breaker question.
+      setTieBreakerOptions(winners);
+      setQuizStage('tieBreaker');
+    }
+  };
+
+  // ─── HANDLER FOR THE TIE-BREAKER ANSWER ───────────────────────────────────
+  const handleTieBreakerAnswer = (selectedClass: string) => {
+    const classInfo = quizData.quiz.classMapping.find(
+      (mapping) => mapping.class === selectedClass
+    );
+    setTestResult({
+      className: selectedClass,
+      description: classInfo ? classInfo.description : '',
+      totalScore: 0,
+    });
+    const loadQuiz = classSpecificQuizzes[selectedClass];
+    if (loadQuiz) {
+      loadQuiz().then((module) => {
         const specificQuiz = module.default as ClassSpecificQuiz;
         setClassSpecificQuiz(specificQuiz);
         setQuizStage('classSpecific');
         setCurrentQuestionIndex(0);
-        setClassSpecificAnswers([]); // Reset answers for the class-specific quiz
-      } else {
-        // Handle case where there is no class-specific quiz
-        setQuizStage('result');
-      }
-    } else {
-      // Handle cases where the score doesn't match any class
-      setTestResult({
-        className: 'Unknown',
-        description: 'Unable to determine your class.',
-        totalScore,
+        setClassSpecificAnswers([]);
       });
+    } else {
       setQuizStage('result');
     }
   };
 
-
-  const handleClassSpecificAnswer = (answer: ClassSpecificOptionKey) => {
+  // ─── HANDLER FOR THE CLASS-SPECIFIC QUIZ (UNCHANGED) ─────────────────────
+  const handleClassSpecificAnswer = (answer: string) => {
     const updatedAnswers = [...classSpecificAnswers];
     updatedAnswers[currentQuestionIndex] = answer;
     setClassSpecificAnswers(updatedAnswers);
 
-    if (currentQuestionIndex < classSpecificQuiz!!.questions.length - 1) {
+    if (
+      classSpecificQuiz &&
+      currentQuestionIndex < classSpecificQuiz.questions.length - 1
+    ) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Class-specific quiz completed, compute the result
       computeClassSpecificResult(updatedAnswers);
     }
   };
 
-  const computeClassSpecificResult = (answersArray: ClassSpecificOptionKey[]) => {
+  const computeClassSpecificResult = (answersArray: string[]) => {
     let totalScore = 0;
-
-    // Calculate total score based on the user's answers
-    for (let i = 0; i < classSpecificQuiz!!.questions.length; i++) {
+    if (!classSpecificQuiz) return;
+    for (let i = 0; i < classSpecificQuiz.questions.length; i++) {
       const answer = answersArray[i];
       if (!answer) continue;
-      const score = classSpecificQuiz!!.scoring[answer];
+      // We still use a point system for the class-specific quiz.
+      const score =
+        classSpecificQuiz.scoring[answer as ClassSpecificOptionKey] || 0;
       totalScore += score;
     }
-
-    // Determine the Reyvateil companion based on the total score
-    const mapping = classSpecificQuiz!!.reyvateilMapping.find((mapping: any) => {
+    const mapping = classSpecificQuiz.reyvateilMapping.find((mapping) => {
       const [min, max] = mapping.scoreRange.split(' - ').map(Number);
       return totalScore >= min && totalScore <= max;
     });
-
     if (mapping) {
       setFinalResult({
         reyvateil: mapping.reyvateil,
@@ -245,7 +301,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
       });
       setQuizStage('result');
     } else {
-      // Handle cases where the score doesn't match any mapping
       setFinalResult({
         reyvateil: 'Unknown',
         description: 'Unable to determine your Reyvateil companion.',
@@ -255,8 +310,8 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     }
   };
 
+  // ─── RETRY HANDLER ───────────────────────────────────────────────────────
   const handleRetry = () => {
-    // Reset the test state
     setCurrentQuestionIndex(0);
     setAnswers([]);
     setTestResult(null);
@@ -267,6 +322,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     setFinalResult(null);
   };
 
+  // ─── IMAGE SELECTION HANDLERS ─────────────────────────────────────────────
   const handleImageClick = () => {
     onImageSelectionOpen();
   };
@@ -276,11 +332,22 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     onImageSelectionClose();
   };
 
-  if (quizStage === 'initial') {
-    // Render the initial quiz
+  const capitalizeFirstLetter = (str: string): string => {
+    return str
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, (char) => char.toUpperCase());
+  };
+
+  // ─── RENDERING ───────────────────────────────────────────────────────────
+  if (
+    quizStage === 'initial' &&
+    selectedQuestions.length > 0 &&
+    balancedOptions.length > 0
+  ) {
+    const currentQuestion = selectedQuestions[currentQuestionIndex];
+    const currentOptions = balancedOptions[currentQuestionIndex];
     return (
       <>
-        {/* ... existing code for rendering the initial quiz */}
         <Text
           fontSize="xl"
           fontWeight="bold"
@@ -288,35 +355,53 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
           color="purple.300"
           mb={4}
         >
-          Question {currentQuestionIndex + 1} of {questions.length}
+          Question {currentQuestionIndex + 1} of {totalQuizQuestions}
         </Text>
         <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          {questions[currentQuestionIndex].question}
+          {currentQuestion.question}
         </Text>
         <RadioGroup
           key={currentQuestionIndex}
-          onChange={(value) => handleTestAnswer(value as OptionKey)}
+          onChange={(value) => handleTestAnswer(value as string)}
           value={answers[currentQuestionIndex] || ''}
         >
           <Stack spacing={4} align="center">
-            {Object.entries(questions[currentQuestionIndex].options).map(
-              ([optionKey, optionValue]) => (
-                <Radio
-                  key={optionKey}
-                  value={optionKey}
-                  size="lg"
-                  colorScheme="purple"
-                >
-                  <Text color="gray.200">{optionValue}</Text>
-                </Radio>
-              )
-            )}
+            {currentOptions.map((cls) => (
+              <Radio key={cls} value={cls} size="lg" colorScheme="purple">
+                <Text color="gray.200">{currentQuestion.options[cls]}</Text>
+              </Radio>
+            ))}
+          </Stack>
+        </RadioGroup>
+      </>
+    );
+  } else if (quizStage === 'tieBreaker') {
+    return (
+      <>
+        <Text
+          fontSize="xl"
+          fontWeight="bold"
+          textAlign="center"
+          color="purple.300"
+          mb={4}
+        >
+          Tie Breaker
+        </Text>
+        <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
+          There is a tie between: {tieBreakerOptions.join(', ')}. Which one calls to you?
+        </Text>
+        <RadioGroup onChange={(value) => handleTieBreakerAnswer(value as string)}>
+          <Stack spacing={4} align="center">
+            {tieBreakerOptions.map((cls) => (
+              <Radio key={cls} value={cls} size="lg" colorScheme="purple">
+                <Text color="gray.200">{cls}</Text>
+              </Radio>
+            ))}
           </Stack>
         </RadioGroup>
       </>
     );
   } else if (quizStage === 'classSpecific' && classSpecificQuiz) {
-    // Render the class-specific quiz
     const currentQuestion = classSpecificQuiz.questions[currentQuestionIndex];
     return (
       <>
@@ -335,18 +420,13 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
         </Text>
         <RadioGroup
           key={currentQuestionIndex}
-          onChange={(value) => handleClassSpecificAnswer(value as ClassSpecificOptionKey)}
+          onChange={(value) => handleClassSpecificAnswer(value as string)}
           value={classSpecificAnswers[currentQuestionIndex] || ''}
         >
           <Stack spacing={4} align="center">
             {Object.entries(currentQuestion.options).map(
               ([optionKey, optionValue]) => (
-                <Radio
-                  key={optionKey}
-                  value={optionKey}
-                  size="lg"
-                  colorScheme="purple"
-                >
+                <Radio key={optionKey} value={optionKey} size="lg" colorScheme="purple">
                   <Text color="gray.200">{optionValue}</Text>
                 </Radio>
               )
@@ -356,12 +436,10 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
       </>
     );
   } else if (quizStage === 'result') {
-    // Render the final result
     if (finalResult && testResult) {
       const selectedReyvateil = reyvateils.find(
         (r) => r.name === finalResult.reyvateil
       );
-
       return (
         <>
           <Text
@@ -410,7 +488,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                   <Text fontSize="xl" fontWeight="bold" color="purple.400">
                     {selectedReyvateil.name}
                   </Text>
-
                   <Text
                     fontSize="xl"
                     fontWeight="bold"
@@ -430,7 +507,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                   >
                     Class :
                   </Text>
-
                   <Text fontSize="xl" fontWeight="bold" color="purple.400" ml={2}>
                     {selectedReyvateil.class}
                   </Text>
@@ -447,16 +523,14 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                   <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
                     {Object.entries(selectedReyvateil.stats).map(([stat, value]) => (
                       <Text key={stat} color="gray.300">
-                        {capitalizeFirstLetter(stat.replace(/([A-Z])/g, ' $1'))}:{' '}
-                        {value}
+                        {capitalizeFirstLetter(stat.replace(/([A-Z])/g, ' $1'))}: {value}
                       </Text>
                     ))}
                   </SimpleGrid>
                 ) : (
                   <Alert status="error" borderRadius="md" mt={2}>
                     <AlertIcon />
-                    Reyvateil stats are missing. Please contact support or update the
-                    data.
+                    Reyvateil stats are missing. Please contact support or update the data.
                   </Alert>
                 )}
               </Box>
@@ -466,7 +540,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
               Unable to find the Reyvateil details.
             </Text>
           )}
-
           <Flex justify="center" mt={6}>
             <Button
               colorScheme="purple"
@@ -483,8 +556,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
               Choose Yourself
             </Button>
           </Flex>
-
-          {/* Image Selection Modal */}
           <Modal
             isOpen={isImageSelectionOpen}
             onClose={onImageSelectionClose}
@@ -498,9 +569,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
               <ModalBody
                 maxHeight="90vh"
                 overflowY="auto"
-                onWheel={(e) => {
-                  e.stopPropagation();
-                }}
+                onWheel={(e) => e.stopPropagation()}
               >
                 <VStack spacing={4}>
                   {selectedReyvateil?.images?.map((image) => (
@@ -520,7 +589,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
         </>
       );
     } else {
-      // Handle case where finalResult is null
       return (
         <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
           Unable to determine your Reyvateil companion.
@@ -529,14 +597,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     }
   }
 
-  // Default return (should not reach here)
   return null;
-};
-
-const capitalizeFirstLetter = (str: string): string => {
-  return str
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, (char) => char.toUpperCase());
 };
 
 export default ReyvateilTest;

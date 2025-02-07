@@ -19,22 +19,22 @@
       },
       {
         "name": "Spark Sense",
-        "description": "Detect metal objects or hidden power lines within a short radius, useful for scavenging in mechanical ruins.",
+        "description": "Detect metal objects within a short radius (20ft.), useful for scavenging in mechanical ruins.",
         "cooldown": 600
       },
       {
         "name": "Static Pulse",
-        "description": "Briefly charge the air, causing hair and fur to stand on end, potentially revealing hidden enemies or secret passages.",
+        "description": "Briefly charge the air, causing hair and fur to stand on end, potentially revealing hidden enemies or secret passages in a radius (60ft.).",
         "cooldown": 1800
       },
       {
-        "name": "Storm’s Storytime",
-        "description": "Conjure a mild thunder rumble that can enthrall NPCs or provide immersive ambiance for storytelling around camp.",
+        "name": "Stormy Storytime",
+        "description": "Conjure an audible thunder rumble.",
         "cooldown": 2400
       },
       {
         "name": "Lightning Lantern",
-        "description": "Cause your feathers to glow with electric arcs, acting like a lantern for exploration (non-damaging).",
+        "description": "Cause an object to glow with electric arcs, acting like a lantern for exploration.",
         "cooldown": 900
       }
     ],
@@ -260,12 +260,12 @@
     "abilities": [
       {
         "name": "Mineral Sniffer",
-        "description": "Sense nearby veins of ore or stone, aiding in mining or resource gathering.",
+        "description": "Sense nearby veins of ore or stone, aiding in mining or resource gathering. You can only sniff out a general direction, not the exact location.",
         "cooldown": 1800
       },
       {
         "name": "Boulder Shunt",
-        "description": "Temporarily shift a large stone or debris to clear a path (non-damaging to creatures).",
+        "description": "Temporarily shift a large stone or debris to clear a path (not enough force to hurt).",
         "cooldown": 3000
       },
       {
@@ -275,13 +275,13 @@
       },
       {
         "name": "Earth Echo",
-        "description": "Tap the ground to create subtle vibrations, revealing hollows, tunnels, or hidden cavities in the earth.",
-        "cooldown": 1200
+        "description": "Tap the ground to create subtle vibrations, revealing hollows, tunnels, or hidden cavities in the earth up to 200ft away.",
+        "cooldown": 12000
       },
       {
         "name": "Crystalline Campfire",
-        "description": "Grow a ring of small crystals that glow warmly for light. They last a short while before crumbling.",
-        "cooldown": 3600
+        "description": "Grow a ring of small crystals that glow warmly for light. They last a short while before crumbling. Get +1 on any hit-die roll you make around this campfire.",
+        "cooldown": 14000
       }
     ],
     "levelUpRequirements": [
@@ -504,12 +504,12 @@
     "abilities": [
   {
     "name": "Ember Oven",
-    "description": "Generate stable heat around your hands or wings to cook small meals or warm allies in cold climates.",
-    "cooldown": 1200
+    "description": "Generate stable heat around your hands to cook small meals or warm allies in cold climates.",
+    "cooldown": 3000
   },
   {
     "name": "Firelight Glow",
-    "description": "Produce a soft ember-like glow to illuminate dark environments, comforting travelers.",
+    "description": "Produce a soft ember-like glow to illuminate dark environments.",
     "cooldown": 600
   },
   {
@@ -519,13 +519,13 @@
   },
   {
     "name": "Flame Sketch",
-    "description": "Trace lines of heat in the air, creating temporary fiery symbols (useful for messages or warding signals).",
-    "cooldown": 2400
+    "description": "Trace lines of heat in the air, creating temporary fiery symbols (useful for messages or warding signals). Can be programmed to stay up to an hour.",
+    "cooldown": 6000
   },
   {
     "name": "Spark of Warmth",
-    "description": "Boost the morale of nearby NPCs or allies by slightly raising body temperature and spirit (non-damaging).",
-    "cooldown": 3000
+    "description": "Boost the morale of nearby NPCs or allies by slightly raising body temperature and spirit. Everyone within 30ft. gains 1 inspiration point and 1 Kindness.",
+    "cooldown": 60000
   }
 ]
 ,
@@ -749,27 +749,27 @@
     "abilities": [
   {
     "name": "Soothing Harmony",
-    "description": "Play a gentle tune that eases tension in wildlife and NPCs, encouraging peaceful interaction.",
+    "description": "Play a gentle tune that eases tension, encouraging peaceful interaction.",
     "cooldown": 1200
   },
   {
     "name": "Chorus Echo",
-    "description": "Project melodic echoes around you, lifting the mood and helping allies stay alert during long travels.",
-    "cooldown": 600
+    "description": "Project melodic echoes around you, lifting the mood and helping allies stay alert during long travels. -1 to all conditions for everyone who can hear it.",
+    "cooldown": 12000
   },
   {
     "name": "Harmony Ward",
-    "description": "Generate a pleasant resonance that repels minor pests or insects from your camp area.",
-    "cooldown": 3000
+    "description": "Generate a pleasant resonance that repels minor pests or insects from your camp area for up to 10 hours.",
+    "cooldown": 86400
   },
   {
     "name": "Mellow Memory",
-    "description": "Playing certain chords can nudge an NPC’s recall of forgotten lore or details, aiding in investigations.",
-    "cooldown": 1800
+    "description": "Playing certain chords can help those who hear it recall forgotten details.",
+    "cooldown": 12000
   },
   {
     "name": "Lullaby Lightshow",
-    "description": "Accompany your songs with faint dancing lights, a captivating spectacle useful for storytelling or diplomacy.",
+    "description": "Accompany your songs with faint dancing lights, a captivating spectacle that can potentially lull onlookers to sleep. (Only works if they are relaxed and tired - DM discretion)",
     "cooldown": 2400
   }
 ]
@@ -996,23 +996,23 @@
     "abilities": [
   {
     "name": "Melodic Infusion",
-    "description": "Use harmonic chanting to stabilize alchemical brews, boosting potion potency slightly.",
-    "cooldown": 3000
+    "description": "Use harmonic chanting to stabilize alchemical brews, boosting potion potency slightly. A one-time effect, but no limit to the amount of brews affected.",
+    "cooldown": 30000
   },
   {
     "name": "Aquatic Lullaby",
-    "description": "Hum a tranquil tune that calms fish or amphibians, improving fishing or aquatic resource gathering.",
-    "cooldown": 1800
+    "description": "Hum a tranquil tune that calms fish or amphibians, improving fishing or aquatic resource gathering until you stop.",
+    "cooldown": 18000
   },
   {
     "name": "Resonant Bond",
-    "description": "Tie a sonic link between allies, helping them locate each other via a subtle hum in crowded or dark places.",
-    "cooldown": 2400
+    "description": "Tie a sonic link between allies, helping them locate each other via a subtle hum in crowded or dark places. Lasts as long as Hymmnos are not disrupted.",
+    "cooldown": 21600
   },
   {
     "name": "Cacophony Trap",
-    "description": "Create a burst of harmless but startling noise that may distract roaming beasts or draw them away.",
-    "cooldown": 1200
+    "description": "Place a sigil that can create a burst of harmless but startling noise either at command or on proximity.",
+    "cooldown": 86400
   },
   {
     "name": "Song of Strata",
@@ -1248,13 +1248,13 @@
   },
   {
     "name": "Quiet Strings",
-    "description": "Mask subtle movements or footsteps with gentle strumming, aiding stealth for a short duration.",
-    "cooldown": 1200
+    "description": "Mask subtle movements or footsteps with gentle strumming, aiding stealth for a short duration (1 min).",
+    "cooldown": 3000
   },
   {
     "name": "Enchanted Ditty",
-    "description": "Briefly enchant a small item (like a necklace) with restful vibes, easing an ally's stress.",
-    "cooldown": 2400
+    "description": "Briefly enchant a small item (like a necklace) with restful vibes, easing an ally's stress. Whilst worn they are protected from their conditions. The enchantment fades after an hour.",
+    "cooldown": 40000
   },
   {
     "name": "Traveling Tune",
@@ -1262,9 +1262,9 @@
     "cooldown": 3000
   },
   {
-    "name": "Reverie Recall",
-    "description": "Cast a gentle harp harmony that helps an NPC remember or recount detailed memories.",
-    "cooldown": 1800
+    "name": "Call of the Valkyr",
+    "description": "Grant wings to a creature for 6 seconds. If they are unconscious or immobilized the wings will automatically move them towards you.",
+    "cooldown": 64800
   }
 ]
 ,
@@ -1494,14 +1494,14 @@
     "cooldown": 3000
   },
   {
-    "name": "Halo Insight",
+    "name": "Deep Insight",
     "description": "Sense hidden curses or negative energies affecting people, helpful for diagnosing supernatural ailments.",
-    "cooldown": 1800
+    "cooldown": 18000
   },
   {
     "name": "Gentle Blessing",
-    "description": "Bestow a short-lived boon that comforts distressed travelers or NPCs, easing their anxieties.",
-    "cooldown": 2400
+    "description": "Bestow a short-lived boon that comforts distressed travelers or NPCs, easing their anxieties and making them feel connected to something bigger.",
+    "cooldown": 1200
   },
   {
     "name": "Sunlit Beacon",
@@ -1511,7 +1511,7 @@
   {
     "name": "Soothe the Weary",
     "description": "Calming aura that helps insomniac allies sleep more restfully, quickening their recovery in safe areas.",
-    "cooldown": 1200
+    "cooldown": 30000
   }
 ]
 ,
@@ -1734,8 +1734,8 @@
     "abilities": [
   {
     "name": "Crystal Reflection",
-    "description": "Project faint illusions of starlight, aiding nighttime travel or giving illusions for misdirection.",
-    "cooldown": 2400
+    "description": "Project faint illusions of guiding starlight, aiding nighttime travel or giving illusions for misdirection.",
+    "cooldown": 8000
   },
   {
     "name": "Gentle Current",
@@ -1744,18 +1744,18 @@
   },
   {
     "name": "Aurora Drizzle",
-    "description": "Produce color-shifting lights overhead, a comforting phenomenon that can rally or calm NPCs.",
-    "cooldown": 3000
+    "description": "Produce color-shifting lights overhead that enhances certain Hymmnos.",
+    "cooldown": 60000
   },
   {
-    "name": "Lunar Compass",
-    "description": "Briefly attune to moonlit sky patterns, granting a sense of direction even underground or in cloudy weather.",
+    "name": "Sterile Light",
+    "description": "Emit bright light in a 100ft. cone that kills any germs, bacteria or otherwise. Does not work on magical effects.",
     "cooldown": 1800
   },
   {
     "name": "Star Lull",
-    "description": "Hum a cosmic lullaby that aids rest, granting mild stress relief to a weary companion or NPC.",
-    "cooldown": 2400
+    "description": "Hum a cosmic lullaby that aids rest, granting mild stress relief to all who hear it. Reduce their highest condition by 3. Increase their Divergence by 2.",
+    "cooldown": 24000
   }
 ]
 ,
@@ -1980,7 +1980,7 @@
   {
     "name": "Twilight Shroud",
     "description": "Dim ambient light around you, creating safe low visibility for subtle movements.",
-    "cooldown": 1800
+    "cooldown": 5000
   },
   {
     "name": "Moonlit Brew",
@@ -1989,17 +1989,17 @@
   },
   {
     "name": "Astral Reflection",
-    "description": "Reflect subtle cosmic patterns onto cave walls, revealing hidden inscriptions or runes.",
-    "cooldown": 2400
+    "description": "Reflect subtle cosmic patterns onto cave walls, revealing hidden details.",
+    "cooldown": 24000
   },
   {
     "name": "Dusk’s Whisper",
-    "description": "Share quiet messages with nearby allies or NPCs, as if carried by a gentle night breeze.",
-    "cooldown": 1200
+    "description": "Share quiet messages with nearby allies or NPCs unheard to anyone else.",
+    "cooldown": 500
   },
   {
     "name": "Dreamlight Pocket",
-    "description": "Store or conceal small fragile items in a faint twilight bubble that repels moisture or dust.",
+    "description": "Store or conceal a small item in a faint twilight bubble that repels moisture or dust. The bubble can be turned invisible.",
     "cooldown": 3600
   }
 ]
@@ -2223,23 +2223,23 @@
     "abilities": [
   {
     "name": "Root Path",
-    "description": "Encourage vines to weave a narrow, temporary bridge over small gaps or ravines.",
-    "cooldown": 2400
+    "description": "Encourage vines to weave a narrow, temporary bridge over small gaps, rivers or similar.",
+    "cooldown": 2000
   },
   {
     "name": "Seed Whisper",
-    "description": "Stimulate certain seeds to sprout instantly, aiding foraging or creating quick plant cover.",
-    "cooldown": 1800
+    "description": "Stimulate a bunch of seeds to sprout instantly.",
+    "cooldown": 18000
   },
   {
     "name": "Petal Cloak",
-    "description": "Conjure a swirl of petals around yourself or an ally, mildly camouflaging them in forest terrain.",
-    "cooldown": 1200
+    "description": "Conjure a swirl of petals around yourself or an ally, mildly camouflaging them for 1 minute or until they move.",
+    "cooldown": 600
   },
   {
     "name": "Floral Scent",
-    "description": "Release a fragrant aura that repels minor insects or pests from your campsite.",
-    "cooldown": 3000
+    "description": "Create a small ball that releases a fragrant aura that repels minor insects or pests from your campsite for 4 hours.",
+    "cooldown": 30000
   },
   {
     "name": "Verdant Memory",
@@ -2472,21 +2472,21 @@
   {
     "name": "Wildlife Kinship",
     "description": "Calm or befriend small animals, encouraging them to help gather resources or deliver messages.",
-    "cooldown": 3000
+    "cooldown": 10000
   },
   {
     "name": "Grove Harvest",
     "description": "Improve success when collecting organic materials like berries or hides, ensuring higher-quality yields.",
-    "cooldown": 1200
+    "cooldown": 12000
   },
   {
     "name": "Antler Beacon",
-    "description": "Channel faint nature magic through your antler-like wings, acting as a glowing guide in dense forests.",
-    "cooldown": 2400
+    "description": "Channel faint nature magic acting as a glowing guide to a location of your choice. There must be plants deeprooted enough nearby to lay the path to follow.",
+    "cooldown": 24000
   },
   {
     "name": "Burrow Sense",
-    "description": "Briefly sense burrowing creatures or tunnels near you, useful for locating hidden warrens or safe spots.",
+    "description": "Briefly sense burrowing creatures or tunnels near you. Big cavernous openings do not register.",
     "cooldown": 1800
   },
   {
@@ -2718,27 +2718,27 @@
     "abilities": [
   {
     "name": "Rockwalk",
-    "description": "Step lightly on unstable rock, granting you safe footing on crumbly or shifting terrain.",
-    "cooldown": 1800
+    "description": "Solidify and lock any loose or unstable ground for a minute to make sure you have safe passage.",
+    "cooldown": 800
   },
   {
     "name": "Moss Blanket",
-    "description": "Grow soft moss over hard surfaces, forming natural bedding or padding for silent movement.",
+    "description": "Grow soft moss over hard surfaces, forming natural bedding or padding for silent movement. You choose a point in space and the radius (up to 100ft) you want it to grow to.",
     "cooldown": 2400
   },
   {
-    "name": "Petrify Mushrooms",
-    "description": "Temporarily strengthen local fungi into sturdy, stepping-stone-like platforms to cross small gaps.",
-    "cooldown": 3000
+    "name": "Petrifying Nature",
+    "description": "Temporarily morph local flora into sturdy rocks. They'll remain petrified for 24 hours. 70ft. radius",
+    "cooldown": 10000
   },
   {
-    "name": "Earth’s Embrace",
-    "description": "Sense vibrations of underground water sources, aiding in well-digging or finding hidden springs.",
+    "name": "Dowsing",
+    "description": "Sense liquid sources and learn its nature within a 50ft. cylinder 200ft. high and deep.",
     "cooldown": 3600
   },
   {
     "name": "Stalagmite Shaping",
-    "description": "Adjust the shape of small stalagmites or stalactites, creating improvised hooks or climbing grips.",
+    "description": "Create or top small stalagmites or stalactites, creating improvised hooks or climbing grips out of flat surfaces or vice versa. Applies on touch.",
     "cooldown": 1200
   }
 ]
@@ -2965,28 +2965,28 @@
     "abilities": [
   {
     "name": "Metal Meld",
-    "description": "Briefly soften small metal objects for reshaping or repair, assisting quick blacksmithing tasks.",
-    "cooldown": 2400
+    "description": "Briefly soften small metal objects for reshaping or repair, assisting quick blacksmithing or mining tasks.",
+    "cooldown": 10000
   },
   {
     "name": "Engraved Guidance",
-    "description": "Carve runes or patterns into gear to track or identify items, preventing theft in certain towns.",
-    "cooldown": 1800
+    "description": "Carve runes or patterns into gear to track or identify items, you always know which direction this item is.",
+    "cooldown": 5000
   },
   {
     "name": "Guarded Camp",
-    "description": "Erect a partial metal barrier around your campsite for basic shelter from weather or small critters.",
-    "cooldown": 3000
+    "description": "Erect a partial metal fenced barrier around your campsite for basic shelter from weather or small critters. (30ft diameter)",
+    "cooldown": 30000
   },
   {
     "name": "Clang of Summons",
-    "description": "Strike your metal wing plates together to produce a resounding alarm signal heard far away by allies.",
+    "description": "Strike your metal plates together to produce a resounding alarm signal heard up to a quarter mile away (1320ft.).",
     "cooldown": 1200
   },
   {
     "name": "Scrap Salvage",
     "description": "Quickly dismantle metallic debris or leftover scrap to gather usable metal parts.",
-    "cooldown": 3600
+    "cooldown": 1200
   }
 ]
 ,
@@ -3211,28 +3211,28 @@
     "abilities": [
   {
     "name": "Kinetic Spark",
-    "description": "Harness kinetic force to power small devices or jump-start a mechanical contraption (no combat effect).",
-    "cooldown": 1200
+    "description": "Harness kinetic force to power small devices or jump-start a mechanical contraption.",
+    "cooldown": 12000
   },
   {
-    "name": "Forceful Cart",
-    "description": "Temporarily push a disabled wagon or heavy chest using subtle kinetic pulses.",
-    "cooldown": 3000
+    "name": "Forceful Push",
+    "description": "Spend kinetic energy to force-push up to a large boulder.",
+    "cooldown": 5000
   },
   {
     "name": "Dampened Footfall",
-    "description": "Absorb your own kinetic impact, making your steps quieter during stealth or scouting.",
-    "cooldown": 1800
+    "description": "Absorb all kinetic impact within 20 ft, making steps quieter during stealth.",
+    "cooldown": 18000
   },
   {
     "name": "Momentum Shift",
-    "description": "Assist a friend scaling a wall or climbing by giving them a slight upward force.",
-    "cooldown": 2400
+    "description": "Assist yourself or an ally scaling a wall or climbing by giving them a slight upward force.",
+    "cooldown": 100
   },
   {
-    "name": "Rebound Raft",
-    "description": "Channel kinetic energy to keep a small raft or boat stable in rough waters for a short period.",
-    "cooldown": 3600
+    "name": "Kinetic Stasis",
+    "description": "Channel kinetic energy to keep an unstable platform or object upright for 4 minutes.",
+    "cooldown": 36000
   }
 ]
 ,
@@ -3457,27 +3457,27 @@
     "abilities": [
   {
     "name": "Armor Polish",
-    "description": "Apply a quick polish that preserves metal surfaces and prevents minor rust buildup on gear.",
-    "cooldown": 1200
+    "description": "Apply a quick polish that preserves metal surfaces and prevents minor rust buildup on gear. The application lasts 8 hours. While polished you have advantage on Intimidation checks.",
+    "cooldown": 5000
   },
   {
     "name": "Iron Inscription",
-    "description": "Etch simple patterns or lettering into metal objects, useful for labeling or discreet messages.",
+    "description": "Etch simple patterns or lettering into any object or surface, useful for labeling or discreet messages. Some words hold power...",
     "cooldown": 2400
   },
   {
     "name": "Diplomatic Bearing",
-    "description": "Adopt a poised stance and calm demeanor, aiding in formal negotiations or linguistic exchanges.",
-    "cooldown": 1800
+    "description": "Adopt a poised stance and calm demeanor, aiding in formal negotiations or linguistic exchanges. Everyone allied to you has +5 on any social check until you release the pose.",
+    "cooldown": 28000
   },
   {
     "name": "Tanned Hideworks",
-    "description": "Convert raw hides into rudimentary coverings or containers, useful for short-term storage or repairs.",
+    "description": "Convert raw hides into rudimentary coverings or containers, useful for short-term storage or repairs. Crafts under a DM-discretion threshold are guaranteed to succeed.",
     "cooldown": 3000
   },
   {
     "name": "Fishing Line Lash",
-    "description": "Reinforce lines or nets with a special knot technique, improving fishing success in calm waters.",
+    "description": "Reinforce lines or nets with a special knot technique, improving fishing success in calm waters. This reinforcement is semi-permanent (until the thread is broken).",
     "cooldown": 600
   }
 ]
@@ -3702,17 +3702,17 @@
 "abilities": [
   {
     "name": "Silent Perception",
-    "description": "Deepen your focus to notice subtle sounds or movements, useful when scouting or meditating on clues.",
-    "cooldown": 1800
+    "description": "Deepen your focus to notice subtle sounds or movements, useful when scouting or meditating on clues. Gain advantage on Perception and Investigation for 1 minute.",
+    "cooldown": 18000
   },
   {
     "name": "Tranquil Presence",
-    "description": "Project a calm aura that eases tension in NPCs, preventing minor hostilities or arguments.",
-    "cooldown": 1200
+    "description": "Project a calm aura that eases tension in those around you (30ft.).",
+    "cooldown": 12000
   },
   {
     "name": "Stillness Ritual",
-    "description": "Meditate briefly, reducing personal fatigue or stress in harsh environments (non-combat).",
+    "description": "1 minute channel : Meditate briefly, reducing personal fatigue or stress in harsh environments. You can use hit die up to your Reyvateil level and if you do remove 1 condition point from any condition.",
     "cooldown": 2400
   },
   {
@@ -3722,7 +3722,7 @@
   },
   {
     "name": "Quiet Waters",
-    "description": "Sit in serene focus near water, attracting fish or calming aquatic life for easier fishing.",
+    "description": "Sit in serene focus near water, attracting fish or calming aquatic life for easier fishing. Some land creatures might also miss you.",
     "cooldown": 3600
   }
 ]
@@ -3949,28 +3949,28 @@
 "abilities": [
   {
     "name": "Evasive Step",
-    "description": "Perform a quick footwork technique that helps avoid natural hazards or traps without engaging in combat.",
-    "cooldown": 1200
+    "description": "Perform quick footwork that helps avoid hazards or traps, maybe even some creatures.",
+    "cooldown": 400
   },
   {
     "name": "Kinetic Pulse",
-    "description": "Gently push light objects or debris away, clearing narrow pathways or small blockages.",
-    "cooldown": 1800
+    "description": "Gently push light objects or debris away, clearing narrow pathways or small blockages, or loudly push one giant object.",
+    "cooldown": 10800
   },
   {
     "name": "Momentum Boost",
-    "description": "Grant a short burst of speed to an ally, aiding in sprinting or climbing (purely movement-based).",
-    "cooldown": 2400
+    "description": "Grant a short burst of speed to all allies within 15 ft., aiding in sprinting or climbing. Lasts up to 3 minutes.",
+    "cooldown": 24000
   },
   {
     "name": "Rhythmic Foraging",
     "description": "Use measured, flowing motions to gather herbs or small game stealthily, minimizing disturbance to wildlife.",
-    "cooldown": 3000
+    "cooldown": 30000
   },
   {
     "name": "Flutter Balance",
-    "description": "Channel subtle wing motions to maintain perfect balance on narrow ledges or slippery terrain.",
-    "cooldown": 3600
+    "description": "Simulate subtle wing motions to maintain perfect balance on narrow ledges or slippery terrain.",
+    "cooldown": 600
   }
 ]
 ,
@@ -4196,28 +4196,28 @@
     },
 "abilities": [
   {
-    "name": "Serene Glow",
-    "description": "Emit a faint pastel light from your wings, comforting allies and gently illuminating dark areas.",
-    "cooldown": 1200
+    "name": "Quiet Before the Storm",
+    "description": "Block out any external sound you do not want to hear right now.",
+    "cooldown": 4000
   },
   {
     "name": "Occult Attunement",
-    "description": "Momentarily sense supernatural energies, helpful for detecting hidden curses or wards (non-damaging).",
-    "cooldown": 3000
+    "description": "Momentarily sense supernatural energies, helpful for detecting hidden curses or wards.",
+    "cooldown": 30000
   },
   {
     "name": "Gourmet Harmony",
-    "description": "Stir a tranquil vibe into camp cooking, slightly enhancing flavor and boosting morale.",
-    "cooldown": 1800
+    "description": "Stir a tranquil vibe into camp cooking, slightly enhancing flavor and boosting morale. People who eat this gain 5 temporary HP per your Reyvateil Level.",
+    "cooldown": 18000
   },
   {
     "name": "Mindful Meditation",
-    "description": "Guide allies through a brief mental exercise, reducing stress or fear from previous encounters.",
-    "cooldown": 2400
+    "description": "Guide allies through a brief mental exercise, reducing stress or fear from previous encounters. Any conditions gained in the last 5 minutes are halved.",
+    "cooldown": 80000
   },
   {
-    "name": "River Silence",
-    "description": "Inspire stillness around water, making fish less startled and aiding calm, stealthy crossing.",
+    "name": "River Crossing",
+    "description": "Gain the ability to walk on water for 1 minute.",
     "cooldown": 3600
   }
 ]
@@ -4444,22 +4444,22 @@
 "abilities": [
   {
     "name": "Blessed Forge",
-    "description": "Lightly enchant a smithy station or anvil, improving the quality of blacksmithing for a short period.",
-    "cooldown": 3000
+    "description": "Lightly enchant a smithy station or anvil, improving the quality of blacksmithing done for an hour.",
+    "cooldown": 8000
   },
   {
     "name": "Occult Safeguard",
-    "description": "Ward off minor eldritch influences on equipment or areas, preventing small-scale corruption.",
-    "cooldown": 2400
+    "description": "Ward off minor chaotic influences on equipment or areas, preventing small-scale corruption. Lasts for 1 hour.",
+    "cooldown": 9000
   },
   {
     "name": "Hide Purification",
-    "description": "Use a gentle radiant glow to cleanse fresh hides or tans, reducing spoilage or foul odors.",
-    "cooldown": 1800
+    "description": "Use a gentle radiant glow to cleanse fresh hides or tans, reducing spoilage or foul odors. Keeps it unchanging for 1 hour after application.",
+    "cooldown": 4000
   },
   {
     "name": "Guided Speech",
-    "description": "Enhance your linguistic clarity, making it easier to converse with foreign NPCs or decode texts.",
+    "description": "Enhance your linguistic clarity, making it easier to converse with those unintelligent or who speak other languages. Lasts for 10 minutes.",
     "cooldown": 1200
   },
   {
@@ -4696,8 +4696,8 @@
   },
   {
     "name": "Scavenger’s Grace",
-    "description": "Briefly sense leftover items or hidden caches in debris, aiding quick salvage or survival hunts.",
-    "cooldown": 1200
+    "description": "Briefly sense leftover items or hidden caches in debris, aiding quick salvage hunts.",
+    "cooldown": 12000
   },
   {
     "name": "Herbal Benediction",
@@ -4706,12 +4706,12 @@
   },
   {
     "name": "Sigil Engraving",
-    "description": "Etch a small holy rune into an object, marking it as guarded (social effect in certain towns).",
-    "cooldown": 1800
+    "description": "Etch a small holy rune into an object, marking it as guarded. Must etch the rune of a God of Chaos. Effect differs.",
+    "cooldown": 18000
   },
   {
     "name": "Humble Vigil",
-    "description": "Stand silent watch over a campsite, preventing minor nighttime disturbances or theft attempts.",
+    "description": "Stand silent watch over a campsite, able to alarm you when something approaches. Prevents being surprised if Valorin can observe what is coming.",
     "cooldown": 3600
   }
 ]
@@ -4939,18 +4939,18 @@
 "abilities": [
   {
     "name": "Celestial Translation",
-    "description": "Momentarily decode archaic symbols or foreign script, bridging minor language gaps.",
-    "cooldown": 1800
+    "description": "Decode or translate a single line of text or code without fail.",
+    "cooldown": 10000000
   },
   {
-    "name": "Hearty Culinary Blessing",
-    "description": "Instill a warm aura into meals, boosting their nutritional value or taste for a short period.",
-    "cooldown": 1200
+    "name": "Divine Activation",
+    "description": "Force-(de-)activate any old divine construct.",
+    "cooldown": 12000
   },
   {
-    "name": "Alchemical Filter",
-    "description": "Project faint divine sparks that remove impurities in certain brews or potions, improving results.",
-    "cooldown": 2400
+    "name": "Make Offering",
+    "description": "Offer flesh (2.5 lbs minimum if non-human) in a sacrificial fire. Restore 1 spell slot of any level. ",
+    "cooldown": 10000
   },
   {
     "name": "Reverent Reflection",
@@ -4959,7 +4959,7 @@
   },
   {
     "name": "Soft Ward",
-    "description": "Bestow a mild protective glow on an ally, discouraging certain malevolent interactions (non-combat).",
+    "description": "Bestow a mild protective glow on an ally, preventing any tier 1 or 2 condition effects from affecting them for 1 hour.",
     "cooldown": 3600
   }
 ]
@@ -5186,19 +5186,19 @@
     },
 "abilities": [
   {
-    "name": "Arrow Carving",
-    "description": "Quickly craft or modify arrows in the field using nearby twigs, improving fletching yield.",
-    "cooldown": 1200
+    "name": "Leaf Fletching",
+    "description": "Quickly craft or modify arrows using nothing but leafs.",
+    "cooldown": 3200
   },
   {
-    "name": "Silent Skinning",
-    "description": "Perform near-silent skinning tasks, preserving hide quality while avoiding noise in the wild.",
-    "cooldown": 1800
+    "name": "Vine Rapple",
+    "description": "Shoot out a strong vine and make it tangle itself stuck around an object within 30ft. The vine then goes slack at a length of 30ft. The vine is magically enhanced for 5 minutes before it turns into a normal vine..",
+    "cooldown": 3000
   },
   {
     "name": "Trail Scavenger",
-    "description": "Scan the ground for leftover gear or hidden caches from past travelers or creatures.",
-    "cooldown": 2400
+    "description": "Scan the ground for traces of movement leading to leftover gear or hidden caches.",
+    "cooldown": 10000
   },
   {
     "name": "Forest Forager",
@@ -5207,8 +5207,8 @@
   },
   {
     "name": "Leaf Veil",
-    "description": "Create a light camouflage of leaves that helps you blend in natural greenery (non-combat stealth).",
-    "cooldown": 3600
+    "description": "Create a light camouflage of leaves that helps you blend in natural greenery while stationary.",
+    "cooldown": 8100
   }
 ]
 ,
@@ -5435,28 +5435,28 @@
     },
 "abilities": [
   {
-    "name": "Wind-Fletch",
+    "name": "Wind Force",
     "description": "Enhance arrow flights with a short gust, improving range or accuracy outside of combat scenarios.",
     "cooldown": 1200
   },
   {
-    "name": "Butcher’s Breeze",
-    "description": "Create a gentle air current that helps keep fresh kills or butchered meats cool and less likely to spoil.",
+    "name": "Protective Winds",
+    "description": "Create a gentle air current that helps keep out any unwanted particles, odors or otherwise. Does not work against magical effects.",
     "cooldown": 1800
   },
   {
-    "name": "Hide Drying Draft",
-    "description": "Blow warm gusts that help expedite tanning processes on simple hides.",
+    "name": "Boosted Leap",
+    "description": "Use the wind to propel yourself up to 3 times your normal jumping height.",
     "cooldown": 2400
   },
   {
     "name": "Crosswind Mapping",
     "description": "Detect subtle wind patterns to gauge the best path across difficult terrain or locate hidden passages.",
-    "cooldown": 3000
+    "cooldown": 5000
   },
   {
     "name": "Gale Gust",
-    "description": "Briefly propel a small raft or push drifting objects to assist crossing a calm lake or pool.",
+    "description": "Propel a small raft or push drifting objects to assist crossing a calm lake or pool, active until you stop.",
     "cooldown": 3600
   }
 ]
@@ -5683,14 +5683,14 @@
     },
 "abilities": [
   {
-    "name": "Sky Fletch",
-    "description": "Harvest high-quality feathers or adapt them into specialized arrows (no direct damage).",
+    "name": "Drilling Arrows",
+    "description": "Your bow is temporarily enhanced to spin its arrows, as if to drill, after shooting. A mining method which does not require any Strength.",
     "cooldown": 1800
   },
   {
     "name": "Avian Linguistics",
     "description": "Mimic birdcalls or whistles to interact with friendly avian creatures or signal allies discreetly.",
-    "cooldown": 1200
+    "cooldown": 6
   },
   {
     "name": "Scavenger’s Glimpse",
@@ -5698,9 +5698,9 @@
     "cooldown": 2400
   },
   {
-    "name": "Campfire Cuisine",
-    "description": "Use warm drafts from your wings to help cook or smoke small amounts of food swiftly.",
-    "cooldown": 3000
+    "name": "Keen Eye",
+    "description": "When looking down on an area you can pinpoint anything that moves without fail.",
+    "cooldown": 30000
   },
   {
     "name": "Feather Glide",
@@ -5932,8 +5932,8 @@
 "abilities": [
   {
     "name": "Nighttime Lift",
-    "description": "Perform delicate lifts of small objects or keys in low-light conditions, aided by your wings’ silent flutter.",
-    "cooldown": 1200
+    "description": "Grow almost invisible shadowy wings that flap without sound but cannot fly you higher than 3 ft. off the ground. Last 10 minutes.",
+    "cooldown": 3600
   },
   {
     "name": "Poisonbrew Savvy",
@@ -5941,19 +5941,19 @@
     "cooldown": 1800
   },
   {
-    "name": "Subtle Tannery",
-    "description": "Quietly process small hides using minimal odor, reducing the chance of attracting predators.",
+    "name": "Darksight",
+    "description": "Become able to see in complete (non-magical) darkness for 10 minutes.",
     "cooldown": 3000
   },
   {
     "name": "Foraging Flicker",
-    "description": "Create tiny shadow illusions that distract small animals while you gather resources.",
+    "description": "Create tiny shadow illusions that distract small animals while you gather resources or hunt.",
     "cooldown": 2400
   },
   {
     "name": "Shadewalk",
-    "description": "Briefly blend with darkness to slip past unsuspecting NPCs or guard animals (non-combat).",
-    "cooldown": 3600
+    "description": "Briefly blend with darkness to slip past unsuspecting NPCs or guard animals. Can only be used in dim light or darker, grants you functional invisibility for 1 minute.",
+    "cooldown": 6600
   }
 ]
 ,
@@ -6181,27 +6181,27 @@
 "abilities": [
   {
     "name": "Silent Pilfer",
-    "description": "Lift small items from a surface without drawing attention, useful for retrieving lost trinkets or clues.",
-    "cooldown": 1200
+    "description": "You can no longer produce sound in the next 30 minutes. This also counts for objects you are touching, for example when pushing a boulder. The only exception is external effects (You throwing a bomb and it landing produce no sound, its explosion does).",
+    "cooldown": 12000
   },
   {
     "name": "Lost Tongues",
-    "description": "Murmur cryptic phrases that help decode minor occult or forgotten languages (doesn't handle complex texts).",
+    "description": "Any language you read and do not understand is whispered to you so that you at least know its pronunciation.",
     "cooldown": 2400
   },
   {
     "name": "Wisp of Darkness",
-    "description": "Generate a faint swirl of shadow around yourself, aiding stealth but not harming foes.",
-    "cooldown": 1800
+    "description": "Generate a faint swirl of shadow around yourself, could both be used to hide or to intimidate. Or to just look cool.",
+    "cooldown": 3000
   },
   {
     "name": "Minor Hexbreak",
     "description": "Briefly disrupt small curses or illusions on objects, revealing their true nature.",
-    "cooldown": 3000
+    "cooldown": 30000
   },
   {
     "name": "Poison Pinch",
-    "description": "Identify the potency of a mild toxin or poison quickly, ensuring safer handling (non-damaging).",
+    "description": "Identify the potency of a mild toxin or poison quickly, ensuring safer handling.",
     "cooldown": 600
   }
 ]
@@ -6439,7 +6439,7 @@
   },
   {
     "name": "Poison Crop",
-    "description": "Grow or cultivate small venomous plants in a hidden patch for later use (no direct damage).",
+    "description": "Grow or cultivate small venomous plants in vials for later use.",
     "cooldown": 3000
   },
   {
@@ -6449,8 +6449,8 @@
   },
   {
     "name": "Nocturnal Silence",
-    "description": "Move swiftly and noiselessly at night, leaving minimal trace for trackers or wildlife.",
-    "cooldown": 3600
+    "description": "Move swiftly and noiselessly, leaving minimal trace for trackers or wildlife. During this movement you appear as a cloud of dark smoke. Lasts 20 minutes.",
+    "cooldown": 5600
   }
 ]
 ,
@@ -6681,23 +6681,23 @@
   },
   {
     "name": "Botanical Warmth",
-    "description": "Gently heat herbal bundles, enhancing extraction of beneficial qualities (non-damaging).",
+    "description": "Gently heat herbal bundles, enhancing extraction of beneficial qualities or growth.",
     "cooldown": 2400
   },
   {
-    "name": "Language Spark",
-    "description": "Briefly spark clarity in a conversation, bridging a minor language gap or clarifying instructions.",
-    "cooldown": 1200
+    "name": "Create Fire",
+    "description": "Spark a fire into existance. Useful when lighting a campfire or such.",
+    "cooldown": 200
   },
   {
     "name": "Burning Engrave",
-    "description": "Etch fiery runes or markings onto wooden surfaces, labeling them or leaving a harmless glow.",
-    "cooldown": 3000
+    "description": "Etch fiery runes or markings onto wooden surfaces, labeling them or leaving a harmless glow. Some words hold power...",
+    "cooldown": 5000
   },
   {
-    "name": "Flame-Fletch Aid",
-    "description": "Temporarily harden arrow shafts or fletching with mild heat, preventing warping from moisture.",
-    "cooldown": 3600
+    "name": "Flame Sense",
+    "description": "For the next 10 minutes you know the approximate location of all fire sources within 100ft. (or equivalent heat).",
+    "cooldown": 12000
   }
 ]
 ,
@@ -6926,9 +6926,9 @@
     "cooldown": 1800
   },
   {
-    "name": "Occult Frost",
-    "description": "Coat small ritual items in a thin layer of frost, helpful for certain arcane or cleansing ceremonies.",
-    "cooldown": 2400
+    "name": "True Frost",
+    "description": "Create an encasing of ice around an object that will keep inside any curses or similar effects. Lasts 24 hours on application.",
+    "cooldown": 3200
   },
   {
     "name": "Icy Preservation",
@@ -6936,12 +6936,12 @@
     "cooldown": 3000
   },
   {
-    "name": "Frostbit Cuisine",
-    "description": "Flash-chill cooked food to lock in flavor, giving it a unique cold twist (purely culinary).",
+    "name": "Frostbite",
+    "description": "Freeze the top-layer of a body of water. Remains magically enhanced for 3 minutes before turning into normal ice.",
     "cooldown": 1200
   },
   {
-    "name": "Crystal Mining Pulse",
+    "name": "Crystal Mining",
     "description": "Send a chill pulse that makes certain ore veins or crystals glimmer faintly, aiding in mining.",
     "cooldown": 3600
   }
@@ -7176,18 +7176,18 @@
   },
   {
     "name": "Rune Shock",
-    "description": "Give a mild jolt to runic inscriptions or wards, briefly revealing their pattern without harming them.",
+    "description": "Give a mild jolt to runic inscriptions or wards, briefly revealing their pattern without harming them making it easier to discern their nature.",
     "cooldown": 2400
   },
   {
-    "name": "Sky Kitchen",
-    "description": "Use faint static friction to heat cookware for simple meal prep in the wild.",
+    "name": "Static Kitchen",
+    "description": "Use faint static friction to heat cookware for simple meal prep in the wild without any tools.",
     "cooldown": 1200
   },
   {
     "name": "Electro-Linguistics",
-    "description": "Send subtle arcs between you and a conversation partner, clarifying mispronunciations or tone.",
-    "cooldown": 3000
+    "description": "Create a temporary telepathic link between you and an x amount of creatures up to your Reyvateil level. Lasts for 1 hour.",
+    "cooldown": 9000
   },
   {
     "name": "Storm Hum",
@@ -7435,11 +7435,11 @@
   {
     "name": "Deepsea Sense",
     "description": "Tune into faint astral echoes in water, aiding in fishing or exploring watery caverns.",
-    "cooldown": 1200
+    "cooldown": 3600
   },
   {
     "name": "Veil of Shadows",
-    "description": "Conjure a non-combat gloom that dims bright lights around you, making stealth or subtle gatherings easier.",
+    "description": "Conjure a gloom that dims bright lights around you, making stealth or subtle gatherings easier.",
     "cooldown": 3600
   }
 ]
@@ -7669,26 +7669,26 @@
   {
     "name": "Void Lantern",
     "description": "Hold a gentle void glow in your palm, revealing outlines in pitch-black darkness (no combat effect).",
-    "cooldown": 1800
+    "cooldown": 800
   },
   {
     "name": "Dark Whisper",
     "description": "Convey short messages in a hushed tone that cannot be overheard by non-target listeners.",
-    "cooldown": 2400
+    "cooldown": 600
   },
   {
-    "name": "Alchemical Shadow",
-    "description": "Wrap flasks or potions in a mild darkness that stabilizes volatile ingredients while mixing.",
-    "cooldown": 3000
+    "name": "Miasma of the Void",
+    "description": "Fill a 4 5-ft. cubes with the Miasma of the void making it impassible for any living creature not willing to risk their future. Lasts 10 minutes.",
+    "cooldown": 50000
   },
   {
-    "name": "Eerie Translation",
-    "description": "Temporarily decode obscure scripts or hints left by ancient cults, using your warlock insight.",
-    "cooldown": 1200
+    "name": "Hidden in Plain Sight",
+    "description": "Obscure scripts or small objects from people's sight. Lasts 1 hour.",
+    "cooldown": 12000
   },
   {
     "name": "Nocturne Sustenance",
-    "description": "Infuse cooking with void energies to produce a unique dish that has slightly longer shelf life.",
+    "description": "Consume the light itself for sustenance. Can only be used in dim light or brighter. Decrease the light-level by 1 tier, this counts as a meal, gain +1 Morphosis (Condition).",
     "cooldown": 3600
   }
 ]
@@ -7917,28 +7917,28 @@
 "abilities": [
   {
     "name": "Eclipse Gaze",
-    "description": "Momentarily read faint star or sun patterns on surfaces, revealing hidden runes or cosmic clues.",
-    "cooldown": 1800
+    "description": "Momentarily block out all light except that which reaches what is hidden.",
+    "cooldown": 18000
   },
   {
-    "name": "Runic Phase",
-    "description": "Briefly highlight runic scripts around you, letting them glow under your eclipse aura for study.",
-    "cooldown": 2400
+    "name": "Twilight",
+    "description": "Briefly become invisible while unmoving. Lasts 10 minutes or until you move.",
+    "cooldown": 3400
   },
   {
-    "name": "Bilingual Eclipse",
-    "description": "Smooth out minor language barriers with cosmic whispers, bridging small linguistic gaps.",
-    "cooldown": 1200
+    "name": "Forced Night",
+    "description": "You and/or any willing creatures within 30ft. fall asleep instantly and do not wake up until fully rested unless HP is lost.",
+    "cooldown": 12000
   },
   {
-    "name": "Mining Moonlight",
-    "description": "Shine a sliver of pale light onto cave walls, making certain ore veins faintly glimmer for easier extraction.",
-    "cooldown": 3000
+    "name": "Full Eclipse",
+    "description": "Turn any one object invisible until it is touched by anyone except you.",
+    "cooldown": 300000
   },
   {
     "name": "Twilight Shift",
-    "description": "Dim the immediate vicinity to dusk-like lighting, helpful for stealth or calming rowdy gatherings.",
-    "cooldown": 3600
+    "description": "Dim all light within reach for 1 hour.",
+    "cooldown": 3606
   }
 ]
 ,
@@ -8165,23 +8165,23 @@
     },
 "abilities": [
   {
-    "name": "Rune-Lore",
-    "description": "Briefly analyze and interpret unknown runes or glyphs to learn their general function.",
-    "cooldown": 1800
+    "name": "Rune Lore",
+    "description": "Briefly analyze and interpret unknown runes or glyphs to learn their general function or a vague meaning. 50% chance the information gathered is false.",
+    "cooldown": 8800
   },
   {
-    "name": "Alchemical Draft",
-    "description": "Stabilize brewing ingredients with mild arcane waves, reducing chance of potion failure.",
-    "cooldown": 2400
+    "name": "Blasphemy",
+    "description": "Recreate a Hymmnosum. (Requires an Enchanted Quill and paper)",
+    "cooldown": 240000
   },
   {
-    "name": "Arcane Lexicon",
-    "description": "Temporarily recall linguistic knowledge, aiding in decoding mystical texts or archaic phrases.",
-    "cooldown": 1200
+    "name": "Be the Wave",
+    "description": "Open yourself up to the echoing Hymmnos. Effects dependent on the Hymmnos.",
+    "cooldown": 120000
   },
   {
-    "name": "Herbal Sigil",
-    "description": "Draw quick sigils in herbal ink that preserve the potency of fresh-cut plants.",
+    "name": "Conjure Vial",
+    "description": "Conjure an amount of empty vials equivalent to your Reyvateil level. ",
     "cooldown": 3000
   },
   {
@@ -8414,27 +8414,27 @@
 "abilities": [
   {
     "name": "Arcane Cookfire",
-    "description": "Summon a mild magical flame to gently heat or cook meals without smoke or smell.",
-    "cooldown": 1800
+    "description": "Summon a mild magical flame to gently heat or cook meals without exuding light, smoke or smell.",
+    "cooldown": 20000
   },
   {
-    "name": "Illusionary Overlay",
-    "description": "Temporarily project illusions onto an area, helpful for hiding camp or blending with the environment.",
-    "cooldown": 2400
+    "name": "Illusory Overlay",
+    "description": "Temporarily project illusions onto an area within a 10ft cube, helpful for hiding something or blending with the environment.",
+    "cooldown": 9000
   },
   {
-    "name": "Occult Detector",
-    "description": "Pulse out a short-range wave that identifies faint traces of hidden curses or magic (non-combat).",
-    "cooldown": 1200
+    "name": "Aether Restoration",
+    "description": "Restore 3 spell slots. Each can be a level up to half your Reyvateil level (min. 1).",
+    "cooldown": 12000
   },
   {
     "name": "Alchemical Focus",
     "description": "Sharpen your mind to reduce mistakes when mixing complex potions, slightly improving success rate.",
-    "cooldown": 3000
+    "cooldown": 100
   },
   {
-    "name": "Mystic Meal",
-    "description": "Add a hint of arcane flavor to simple dishes, making them more palatable or last slightly longer.",
+    "name": "Revitalize",
+    "description": "Remove a level of fatigue by reconnecting with the Weave of Magic. Gain +1 Harmony",
     "cooldown": 3600
   }
 ]
@@ -8662,14 +8662,14 @@
     },
 "abilities": [
   {
-    "name": "Rune Weave",
-    "description": "Briefly weave strands of runic magic into cloth or thread, strengthening them for repairs.",
+    "name": "Magic Weave",
+    "description": "Briefly weave strands of magic into cloth or thread, strengthening them for repairs or crafting.",
     "cooldown": 1800
   },
   {
     "name": "Lexicon Whisper",
     "description": "Enhance your voice to better negotiate or decipher tricky dialects, smoothing out language barriers.",
-    "cooldown": 2400
+    "cooldown": 6
   },
   {
     "name": "Alchemical Tweak",
@@ -8677,13 +8677,13 @@
     "cooldown": 3000
   },
   {
-    "name": "Forager’s Glamour",
-    "description": "Cast a minor illusion to make local fauna less wary while you gather resources.",
-    "cooldown": 1200
+    "name": "Self-Enchant",
+    "description": "Make yourself look different through the use of illusion. Can be used with enchantment scrolls to gain extra effects. Lasts 1 hour.",
+    "cooldown": 5000
   },
   {
     "name": "Enchanting Hush",
-    "description": "Prevent small distractions or background noise from disrupting delicate tasks like crafting.",
+    "description": "Prevent small distractions or background noise from disrupting delicate tasks by blocking them out.",
     "cooldown": 3600
   }
 ]
@@ -8911,17 +8911,17 @@
 "abilities": [
   {
     "name": "Gear Tinker",
-    "description": "Quickly adjust or fix a simple mechanism, like a door lock or small contraption, without harming it.",
-    "cooldown": 1800
+    "description": "Quickly adjust or fix a simple mechanism, like a door lock or small contraption, without harming it. Can still fail but without negative consequence, hence can be tried again later.",
+    "cooldown": 3600
   },
   {
     "name": "Smithing Surge",
-    "description": "Infuse your blacksmithing station with short-lived mechanical energy, improving forging speed (non-combat).",
-    "cooldown": 2400
+    "description": "Activate the old unknown mechanisms in the forge, making most of the process automatic an so making blacksmithing much easier. Stays active for an amount of minutes equal to your Reyvateil level.",
+    "cooldown": 6000
   },
   {
     "name": "Alchemical Tray",
-    "description": "Deploy a small mechanical tray that can hold unstable alchemical mixtures safely for mixing.",
+    "description": "Deploy a small mechanical tray that can hold and mix unstable alchemical mixtures safely. Can mix an amount of potions equal to your Reyvateil level",
     "cooldown": 3000
   },
   {
@@ -8931,7 +8931,7 @@
   },
   {
     "name": "Mechanical Glowfly",
-    "description": "Release a clockwork firefly to illuminate an area, track mild motion, or signal allies discreetly.",
+    "description": "Release a clockwork firefly to illuminate an area, track mild motion, or signal allies discreetly. You can look through its eyes on your system up to 100ft. away or until there is no Hymmnos present.",
     "cooldown": 3600
   }
 ]
@@ -9161,26 +9161,26 @@
   {
     "name": "Circuit Channel",
     "description": "Redirect small magical currents through a device, temporarily powering or stabilizing it.",
-    "cooldown": 1800
+    "cooldown": 5000
   },
   {
-    "name": "Alchemical Conduction",
-    "description": "Use flickers of energy to quicken certain chemical reactions, helpful for advanced potion-making.",
+    "name": "Life Radar",
+    "description": "Ping an area of 10-100ft. to see if there are any living beings. This does not work through walls, but can travel similar to sound-waves.",
     "cooldown": 2400
   },
   {
     "name": "Rune Rewire",
-    "description": "Rearrange the runic etchings on a gadget, granting it a brief new function or form.",
-    "cooldown": 3000
+    "description": "Rearrange the runic etchings, granting it a brief new function or form - or breaking it. The magic fades and the runes reform after 1 minute.",
+    "cooldown": 3600
   },
   {
-    "name": "Cook’s Spark",
-    "description": "Generate small electric arcs to maintain even heat on a cooking plate, preventing burnt or underdone meals.",
+    "name": "All the Same",
+    "description": "When making your next Alchemy or Cooking related check use both bonuses.",
     "cooldown": 1200
   },
   {
-    "name": "Energy Overcast",
-    "description": "Emit a faint aura that repels mild weather inconveniences (like drizzle), keeping gear drier.",
+    "name": "Energy Umbrella",
+    "description": "Emit a faint aura that repels mild weather inconveniences (like drizzle).",
     "cooldown": 3600
   }
 ]
@@ -9408,28 +9408,28 @@
     },
 "abilities": [
   {
-    "name": "Machinery Tune-Up",
-    "description": "Provide routine maintenance on small machines or contraptions, preventing breakdown.",
+    "name": "Forced Malfunction",
+    "description": "Glitch out a device. Unknown consequences.",
     "cooldown": 1800
   },
   {
-    "name": "Blacksmith’s Aid",
-    "description": "Briefly boost forging synergy with mechanical attachments, improving metalwork speed (non-combat).",
+    "name": "Automated Hammer",
+    "description": "Take a load off, improve metalwork speed and consistency.",
     "cooldown": 2400
   },
   {
     "name": "Woodcarver Setup",
-    "description": "Assemble a foldable carving bench to shape wooden parts or boards quickly in the field.",
+    "description": "Assemble a foldable carving bench to shape wooden parts or boards quickly in the field. Requires Wood.",
     "cooldown": 3000
   },
   {
-    "name": "Alchemic Lockdown",
-    "description": "Fix a fragile brew or chemical in place with a gear clamp, stabilizing reaction mishaps.",
-    "cooldown": 1200
+    "name": "Lake in a Bottle",
+    "description": "Conjure a glass bottle that holds a day's worth of water for 1 person.",
+    "cooldown": 10000
   },
   {
     "name": "Gear-Driven Light",
-    "description": "Crank a small gear module that produces a steady glow, serving as a portable lamp for hours.",
+    "description": "Crank a small gear module that produces a steady glow, serving as a portable lamp for 2 hours.",
     "cooldown": 3600
   }
 ]
@@ -9657,28 +9657,28 @@
     },
 "abilities": [
   {
-    "name": "Occult Venesection",
-    "description": "Use mild blood-magic knowledge to check a creature’s health or identify basic ailments (no harm).",
-    "cooldown": 1800
+    "name": "Sanguine Venesection",
+    "description": "Use blood-magic to check a creature’s health or identify basic ailments. Can also be used to determine cause of death on a corpse.",
+    "cooldown": 500
   },
   {
     "name": "Fleshcraft Prep",
-    "description": "Improve butchery yield by chanting a ritual that keeps meat fresh for slightly longer.",
+    "description": "Enhance your tools with blood, making them sharper and easier to use when foraging/skinning/hunting etc.",
     "cooldown": 2400
   },
   {
-    "name": "Sanguine Sniff",
+    "name": "Iron Sniff",
     "description": "Detect traces of old blood spills or injuries, useful for tracking lost travelers or animals.",
     "cooldown": 3000
   },
   {
-    "name": "Skinning Aid",
-    "description": "Quick incantation that makes hide or pelt removal smoother, avoiding accidental tears.",
-    "cooldown": 1200
+    "name": "Offering",
+    "description": "Make a blood offer to any who want it. More effective with human blood, moreso when it's not yours.",
+    "cooldown": 10000
   },
   {
-    "name": "Scavenger’s Vein",
-    "description": "Sense leftover remains or camp scraps from a scene, possibly leading to lost valuables or supply caches.",
+    "name": "Bloodpuppet",
+    "description": "Shed some blood to create a small puppet of blood that you can command to scout ahead. You can only learn what it saw once it returns and you investigate the blood.",
     "cooldown": 3600
   }
 ]
@@ -9905,13 +9905,13 @@
     },
 "abilities": [
   {
-    "name": "Vital Tether",
-    "description": "Use mild blood magic to safely store or preserve raw materials (like meat) for a short time.",
+    "name": "Unrivaled Vitality",
+    "description": "Get rid of any external status (e.g poison, paralysis, etc).",
     "cooldown": 3000
   },
   {
-    "name": "Flawless Skinning",
-    "description": "Perform extremely precise skinning on hunted creatures, maximizing pelt quality.",
+    "name": "Bloody Bridge",
+    "description": "Use the blood of nearby corpses to built a temporary solid structure. Stays hardened for an hour.",
     "cooldown": 1800
   },
   {
@@ -9920,14 +9920,14 @@
     "cooldown": 2400
   },
   {
-    "name": "Scavenger’s Eye",
+    "name": "Scavenger Eye",
     "description": "Briefly gain heightened vision for spotting dropped items or hidden remains in the wild.",
     "cooldown": 1200
   },
   {
-    "name": "Butcher’s Grace",
-    "description": "Chant softly to reduce the mess or gore when carving meat, easing disposal and preserving hygiene.",
-    "cooldown": 3600
+    "name": "Mark Nemesis",
+    "description": "When your blood is on another creature you can mark them as your Nemesis. Any action you take towards each other you will be at an advantage, but they always know where you are - or vice versa. This mark cannot be undone by anything but death.",
+    "cooldown": 20000
   }
 ]
 ,
@@ -10154,18 +10154,18 @@
     },
 "abilities": [
   {
-    "name": "Occult Mark",
-    "description": "Place a faint sigil on your own hide or clothing, preventing mild curses from latching onto you.",
-    "cooldown": 1800
+    "name": "Occultation Mark",
+    "description": "Place a faint sigil on your own hide or clothing, preventing mild curses from latching onto you. Stays active for 1 hour.",
+    "cooldown": 8000
   },
   {
-    "name": "Shadow Tanning",
-    "description": "Tan leathers under dim light with minimal odor, avoiding detection by certain beasts.",
+    "name": "Shadow Crafter",
+    "description": "You can work any crafting method without being able to see for 1 creation.",
     "cooldown": 3000
   },
   {
-    "name": "Butcher’s Finesse",
-    "description": "Precisely cut meat from bone, preserving maximum nutritional or trade value (non-combat).",
+    "name": "Blood Purification",
+    "description": "Burn any foreign substance from a collection of blood.",
     "cooldown": 2400
   },
   {
@@ -10175,7 +10175,7 @@
   },
   {
     "name": "Crimson Douse",
-    "description": "Extinguish small fires or embers by channeling a subtle blood-based dampening effect.",
+    "description": "Easily extinguish fire with the use of nearby blood",
     "cooldown": 3600
   }
 ]

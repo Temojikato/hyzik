@@ -546,10 +546,9 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                         <Tooltip label={ability.name} aria-label={ability.name}>
                           <Button
                             onClick={() => handleAbilityClick(ability)}
-                            variant="outline"
                             borderRadius="full"
-                            width="80px"
-                            height="80px"
+                            width="90px"
+                            height="90px"
                             padding="0"
                             _hover={{ bg: 'gray.100' }}
                             _active={{ bg: 'gray.200' }}
@@ -560,7 +559,6 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                             <Image
                               src={ability.icon || 'https://via.placeholder.com/100'}
                               alt={ability.name}
-                              boxSize="60px"
                               objectFit="cover"
                               filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
                             />
