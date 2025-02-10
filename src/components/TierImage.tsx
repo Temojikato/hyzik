@@ -24,6 +24,7 @@ const TierImage: React.FC<TierImageProps> = ({ tierName, alt, boxSize, show = tr
         setImageUrl(url);
       } catch (error) {
         console.error('Error fetching monster tier image:', error);
+        setImageUrl("https://dndbeyond-support.wizards.com/hc/theming_assets/01JDAVQEXS2NAZNHGTDSGBQR08")
       } finally {
         setLoading(false);
       }

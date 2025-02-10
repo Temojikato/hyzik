@@ -240,7 +240,7 @@ interface ItemImageProps {
 }
 
 const ItemImage: React.FC<ItemImageProps> = ({ imagePath, itemName }) => {
-  const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
+  const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
   useEffect(() => {

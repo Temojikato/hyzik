@@ -32,6 +32,7 @@ import { useToast } from '@chakra-ui/react';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import CraftingModal from './CraftingModal';
+import LootTroveModal from './LootTroveModal';
 
 interface InventoryModalProps {
   isOpen: boolean;
@@ -72,6 +73,12 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
     isOpen: isCraftingOpen,
     onOpen: onCraftingOpen,
     onClose: onCraftingClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isLootTroveOpen,
+    onOpen: onLootTroveOpen,
+    onClose: onLootTroveClose,
   } = useDisclosure();
 
   const [filterText, setFilterText] = useState<string>('');
@@ -145,13 +152,21 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered scrollBehavior="inside">
         <ModalOverlay />
-        <ModalContent bg="secondary" maxH="80vh">
+        <ModalContent
+          bg="secondary"
+          maxH="80vh"
+          display="flex"
+          flexDirection="column"
+        >
           <ModalHeader color="textHeader">Your Inventory</ModalHeader>
           <ModalCloseButton color="text" />
           <ModalBody>
             {/* Filter and Add Item Button */}
             <VStack spacing={4} align="stretch" marginBottom="1rem">
               <HStack justifyContent="flex-end">
+                <Button onClick={onLootTroveOpen} colorScheme="yellow">
+                  Troves
+                </Button>
                 <Button onClick={onAddItemOpen} colorScheme="blue">
                   Add Item
                 </Button>
@@ -267,6 +282,8 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
         setInventory={setInventory}
         currentUser={currentUser}
       />
+
+      <LootTroveModal setInventory={setInventory} isOpen={isLootTroveOpen} onClose={onLootTroveClose} currentUser={currentUser} inventory={inventory} />
     </>
   );
 };
@@ -278,7 +295,7 @@ interface ItemImageProps {
 }
 
 const ItemImage: React.FC<ItemImageProps> = ({ imagePath, itemName }) => {
-  const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
+  const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
   useEffect(() => {

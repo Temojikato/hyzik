@@ -1,0 +1,107 @@
+[
+  {
+    "id": "Common Weapon",
+    "name": "Common Weapon",
+    "description": "A standard issue weapon favored by most warriors. Reliable but unremarkable in design.",
+    "category": "Weapons",
+    "recipe": ["Iron Ingot", "Wood"]
+  },
+  {
+    "id": "Uncommon Weapon",
+    "name": "Uncommon Weapon",
+    "description": "A weapon with improved craftsmanship and minor enhancements, offering better performance than the common version.",
+    "category": "Weapons",
+    "recipe": ["Refined Iron", "Polished Wood", "Leather Grip"]
+  },
+  {
+    "id": "Rare Weapon",
+    "name": "Rare Weapon",
+    "description": "A finely crafted weapon imbued with subtle magical properties, sought after by skilled fighters.",
+    "category": "Weapons",
+    "recipe": ["Steel Ingot", "Enchanted Wood", "Dragon Bone"]
+  },
+  {
+    "id": "Legendary Weapon",
+    "name": "Legendary Weapon",
+    "description": "An extraordinary weapon of mythic quality, said to be forged by the gods themselves.",
+    "category": "Weapons",
+    "recipe": ["Mystic Alloy", "Elder Wood", "Celestial Gem"]
+  },
+  {
+    "id": "Artifact Weapon",
+    "name": "Artifact Weapon",
+    "description": "A one-of-a-kind weapon with immense power and storied history. Its origin is shrouded in legend.",
+    "category": "Weapons",
+    "recipe": ["Mythic Alloy", "Ancient Wood", "Arcane Essence"]
+  },
+  {
+    "id": "Common Armor",
+    "name": "Common Armor",
+    "description": "Standard armor offering basic protection for the average fighter.",
+    "category": "Armor",
+    "recipe": ["Iron Plate", "Leather Straps"]
+  },
+  {
+    "id": "Uncommon Armor",
+    "name": "Uncommon Armor",
+    "description": "Improved armor with additional reinforcement and design, providing better defense.",
+    "category": "Armor",
+    "recipe": ["Reinforced Iron", "Cured Leather", "Bronze Buckle"]
+  },
+  {
+    "id": "Rare Armor",
+    "name": "Rare Armor",
+    "description": "A suit of armor crafted with superior materials and design, offering excellent protection and style.",
+    "category": "Armor",
+    "recipe": ["Steel Plate", "Enchanted Leather", "Silver Trim"]
+  },
+  {
+    "id": "Legendary Armor",
+    "name": "Legendary Armor",
+    "description": "Armor of legend, renowned for its nearly impenetrable design and the power it bestows upon its wearer.",
+    "category": "Armor",
+    "recipe": ["Mystic Steel", "Dragonhide", "Celestial Thread"]
+  },
+  {
+    "id": "Artifact Armor",
+    "name": "Artifact Armor",
+    "description": "A unique piece of armor of mythical origins, said to be imbued with divine protection and mystery.",
+    "category": "Armor",
+    "recipe": ["Mythic Steel", "Ancient Dragonhide", "Arcane Weave"]
+  },
+  {
+    "id": "Common Wondrous Item",
+    "name": "Common Wondrous Item",
+    "description": "A simple but useful item imbued with minor enchantments, often seen among common folk.",
+    "category": "Wondrous Items",
+    "recipe": ["Crystal Shard", "Herbs"]
+  },
+  {
+    "id": "Uncommon Wondrous Item",
+    "name": "Uncommon Wondrous Item",
+    "description": "A well-crafted wondrous item with subtle magical effects that enhance everyday life.",
+    "category": "Wondrous Items",
+    "recipe": ["Enchanted Crystal", "Rare Herb"]
+  },
+  {
+    "id": "Rare Wondrous Item",
+    "name": "Rare Wondrous Item",
+    "description": "An exquisite and magical item that is highly valued for its beauty and mystical properties.",
+    "category": "Wondrous Items",
+    "recipe": ["Mystic Crystal", "Moonlight Herb"]
+  },
+  {
+    "id": "Legendary Wondrous Item",
+    "name": "Legendary Wondrous Item",
+    "description": "A wondrous item of great renown and power, steeped in lore and mystery.",
+    "category": "Wondrous Items",
+    "recipe": ["Celestial Crystal", "Sunlit Herb", "Star Dust"]
+  },
+  {
+    "id": "Artifact Wondrous Item",
+    "name": "Artifact Wondrous Item",
+    "description": "An unparalleled item of magical wonder, a true artifact with powers beyond mortal comprehension.",
+    "category": "Wondrous Items",
+    "recipe": ["Mythic Crystal", "Ancient Herb", "Cosmic Dust"]
+  }
+]

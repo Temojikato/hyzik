@@ -1,0 +1,297 @@
+{
+  "categories": [
+    {
+      "category": "Treasure Chest",
+      "tiers": [
+        {
+          "id": "Bronze Chest",
+          "name": "Bronze Chest",
+          "description": "A modest chest made of bronze, rumored to contain a few valuable trinkets.",
+          "maxAmountOfItems": 1,
+          "loot": [
+            { "itemName": "Gold Coin", "itemChance": 40, "quantity": "1-100" },
+            { "itemName": "Spices", "itemChance": 20, "quantity": "5" },
+            { "itemName": "Common Weapon", "itemChance": 10 },
+            { "itemName": "Common Armor", "itemChance": 10 },
+            { "itemName": "Common Wondrous Item", "itemChance": 10 },
+            { "itemName": "Forgotten Coin", "itemChance": 10 }
+          ],
+          "image": "bronze_chest.png"
+        },
+        {
+          "id": "Silver Chest",
+          "name": "Silver Chest",
+          "description": "A refined chest forged from silver, with hints of greater fortune inside.",
+          "maxAmountOfItems": 2,
+          "loot": [
+            { "itemName": "Gold Coin", "itemChance": 40, "quantity": "1-100" },
+            { "itemName": "Small Gem", "itemChance": 20, "quantity": "5" },
+            { "itemName": "Uncommon Weapon", "itemChance": 10 },
+            { "itemName": "Uncommon Armor", "itemChance": 10 },
+            { "itemName": "Uncommon Wondrous Item", "itemChance": 10 },
+            { "itemName": "Relic Fragment", "itemChance": 10 }
+          ],
+          "image": "silver_chest.png"
+        },
+        {
+          "id": "Gold Chest",
+          "name": "Gold Chest",
+          "description": "A lavish chest made of gold, believed to contain substantial wealth.",
+          "maxAmountOfItems": 3,
+          "loot": [
+            { "itemName": "Gold Coin", "itemChance": 40, "quantity": "1-100" },
+            { "itemName": "Small Gem", "itemChance": 20, "quantity": "5" },
+            { "itemName": "Rare Weapon", "itemChance": 10 },
+            { "itemName": "Rare Armor", "itemChance": 10 },
+            { "itemName": "Rare Wondrous Item", "itemChance": 10 },
+            { "itemName": "Ancient Manuscript", "itemChance": 10 }
+          ],
+          "image": "gold_chest.png"
+        },
+        {
+          "id": "Orichalcum Chest",
+          "name": "Orichalcum Chest",
+          "description": "A legendary chest made from orichalcum, said to hold unparalleled treasures.",
+          "maxAmountOfItems": 4,
+          "loot": [
+            { "itemName": "Gold Coin", "itemChance": 40, "quantity": "1-100" },
+            { "itemName": "Small Gem", "itemChance": 20, "quantity": "5" },
+            { "itemName": "Legendary Weapon", "itemChance": 10 },
+            { "itemName": "Legendary Armor", "itemChance": 10 },
+            { "itemName": "Legendary Wondrous Item", "itemChance": 10 },
+            { "itemName": "Artifact Weapon", "itemChance": 5 },
+            { "itemName": "Artifact Armor", "itemChance": 5 },
+            { "itemName": "Artifact Wondrous Item", "itemChance": 5 },
+            { "itemName": "Mystic Locket", "itemChance": 5 },
+            { "itemName": "Rune-Etched Tablet", "itemChance": 5 },
+            { "itemName": "Tattered Banner", "itemChance": 5 },
+            { "itemName": "Dragon Scale", "itemChance": 5 }
+          ],
+          "image": "orichalcum_chest.png"
+        }
+      ]
+    },
+    {
+      "category": "Ore Vein",
+      "tiers": [
+        {
+          "id": "Ore Vein",
+          "name": "Ore Vein",
+          "description": "A modest vein of ore, yielding common minerals.",
+          "maxAmountOfItems": 1,
+          "loot": [
+            { "itemName": "Coal", "itemChance": 40 },
+            { "itemName": "Metal Ore", "itemChance": 20 },
+            { "itemName": "Glass", "itemChance": 10 },
+            { "itemName": "Stone", "itemChance": 10 },
+            { "itemName": "Nothing", "itemChance": 20 }
+          ],
+          "image": "ore_vein.png"
+        },
+        {
+          "id": "Rich Ore Vein",
+          "name": "Rich Ore Vein",
+          "description": "A richer ore vein that promises more valuable minerals.",
+          "maxAmountOfItems": 2,
+          "loot": [
+            { "itemName": "Gold Ingot", "itemChance": 35 },
+            { "itemName": "Metal Ore", "itemChance": 30 },
+            { "itemName": "Gemstones", "itemChance": 15 },
+            { "itemName": "Glass", "itemChance": 10 },
+            { "itemName": "Nothing", "itemChance": 10 }
+          ],
+          "image": "rich_ore_vein.png"
+        },
+        {
+          "id": "Glimmering Ore Vein",
+          "name": "Glimmering Ore Vein",
+          "description": "An ore vein that sparkles with hints of precious metal.",
+          "maxAmountOfItems": 3,
+          "loot": [
+            { "itemName": "Celestial Gemstone", "itemChance": 35 },
+            { "itemName": "Gold Ingot", "itemChance": 25 },
+            { "itemName": "Metal Ore", "itemChance": 20 },
+            { "itemName": "Gemstones", "itemChance": 10 },
+            { "itemName": "Nothing", "itemChance": 10 }
+          ],
+          "image": "glimmering_ore_vein.png"
+        },
+        {
+          "id": "Celestial Ore Vein",
+          "name": "Celestial Ore Vein",
+          "description": "A rare ore vein imbued with celestial energy.",
+          "maxAmountOfItems": 4,
+          "loot": [
+            { "itemName": "Celestial Gemstone", "itemChance": 40 },
+            { "itemName": "Energy Core", "itemChance": 30 },
+            { "itemName": "Enchantment Crystal", "itemChance": 20 },
+            { "itemName": "Nothing", "itemChance": 10 }
+          ],
+          "image": "celestial_ore_vein.png"
+        }
+      ]
+    },
+    {
+      "category": "Fishing Spot",
+      "tiers": [
+        {
+          "id": "Ravaging Fishing Spot",
+          "name": "Ravaging Fishing Spot",
+          "description": "A dangerous fishing spot where turbulent waters challenge even seasoned anglers.",
+          "maxAmountOfItems": 1,
+          "loot": [
+            { "itemName": "Raw Fish", "itemChance": 40, "quantity": "1-3" },
+            { "itemName": "Feather", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "ravaging_fishing_spot.png"
+        },
+        {
+          "id": "Fishing Spot",
+          "name": "Fishing Spot",
+          "description": "A typical fishing spot, offering a decent catch.",
+          "maxAmountOfItems": 2,
+          "loot": [
+            { "itemName": "Raw Fish", "itemChance": 50, "quantity": "1-3" },
+            { "itemName": "Old Boot", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Pearl", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 10 }
+          ],
+          "image": "fishing_spot.png"
+        },
+        {
+          "id": "Crowded Fishing Spot",
+          "name": "Crowded Fishing Spot",
+          "description": "A bustling fishing area where many anglers compete for the best catch.",
+          "maxAmountOfItems": 3,
+          "loot": [
+            { "itemName": "Raw Fish", "itemChance": 40, "quantity": "1-3" },
+            { "itemName": "Old Boot", "itemChance": 30, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 30 }
+          ],
+          "image": "crowded_fishing_spot.png"
+        },
+        {
+          "id": "Serene Fishing Spot",
+          "name": "Serene Fishing Spot",
+          "description": "A tranquil fishing spot where the fish seem to come easily.",
+          "maxAmountOfItems": 4,
+          "loot": [
+            { "itemName": "Raw Fish", "itemChance": 60, "quantity": "1-3" },
+            { "itemName": "Pearl", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 20 }
+          ],
+          "image": "serene_fishing_spot.png"
+        }
+      ]
+    },
+    {
+      "category": "Gathering",
+      "tiers": [
+        {
+          "id": "Empty Room Gathering",
+          "name": "Empty Room Gathering",
+          "description": "An abandoned room with little growth, but some scattered natural ingredients.",
+          "maxAmountOfItems": 1,
+          "loot": [
+            { "itemName": "Herbs", "itemChance": 30, "quantity": "1-3" },
+            { "itemName": "Mushrooms", "itemChance": 20, "quantity": "1-2" },
+            { "itemName": "Nothing", "itemChance": 50 }
+          ],
+          "image": "empty_room_gathering.png"
+        },
+        {
+          "id": "Forest Gathering",
+          "name": "Forest Gathering",
+          "description": "A lush forest teeming with edible flora.",
+          "maxAmountOfItems": 2,
+          "loot": [
+            { "itemName": "Wild Berries", "itemChance": 40, "quantity": "1-3" },
+            { "itemName": "Herbs", "itemChance": 30, "quantity": "1-3" },
+            { "itemName": "Nothing", "itemChance": 30 }
+          ],
+          "image": "forest_gathering.png"
+        },
+        {
+          "id": "Ruins Gathering",
+          "name": "Ruins Gathering",
+          "description": "A crumbling ruin where nature reclaims forgotten treasures.",
+          "maxAmountOfItems": 3,
+          "loot": [
+            { "itemName": "Mushrooms", "itemChance": 35, "quantity": "1-2" },
+            { "itemName": "Wild Berries", "itemChance": 25, "quantity": "1-3" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "ruins_gathering.png"
+        },
+        {
+          "id": "Cave Gathering",
+          "name": "Cave Gathering",
+          "description": "A dark cave where rare fungi and minerals grow.",
+          "maxAmountOfItems": 4,
+          "loot": [
+            { "itemName": "Mushrooms", "itemChance": 40, "quantity": "1-3" },
+            { "itemName": "Herbs", "itemChance": 20, "quantity": "1-3" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "cave_gathering.png"
+        }
+      ]
+    },
+    {
+      "category": "Cache",
+      "tiers": [
+        {
+          "id": "Leftover Cache",
+          "name": "Leftover Cache",
+          "description": "A small stash of discarded items, not very valuable.",
+          "maxAmountOfItems": 1,
+          "loot": [
+            { "itemName": "Broken Trinket", "itemChance": 40, "quantity": "1" },
+            { "itemName": "Rusty Key", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "leftover_cache.png"
+        },
+        {
+          "id": "Hidden Cache",
+          "name": "Hidden Cache",
+          "description": "A secret stash hidden from prying eyes.",
+          "maxAmountOfItems": 2,
+          "loot": [
+            { "itemName": "Old Relic", "itemChance": 30, "quantity": "1" },
+            { "itemName": "Mystery Box", "itemChance": 20, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 50 }
+          ],
+          "image": "hidden_cache.png"
+        },
+        {
+          "id": "Luxurious Cache",
+          "name": "Luxurious Cache",
+          "description": "A well-hidden trove of lavish goods.",
+          "maxAmountOfItems": 3,
+          "loot": [
+            { "itemName": "Precious Gem", "itemChance": 35, "quantity": "1-3" },
+            { "itemName": "Gold Coin", "itemChance": 25, "quantity": "1-100" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "luxurious_cache.png"
+        },
+        {
+          "id": "Royal Cache",
+          "name": "Royal Cache",
+          "description": "A regal cache containing items of unmatched quality and rarity.",
+          "maxAmountOfItems": 4,
+          "loot": [
+            { "itemName": "Royal Emblem", "itemChance": 30, "quantity": "1" },
+            { "itemName": "Exquisite Gem", "itemChance": 30, "quantity": "1" },
+            { "itemName": "Enchanted Metal", "itemChance": 10, "quantity": "1-2" },
+            { "itemName": "Inferno Ash", "itemChance": 10, "quantity": "1" },
+            { "itemName": "Nothing", "itemChance": 40 }
+          ],
+          "image": "royal_cache.png"
+        }
+      ]
+    }
+  ]
+}

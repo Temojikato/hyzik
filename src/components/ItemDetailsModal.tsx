@@ -54,7 +54,7 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
   } = useDisclosure();
   const toast = useToast();
 
-  const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
+  const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
   useEffect(() => {

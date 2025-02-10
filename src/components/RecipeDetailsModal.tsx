@@ -46,7 +46,7 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
   currentUser,
 }) => {
   const toast = useToast();
-  const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
+  const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
   const [componentItems, setComponentItems] = useState<ComponentItem[]>([]);
   const [loadingComponents, setLoadingComponents] = useState<boolean>(false);
@@ -290,7 +290,7 @@ interface ComponentImageProps {
 }
 
 const ComponentImage: React.FC<ComponentImageProps> = ({ imagePath, itemName }) => {
-  const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
+  const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
   useEffect(() => {

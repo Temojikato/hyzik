@@ -1,54 +1,82 @@
 import { doc, runTransaction } from "firebase/firestore";
 import { db } from "../Firebase";
-import { LootEntry } from "../types/BestiaryTypes";
 import { Item } from "../types/Reyvateils";
 
-export function rollLoot(loot: LootEntry[]): string[] {
-  const guaranteedItems: string[] = [];
-  const rollCandidates: { item: string; chance: number }[] = [];
+
+export interface LootEntry {
+  itemName: string;
+  itemChance: number;
+  quantity?: string; // e.g. "5" or "1-100"
+}
+
+export interface RolledLoot {
+  itemName: string;
+  quantity: number;
+}
+
+function parseQuantity(qty?: string): number {
+  if (!qty) return 1; // default quantity is 1 if not provided
+  const parts = qty.split("-");
+  if (parts.length > 1) {
+    // It's a range: roll a random integer between min and max (inclusive)
+    const min = parseInt(parts[0], 10);
+    const max = parseInt(parts[1], 10);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  } else {
+    // Fixed quantity
+    return parseInt(qty, 10) || 1;
+  }
+}
+
+export function rollLoot(loot: LootEntry[]): RolledLoot[] {
+  const guaranteedItems: RolledLoot[] = [];
+  const rollCandidates: { item: string; chance: number; quantity?: string }[] = [];
 
   loot.forEach(entry => {
     if (entry.itemChance === 100) {
-      guaranteedItems.push(entry.itemName);
+      // Guaranteed loot – include quantity parsed
+      guaranteedItems.push({
+        itemName: entry.itemName,
+        quantity: parseQuantity(entry.quantity)
+      });
     } else {
-      rollCandidates.push({ item: entry.itemName, chance: entry.itemChance });
+      rollCandidates.push({
+        item: entry.itemName,
+        chance: entry.itemChance,
+        quantity: entry.quantity
+      });
     }
   });
 
-  let extraDrop: string | null = null;
+  let extraDrop: RolledLoot | null = null;
   if (rollCandidates.length > 0) {
-    // Sum the chance values of the non-guaranteed items.
     const totalWeight = rollCandidates.reduce((sum, candidate) => sum + candidate.chance, 0);
-    // Generate a random number between 0 and totalWeight.
     const randomRoll = Math.random() * totalWeight;
     let cumulative = 0;
     for (const candidate of rollCandidates) {
       cumulative += candidate.chance;
       if (randomRoll < cumulative) {
-        extraDrop = candidate.item;
+        extraDrop = {
+          itemName: candidate.item,
+          quantity: parseQuantity(candidate.quantity)
+        };
         break;
       }
     }
   }
 
-  if (extraDrop) {
-    return [...guaranteedItems, extraDrop];
-  } else {
-    return guaranteedItems;
-  }
+  return extraDrop ? [...guaranteedItems, extraDrop] : guaranteedItems;
 }
 
-
 export async function addLootToInventory(
-  lootItems: string[],
+  lootItems: RolledLoot[],
   currentUser: { uid: string },
   toast: (options: any) => void,
-  setInventory: (newInv: any[]) => void,
-  inventory: any[]
+  setInventory: (newInv: Item[]) => void,
+  inventory: Item[]
 ): Promise<void> {
   try {
     const userRef = doc(db, 'users', currentUser.uid);
-    // Clone your local inventory array.
     let newInventory = [...inventory];
 
     await runTransaction(db, async (transaction) => {
@@ -57,9 +85,8 @@ export async function addLootToInventory(
         throw new Error('User data not found.');
       }
 
-      // For each loot item, update the inventory.
-      for (const itemName of lootItems) {
-        // Check if the item name is "nothing" and skip it
+      for (const lootObj of lootItems) {
+        const { itemName, quantity } = lootObj;
         if (itemName.toLowerCase() === 'nothing') {
           toast({
             title: 'Loot Contained Nothing',
@@ -68,10 +95,9 @@ export async function addLootToInventory(
             duration: 3000,
             isClosable: true,
           });
-          continue; // Skip this item and move on to the next one
+          continue;
         }
 
-        // Get a reference to the item document. We assume the document id is the same as the item name.
         const itemRef = doc(db, 'items', itemName);
         const itemSnap = await transaction.get(itemRef);
         if (!itemSnap.exists()) {
@@ -79,44 +105,46 @@ export async function addLootToInventory(
           continue;
         }
 
-        // Check if the item already exists in the inventory.
-        const existingItemIndex = newInventory.findIndex(
-          (item) => item.id === itemName
-        );
+        const existingItemIndex = newInventory.findIndex((item) => item.id === itemName);
         if (existingItemIndex !== -1) {
-          // Increase quantity by 1.
-          newInventory[existingItemIndex].quantity += 1;
-          // Ensure we have a valid reference.
-          if (!newInventory[existingItemIndex].reference) {
-            newInventory[existingItemIndex].reference = itemRef;
-          }
+          const existingItem = newInventory[existingItemIndex];
+          const updatedItem = {
+            ...existingItem,
+            quantity: (existingItem.quantity || 0) + quantity,
+            reference: (existingItem as any).reference ? (existingItem as any).reference : itemRef,
+          };
+          newInventory[existingItemIndex] = updatedItem as any;
         } else {
-          // Otherwise, add the new item with quantity 1.
           newInventory.push({
             ...(itemSnap.data() as Item),
+            id: itemName,
+            quantity,
             reference: itemRef,
-            quantity: 1,
-          });
+          } as any);
         }
       }
-      // Update the user's inventory in Firestore.
-      transaction.update(userRef, {
-        inventory: newInventory.map((item) => ({
-          // Ensure the reference is valid.
-          reference: item.reference || doc(db, 'items', item.id),
-          quantity: item.quantity,
-        })),
-      });
+
+      transaction.set(
+        userRef,
+        {
+          inventory: newInventory.map((item) => ({
+            reference: (item as any).reference || doc(db, 'items', item.id),
+            quantity: item.quantity,
+          })),
+        },
+        { merge: true }
+      );
     });
 
-
-    // Update local inventory state.
     setInventory(newInventory);
-    const filteredLootItems = lootItems.filter(item => item.toLowerCase() !== 'nothing');
-    if (filteredLootItems.length != 0) {
+    const filteredLootItems = lootItems.filter(l => l.itemName.toLowerCase() !== "nothing");
+    if (filteredLootItems.length !== 0) {
+      const lootDescriptions = filteredLootItems
+        .map(l => `${l.itemName} (x${l.quantity})`)
+        .join(", ");
       toast({
         title: 'Loot Added',
-        description: `Added: ${lootItems.join(', ')}`,
+        description: `Added: ${lootDescriptions}`,
         status: 'success',
         duration: 3000,
         isClosable: true,

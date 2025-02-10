@@ -487,7 +487,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
               <Image
                 src={
                   selectedImageUrl ||
-                  (reyvateil ? reyvateil.image : 'placeholder-image.png')
+                  (reyvateil ? reyvateil.image : 'placeholder-image')
                 }
                 alt={reyvateil ? reyvateil.name : 'Unknown Reyvateil'}
                 objectFit="cover"
