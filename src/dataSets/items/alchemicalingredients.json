@@ -26,5 +26,26 @@
     "description": "Highly concentrated venom extracted from the fangs of Tower predators, essential for crafting poisons and antidotes.",
     "category": "Alchemical Ingredients",
     "recipe": ["Venom Glands", "Empty Vial"]
+  },
+  {
+    "id": "Phantom Dust",
+    "name": "Phantom Dust",
+    "description": "A fine, iridescent dust gathered from the remnants of spectral beings. It's used in invisibility potions and for binding elusive magical essences.",
+    "category": "Alchemical Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Dragon's Blood Resin",
+    "name": "Dragon's Blood Resin",
+    "description": "A sticky, ruby-hued resin exuded by fire-breathing drakes. Its potent magical properties make it a prized ingredient for fiery enchantments and potent potions.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Empty Vial", "Fire Essence"]
+  },
+  {
+    "id": "Nether Bloom",
+    "name": "Nether Bloom",
+    "description": "A dark, otherworldly flower found in cursed groves. Its petals pulse with arcane energy, making it ideal for crafting shadow potions and hexes.",
+    "category": "Alchemical Ingredients",
+    "recipe": ["Shadow Vine", "Dark Soil"]
   }
 ]

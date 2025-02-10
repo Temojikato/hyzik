@@ -12,7 +12,7 @@ module.exports = {
         "Unknown - Theorized to be dangerous and aggressive"
     },
     LoreLocked: false,
-    Name: "Venestria, The Tangled Vine",
+    Name: "Venestria The Tangled Vine",
     Tiers: {
       Minor: {
         // In this tier, the loot table totals 100% with valid loot summing to 65% and a fallback "Nothing" at 35%.

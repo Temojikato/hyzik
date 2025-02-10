@@ -20,8 +20,7 @@ module.exports = {
         Locked: false,
         Name: "V1-14S3R",
         Stats: {
-          Dexterity: "10",
-          Strength: "10"
+
         }
       },
       Regular: {
@@ -37,8 +36,7 @@ module.exports = {
         Locked: true,
         Name: "V2-14S3R",
         Stats: {
-          Dexterity: "12",
-          Strength: "14"
+
         }
       }
     }
@@ -65,8 +63,7 @@ module.exports = {
         Locked: false,
         Name: "V1-UNM0V3D",
         Stats: {
-          Dexterity: "8",
-          Strength: "12"
+
         }
       },
       Regular: {
@@ -82,15 +79,14 @@ module.exports = {
         Locked: true,
         Name: "V2-UNM0V3D",
         Stats: {
-          Dexterity: "10",
-          Strength: "16"
+
         }
       }
     }
   },
 
   "P4L4D1N": {
-    Locked: false,
+    Locked: true,
     Lore: {
       Formation:
         "Reptilian inspired bots painted in whites to represent the protection against evil. They are inherently immune to any curses, yet one of the most sentient and life-like constructs in the Tower."
@@ -110,8 +106,7 @@ module.exports = {
         Locked: false,
         Name: "V1-P4L4D1N",
         Stats: {
-          Dexterity: "10",
-          Strength: "12"
+
         }
       },
       Regular: {
@@ -127,15 +122,14 @@ module.exports = {
         Locked: true,
         Name: "V2-P4L4D1N",
         Stats: {
-          Dexterity: "12",
-          Strength: "16"
+
         }
       }
     }
   },
 
   "JU663RN4UT": {
-    Locked: false,
+    Locked: true,
     Lore: {
       Formation:
         "Massive stone golems enhanced by the power of Hymmnos. Primitive in their information processing and strategies, but their fists have the potential to crush any human in a single hit."
@@ -155,8 +149,7 @@ module.exports = {
         Locked: false,
         Name: "V1-JU663RN4UT",
         Stats: {
-          Dexterity: "6",
-          Strength: "18"
+
         }
       },
       Regular: {
@@ -172,15 +165,14 @@ module.exports = {
         Locked: true,
         Name: "V2-JU663RN4UT",
         Stats: {
-          Dexterity: "8",
-          Strength: "22"
+
         }
       }
     }
   },
 
   "M0UNT41N": {
-    Locked: false,
+    Locked: true,
     Lore: {
       Formation:
         "As the name implies these appear to be walking volcanoes, yet they share characteristics with golems. These similarities are only on the outside though, as inside these are less like golems or machines and more like primordial elemental entities chained within a controllable shell."
@@ -200,8 +192,7 @@ module.exports = {
         Locked: false,
         Name: "V1-M0UNT41N",
         Stats: {
-          Dexterity: "8",
-          Strength: "16"
+
         }
       },
       Regular: {
@@ -217,8 +208,7 @@ module.exports = {
         Locked: true,
         Name: "V2-M0UNT41N",
         Stats: {
-          Dexterity: "10",
-          Strength: "20"
+
         }
       }
     }

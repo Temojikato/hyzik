@@ -25,17 +25,18 @@ module.exports = {
         Locked: false,
         Name: "Avatar of Greed and Patience",
         Stats: {
-          Strength: "30",
-          Dexterity: "10",
-          Constitution: "28",
-          Intelligence: "15",
-          Wisdom: "20",
-          Charisma: "18"
+          Strength: "???",
+          Dexterity: "???",
+          Constitution: "???",
+          Intelligence: "???",
+          Wisdom: "???",
+          Charisma: "???"
         },
         Abilities: [
           "Exudes an aura of timeless greed that saps the will of intruders.",
           "Its silent, watchful presence instills both fear and awe.",
-          "Can cause nearby foes to hesitate, giving it time to shed valuable resources."
+          "Can cause nearby foes to hesitate, giving it time to shed valuable resources.",
+          "Probably a lot more"
         ],
         Description:
           "This legendary Avatar stands as a testament to ancient power. Revered and feared in equal measure, it quietly watches over its treasure-filled pods and exerts a mysterious influence over its slime progeny."

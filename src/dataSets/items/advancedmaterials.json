@@ -2,7 +2,7 @@
   {
     "id": "Dragon Scale",
     "name": "Dragon Scale",
-    "description": "Rare material for high-tier crafting.",
+    "description": "Rare material for high-tier crafting gathered off the bodies of dragons.",
     "category": "Advanced Materials",
     "recipe": ["Metal Ingot", "Magical Essence"]
   },
@@ -12,5 +12,69 @@
     "description": "Metal imbued with magical properties.",
     "category": "Advanced Materials",
     "recipe": ["Metal Ingot", "Magical Essence"]
+  },
+  {
+    "id": "inferno_ash",
+    "name": "Inferno Ash",
+    "description": "Ash gathered from scorched landscapes or the aftermath of burning battles. Rich in residual heat, it is prized by alchemists and bomb makers alike.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "molten_glass",
+    "name": "Molten Glass",
+    "description": "Glass formed in extreme heat, ideal for advanced optical or magical components. It can be collected near smelting forges or in the heart of a volcano.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "cinder_powder",
+    "name": "Cinder Powder",
+    "description": "A fine powder made from crushed cinders. Often used as a binding agent in explosive mixtures or magical talismans.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "smoldering_ember",
+    "name": "Smoldering Ember",
+    "description": "A glowing ember that never fully extinguishes, perfect for sustaining enchanted fires or crafting potent incendiary devices.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "blazing_alloy",
+    "name": "Blazing Alloy",
+    "description": "A metal alloy forged in extreme heat, resistant to thermal shock. It is used in the crafting of high-end weapons and armor for hot environments.",
+    "category": "Advanced Materials",
+    "recipe": [
+      { "itemId": "coal", "quantity": 2 },
+      { "itemId": "iron_ore", "quantity": 1 }
+    ]
+  },
+  {
+    "id": "searing_crystal",
+    "name": "Searing Crystal",
+    "description": "A crystalline substance that radiates intense heat. It is either mined from volcanic shards or dropped by enchanted fire creatures.",
+    "category": "Advanced Materials",
+    "recipe": []
+  },
+  {
+    "id": "charcoal",
+    "name": "Charcoal",
+    "description": "A refined form of coal that burns hotter and cleaner. Often produced by slowly burning wood in a low-oxygen environment.",
+    "category": "Advanced Materials",
+    "recipe": [
+      { "itemId": "wood", "quantity": 2 }
+    ]
+  },
+  {
+    "id": "firecracker",
+    "name": "Firecracker",
+    "description": "A small explosive device that produces a brilliant flash and loud bang. Crafted from volatile components and used both for combat and distraction.",
+    "category": "Advanced Materials",
+    "recipe": [
+      { "itemId": "cinder_powder", "quantity": 1 },
+      { "itemId": "arcane_oil", "quantity": 1 }
+    ]
   }
 ]

@@ -12,5 +12,54 @@
     "description": "Fresh meat obtained from hunted animals.",
     "category": "Culinary Ingredients",
     "recipe": ["Grain"]
+  },
+  {
+    "id": "Fresh Eggs",
+    "name": "Fresh Eggs",
+    "description": "A carton of fresh eggs collected from local fowl. Versatile for baking and cooking.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Aromatic Herbs",
+    "name": "Aromatic Herbs",
+    "description": "A bundle of fragrant herbs picked from the wild, adding flavor to soups, stews, and other dishes.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Wild Berries",
+    "name": "Wild Berries",
+    "description": "A handful of freshly picked wild berries, perfect for desserts, jams, or a refreshing snack.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Fresh Milk",
+    "name": "Fresh Milk",
+    "description": "Milk obtained from local livestock, used in a variety of recipes including cheeses and puddings.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Honey",
+    "name": "Honey",
+    "description": "A jar of golden honey collected from beehives, prized as a natural sweetener in culinary creations.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Raw Fish",
+    "name": "Raw Fish",
+    "description": "Fresh fish caught from nearby waters, offering a delicate flavor ideal for various recipes.",
+    "category": "Culinary Ingredients",
+    "recipe": []
+  },
+  {
+    "id": "Root Vegetables",
+    "name": "Root Vegetables",
+    "description": "A mix of hearty root vegetables that can be roasted, boiled, or mashed to create nourishing meals.",
+    "category": "Culinary Ingredients",
+    "recipe": []
   }
 ]

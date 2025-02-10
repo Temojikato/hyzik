@@ -178,10 +178,8 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
                     }}
                     position="relative"
                   >
-                    <RecipeImage
-                      imagePath={'items/' + recipe.name.toLowerCase() + '.png'}
-                      recipeName={recipe.name}
-                    />
+                    <ItemImage imagePath={"items/" + recipe.name + ".png"} itemName={recipe.name} />
+
                     <Box
                       position="absolute"
                       top="0"
@@ -235,12 +233,13 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
   );
 };
 
-interface RecipeImageProps {
+
+interface ItemImageProps {
   imagePath?: string;
-  recipeName: string;
+  itemName: string;
 }
 
-const RecipeImage: React.FC<RecipeImageProps> = ({ imagePath, recipeName }) => {
+const ItemImage: React.FC<ItemImageProps> = ({ imagePath, itemName }) => {
   const [imageUrl, setImageUrl] = useState<string>('placeholder-image.png');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
@@ -251,7 +250,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ imagePath, recipeName }) => {
           const url = await getDownloadURL(ref(storage, imagePath));
           setImageUrl(url);
         } catch (error) {
-          console.error('Error fetching recipe image:', error);
+          console.error('Error fetching item image:', error);
         }
       }
       setLoadingImage(false);
@@ -265,7 +264,13 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ imagePath, recipeName }) => {
       <Spinner size="md" />
     </Box>
   ) : (
-    <Image src={imageUrl} alt={recipeName} objectFit="cover" width="100%" height="100px" />
+    <Image
+      src={imageUrl}
+      alt={itemName}
+      objectFit="cover"
+      width="100%"
+      height="100px"
+    />
   );
 };
 

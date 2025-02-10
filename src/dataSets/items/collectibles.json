@@ -12,5 +12,33 @@
     "description": "A piece of a relic with historical significance.",
     "category": "Collectibles",
     "recipe": ["Paper", "Ink", "Enchanted Quill"]
+  },
+  {
+    "id": "Forgotten Coin",
+    "name": "Forgotten Coin",
+    "description": "An ancient coin embossed with the visage of a long-forgotten ruler. It is said to bring fortune—or curse—to its discoverer.",
+    "category": "Collectibles",
+    "recipe": ["Old Mint", "Mystic Seal"]
+  },
+  {
+    "id": "Mystic Locket",
+    "name": "Mystic Locket",
+    "description": "A delicate locket that holds a mysterious aura. Theres a portrait inside of a small girl in a red frilly dress and a noble woman in a nightgown.",
+    "category": "Collectibles",
+    "recipe": []
+  },
+  {
+    "id": "Rune-Etched Tablet",
+    "name": "Rune-Etched Tablet",
+    "description": "A stone tablet carved with archaic runes. Scholars believe it holds clues to the ancient magic of the Tower.",
+    "category": "Collectibles",
+    "recipe": ["Smooth Stone", "Engraving Tool", "Arcane Dust"]
+  },
+  {
+    "id": "Tattered Banner",
+    "name": "Tattered Banner",
+    "description": "A faded banner from a lost kingdom, its worn fabric and symbols evoking memories of former glory.",
+    "category": "Collectibles",
+    "recipe": ["Worn Cloth", "Natural Dye", "Old Emblem"]
   }
 ]

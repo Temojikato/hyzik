@@ -12,5 +12,33 @@
     "description": "A small glass container used to hold various liquids and essences.",
     "category": "Containers",
     "recipe": ["Glass"]
+  },
+  {
+    "id": "Glass Jar",
+    "name": "Glass Jar",
+    "description": "A sturdy glass jar with a tight-sealing lid, ideal for storing both liquids and dry ingredients.",
+    "category": "Containers",
+    "recipe": ["Glass", "Wooden Lid"]
+  },
+  {
+    "id": "Leather Pouch",
+    "name": "Leather Pouch",
+    "description": "A small, flexible pouch crafted from leather, perfect for carrying alchemical ingredients or small treasures.",
+    "category": "Containers",
+    "recipe": ["Leather", "Thread"]
+  },
+  {
+    "id": "Ceramic Urn",
+    "name": "Ceramic Urn",
+    "description": "A beautifully crafted ceramic urn, often used to store rare liquids and delicate essences.",
+    "category": "Containers",
+    "recipe": ["Clay", "Glaze"]
+  },
+  {
+    "id": "Metal Canister",
+    "name": "Metal Canister",
+    "description": "A rugged metal canister designed to safely store volatile substances or corrosive liquids.",
+    "category": "Containers",
+    "recipe": ["Metal Scrap", "Sealant"]
   }
 ]
