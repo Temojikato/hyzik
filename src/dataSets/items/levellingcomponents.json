@@ -70,78 +70,78 @@
     "recipe": []
   },
   {
-    "id": "Shard of Arcana",
-    "name": "Shard of Arcana",
+    "id": "Fragment of Arcana",
+    "name": "Fragment of Arcana",
     "description": "A refined form of magical energy, reflecting the Sorcerer's growing mastery and control over their innate magical abilities.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Darkness",
-    "name": "Shard of Darkness",
+    "id": "Fragment of Darkness",
+    "name": "Fragment of Darkness",
     "description": "A manifestation of the Warlock's deepening bond with their patron, granting them greater access to their patron's power and influence.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Divinity",
-    "name": "Shard of Divinity",
+    "id": "Fragment of Divinity",
+    "name": "Fragment of Divinity",
     "description": "A concentrated form of divine energy, reflecting the Cleric's growing connection to their deity.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Focus (Ranger)",
-    "name": "Shard of Focus (Ranger)",
+    "id": "Fragment of Focus (Ranger)",
+    "name": "Fragment of Focus (Ranger)",
     "description": "Represents a heightened awareness and mastery of their chosen fighting style and favored terrain.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Fury",
-    "name": "Shard of Fury",
+    "id": "Fragment of Fury",
+    "name": "Fragment of Fury",
     "description": "A more potent version of the Fragment of Rage, required for higher-level Barbarians.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Harmony",
-    "name": "Shard of Harmony",
+    "id": "Fragment of Harmony",
+    "name": "Fragment of Harmony",
     "description": "A refined version of the Fragment of Melody, representing a deeper understanding of musical harmony and its magical properties.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Mysticism",
-    "name": "Shard of Mysticism",
+    "id": "Fragment of Mysticism",
+    "name": "Fragment of Mysticism",
     "description": "A culmination of years of study and magical practice, representing the Wizard's deep understanding of arcane principles and their ability to weave potent spells.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Shadow",
-    "name": "Shard of Shadow",
+    "id": "Fragment of Shadows",
+    "name": "Fragment of Shadows",
     "description": "Represents a deeper understanding of stealth and deception, allowing the Rogue to manipulate shadows and blend seamlessly into their surroundings.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Tranquility",
-    "name": "Shard of Tranquility",
+    "id": "Fragment of Tranquility",
+    "name": "Fragment of Tranquility",
     "description": "A manifestation of inner harmony and perfect balance, signifying the Monk's mastery of their physical and spiritual energies.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Valor (Fighter)",
-    "name": "Shard of Valor (Fighter)",
+    "id": "Fragment of Valor (Fighter)",
+    "name": "Fragment of Valor (Fighter)",
     "description": "A symbol of courage and unwavering determination, reflecting the Fighter's mastery of combat skills.",
     "category": "Leveling Component",
     "recipe": []
   },
   {
-    "id": "Shard of Valor (Paladin)",
-    "name": "Shard of Valor (Paladin)",
+    "id": "Fragment of Valor (Paladin)",
+    "name": "Fragment of Valor (Paladin)",
     "description": "A symbol of courage and selflessness, reflecting the Paladin's unwavering commitment to protecting the innocent and upholding their oaths.",
     "category": "Leveling Component",
     "recipe": []
@@ -161,8 +161,8 @@
     "recipe": []
   },
   {
-    "id": "Infernal Shard",
-    "name": "Infernal Shard",
+    "id": "Infernal Fragment",
+    "name": "Infernal Fragment",
     "description": "A crystallized fragment of infernal energy, reflecting the Blood Hunter's dangerous pact and their growing mastery over dark and potent forces.",
     "category": "Leveling Component",
     "recipe": []

@@ -30,6 +30,7 @@ import TiersSwiper from './TiersSwiper';
 import { getMonsterByName } from '../utils/fetchAllMonsters';
 import { User } from 'firebase/auth';
 import { Item } from '../types/Reyvateils';
+import InteractiveMapRegionTown from './InteractiveMapRegionTown';
 
 interface RegionModalProps {
   region: MapRegion;
@@ -64,7 +65,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
   const imageRef = useRef<HTMLImageElement>(null);
   const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
-  
+  const isTownRegion = Boolean(region.carouselImages && region.carouselImages.length > 0);
 
   // Track natural dimensions of the floor image.
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -173,7 +174,85 @@ const RegionModal: React.FC<RegionModalProps> = ({
       console.error(`Monster with name "${monsterName}" not found.`);
     }
   }
-  
+
+  function focusOnRegion(regionPolygon: [number, number][], areaPolygon: [number, number][]) {
+    // Compute bounding box of the area (which is in the correct coordinate space)
+    const areaXs = areaPolygon.map(([x]) => x);
+    const areaYs = areaPolygon.map(([, y]) => y);
+    const areaMinX = Math.min(...areaXs);
+    const areaMaxX = Math.max(...areaXs);
+    const areaMinY = Math.min(...areaYs);
+    const areaMaxY = Math.max(...areaYs);
+    const areaWidth = areaMaxX - areaMinX;
+    const areaHeight = areaMaxY - areaMinY;
+
+    // Compute bounding box of the region
+    const regionXs = regionPolygon.map(([x]) => x);
+    const regionYs = regionPolygon.map(([, y]) => y);
+    const regionMinX = Math.min(...regionXs);
+    const regionMaxX = Math.max(...regionXs);
+    const regionMinY = Math.min(...regionYs);
+    const regionMaxY = Math.max(...regionYs);
+    const regionWidth = regionMaxX - regionMinX;
+    const regionHeight = regionMaxY - regionMinY;
+
+    // Compute normalization factor
+    // (Assume regionPolygon should be scaled to roughly match the area polygon's scale.)
+    const factorX = areaWidth / regionWidth;
+    const factorY = areaHeight / regionHeight;
+    const normalizationFactor = Math.min(factorX, factorY);
+
+    // Normalize region polygon coordinates:
+    const normalizedPolygon = regionPolygon.map(([x, y]) => [x * normalizationFactor, y * normalizationFactor] as [number, number]);
+
+    // Now compute bounding box for the normalized region:
+    const normXs = normalizedPolygon.map(([x]) => x);
+    const normYs = normalizedPolygon.map(([, y]) => y);
+    const normMinX = Math.min(...normXs);
+    const normMaxX = Math.max(...normXs);
+    const normMinY = Math.min(...normYs);
+    const normMaxY = Math.max(...normYs);
+
+    const bboxWidth = normMaxX - normMinX;
+    const bboxHeight = normMaxY - normMinY;
+    const centerX = normMinX + bboxWidth / 2;
+    const centerY = normMinY + bboxHeight / 2;
+
+    // Get rendered image dimensions from your imageRef (same as before)
+    const renderedImgWidth = imageRef.current!.clientWidth;
+    const renderedImgHeight = imageRef.current!.clientHeight;
+
+    // Container dimensions:
+    const containerWidth = wrapperRef.current!.offsetWidth;
+    const containerHeight = wrapperRef.current!.offsetHeight;
+
+    // We assume the image was rendered with objectFit="contain",
+    // so we get shrink factors (rendered / natural dimensions)
+    const shrinkFactorX = renderedImgWidth / dimensions.width;
+    const shrinkFactorY = renderedImgHeight / dimensions.height;
+
+    // Apply the same shrink factors to our normalized polygon:
+    const scaledPolygon = normalizedPolygon.map(([x, y]) => [x * shrinkFactorX, y * shrinkFactorY] as [number, number]);
+    const scaledXs = scaledPolygon.map(([x]) => x);
+    const scaledYs = scaledPolygon.map(([, y]) => y);
+    const scaledMinX = Math.min(...scaledXs);
+    const scaledMaxX = Math.max(...scaledXs);
+    const scaledMinY = Math.min(...scaledYs);
+    const scaledMaxY = Math.max(...scaledYs);
+
+    const scaledWidth = scaledMaxX - scaledMinX;
+    const scaledHeight = scaledMaxY - scaledMinY;
+    const scaledCenterX = scaledMinX + scaledWidth / 2;
+    const scaledCenterY = scaledMinY + scaledHeight / 2;
+
+    // Calculate the scale that fits the normalized region bounding box into ~80% of the container.
+    const scale = Math.min(containerWidth / scaledWidth, containerHeight / scaledHeight) * 0.8;
+    const translateX = (containerWidth / 2) - (scaledCenterX * scale);
+    const translateY = (containerHeight / 2) - (scaledCenterY * scale);
+
+    transformRef.current!.setTransform(translateX, translateY, scale, 300);
+  }
+
 
   return (
     <>
@@ -185,61 +264,67 @@ const RegionModal: React.FC<RegionModalProps> = ({
           <ModalBody p={0}>
             <Flex direction="column" height="100%">
               {/* Top Section: Interactive Map */}
-              <Box flex="2" position="relative" overflow="hidden" ref={wrapperRef}>
-                {isMobile && (
-                  <Tooltip label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}>
-                    <IconButton
-                      icon={isFullscreen ? <FaCompress /> : <FaExpand />}
-                      onClick={toggleFullscreen}
+              {isTownRegion ? (
+                <Box flex="2">
+                  <InteractiveMapRegionTown images={region.carouselImages!} />
+                </Box>
+              ) : (
+                <Box flex="2" position="relative" overflow="hidden" ref={wrapperRef}>
+                  {isMobile && (
+                    <Tooltip label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}>
+                      <IconButton
+                        icon={isFullscreen ? <FaCompress /> : <FaExpand />}
+                        onClick={toggleFullscreen}
+                        position="absolute"
+                        top="10px"
+                        right="10px"
+                        zIndex={1000}
+                        aria-label="Toggle Fullscreen"
+                      />
+                    </Tooltip>
+                  )}
+                  {isMobile && isFullscreen && (
+                    <Box
                       position="absolute"
-                      top="10px"
+                      bottom="10px"
                       right="10px"
                       zIndex={1000}
-                      aria-label="Toggle Fullscreen"
-                    />
-                  </Tooltip>
-                )}
-                {isMobile && isFullscreen && (
-                  <Box
-                    position="absolute"
-                    bottom="10px"
-                    right="10px"
-                    zIndex={1000}
-                    display="flex"
-                    flexDirection="column"
-                    gap="10px"
-                  >
-                    <IconButton icon={<FaPlus />} aria-label="Zoom In" onClick={handleZoomIn} />
-                    <IconButton icon={<FaMinus />} aria-label="Zoom Out" onClick={handleZoomOut} />
-                    <IconButton icon={<FaUndo />} aria-label="Reset Zoom" onClick={handleReset} />
-                  </Box>
-                )}
-                <TransformWrapper
-                  ref={transformRef}
-                  initialScale={1}
-                  minScale={0.5}
-                  maxScale={10}
-                  doubleClick={{ disabled: true }}
-                  wheel={{ step: 0.1 }}
-                  pinch={{ step: 0.1 }}
-                >
-                  <TransformComponent>
-                    <Box position="relative" width="100%" height="100%">
-                      <Box
-                        as="img"
-                        ref={imageRef}
-                        src={floorImageUrl}
-                        alt={`Floor containing region: ${region.name}`}
-                        width="100%"
-                        height="100%"
-                        objectFit="contain"
-                        display="block"
-                      />
-                      {/* Optionally, you could overlay additional graphics here */}
+                      display="flex"
+                      flexDirection="column"
+                      gap="10px"
+                    >
+                      <IconButton icon={<FaPlus />} aria-label="Zoom In" onClick={handleZoomIn} />
+                      <IconButton icon={<FaMinus />} aria-label="Zoom Out" onClick={handleZoomOut} />
+                      <IconButton icon={<FaUndo />} aria-label="Reset Zoom" onClick={handleReset} />
                     </Box>
-                  </TransformComponent>
-                </TransformWrapper>
-              </Box>
+                  )}
+                  <TransformWrapper
+                    ref={transformRef}
+                    initialScale={1}
+                    minScale={0.5}
+                    maxScale={10}
+                    doubleClick={{ disabled: true }}
+                    wheel={{ step: 0.1 }}
+                    pinch={{ step: 0.1 }}
+                  >
+                    <TransformComponent>
+                      <Box position="relative" width="100%" height="100%">
+                        <Box
+                          as="img"
+                          ref={imageRef}
+                          src={floorImageUrl}
+                          alt={`Floor containing region: ${region.name}`}
+                          width="100%"
+                          height="100%"
+                          objectFit="contain"
+                          display="block"
+                        />
+                        {/* Optionally, you could overlay additional graphics here */}
+                      </Box>
+                    </TransformComponent>
+                  </TransformWrapper>
+                </Box>
+              )}
 
               {/* Bottom Section: Region Information */}
               <Box flex="1" p={4} bg="gray.50" overflowY="auto" {...infoBlurStyle}>
@@ -294,7 +379,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      
+
       {selectedMonster && (
         <Modal
           isOpen={isMonsterModalOpen}
