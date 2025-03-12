@@ -1,11 +1,10 @@
 // src/components/Home.tsx
 import React, { useEffect, useState } from 'react';
-import { doc, DocumentReference, getDoc, runTransaction } from 'firebase/firestore';
-import { db } from '../Firebase';
+import { doc, getDoc, runTransaction, DocumentReference } from 'firebase/firestore';
+import { db, auth } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { Reyvateil, Item } from '../types/Reyvateils';
 import { signOut } from 'firebase/auth';
-import { auth } from '../Firebase';
 import {
   Spinner,
   Flex,
@@ -14,15 +13,18 @@ import {
   Box,
   useDisclosure,
   useToast,
+  Input,
+  Button,
 } from '@chakra-ui/react';
 import ReyvateilInfo from './ReyvateilInfo';
 import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../contexts/ThemeContext';
 import InventoryModal from './InventoryModal';
 import FullScreenMapModal from './FullScreenMapModal';
-import PlayerInfo from './PlayerInfo';
 import FullScreenBestiaryModal from './FullScreenBestiaryModal';
+import FullScreenNPCModal from './FullScreenNPCModal'; // Import the NPC modal component
 import Header from './Header'; // Import the Header component
+import PlayerInfo from './PlayerInfo';
 
 const Home: React.FC = () => {
   const { currentUser } = useAuth();
@@ -35,7 +37,7 @@ const Home: React.FC = () => {
     isOpen,
     onOpen,
     onClose,
-  } = useDisclosure(); // Controls for the inventory modal
+  } = useDisclosure(); // Inventory modal controls
   const {
     isOpen: isOpenMaps,
     onOpen: onOpenMaps,
@@ -46,6 +48,13 @@ const Home: React.FC = () => {
     onOpen: onOpenBestiary,
     onClose: onCloseBestiary,
   } = useDisclosure();
+  // New useDisclosure for the NPC modal (Resident Codex)
+  const {
+    isOpen: isOpenNPC,
+    onOpen: onOpenNPC,
+    onClose: onCloseNPC,
+  } = useDisclosure();
+
   const navigate = useNavigate();
   const [unlockedRecipes, setUnlockedRecipes] = useState<string[]>([]);
   const toast = useToast();
@@ -68,7 +77,7 @@ const Home: React.FC = () => {
           if (!userData.reyvateilId) {
             setError('No Reyvateil selected.');
             setLoading(false);
-            navigate('/select-reyvateil'); // Use navigate instead of window.location
+            navigate('/select-reyvateil');
             return;
           }
 
@@ -101,7 +110,7 @@ const Home: React.FC = () => {
                 try {
                   if (!(itemData.reference instanceof DocumentReference)) {
                     console.error('Invalid reference, expected DocumentReference:', itemData.reference);
-                    return null; // Skip this item as its reference is invalid
+                    return null;
                   }
                   const itemSnap = await getDoc(itemData.reference);
                   if (itemSnap.exists()) {
@@ -116,7 +125,7 @@ const Home: React.FC = () => {
                   return null;
                 } catch (error) {
                   console.error('Error fetching item data:', error);
-                  return null; // handle error, maybe incorrect path or reference issues
+                  return null;
                 }
               })
             );
@@ -212,20 +221,17 @@ const Home: React.FC = () => {
 
   return (
     <Box p={4} bg="background">
-      {/* Header Component */}
+      {/* Header Component with an added NPC button */}
       <Header
         onOpenBestiary={onOpenBestiary}
         onOpenMaps={onOpenMaps}
         onOpenInventory={onOpen}
+        onOpenNPC={onOpenNPC} // Pass the onOpen function for NPC modal
         handleLogout={handleLogout}
       />
 
-      {/* Rest of your components */}
-      <ReyvateilInfo
-        reyvateil={reyvateil}
-        inventory={inventory}
-        setInventory={setInventory}
-      />
+      {/* Main content */}
+      <ReyvateilInfo reyvateil={reyvateil} inventory={inventory} setInventory={setInventory} />
       <PlayerInfo />
       <InventoryModal
         isOpen={isOpen}
@@ -237,8 +243,25 @@ const Home: React.FC = () => {
         unlockedRecipes={unlockedRecipes}
         setUnlockedRecipes={handleRecipeUnlock}
       />
-      <FullScreenMapModal inventory={inventory} setInventory={setInventory} currentUser={currentUser} isOpen={isOpenMaps} onClose={onCloseMaps} />
-      <FullScreenBestiaryModal inventory={inventory} setInventory={setInventory} currentUser={currentUser} isOpen={isOpenBestiary} onClose={onCloseBestiary} />
+      <FullScreenMapModal
+        inventory={inventory}
+        setInventory={setInventory}
+        currentUser={currentUser}
+        isOpen={isOpenMaps}
+        onClose={onCloseMaps}
+      />
+      <FullScreenBestiaryModal
+        inventory={inventory}
+        setInventory={setInventory}
+        currentUser={currentUser}
+        isOpen={isOpenBestiary}
+        onClose={onCloseBestiary}
+      />
+      <FullScreenNPCModal
+        isOpen={isOpenNPC}
+        onClose={onCloseNPC}
+        currentUser={currentUser}
+      />
     </Box>
   );
 };

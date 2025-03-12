@@ -19,6 +19,7 @@ interface HeaderProps {
   onOpenBestiary: () => void;
   onOpenMaps: () => void;
   onOpenInventory: () => void;
+  onOpenNPC: () => void;
   handleLogout: () => void;
 }
 
@@ -26,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({
   onOpenBestiary,
   onOpenMaps,
   onOpenInventory,
+  onOpenNPC,
   handleLogout,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -57,6 +59,16 @@ const Header: React.FC<HeaderProps> = ({
               <DrawerBody>
                 <Stack spacing={4} mt={10}>
                   <Button
+                    colorScheme="white"
+                    variant="outline"
+                    onClick={() => {
+                      onOpenNPC();
+                      onClose();
+                    }}
+                  >
+                    Resident Codex
+                  </Button>
+                  <Button
                     colorScheme="red"
                     variant="outline"
                     fontFamily="Hymmnos"
@@ -65,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({
                       onClose();
                     }}
                   >
-                    Open Bestiary
+                    Bestiary
                   </Button>
                   <Button
                     colorScheme="green"
@@ -76,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({
                       onClose();
                     }}
                   >
-                    Open Maps
+                    Maps
                   </Button>
                   <Button
                     colorScheme="blue"
@@ -87,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({
                       onClose();
                     }}
                   >
-                    Open Inventory
+                    Inventory
                   </Button>
                   <Button
                     colorScheme="red"
