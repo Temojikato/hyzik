@@ -31,7 +31,7 @@ import {
   doc,
   runTransaction,
 } from 'firebase/firestore';
-import { DBItem, Item, Reyvateil } from '../types/Reyvateils'; // Ensure these types are correctly defined
+import { Item, Reyvateil } from '../types/Reyvateils'; // Ensure these types are correctly defined
 import { User } from 'firebase/auth';
 
 interface AddItemModalProps {

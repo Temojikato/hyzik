@@ -24,6 +24,7 @@ interface FeedModalProps {
 }
 
 const FeedModal: React.FC<FeedModalProps> = ({ isOpen, onClose, inventory, onConfirm }) => {
+  
   // Filter out only items that are of the category "Lesser Spirit Food"
   const feedItems = inventory.filter((item) => item.category === 'Lesser Spirit Food');
   const [selectedItemId, setSelectedItemId] = useState<string>('');

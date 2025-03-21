@@ -120,6 +120,7 @@ const Home: React.FC = () => {
                       name: itemDetails.name,
                       description: itemDetails.description,
                       quantity: itemData.quantity,
+                      category: itemDetails.category
                     };
                   }
                   return null;
@@ -129,7 +130,8 @@ const Home: React.FC = () => {
                 }
               })
             );
-            setInventory(inventoryItems.filter((item): item is Item => item !== null));
+            
+            setInventory(inventoryItems);
           }
         } catch (err) {
           console.error('Error fetching user data:', err);

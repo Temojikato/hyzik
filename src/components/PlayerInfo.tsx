@@ -38,6 +38,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Conditions';
 import { Item } from '../types/Reyvateils';
 import { color } from 'framer-motion';
+import BossBattleModal from './BossBattleModal';
 
 // Define pulsate animation for Progress bar
 const pulsate = keyframes`
@@ -83,6 +84,13 @@ const PlayerInfo: React.FC = () => {
   // Timer states
   const [effectTimer, setEffectTimer] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [bossBattleData, setBossBattleData] = useState<{ sin: string; virtue: string } | null>(null);
+  const {
+    isOpen: isBossBattleOpen,
+    onOpen: onBossBattleOpen,
+    onClose: onBossBattleClose,
+  } = useDisclosure();
 
   // Determine if we're in a testing environment
   const isTesting = process.env.NODE_ENV === 'development';
@@ -167,9 +175,9 @@ const PlayerInfo: React.FC = () => {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-  
+
     const eligibleEffects: { conditionName: string; effect: ConditionEffect }[] = [];
-  
+
     conditions.forEach((condition) => {
       const activeEffectsForCondition = getActiveEffects(condition.name, condition.amount);
       if (activeEffectsForCondition.length > 0) {
@@ -183,7 +191,7 @@ const PlayerInfo: React.FC = () => {
         }
       }
     });
-  
+
     if (eligibleEffects.length > 0) {
       // Choose one effect randomly from all eligible effects
       const randomIndex = Math.floor(Math.random() * eligibleEffects.length);
@@ -192,13 +200,13 @@ const PlayerInfo: React.FC = () => {
       setActiveEffect(chosenEffect);
       setActivatedEffect(chosenEffect.effect);
       onEffectModalOpen();
-  
+
       // Initialize timer with random duration between 4 to 10 minutes
       const duration = getRandomDuration(240, 600); // 240s = 4min, 600s = 10min
       setEffectTimer(duration);
     }
   };
-  
+
 
   // Handle gaining or updating a condition
   const handleGainCondition = async () => {
@@ -212,9 +220,26 @@ const PlayerInfo: React.FC = () => {
       });
       return;
     }
+
+    // Look up the definition to get its type and color
+    const definition = conditionDefinitions.find(
+      (def) => def.name.toLowerCase() === selectedCondition.toLowerCase()
+    );
+
+    // Default fallback if not found
+    const fallbackType = 'sin';   // or 'virtue'
+    const fallbackColor = 'purple';
+
+    // Build new condition object
+    const conditionToAdd: UserCondition = {
+      name: selectedCondition,
+      amount: conditionValue,
+      type: definition?.type || fallbackType,
+      color: definition?.color || fallbackColor,
+    };
+
+
     const userRef = doc(db, 'users', currentUser.uid);
-    // Prepare the condition to add or update
-    const conditionToAdd: UserCondition = { name: selectedCondition, amount: conditionValue, color: conditions.find(con => con.name.toLowerCase() === currentCondition.toLowerCase())?.color!! };
 
     try {
       let newConditions = [...conditions]; // Clone the current conditions
@@ -245,7 +270,7 @@ const PlayerInfo: React.FC = () => {
         } else {
           // Add new condition
           console.log(conditionToAdd)
-          newConditions.push({name: conditionToAdd.name, amount: conditionToAdd.amount});
+          newConditions.push({ name: conditionToAdd.name, amount: conditionToAdd.amount, type: conditionToAdd.type });
         }
 
         // Update Firestore with the new conditions array
@@ -353,6 +378,68 @@ const PlayerInfo: React.FC = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
+  const getRandomDefinitionName = (type: string): string => {
+    const defs = conditionDefinitions.filter(
+      (def) => def.type.toLowerCase() === type.toLowerCase()
+    );
+    if (defs.length === 0) return type; // This should not happen ideally
+    const randomIndex = Math.floor(Math.random() * defs.length);
+    return defs[randomIndex].name;
+  };
+  useEffect(() => {
+    if (conditions.length === 0 || conditionDefinitions.length === 0) return;
+  
+    const threshold = 150;
+    const userSinConditions = conditions.filter(
+      (cond) => cond.type?.toLowerCase() === 'sin'
+    );
+    const userVirtueConditions = conditions.filter(
+      (cond) => cond.type?.toLowerCase() === 'virtue'
+    );
+  
+    // Determine if either type has a condition that meets the threshold.
+    const triggerSin = userSinConditions.some((cond) => cond.amount >= threshold);
+    const triggerVirtue = userVirtueConditions.some((cond) => cond.amount >= threshold);
+  
+    // Only trigger boss battle if at least one condition of either type is >= threshold.
+    if ((triggerSin || triggerVirtue) && !bossBattleData) {
+      let sinValue: string;
+      let virtueValue: string;
+  
+      // For sin: if any sin condition >= threshold, pick the highest among those.
+      // Otherwise, pick the highest overall (even if below threshold), or random if none exist.
+      if (triggerSin) {
+        const triggeredSin = userSinConditions
+          .filter((cond) => cond.amount >= threshold)
+          .sort((a, b) => b.amount - a.amount)[0];
+        sinValue = triggeredSin.name;
+      } else if (userSinConditions.length > 0) {
+        const highestSin = [...userSinConditions].sort((a, b) => b.amount - a.amount)[0];
+        sinValue = highestSin.name;
+      } else {
+        sinValue = getRandomDefinitionName('sin');
+      }
+  
+      // For virtue: if any virtue condition >= threshold, pick the highest among those.
+      // Otherwise, pick the highest overall (even if below threshold), or random if none exist.
+      if (triggerVirtue) {
+        const triggeredVirtue = userVirtueConditions
+          .filter((cond) => cond.amount >= threshold)
+          .sort((a, b) => b.amount - a.amount)[0];
+        virtueValue = triggeredVirtue.name;
+      } else if (userVirtueConditions.length > 0) {
+        const highestVirtue = [...userVirtueConditions].sort((a, b) => b.amount - a.amount)[0];
+        virtueValue = highestVirtue.name;
+      } else {
+        virtueValue = getRandomDefinitionName('virtue');
+      }
+  
+      setBossBattleData({ sin: sinValue, virtue: virtueValue });
+      onBossBattleOpen();
+    }
+  }, [conditions, conditionDefinitions, bossBattleData, onBossBattleOpen]);
+  
+
 
   return (
     <Box ml={4} mr={4} mt={8}>
@@ -431,6 +518,19 @@ const PlayerInfo: React.FC = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      {bossBattleData && (
+        <BossBattleModal
+          isOpen={isBossBattleOpen}
+          onClose={() => {
+            onBossBattleClose();
+            setBossBattleData(null); // reset after closing
+          }}
+          sin={bossBattleData.sin}
+          virtue={bossBattleData.virtue}
+        />
+      )}
+
 
       {/* Conditions List */}
       <VStack spacing={4} align="stretch" mt={4}>

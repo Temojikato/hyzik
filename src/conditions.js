@@ -5,6 +5,7 @@ module.exports = [
     name: "Madness",
     color: "#fff352",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Confused",
@@ -33,6 +34,7 @@ module.exports = [
     name: "Pride",
     color: "#ffd700",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Boastful",
@@ -57,6 +59,7 @@ module.exports = [
     name: "Greed",
     color: "#bba14f",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Covetous",
@@ -81,6 +84,7 @@ module.exports = [
     name: "Lust",
     color: "#ff69b4",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Flirtatious",
@@ -105,6 +109,7 @@ module.exports = [
     name: "Envy",
     color: "#88b04b",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Jealous Eye",
@@ -129,6 +134,7 @@ module.exports = [
     name: "Gluttony",
     color: "#e9967a",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Voracious Appetite",
@@ -152,6 +158,7 @@ module.exports = [
     name: "Wrath",
     color: "#d21f3c",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Irritable",
@@ -176,6 +183,7 @@ module.exports = [
     name: "Sloth",
     color: "#708090",
     thresholds: [5, 20, 50, 100],
+    type: "sin",
     conditionEffects: [
       {
         name: "Inertia",
@@ -203,6 +211,7 @@ module.exports = [
     name: "Chastity",
     color: "#ffc0cb",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Reserved",
@@ -226,6 +235,7 @@ module.exports = [
     name: "Temperance",
     color: "#a3c1ad",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Self-Control",
@@ -249,6 +259,7 @@ module.exports = [
     name: "Charity",
     color: "#ffefd5",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Sharing Spirit",
@@ -273,6 +284,7 @@ module.exports = [
     name: "Diligence",
     color: "#008b8b",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Hard Worker",
@@ -296,6 +308,7 @@ module.exports = [
     name: "Patience",
     color: "#f5f5dc",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Calm Listener",
@@ -320,6 +333,7 @@ module.exports = [
     name: "Kindness",
     color: "#ffd5cd",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Gentle Manners",
@@ -343,6 +357,7 @@ module.exports = [
     name: "Humility",
     color: "#faf0be",
     thresholds: [5, 20, 50, 100],
+    type: "virtue",
     conditionEffects: [
       {
         name: "Modest",
@@ -370,6 +385,7 @@ module.exports = [
     name: "Morphosis",
     color: "#c680ff",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Shifting Senses",
@@ -394,6 +410,7 @@ module.exports = [
     name: "Harmony",
     color: "#c2f0c2",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Balanced Mind",
@@ -418,6 +435,7 @@ module.exports = [
     name: "Enlightenment",
     color: "#e7ffc7",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Open Mind",
@@ -442,6 +460,7 @@ module.exports = [
     name: "Divergence",
     color: "#dbe5f1",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Split Mind",
@@ -466,6 +485,7 @@ module.exports = [
     name: "Virtuoso",
     color: "#c9c9c9",
     thresholds: [5, 20, 50, 100],
+    type: "other",
     conditionEffects: [
       {
         name: "Ceaseless Brainstorm",

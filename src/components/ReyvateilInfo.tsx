@@ -1,7 +1,7 @@
 // src/components/ReyvateilInfo.tsx
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { DocumentReference, runTransaction } from 'firebase/firestore';
+import { DocumentReference, runTransaction, updateDoc } from 'firebase/firestore';
 import {
   Box,
   Image,
@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { doc, getDoc, collection, getDocs, writeBatch } from 'firebase/firestore';
 import { db, storage } from '../Firebase';
-import { Reyvateil, Ability, Item, DBItem } from '../types/Reyvateils';
+import { Reyvateil, Ability, Item } from '../types/Reyvateils';
 import ReyvateilSkillModal from './ReyvateilSkillModal';
 import { useAuth } from '../contexts/AuthContext';
 import ReyvateilRitualModal from './ReyvateilRitualModal';
@@ -35,6 +35,7 @@ import {
   getAllCooldowns,
 } from '../CooldownUtils';
 import FeedModal from './FeedModal';
+import HungerBar from './HungerBar';
 
 interface ReyvateilInfoProps {
   reyvateil: Reyvateil | null;
@@ -56,6 +57,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
   const [abilities, setAbilities] = useState<Ability[]>([]);
   const [cooldowns, setCooldowns] = useState<Record<string, number>>({});
   const [isFeedModalOpen, setIsFeedModalOpen] = useState<boolean>(false);
+  const [hunger, setHunger] = useState<number>(50);
   const toast = useToast();
 
   // Initialize cooldowns from localStorage
@@ -113,9 +115,36 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
             setSelectedImageUrl(userData.reyvateilImageUrl || reyvateil.image || '');
             setUserLevel(userData.reyvateilLevel || 0);
             setUnlockedRecipes(userData.unlockedRecipes || []);
+
+            if (typeof userData.reyvateilHunger === 'number') {
+              setHunger(userData.reyvateilHunger);
+            } else {
+              // Field doesn't exist: create it with some default (e.g. 50)
+              setHunger(100);
+              // Immediately update Firestore so it’s stored
+              await updateDoc(userRef, { reyvateilHunger: 100 });
+            }
           } else {
             setSelectedImageUrl(reyvateil.images?.[0] || reyvateil.image || '');
           }
+
+          // Decrement every hour (3,600,000 ms)
+          const interval = setInterval(() => {
+            setHunger((prev) => {
+              const newValue = Math.max(prev - 10, 0);
+
+              // Also update Firestore with the new hunger value
+              const userRef = doc(db, 'users', currentUser.uid);
+              updateDoc(userRef, {
+                reyvateilHunger: newValue,
+              }).catch((err) => console.error('Failed to update hunger:', err));
+
+              return newValue;
+            });
+          }, 3600000); // every hour
+
+          // Cleanup on unmount
+          return () => clearInterval(interval);
         } catch (error) {
           console.error('Error fetching selected Reyvateil image:', error);
           setSelectedImageUrl(reyvateil.image || '');
@@ -155,6 +184,22 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
 
     getAbilityIcons();
   }, [reyvateil]);
+
+  async function updateUserHunger(newHunger: number) {
+    if (!currentUser) return; // or handle error
+    const userRef = doc(db, 'users', currentUser.uid);
+
+    await runTransaction(db, async (transaction) => {
+      const userSnap = await transaction.get(userRef);
+      if (!userSnap.exists()) {
+        throw new Error('User data not found.');
+      }
+      transaction.update(userRef, {
+        reyvateilHunger: newHunger,
+      });
+    });
+  }
+
 
   // Handle ability button click
   const handleAbilityClick = (ability: Ability) => {
@@ -233,6 +278,11 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
       });
 
       // Now perform the feed action: reset all ability cooldowns.
+      setHunger(prev => {
+        const newHunger = prev + Math.floor(Math.random() * 21) + 10;
+        updateUserHunger(newHunger)
+        return newHunger;
+      });
       const cooldownsRef = collection(db, 'users', currentUser.uid, 'cooldowns');
       const abilitiesRef = collection(db, 'reyvateils', reyvateil.id, 'abilities');
       const abilitiesSnapshot = await getDocs(abilitiesRef);
@@ -467,20 +517,21 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           boxShadow="sm"
         >
           <VStack spacing={4} align="start">
-            <Flex direction="row" align="center">
-              <Text fontSize="3xl" fontWeight="bold" color="text">
-                {reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel})
-              </Text>
-
+            <Flex direction="column" align="center">
               <Text
-                fontSize="3xl"
+                fontSize="2xl"
                 fontWeight="bold"
                 color="textHeader"
                 fontFamily="Hymmnos"
-                ml={2}
+                overflow="visible"
+                textAlign="center"
               >
                 ({reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel}))
               </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="text" textAlign="center">
+                {reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel})
+              </Text>
+
             </Flex>
 
             <Flex direction={{ base: 'column', md: 'row' }} align="center">
@@ -564,6 +615,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           boxShadow="sm"
         >
           <VStack spacing={4} align="start">
+            <HungerBar currentHunger={hunger} maxHunger={100} />
             <Text fontFamily="Hymmnos" fontSize="lg" fontWeight="semibold" mb={2} color="textHeader">
               Abilities:
             </Text>
@@ -628,7 +680,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                     </GridItem>
                   );
                 })}
-                </Grid>
+              </Grid>
             </ErrorBoundary>
           </VStack>
         </Box>
