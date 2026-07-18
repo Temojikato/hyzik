@@ -73,6 +73,24 @@ export interface CampaignState {
 
 export type GrantKind = 'condition' | 'item' | 'cypher';
 
+export interface GrantDelivery {
+  id: string;
+  groupId: string;
+  recipientId: string;
+  senderId: string;
+  kind: GrantKind;
+  resourceId: string;
+  label: string;
+  amount: number;
+  conditionType?: string;
+  conditionColor?: string;
+  status: 'waiting' | 'shared' | 'transfer-waiting';
+  source?: 'admin' | 'loot' | 'transfer';
+  audienceIds?: string[];
+  senderName?: string;
+  createdAt?: Timestamp;
+}
+
 export interface EncounterMapFrame {
   floorId: string;
   floorName: string;

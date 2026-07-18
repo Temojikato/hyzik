@@ -36,6 +36,15 @@ service cloud.firestore {
       );
     }
 
+    match /grantDeliveries/{deliveryId} {
+      allow create, read, delete: if admin();
+      allow read: if signedIn() && (
+        resource.data.recipientId == request.auth.uid ||
+        (resource.data.audienceIds is list && request.auth.uid in resource.data.audienceIds)
+      );
+      allow update, delete: if false;
+    }
+
     match /campaign/{documentId} {
       allow read: if signedIn();
       allow write: if admin();

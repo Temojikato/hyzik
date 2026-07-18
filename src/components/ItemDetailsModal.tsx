@@ -16,7 +16,11 @@ import {
   useDisclosure,
   useToast,
   Spinner,
-  Box,
+  FormControl,
+  FormLabel,
+  Select,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/react';
 import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
@@ -27,6 +31,10 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import { serializeInventory } from '../utils/inventory';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
+import { httpsCallable } from 'firebase/functions';
+import { functions } from '../Firebase';
+
+interface PartyOption { id: string; displayName: string; reyvateilName?: string }
 
 interface ItemDetailsModalProps {
   isOpen: boolean;
@@ -55,10 +63,20 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
     onOpen: onRemoveModalOpen,
     onClose: onRemoveModalClose,
   } = useDisclosure();
+  const {
+    isOpen: isSendModalOpen,
+    onOpen: onSendModalOpen,
+    onClose: onSendModalClose,
+  } = useDisclosure();
+  useBackDismiss(isSendModalOpen, onSendModalClose);
   const toast = useToast();
 
   const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);
+  const [party, setParty] = useState<PartyOption[]>([]);
+  const [sendTarget, setSendTarget] = useState('');
+  const [sendAmount, setSendAmount] = useState(1);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -143,6 +161,36 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
 
   const hasRecipe = unlockedRecipes.includes(item.id);
 
+  const openSend = async () => {
+    onSendModalOpen();
+    setSendTarget('');
+    setSendAmount(1);
+    try {
+      const result = await httpsCallable<void, { players: PartyOption[] }>(functions, 'getActiveParty')();
+      setParty(result.data.players);
+    } catch (caught: any) {
+      toast({ title: 'Could not load the party', description: caught?.message || String(caught), status: 'error' });
+    }
+  };
+
+  const sendItem = async () => {
+    if (!currentUser || !sendTarget) return;
+    setSending(true);
+    try {
+      await httpsCallable(functions, 'createInventoryTransfer')({ itemId: item.id, targetUserId: sendTarget, amount: sendAmount });
+      setInventory((current) => current.flatMap((entry) => {
+        if (entry.id !== item.id) return [entry];
+        const quantity = Math.max(0, Number(entry.quantity || 0) - sendAmount);
+        return quantity ? [{ ...entry, quantity }] : [];
+      }));
+      toast({ title: 'Transfer sent', description: 'The item is reserved until the other player accepts or declines it.', status: 'success' });
+      onSendModalClose();
+      onClose();
+    } catch (caught: any) {
+      toast({ title: 'Could not send item', description: caught?.message || String(caught), status: 'error' });
+    } finally { setSending(false); }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered>
@@ -170,6 +218,9 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter>
+            <Button colorScheme="purple" variant="outline" onClick={openSend} mr={3}>
+              Send
+            </Button>
             <Button colorScheme="red" onClick={onRemoveModalOpen} mr={3}>
               Remove
             </Button>
@@ -191,6 +242,22 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
         setInventory={setInventory}
         currentUser={currentUser}
       />
+
+      <Modal isOpen={isSendModalOpen} onClose={onSendModalClose} isCentered>
+        <ModalOverlay />
+        <ModalContent bg="surface" color="text">
+          <ModalHeader>Send {item.name}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4} align="stretch">
+              <Text>The item leaves your inventory now and moves to the recipient only after they accept it. A declined transfer is returned to you.</Text>
+              <FormControl isRequired><FormLabel>Player</FormLabel><Select value={sendTarget} onChange={(event) => setSendTarget(event.target.value)}><option value="">Choose an active player</option>{party.map((player) => <option key={player.id} value={player.id}>{player.displayName}{player.reyvateilName ? ` · ${player.reyvateilName}` : ''}</option>)}</Select></FormControl>
+              <FormControl isRequired><FormLabel>Quantity</FormLabel><NumberInput min={1} max={Math.max(1, Number(item.quantity || 1))} value={sendAmount} onChange={(_, value) => setSendAmount(Number.isFinite(value) ? Math.max(1, Math.floor(value)) : 1)}><NumberInputField /></NumberInput></FormControl>
+            </VStack>
+          </ModalBody>
+          <ModalFooter><Button variant="ghost" mr={3} onClick={onSendModalClose}>Cancel</Button><Button onClick={sendItem} isLoading={sending} isDisabled={!sendTarget || sendAmount < 1 || sendAmount > Number(item.quantity || 0)}>Send for acceptance</Button></ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

@@ -23,6 +23,8 @@ import {
   Encounter,
   EncounterMapFrame,
   EncounterParticipant,
+  GrantDelivery,
+  GrantKind,
   MessageStatus,
   PlayerProfile,
   PrivateMessage,
@@ -119,6 +121,73 @@ export const sendPrivateMessages = async (
   });
   await batch.commit();
   return groupId;
+};
+
+export const sendGrantDeliveries = async (input: {
+  senderId: string;
+  recipientIds: string[];
+  kind: GrantKind;
+  resourceId: string;
+  label: string;
+  amount?: number;
+  conditionType?: string;
+  conditionColor?: string;
+}) => {
+  const batch = writeBatch(db);
+  const groupId = crypto.randomUUID();
+  input.recipientIds.forEach((recipientId) => {
+    const deliveryRef = doc(collection(db, 'grantDeliveries'));
+    batch.set(deliveryRef, {
+      groupId,
+      senderId: input.senderId,
+      recipientId,
+      kind: input.kind,
+      resourceId: input.resourceId,
+      label: input.label,
+      amount: Math.max(1, Math.floor(Number(input.amount || 1))),
+      conditionType: input.conditionType || '',
+      conditionColor: input.conditionColor || '',
+      source: 'admin',
+      status: 'waiting',
+      audienceIds: [],
+      createdAt: serverTimestamp(),
+    });
+  });
+  await batch.commit();
+  return groupId;
+};
+
+export const subscribeGrantDeliveries = (
+  userId: string,
+  onValue: (deliveries: GrantDelivery[]) => void,
+  onError?: (error: Error) => void,
+) => {
+  const own = new Map<string, GrantDelivery>();
+  const shared = new Map<string, GrantDelivery>();
+  const publish = () => {
+    const deliveries = Array.from(new Map([...own, ...shared]).values());
+    deliveries.sort((a, b) => (a.createdAt?.toMillis?.() || 0) - (b.createdAt?.toMillis?.() || 0));
+    onValue(deliveries);
+  };
+  const ownUnsubscribe = onSnapshot(
+    query(collection(db, 'grantDeliveries'), where('recipientId', '==', userId)),
+    (snapshot) => {
+      own.clear();
+      snapshot.docs.forEach((entry) => own.set(entry.id, { id: entry.id, ...entry.data() } as GrantDelivery));
+      publish();
+    },
+    onError,
+  );
+  const sharedUnsubscribe = onSnapshot(
+    query(collection(db, 'grantDeliveries'), where('audienceIds', 'array-contains', userId)),
+    (snapshot) => {
+      shared.clear();
+      snapshot.docs.forEach((entry) => shared.set(entry.id, { id: entry.id, ...entry.data() } as GrantDelivery));
+      publish();
+    },
+    onError,
+  );
+  return () => { ownUnsubscribe(); sharedUnsubscribe(); };
 };
 
 export const listPlayers = async (): Promise<PlayerProfile[]> => {

@@ -16,6 +16,8 @@ import AdminPlayerPreview from './components/AdminPlayerPreview';
 import PrivateMessageCenter from './components/PrivateMessageCenter';
 import TranslatorPreview from './components/TranslatorPreview';
 import { BackNavigationProvider } from './contexts/BackNavigationContext';
+import GrantDeliveryCenter from './components/GrantDeliveryCenter';
+import BattleMapDisplay from './components/admin/BattleMapDisplay';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +27,7 @@ const App: React.FC = () => {
           <Router>
             <BackNavigationProvider>
               <PrivateMessageCenter />
+              <GrantDeliveryCenter />
               <Routes>
             {/* Protected Home Route */}
             <Route
@@ -51,6 +54,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<PrivateRoute><AdminRoute><AdminPortal /></AdminRoute></PrivateRoute>} />
             <Route path="/admin/players/:playerId" element={<PrivateRoute><AdminRoute><AdminPlayerPreview /></AdminRoute></PrivateRoute>} />
+            <Route path="/admin/battle-map/:encounterId" element={<PrivateRoute><AdminRoute><BattleMapDisplay /></AdminRoute></PrivateRoute>} />
             {process.env.NODE_ENV === 'development' && <Route path="/__design/admin" element={<AdminPortal previewMode />} />}
             {process.env.NODE_ENV === 'development' && <Route path="/__design/translator" element={<TranslatorPreview />} />}
               </Routes>

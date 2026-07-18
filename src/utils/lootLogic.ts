@@ -1,5 +1,5 @@
-import { doc, runTransaction } from "firebase/firestore";
-import { db } from "../Firebase";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "../Firebase";
 import { Item } from "../types/Reyvateils";
 
 
@@ -76,75 +76,24 @@ export async function addLootToInventory(
   inventory: Item[]
 ): Promise<void> {
   try {
-    const userRef = doc(db, 'users', currentUser.uid);
-    let newInventory = [...inventory];
-
-    await runTransaction(db, async (transaction) => {
-      const userSnap = await transaction.get(userRef);
-      if (!userSnap.exists()) {
-        throw new Error('User data not found.');
-      }
-
-      for (const lootObj of lootItems) {
-        const { itemName, quantity } = lootObj;
-        if (itemName.toLowerCase() === 'nothing') {
-          toast({
-            title: 'Loot Contained Nothing',
-            description: 'The loot contained nothing useful.',
-            status: 'info',
-            duration: 3000,
-            isClosable: true,
-          });
-          continue;
-        }
-
-        const itemRef = doc(db, 'items', itemName);
-        const itemSnap = await transaction.get(itemRef);
-        if (!itemSnap.exists()) {
-          console.warn(`Item "${itemName}" not found in items collection.`);
-          continue;
-        }
-
-        const existingItemIndex = newInventory.findIndex((item) => item.id === itemName);
-        if (existingItemIndex !== -1) {
-          const existingItem = newInventory[existingItemIndex];
-          const updatedItem = {
-            ...existingItem,
-            quantity: (existingItem.quantity || 0) + quantity,
-            reference: (existingItem as any).reference ? (existingItem as any).reference : itemRef,
-          };
-          newInventory[existingItemIndex] = updatedItem as any;
-        } else {
-          newInventory.push({
-            ...(itemSnap.data() as Item),
-            id: itemName,
-            quantity,
-            reference: itemRef,
-          } as any);
-        }
-      }
-
-      transaction.set(
-        userRef,
-        {
-          inventory: newInventory.map((item) => ({
-            reference: (item as any).reference || doc(db, 'items', item.id),
-            quantity: item.quantity,
-          })),
-        },
-        { merge: true }
-      );
-    });
-
-    setInventory(newInventory);
     const filteredLootItems = lootItems.filter(l => l.itemName.toLowerCase() !== "nothing");
-    if (filteredLootItems.length !== 0) {
+    if (!filteredLootItems.length) {
+      toast({ title: 'Loot Contained Nothing', description: 'The loot contained nothing useful.', status: 'info', duration: 3000, isClosable: true });
+      return;
+    }
+    const result = await httpsCallable<{ items: Array<{ itemId: string; amount: number }> }, { count: number }>(functions, 'publishLoot')({
+      items: filteredLootItems.map((entry) => ({ itemId: entry.itemName, amount: entry.quantity })),
+    });
+    void currentUser;
+    void setInventory;
+    void inventory;
+    if (result.data.count !== 0) {
       const lootDescriptions = filteredLootItems
         .map(l => `${l.itemName} (x${l.quantity})`)
         .join(", ");
       toast({
-        title: 'Loot Added',
-        description: `Added: ${lootDescriptions}`,
+        title: 'Loot discovered',
+        description: `${lootDescriptions}. Choose Take or Show the group in the discovery popup.`,
         status: 'success',
         duration: 3000,
         isClosable: true,
