@@ -131,7 +131,7 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
         {/* By setting ModalContent to use flex column layout and a max height, 
             we ensure that ModalBody can expand and scroll as needed */}
         <ModalOverlay />
-        <ModalContent bg="secondary" maxH="80vh" display="flex" flexDirection="column">
+        <ModalContent bg="surface" color="text" maxH="80vh" display="flex" flexDirection="column">
           <ModalHeader color="textHeader">Crafting</ModalHeader>
           <ModalCloseButton color="text" />
           <ModalBody overflowY="auto" flex="1">
@@ -142,13 +142,15 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
                   placeholder="Search..."
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
-                  bg="white"
+                  bg="surfaceRaised"
+                  color="text"
                 />
                 <Select
                   placeholder="Filter by Category"
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  bg="white"
+                  bg="surfaceRaised"
+                  color="text"
                   maxW="200px"
                 >
                   {categories.map((category) => (
@@ -168,7 +170,9 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
                 {filteredRecipes.map((recipe) => (
                   <Box
                     key={recipe.id}
-                    bg="accent"
+                    bg="surfaceRaised"
+                    border="1px solid"
+                    borderColor="border"
                     borderRadius="md"
                     overflow="hidden"
                     cursor="pointer"
@@ -192,7 +196,7 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
                     >
                       Recipe
                     </Box>
-                    <Box p={2} bg="secondary" textAlign="center">
+                    <Box p={2} bg="surface" textAlign="center">
                       <Text color="text" fontWeight="bold" fontSize="sm">
                         {recipe.name}
                       </Text>

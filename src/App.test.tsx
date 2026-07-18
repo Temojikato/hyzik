@@ -1,9 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { CYPHERS } from './data/cyphers';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('ships forty-eight uniquely addressable Cyphers', () => {
+  expect(CYPHERS).toHaveLength(48);
+  expect(new Set(CYPHERS.map((cypher) => cypher.id)).size).toBe(48);
 });

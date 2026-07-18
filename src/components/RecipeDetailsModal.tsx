@@ -23,6 +23,7 @@ import { Item } from '../types/Reyvateils';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import { getFirestore, collection, query, where, getDocs, runTransaction, doc } from 'firebase/firestore';
+import { serializeInventory } from '../utils/inventory';
 
 interface RecipeDetailsModalProps {
   isOpen: boolean;
@@ -144,7 +145,6 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
         const userSnap = await transaction.get(userRef);
         if (!userSnap.exists()) throw new Error('User does not exist');
 
-        const userData = userSnap.data();
         const newInventory = [...inventory];
 
         // Check if user has all required components
@@ -187,7 +187,7 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
 
         // Update user data in transaction
         transaction.update(userRef, {
-          inventory: newInventory,
+          inventory: serializeInventory(newInventory),
         });
 
         // Save updated inventory to use after transaction
@@ -223,7 +223,7 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered scrollBehavior="inside">
         <ModalOverlay />
-        <ModalContent bg="secondary">
+        <ModalContent bg="surface" color="text">
           <ModalHeader color="textHeader">{recipe.name}</ModalHeader>
           <ModalCloseButton color="text" />
           <ModalBody>
@@ -251,7 +251,9 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
                   <Box
                     key={componentItem.id}
                     p={3}
-                    bg="accent"
+                    bg="surfaceRaised"
+                    border="1px solid"
+                    borderColor="border"
                     rounded="md"
                     w="100%"
                   >

@@ -153,7 +153,8 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent
-          bg="secondary"
+          bg="surface"
+          color="text"
           maxH="80vh"
           display="flex"
           flexDirection="column"
@@ -170,7 +171,7 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
                 <Button onClick={onAddItemOpen} colorScheme="blue">
                   Add Item
                 </Button>
-                <Button fontFamily="hymmnos" colorScheme="green" ml={2} onClick={onCraftingOpen}>
+                <Button colorScheme="green" ml={2} onClick={onCraftingOpen}>
                   Crafting
                 </Button>
               </HStack>
@@ -180,13 +181,15 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
                   placeholder="Search..."
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
-                  bg="white"
+                  bg="surfaceRaised"
+                  color="text"
                 />
                 <Select
                   placeholder="Filter by Category"
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  bg="white"
+                  bg="surfaceRaised"
+                  color="text"
                   maxW="200px"
                 >
                   {categories.map((category) => (
@@ -211,7 +214,9 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
                   return (
                     <Box
                       key={inventoryItem.id}
-                      bg="accent"
+                      bg="surfaceRaised"
+                      border="1px solid"
+                      borderColor="border"
                       borderRadius="md"
                       overflow="hidden"
                       cursor="pointer"
@@ -222,7 +227,7 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
                       position="relative"
                     >
                       <ItemImage imagePath={"items/" + itemData.name + ".png"} itemName={itemData.name} />
-                      <Box p={2} bg="secondary" textAlign="center">
+                      <Box p={2} bg="surface" textAlign="center">
                         <Text color="text" fontWeight="bold" fontSize="sm">
                           {itemData.name} (x{inventoryItem.quantity})
                         </Text>

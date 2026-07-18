@@ -16,7 +16,6 @@ import {
   InputLeftElement,
   Icon,
   Flex,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 
@@ -59,17 +58,17 @@ const Login: React.FC = () => {
     <Flex
       align="center"
       justify="center"
-      h="100vh"
-      bgGradient="linear(to-br, gray.900, purple.900, black)"
+      minH="100vh"
+      bg="background"
       p={4}
     >
       <Box
         w="100%"
-        maxW="400px"
-        p={8}
-        borderRadius="md"
-        bg={useColorModeValue('gray.800', 'gray.700')}
-        boxShadow="2xl"
+        maxW="440px"
+        p={{ base: 6, md: 8 }}
+        borderRadius="panel"
+        bg="surface"
+        boxShadow="panel"
         border="1px solid"
         borderColor="purple.500"
       >
@@ -78,38 +77,33 @@ const Login: React.FC = () => {
           size="xl"
           textAlign="center"
           mb={6}
-          fontFamily="Hymmnos"
-          color="purple.300"
-          textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)"
+          color="textHeader"
         >
-          Hyzik en lonfa
+          HYZIK
         </Heading>
+        <Text textAlign="center" color="textMuted" mb={7}>Reconnect to the Omnia campaign interface.</Text>
 
         <form onSubmit={handleSubmit}>
           <VStack spacing={5}>
             {/* Email Input */}
             <FormControl id="email" isRequired>
-              <FormLabel fontFamily="Hymmnos" color="gray.200">Email Address</FormLabel>
+              <FormLabel>Email address</FormLabel>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Icon as={FaEnvelope} color="purple.400" />
                 </InputLeftElement>
                 <Input
                   type="email"
-                  placeholder="you@fantasy.com"
+                  placeholder="you@example.com"
                   ref={emailRef}
                   focusBorderColor="purple.400"
-                  fontFamily="Hymmnos"
-                  fontSize="2xl"
-                  bg="gray.600"
-                  color="gray.100"
                 />
               </InputGroup>
             </FormControl>
 
             {/* Password Input */}
             <FormControl id="password" isRequired>
-              <FormLabel fontFamily="Hymmnos" color="gray.200">Password</FormLabel>
+              <FormLabel>Password</FormLabel>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Icon as={FaLock} color="purple.400" />
@@ -117,12 +111,8 @@ const Login: React.FC = () => {
                 <Input
                   type="password"
                   placeholder="Shhh... it's a secret"
-                  fontFamily="Hymmnos"
-                  fontSize="2xl"
                   ref={passwordRef}
                   focusBorderColor="purple.400"
-                  bg="gray.600"
-                  color="gray.100"
                 />
               </InputGroup>
             </FormControl>
@@ -134,16 +124,9 @@ const Login: React.FC = () => {
               variant="solid"
               w="full"
               isLoading={loading}
-              fontFamily="Hymmnos"
-              fontSize="2xl"
               loadingText="Connecting..."
-              boxShadow="0 0 20px rgba(128, 90, 213, 0.5)"
-              _hover={{
-                bgGradient: 'linear(to-r, purple.500, pink.500)',
-                boxShadow: '0 0 30px rgba(255, 20, 147, 0.8)',
-              }}
             >
-              Enter the Realm
+              Enter campaign
             </Button>
           </VStack>
         </form>
@@ -152,10 +135,8 @@ const Login: React.FC = () => {
           mt={6}
           textAlign="center"
           color="gray.300"
-          fontFamily="Hymmnos"
-          _hover={{ textDecoration: 'underline', color: 'purple.400' }}
         >
-          Need an account? <Link to="/signup">Sign Up</Link>
+          Need an account? <Link to="/signup" style={{ color: '#C5A7FF' }}>Create one</Link>
         </Text>
       </Box>
     </Flex>

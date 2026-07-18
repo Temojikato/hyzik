@@ -91,7 +91,7 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered>
         <ModalOverlay />
-        <ModalContent mt="2rem" maxHeight="90vh">
+        <ModalContent mt="2rem" maxHeight="90vh" bg="surface" color="text">
           <ModalHeader>{area.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody p={0}>
@@ -121,7 +121,7 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
               </Box>
 
               {/* BOTTOM: Textual Info */}
-              <Box flex="1" p={4} bg="gray.50" overflowY="auto">
+              <Box flex="1" p={4} bg="surface" color="text" overflowY="auto" borderTop="1px solid" borderColor="border">
                 <Text fontWeight="bold" fontSize="lg" mb={2}>
                   Area Details
                 </Text>
@@ -142,10 +142,10 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
                         <Box
                           key={mName}
                           p={2}
-                          bg="accent"
+                          bg="surfaceRaised"
                           borderRadius="md"
                           border="1px solid"
-                          borderColor="gray.200"
+                          borderColor="accent"
                           cursor="pointer"
                           onClick={() => handleAreaMonsterClick(mName)}
                         >
@@ -167,7 +167,10 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
                         <Box
                           key={regionItem.id}
                           p={2}
-                          bg="gray.200"
+                          bg="surfaceRaised"
+                          color="text"
+                          border="1px solid"
+                          borderColor="border"
                           borderRadius="md"
                           cursor="pointer"
                           onClick={() => handleRegionClick(regionItem)}

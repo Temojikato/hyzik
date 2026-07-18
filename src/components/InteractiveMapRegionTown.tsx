@@ -28,7 +28,7 @@ const InteractiveMapRegionTown: React.FC<InteractiveMapRegionTownProps> = ({ ima
       justifyContent="center"
       position="relative"
       height="100%"
-      bg="gray.200"
+      bg="background"
     >
       <Box width="70%" position="relative" overflow="hidden">
         <Image

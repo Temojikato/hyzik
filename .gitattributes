@@ -1,0 +1,5 @@
+# Keep generated/canonical text deterministic across Windows and CI.
+"/campaign files/_reference/*.json" text eol=lf
+"/campaign files/_reference/**/*.json" text eol=lf
+"/campaign files/_reference/songs/*.md" whitespace=-blank-at-eol
+/src/generated/*.json text eol=lf

@@ -1,0 +1,789 @@
+{
+  "known_token_occurrences": 490,
+  "unknown_token_occurrences": 122,
+  "unknown_unique": 88,
+  "most_common_unknown": [
+    [
+      "yoyuu",
+      7
+    ],
+    [
+      "no",
+      6
+    ],
+    [
+      "chaos",
+      5
+    ],
+    [
+      "hush",
+      4
+    ],
+    [
+      "gan",
+      3
+    ],
+    [
+      "hero",
+      3
+    ],
+    [
+      "zzterrfa",
+      3
+    ],
+    [
+      "noss",
+      2
+    ],
+    [
+      "fate",
+      2
+    ],
+    [
+      "si",
+      2
+    ],
+    [
+      "diver",
+      2
+    ],
+    [
+      "suzu",
+      2
+    ],
+    [
+      "vanish",
+      2
+    ],
+    [
+      "of",
+      2
+    ],
+    [
+      "kin",
+      2
+    ],
+    [
+      "illusions",
+      2
+    ],
+    [
+      "door",
+      2
+    ],
+    [
+      "dodelij",
+      1
+    ],
+    [
+      "sosa",
+      1
+    ],
+    [
+      "fy",
+      1
+    ],
+    [
+      "kullan",
+      1
+    ],
+    [
+      "aku",
+      1
+    ],
+    [
+      "divers",
+      1
+    ],
+    [
+      "wiss",
+      1
+    ],
+    [
+      "thernoes",
+      1
+    ],
+    [
+      "zzhueaf",
+      1
+    ],
+    [
+      "yoy",
+      1
+    ],
+    [
+      "az",
+      1
+    ],
+    [
+      "tiela",
+      1
+    ],
+    [
+      "wos",
+      1
+    ],
+    [
+      "flachs",
+      1
+    ],
+    [
+      "torumu",
+      1
+    ],
+    [
+      "zey.",
+      1
+    ],
+    [
+      "tun",
+      1
+    ],
+    [
+      "awe",
+      1
+    ],
+    [
+      "valwe",
+      1
+    ],
+    [
+      "salla",
+      1
+    ],
+    [
+      "iiyas",
+      1
+    ],
+    [
+      "auphli",
+      1
+    ],
+    [
+      "monstrosity",
+      1
+    ],
+    [
+      "eien",
+      1
+    ],
+    [
+      "agony",
+      1
+    ],
+    [
+      "japanese",
+      1
+    ],
+    [
+      "but",
+      1
+    ],
+    [
+      "cedet",
+      1
+    ],
+    [
+      "eye",
+      1
+    ],
+    [
+      "chasms",
+      1
+    ],
+    [
+      "reason",
+      1
+    ],
+    [
+      "undone",
+      1
+    ],
+    [
+      "nan",
+      1
+    ],
+    [
+      "noise",
+      1
+    ],
+    [
+      "deep",
+      1
+    ],
+    [
+      "koware",
+      1
+    ],
+    [
+      "furniture",
+      1
+    ],
+    [
+      "gann",
+      1
+    ],
+    [
+      "grafter",
+      1
+    ],
+    [
+      "kami",
+      1
+    ],
+    [
+      "creeping",
+      1
+    ],
+    [
+      "kyui",
+      1
+    ],
+    [
+      "nakama",
+      1
+    ],
+    [
+      "doko",
+      1
+    ],
+    [
+      "arises",
+      1
+    ],
+    [
+      "omnia",
+      1
+    ],
+    [
+      "kagu",
+      1
+    ],
+    [
+      "to",
+      1
+    ],
+    [
+      "metamorphose",
+      1
+    ],
+    [
+      "red-leather",
+      1
+    ],
+    [
+      "ward",
+      1
+    ],
+    [
+      "warn",
+      1
+    ],
+    [
+      "others",
+      1
+    ],
+    [
+      "bung",
+      1
+    ],
+    [
+      "god",
+      1
+    ],
+    [
+      "grafting",
+      1
+    ],
+    [
+      "spinha",
+      1
+    ],
+    [
+      "intangible",
+      1
+    ],
+    [
+      "end",
+      1
+    ],
+    [
+      "gloom",
+      1
+    ],
+    [
+      "fade",
+      1
+    ],
+    [
+      "murmurs",
+      1
+    ],
+    [
+      "gaut",
+      1
+    ],
+    [
+      "watchers",
+      1
+    ],
+    [
+      "hail",
+      1
+    ],
+    [
+      "stay",
+      1
+    ],
+    [
+      "away",
+      1
+    ],
+    [
+      "s",
+      1
+    ],
+    [
+      "final",
+      1
+    ],
+    [
+      "sorrow",
+      1
+    ],
+    [
+      "tokoshie",
+      1
+    ]
+  ],
+  "occurrences": [
+    {
+      "paragraph": 196,
+      "unknown_tokens": [
+        "gan"
+      ],
+      "text": "f.s. ween balduo neee konla\nharr stel spiritum Nn gan ganna\nnaja\nnaja\nnaja\ndelij gyas revatail f.s. ween balduo"
+    },
+    {
+      "paragraph": 205,
+      "unknown_tokens": [
+        "gan"
+      ],
+      "text": "f.s. ween balduo neee konla\nharr stel spiritum Nn gan ganna\nnaja\nnaja\nnaja\ndelij gyas revatail f.s. ween balduo"
+    },
+    {
+      "paragraph": 215,
+      "unknown_tokens": [
+        "gan"
+      ],
+      "text": "f.s. ween balduo neee konla\nharr stel spiritum Nn gan ganna\nnaja\nnaja\nnaja\ndelij gyas revatail f.s. ween balduo"
+    },
+    {
+      "paragraph": 219,
+      "unknown_tokens": [
+        "dodelij"
+      ],
+      "text": "fulual dauan dest nuih has raudl qoga\nsarla sik en balduo ryewa\ngauto yetere dodelij ale art gyas revatail f.s. ween balduo"
+    },
+    {
+      "paragraph": 228,
+      "unknown_tokens": [
+        "sosa"
+      ],
+      "text": "h.m.m.r. balduo sosa tilanta"
+    },
+    {
+      "paragraph": 288,
+      "unknown_tokens": [
+        "chaos"
+      ],
+      "text": "Yanje zess chaos vit xinfar syec,"
+    },
+    {
+      "paragraph": 289,
+      "unknown_tokens": [
+        "fy"
+      ],
+      "text": "Zayea tota syana, vonn xevxl zess fy,"
+    },
+    {
+      "paragraph": 290,
+      "unknown_tokens": [
+        "kullan",
+        "aku"
+      ],
+      "text": "Sashel zuieg kullan, zess aku ar U-TA."
+    },
+    {
+      "paragraph": 291,
+      "unknown_tokens": [
+        "Noss",
+        "hero"
+      ],
+      "text": "Noss hero tek ar tonelico, zz wis fatere,"
+    },
+    {
+      "paragraph": 292,
+      "unknown_tokens": [
+        "Divers",
+        "wiss"
+      ],
+      "text": "Divers t.h.k.t. terrfa ween, tilanta zz wiss,"
+    },
+    {
+      "paragraph": 297,
+      "unknown_tokens": [
+        "thernoes",
+        "zzhueaf"
+      ],
+      "text": "Sasya aulla thernoes tie zzhueaf"
+    },
+    {
+      "paragraph": 300,
+      "unknown_tokens": [
+        "zzterrfa"
+      ],
+      "text": "Ekouolga oz handeres, f.s. oz zzterrfa,"
+    },
+    {
+      "paragraph": 303,
+      "unknown_tokens": [
+        "chaos"
+      ],
+      "text": "ess corle oz chaos, engua synk."
+    },
+    {
+      "paragraph": 310,
+      "unknown_tokens": [
+        "Noss",
+        "hero"
+      ],
+      "text": "Noss hero zahha tes weak,"
+    },
+    {
+      "paragraph": 312,
+      "unknown_tokens": [
+        "yoy"
+      ],
+      "text": "Harra walaka yoy aulla, fujara engua."
+    },
+    {
+      "paragraph": 319,
+      "unknown_tokens": [
+        "zzterrfa"
+      ],
+      "text": "Ekouolga oz handeres, f.s. oz zzterrfa,"
+    },
+    {
+      "paragraph": 322,
+      "unknown_tokens": [
+        "chaos"
+      ],
+      "text": "ess corle oz chaos, engua synk."
+    },
+    {
+      "paragraph": 328,
+      "unknown_tokens": [
+        "chaos",
+        "hero"
+      ],
+      "text": "Ess hao chaos, hero zahha byui,"
+    },
+    {
+      "paragraph": 332,
+      "unknown_tokens": [
+        "zzterrfa"
+      ],
+      "text": "Ekouolga oz handeres, f.s. oz zzterrfa,"
+    },
+    {
+      "paragraph": 335,
+      "unknown_tokens": [
+        "chaos"
+      ],
+      "text": "ess corle oz chaos, engua synk."
+    },
+    {
+      "paragraph": 338,
+      "unknown_tokens": [
+        "az"
+      ],
+      "text": "Got U-TA ess doodu syec, az balduo k.r.,"
+    },
+    {
+      "paragraph": 352,
+      "unknown_tokens": [
+        "tiela",
+        "wos",
+        "flachs",
+        "torumu"
+      ],
+      "text": "vinan tiela walaka ween akata wos, ween flachs torumu ween sielp."
+    },
+    {
+      "paragraph": 353,
+      "unknown_tokens": [
+        "fate",
+        "zey."
+      ],
+      "text": "zz tota vega ciel, fatere fate wharn stel zey."
+    },
+    {
+      "paragraph": 356,
+      "unknown_tokens": [
+        "Tun",
+        "si",
+        "si"
+      ],
+      "text": "Tun si fatere si ssvid ciel."
+    },
+    {
+      "paragraph": 358,
+      "unknown_tokens": [
+        "awe"
+      ],
+      "text": "Tie yor unloee, tie yor w.s.s., awe ween terrfa, Fatere zayea tek yanje weel."
+    },
+    {
+      "paragraph": 360,
+      "unknown_tokens": [
+        "valwe",
+        "salla"
+      ],
+      "text": "Yehar, zz valwe, sor salla zz tie yor tie, Zayea tek yanje weel."
+    },
+    {
+      "paragraph": 367,
+      "unknown_tokens": [
+        "Diver"
+      ],
+      "text": "Diver an h.m.m.r. balduo konla"
+    },
+    {
+      "paragraph": 368,
+      "unknown_tokens": [
+        "iiyas"
+      ],
+      "text": "初めの asyar amariare, en iiyas halun"
+    },
+    {
+      "paragraph": 369,
+      "unknown_tokens": [
+        "auphli"
+      ],
+      "text": "walaka Tonelico, jam faja auphli"
+    },
+    {
+      "paragraph": 370,
+      "unknown_tokens": [
+        "suzu",
+        "monstrosity",
+        "eien"
+      ],
+      "text": "c.z. boia suzu… discest monstrosity eien"
+    },
+    {
+      "paragraph": 371,
+      "unknown_tokens": [
+        "agony",
+        "no",
+        "japanese"
+      ],
+      "text": "crudea corle, biran agony no japanese「拷問」"
+    },
+    {
+      "paragraph": 373,
+      "unknown_tokens": [
+        "but",
+        "yoyuu",
+        "vanish"
+      ],
+      "text": "but guol yoyuu… wharn vanish, jambea f.w.r.n"
+    },
+    {
+      "paragraph": 374,
+      "unknown_tokens": [
+        "cedet",
+        "eye",
+        "chasms",
+        "of",
+        "reason",
+        "undone"
+      ],
+      "text": "cedet eye so nene—chasms of reason undone"
+    },
+    {
+      "paragraph": 375,
+      "unknown_tokens": [
+        "yoyuu",
+        "hush"
+      ],
+      "text": "clemezen halun yoyuu boches hush…"
+    },
+    {
+      "paragraph": 376,
+      "unknown_tokens": [
+        "nan",
+        "no",
+        "noise",
+        "deep"
+      ],
+      "text": "nan netvear roon no noise, polona deep"
+    },
+    {
+      "paragraph": 377,
+      "unknown_tokens": [
+        "koware",
+        "furniture",
+        "kin"
+      ],
+      "text": "spitze koware? la furniture? 彼のkinは？"
+    },
+    {
+      "paragraph": 378,
+      "unknown_tokens": [
+        "gann",
+        "yoyuu",
+        "Grafter",
+        "no",
+        "kami"
+      ],
+      "text": "gann yoyuu exali “Grafter no kami”"
+    },
+    {
+      "paragraph": 379,
+      "unknown_tokens": [
+        "illusions",
+        "creeping",
+        "kyui"
+      ],
+      "text": "faura illusions b.s.m. creeping en kyui"
+    },
+    {
+      "paragraph": 380,
+      "unknown_tokens": [
+        "nakama",
+        "doko",
+        "no",
+        "arises"
+      ],
+      "text": "ennalte: “nakama doko?” no kvyeire arises"
+    },
+    {
+      "paragraph": 381,
+      "unknown_tokens": [
+        "omnia",
+        "kin",
+        "kagu",
+        "to"
+      ],
+      "text": "omnia discest kin—kagu to parge"
+    },
+    {
+      "paragraph": 382,
+      "unknown_tokens": [
+        "yoyuu"
+      ],
+      "text": "tasyue boia, giue yoyuu: “我をも創れ”"
+    },
+    {
+      "paragraph": 383,
+      "unknown_tokens": [
+        "suzu",
+        "door",
+        "metamorphose"
+      ],
+      "text": "poto corpu suzu door metamorphose"
+    },
+    {
+      "paragraph": 384,
+      "unknown_tokens": [
+        "yoyuu",
+        "red-leather"
+      ],
+      "text": "rudje dand yoyuu kiala red-leather:"
+    },
+    {
+      "paragraph": 385,
+      "unknown_tokens": [
+        "ward",
+        "warn",
+        "others",
+        "bung"
+      ],
+      "text": "ward—warn others, bung “入るな”"
+    },
+    {
+      "paragraph": 386,
+      "unknown_tokens": [
+        "God",
+        "of",
+        "Grafting",
+        "yoyuu",
+        "vanish"
+      ],
+      "text": "olga “God of Grafting,” discest yoyuu vanish"
+    },
+    {
+      "paragraph": 387,
+      "unknown_tokens": [
+        "spinha",
+        "hush",
+        "intangible",
+        "end"
+      ],
+      "text": "spinha hush, warce intangible, gran end…"
+    },
+    {
+      "paragraph": 388,
+      "unknown_tokens": [
+        "gloom",
+        "hush",
+        "illusions",
+        "fade"
+      ],
+      "text": "fountaina gloom, jam hush illusions fade"
+    },
+    {
+      "paragraph": 389,
+      "unknown_tokens": [
+        "no",
+        "murmurs"
+      ],
+      "text": "Tonelico no colmask sarr murmurs"
+    },
+    {
+      "paragraph": 390,
+      "unknown_tokens": [
+        "gaut",
+        "door",
+        "watchers",
+        "hail",
+        "stay",
+        "away"
+      ],
+      "text": "gaut 彼の “door,” watchers hail “stay away!”"
+    },
+    {
+      "paragraph": 391,
+      "unknown_tokens": [
+        "yoyuu",
+        "Diver",
+        "s",
+        "final",
+        "fate"
+      ],
+      "text": "f.r.l. yoyuu Diver’s final fate—zodal"
+    },
+    {
+      "paragraph": 392,
+      "unknown_tokens": [
+        "sorrow",
+        "tokoshie",
+        "no",
+        "hush"
+      ],
+      "text": "coall an sorrow: tokoshie no hush"
+    }
+  ]
+}

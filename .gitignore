@@ -22,4 +22,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+dev-server.*.log
 .firebase
+
+# The full local campaign archive is 2+ GB. Keep only the curated references
+# required to rebuild the translator and song catalogue in source control.
+/campaign files/*
+!/campaign files/_reference/
+!/campaign files/_reference/**
+
+# Credentials must never be bundled by the React application.
+/src/serviceAccountKey.json
+/.secrets/

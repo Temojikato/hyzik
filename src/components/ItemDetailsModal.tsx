@@ -25,6 +25,7 @@ import { doc, runTransaction } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
+import { serializeInventory } from '../utils/inventory';
 
 interface ItemDetailsModalProps {
   isOpen: boolean;
@@ -113,7 +114,7 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
         }
 
         // Update user data in transaction
-        transaction.update(userRef, { unlockedRecipes: newUnlockedRecipes, inventory: newInventory });
+        transaction.update(userRef, { unlockedRecipes: newUnlockedRecipes, inventory: serializeInventory(newInventory) });
       });
 
       setUnlockedRecipes(item.id);
@@ -144,7 +145,7 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered>
         <ModalOverlay />
-        <ModalContent bg="secondary">
+        <ModalContent bg="surface" color="text">
           <ModalHeader color="textHeader">{item.name}</ModalHeader>
           <ModalCloseButton color="text" />
           <ModalBody>

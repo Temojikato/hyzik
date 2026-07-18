@@ -1,0 +1,29 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function admin() { return signedIn() && request.auth.token.admin == true; }
+
+    match /reyvateils/{allPaths=**} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /generated-reyvateils/{userId}/{allPaths=**} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /hymmnos-audio/{allPaths=**} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /{allPaths=**} {
+      // Preserve access to all existing item, map, NPC, monster, and ability
+      // artwork. Player uploads remain disabled; campaign assets are admin-only.
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+  }
+}

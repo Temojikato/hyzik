@@ -33,6 +33,7 @@ import {
 } from 'firebase/firestore';
 import { Item, Reyvateil } from '../types/Reyvateils'; // Ensure these types are correctly defined
 import { User } from 'firebase/auth';
+import { serializeInventory } from '../utils/inventory';
 
 interface AddItemModalProps {
   isOpen: boolean;
@@ -174,10 +175,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
 
         // Update the user's inventory in Firestore
         transaction.update(userRef, {
-          inventory: newInventory.map((item) => ({
-            reference: selectedItemRef,
-            quantity: item.quantity,
-          })),
+          inventory: serializeInventory(newInventory),
         });
       });
 
@@ -211,14 +209,14 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay />
-      <ModalContent bg="gray.700">
-        <ModalHeader color="white">Add New Item</ModalHeader>
-        <ModalCloseButton color="white" />
+      <ModalContent bg="surface" color="text">
+        <ModalHeader color="textHeader">Add New Item</ModalHeader>
+        <ModalCloseButton color="text" />
         <ModalBody>
           <VStack spacing={4}>
             {/* Item Selection */}
             <FormControl id="item-name" isRequired>
-              <FormLabel color="white">Item Name</FormLabel>
+              <FormLabel>Item Name</FormLabel>
               {loading ? (
                 <Spinner />
               ) : (
@@ -226,9 +224,8 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
                   placeholder='Select an item'
                   value={selectedItemId}
                   onChange={(e) => setSelectedItemId(e.target.value)}
-                  bg="black"
-                  color="white"
-                  _hover={{ bg: 'gray.500' }}
+                  bg="surfaceRaised"
+                  color="text"
                 >
                   {itemOptions.map((option) => (
                     <option style={{ backgroundColor: 'black', color: 'white' }} key={option.value} value={option.value}>
@@ -241,13 +238,13 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
 
             {/* Quantity Input */}
             <FormControl id="quantity" isRequired>
-              <FormLabel color="white">Quantity</FormLabel>
+              <FormLabel>Quantity</FormLabel>
               <NumberInput
                 min={1}
                 value={quantity}
                 onChange={(valueString) => setQuantity(Number(valueString))}
               >
-                <NumberInputField bg="gray.600" color="white" />
+                <NumberInputField bg="surfaceRaised" color="text" />
               </NumberInput>
             </FormControl>
           </VStack>

@@ -47,8 +47,8 @@
     "description": "A metal alloy forged in extreme heat, resistant to thermal shock. It is used in the crafting of high-end weapons and armor for hot environments.",
     "category": "Advanced Materials",
     "recipe": [
-      { "itemId": "coal", "quantity": 2 },
-      { "itemId": "iron_ore", "quantity": 1 }
+      { "itemId": "Coal", "quantity": 2 },
+      { "itemId": "Metal Ore", "quantity": 1 }
     ]
   },
   {
@@ -64,7 +64,7 @@
     "description": "A refined form of coal that burns hotter and cleaner. Often produced by slowly burning wood in a low-oxygen environment.",
     "category": "Advanced Materials",
     "recipe": [
-      { "itemId": "wood", "quantity": 2 }
+      { "itemId": "Wood", "quantity": 2 }
     ]
   },
   {
@@ -73,8 +73,8 @@
     "description": "A small explosive device that produces a brilliant flash and loud bang. Crafted from volatile components and used both for combat and distraction.",
     "category": "Advanced Materials",
     "recipe": [
-      { "itemId": "cinder_powder", "quantity": 1 },
-      { "itemId": "arcane_oil", "quantity": 1 }
+      { "itemId": "Cinder Powder", "quantity": 1 },
+      { "itemId": "Arcane Oil", "quantity": 1 }
     ]
   }
 ]

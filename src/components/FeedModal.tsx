@@ -46,7 +46,7 @@ const FeedModal: React.FC<FeedModalProps> = ({ isOpen, onClose, inventory, onCon
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
       <ModalOverlay />
-      <ModalContent bg="secondary">
+      <ModalContent bg="surface" color="text">
         <ModalHeader color="textHeader">Choose Feed Item</ModalHeader>
         <ModalBody>
           {feedItems.length > 0 ? (

@@ -41,7 +41,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deployhosting": "npm run build && firebase deploy --only hosting"
+    "deployhosting": "npm run build && firebase deploy --only hosting",
+    "content:build": "node scripts/buildCampaignContent.js",
+    "content:seed": "node scripts/seedCampaignSystems.js",
+    "admin:grant": "node scripts/setAdminClaim.js",
+    "validate:items": "node scripts/validateItems.js",
+    "content:items": "node scripts/seedItems.js",
+    "audio:hymmnos": "node scripts/renderHymmnosAudio.js"
   },
   "eslintConfig": {
     "extends": [

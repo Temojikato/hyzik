@@ -1,0 +1,843 @@
+[
+  {
+    "id": "floor_01_containment_is_not_safety",
+    "title": "Floor I — Containment Is Not Safety",
+    "location": "Tower Floor 1",
+    "lines": [
+      {
+        "hymmnos": "Ma ki ra hymme guard roon.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "ra",
+          "hymme",
+          "guard",
+          "roon"
+        ],
+        "direction": "distant synthetic lead; sing once, then leave instrumental space"
+      },
+      {
+        "hymmnos": "Was paks ga knawa rre dazua enter roon.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "knawa",
+          "rre",
+          "dazua",
+          "enter",
+          "roon"
+        ],
+        "direction": "hyper-clear synthetic lead; two lines only"
+      },
+      {
+        "hymmnos": "Was granme ra knawa rre guard giue dazua.",
+        "tokenIds": [
+          "was",
+          "granme",
+          "ra",
+          "knawa",
+          "rre",
+          "guard",
+          "giue",
+          "dazua"
+        ],
+        "direction": "hyper-clear synthetic lead; two lines only"
+      },
+      {
+        "hymmnos": "Was guwo ga knawa rre dazua zethpa guard.",
+        "tokenIds": [
+          "was",
+          "guwo",
+          "ga",
+          "knawa",
+          "rre",
+          "dazua",
+          "zethpa",
+          "guard"
+        ],
+        "direction": "lead doubled by a narrow mechanical choir; two lines only"
+      },
+      {
+        "hymmnos": "Was granme ra khal roon.",
+        "tokenIds": [
+          "was",
+          "granme",
+          "ra",
+          "khal",
+          "roon"
+        ],
+        "direction": "lead doubled by a narrow mechanical choir; two lines only"
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre wirtamarls haf xava.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "wirtamarls",
+          "haf",
+          "xava"
+        ],
+        "direction": "single close synthetic voice; calm and unnervingly precise"
+      },
+      {
+        "hymmnos": "Ma ki ra hymme guard roon.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "ra",
+          "hymme",
+          "guard",
+          "roon"
+        ],
+        "direction": "single close synthetic voice; calm and unnervingly precise"
+      }
+    ]
+  },
+  {
+    "id": "floor_02_seven_whispers",
+    "title": "Floor II — Seven Whispers",
+    "location": "Tower Floor 2",
+    "lines": []
+  },
+  {
+    "id": "floor_03_the_witness_is_unreliable",
+    "title": "Floor III — The Witness Is Unreliable",
+    "location": "Tower Floor 3",
+    "lines": [
+      {
+        "hymmnos": "Was paks ga reen rre ferx discest.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "reen",
+          "rre",
+          "ferx",
+          "discest"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Nn ki wa knawa rre jenega haf cest.",
+        "tokenIds": [
+          "nn",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "jenega",
+          "haf",
+          "cest"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was paks ga anturn rre eetor deggeez mea.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "anturn",
+          "rre",
+          "eetor",
+          "deggeez",
+          "mea"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was zweie ga knawa rre noes discest mea.",
+        "tokenIds": [
+          "was",
+          "zweie",
+          "ga",
+          "knawa",
+          "rre",
+          "noes",
+          "discest",
+          "mea"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa shyfac nel.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "shyfac",
+          "nel"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma num wa knawa rre dazua haf ferx en jenega.",
+        "tokenIds": [
+          "ma",
+          "num",
+          "wa",
+          "knawa",
+          "rre",
+          "dazua",
+          "haf",
+          "ferx",
+          "en",
+          "jenega"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa anturn rre dazua haf cest en deggeez.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "anturn",
+          "rre",
+          "dazua",
+          "haf",
+          "cest",
+          "en",
+          "deggeez"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was zweie ga knawa rre omn corle discest mea.",
+        "tokenIds": [
+          "was",
+          "zweie",
+          "ga",
+          "knawa",
+          "rre",
+          "omn",
+          "corle",
+          "discest",
+          "mea"
+        ],
+        "direction": ""
+      }
+    ]
+  },
+  {
+    "id": "floor_04_the_song_is_executable",
+    "title": "Floor IV — The Song Is Executable",
+    "location": "Tower Floor 4",
+    "lines": [
+      {
+        "hymmnos": "ADDR roon.",
+        "tokenIds": [
+          "addr",
+          "roon"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre wart chs sosar.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "wart",
+          "chs",
+          "sosar"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "DIA hynne.",
+        "tokenIds": [
+          "dia-2",
+          "hynne"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma zweie ra anturn rre asyar enter hymmnos.",
+        "tokenIds": [
+          "ma",
+          "zweie",
+          "ra",
+          "anturn",
+          "rre",
+          "asyar",
+          "enter",
+          "hymmnos"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "chmod roon.",
+        "tokenIds": [
+          "chmod",
+          "roon"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma granme ra exec hymme khal roon.",
+        "tokenIds": [
+          "ma",
+          "granme",
+          "ra",
+          "exec",
+          "hymme",
+          "khal",
+          "roon"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre hymmnos exec sosar.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "hymmnos",
+          "exec",
+          "sosar"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was yea ra exec hymme aulla shen.",
+        "tokenIds": [
+          "was",
+          "yea",
+          "ra",
+          "exec",
+          "hymme",
+          "aulla",
+          "shen"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was paks ga exec hymme tarfe shen.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "exec",
+          "hymme",
+          "tarfe",
+          "shen"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma zweie ra anturn rre asyar karf sosar.",
+        "tokenIds": [
+          "ma",
+          "zweie",
+          "ra",
+          "anturn",
+          "rre",
+          "asyar",
+          "karf",
+          "sosar"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "HALT.",
+        "tokenIds": [
+          "halt"
+        ],
+        "direction": ""
+      }
+    ]
+  },
+  {
+    "id": "floor_05_the_last_safe_song",
+    "title": "Floor V — The Last Safe Song",
+    "location": "Tower Floor 5",
+    "lines": [
+      {
+        "hymmnos": "Was jyel ga iqwayes yor.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "iqwayes",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma granme ra accrroad yehah yor.",
+        "tokenIds": [
+          "ma",
+          "granme",
+          "ra",
+          "accrroad",
+          "yehah",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Nn granme wa knawa rre yehah na swant yor.",
+        "tokenIds": [
+          "nn",
+          "granme",
+          "wa",
+          "knawa",
+          "rre",
+          "yehah",
+          "na",
+          "swant",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was granme ga knawa rre guard na toya yor lgn gkgula.",
+        "tokenIds": [
+          "was",
+          "granme",
+          "ga",
+          "knawa",
+          "rre",
+          "guard",
+          "na",
+          "toya",
+          "yor",
+          "lgn",
+          "gkgula"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was zweie ga aulla hymma.",
+        "tokenIds": [
+          "was",
+          "zweie",
+          "ga",
+          "aulla",
+          "hymma"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was paks ga knawa rre hymma poto.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "knawa",
+          "rre",
+          "hymma",
+          "poto"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma touwaka ra shyfac rre hymma famfa.",
+        "tokenIds": [
+          "ma",
+          "touwaka",
+          "ra",
+          "shyfac",
+          "rre",
+          "hymma",
+          "famfa"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma zweie ra knawa yorr ryushe lgn gkgula.",
+        "tokenIds": [
+          "ma",
+          "zweie",
+          "ra",
+          "knawa",
+          "yorr",
+          "ryushe",
+          "lgn",
+          "gkgula"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre shefra chs kvyeire.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "shefra",
+          "chs",
+          "kvyeire"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was jyel ga sapon yor.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "sapon",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma touwaka ra shyfac yor.",
+        "tokenIds": [
+          "ma",
+          "touwaka",
+          "ra",
+          "shyfac",
+          "yor"
+        ],
+        "direction": ""
+      }
+    ]
+  },
+  {
+    "id": "perpetual_slime_room_the_hoard_that_waits",
+    "title": "The Hoard That Waits",
+    "location": "Perpetual Slime Room",
+    "lines": [
+      {
+        "hymmnos": "Ma ki wa knawa rre kurt marta syast omni.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "kurt",
+          "marta",
+          "syast",
+          "omni"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre kurt marta pomb vallne.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "kurt",
+          "marta",
+          "pomb",
+          "vallne"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma num wa knawa rre kurt marta teyys yanje.",
+        "tokenIds": [
+          "ma",
+          "num",
+          "wa",
+          "knawa",
+          "rre",
+          "kurt",
+          "marta",
+          "teyys",
+          "yanje"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was paks ga knawa yorr stel kiala.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "knawa",
+          "yorr",
+          "stel",
+          "kiala"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Was paks ga knawa rre vallne eta yor.",
+        "tokenIds": [
+          "was",
+          "paks",
+          "ga",
+          "knawa",
+          "rre",
+          "vallne",
+          "eta",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma zweie ra knawa yorr iqwayes kiala.",
+        "tokenIds": [
+          "ma",
+          "zweie",
+          "ra",
+          "knawa",
+          "yorr",
+          "iqwayes",
+          "kiala"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma touwaka ra knawa rre gfine accrroad rannef yor.",
+        "tokenIds": [
+          "ma",
+          "touwaka",
+          "ra",
+          "knawa",
+          "rre",
+          "gfine",
+          "accrroad",
+          "rannef",
+          "yor"
+        ],
+        "direction": ""
+      },
+      {
+        "hymmnos": "Ma ki wa knawa rre kurt marta haf omni.",
+        "tokenIds": [
+          "ma",
+          "ki",
+          "wa",
+          "knawa",
+          "rre",
+          "kurt",
+          "marta",
+          "haf",
+          "omni"
+        ],
+        "direction": ""
+      }
+    ]
+  },
+  {
+    "id": "venestria_theme_test",
+    "title": "Venestria — Abandoned Song",
+    "location": "Tower Floor 1",
+    "lines": [
+      {
+        "hymmnos": "Was jyel ga loss ferx.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "loss",
+          "ferx"
+        ],
+        "direction": "single breathy female voice"
+      },
+      {
+        "hymmnos": "Was jyel ga sapon ferx.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "sapon",
+          "ferx"
+        ],
+        "direction": "single breathy female voice"
+      },
+      {
+        "hymmnos": "Was jyel ga knawa rre moy hagol.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "knawa",
+          "rre",
+          "moy",
+          "hagol"
+        ],
+        "direction": "single breathy female voice"
+      },
+      {
+        "hymmnos": "Rrha jyel erra slep ween dorn.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "slep",
+          "ween",
+          "dorn"
+        ],
+        "direction": "single breathy female voice"
+      },
+      {
+        "hymmnos": "Was jyel ga chs corpu oz dorn en shazra.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "chs",
+          "corpu",
+          "oz",
+          "dorn",
+          "en",
+          "shazra"
+        ],
+        "direction": "Rooting"
+      },
+      {
+        "hymmnos": "Was jyel ga knawa rre sabl giue mea.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "knawa",
+          "rre",
+          "sabl",
+          "giue",
+          "mea"
+        ],
+        "direction": "Rooting"
+      },
+      {
+        "hymmnos": "Was guwo ra fountaina roon shazra.",
+        "tokenIds": [
+          "was",
+          "guwo",
+          "ra",
+          "fountaina",
+          "roon",
+          "shazra"
+        ],
+        "direction": "whispers multiply into a delayed choir"
+      },
+      {
+        "hymmnos": "Was guwo ra rinc yor shazra.",
+        "tokenIds": [
+          "was",
+          "guwo",
+          "ra",
+          "rinc",
+          "yor",
+          "shazra"
+        ],
+        "direction": "whispers multiply into a delayed choir"
+      },
+      {
+        "hymmnos": "Rrha jyel erra zethpa yor dahzel.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "zethpa",
+          "yor",
+          "dahzel"
+        ],
+        "direction": "full corrupted choir, lead voice still clear"
+      },
+      {
+        "hymmnos": "Rrha jyel erra neee xaczor.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "neee",
+          "xaczor"
+        ],
+        "direction": "full corrupted choir, lead voice still clear"
+      },
+      {
+        "hymmnos": "Rrha jyel erra hymme manac Venestria.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "hymme",
+          "manac"
+        ],
+        "direction": "full corrupted choir, lead voice still clear"
+      },
+      {
+        "hymmnos": "Rrha jyel erra rinc yor shazra.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "rinc",
+          "yor",
+          "shazra"
+        ],
+        "direction": "full corrupted choir, lead voice still clear"
+      },
+      {
+        "hymmnos": "Venestria.",
+        "tokenIds": [],
+        "direction": "voices circle from different distances"
+      },
+      {
+        "hymmnos": "Rrha jyel erra neee xaczor.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "neee",
+          "xaczor"
+        ],
+        "direction": "voices circle from different distances"
+      },
+      {
+        "hymmnos": "Venestria.",
+        "tokenIds": [],
+        "direction": "voices circle from different distances"
+      },
+      {
+        "hymmnos": "Rrha jyel erra hymme manac Venestria.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "hymme",
+          "manac"
+        ],
+        "direction": "voices circle from different distances"
+      },
+      {
+        "hymmnos": "Was jyel ga sapon ferx.",
+        "tokenIds": [
+          "was",
+          "jyel",
+          "ga",
+          "sapon",
+          "ferx"
+        ],
+        "direction": "solo whisper; instruments fall away"
+      },
+      {
+        "hymmnos": "Rrha jyel erra slep ween dorn.",
+        "tokenIds": [
+          "rrha",
+          "jyel",
+          "erra",
+          "slep",
+          "ween",
+          "dorn"
+        ],
+        "direction": "solo whisper; instruments fall away"
+      },
+      {
+        "hymmnos": "Venestria.",
+        "tokenIds": [],
+        "direction": "solo whisper; instruments fall away"
+      }
+    ]
+  }
+]

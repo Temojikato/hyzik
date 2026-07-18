@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AuthProvider } from './contexts/AuthContext';
-import { ChakraProvider } from '@chakra-ui/react';
 import ErrorBoundary from './components/ErrorBoundary';
 
 const root = ReactDOM.createRoot(
@@ -13,11 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <ChakraProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ChakraProvider>
+      <App />
     </ErrorBoundary>
   </React.StrictMode>
 );

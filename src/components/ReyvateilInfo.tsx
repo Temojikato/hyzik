@@ -36,6 +36,8 @@ import {
 } from '../CooldownUtils';
 import FeedModal from './FeedModal';
 import HungerBar from './HungerBar';
+import { useCampaign } from '../contexts/CampaignContext';
+import { resolveAbilityInvocation } from '../utils/abilityHymmnos';
 
 interface ReyvateilInfoProps {
   reyvateil: Reyvateil | null;
@@ -45,6 +47,7 @@ interface ReyvateilInfoProps {
 
 const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, setInventory }) => {
   const { currentUser } = useAuth();
+  const { unlockedLexicon } = useCampaign();
   const { setReyvateilTheme } = useThemeContext(); // Access theme context
   const [selectedAbility, setSelectedAbility] = useState<Ability | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -498,7 +501,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
   }
 
   return (
-    <Box p={4} maxW="100%" overflowX="auto" bg="background">
+    <Box maxW="100%" overflowX="hidden" mb={6}>
       <VStack spacing={4} align="start">
         {criticalError && (
           <Alert status="error" borderRadius="md" width="100%" bg="primary">
@@ -510,25 +513,16 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         <Box
           w="100%"
           p={4}
-          bg="secondary"
+          bg="surface"
           borderWidth="1px"
-          borderColor="gray.200"
-          borderRadius="md"
-          boxShadow="sm"
+          borderColor="border"
+          borderRadius="panel"
+          boxShadow="panel"
         >
           <VStack spacing={4} align="start">
             <Flex direction="column" align="center">
-              <Text
-                fontSize="2xl"
-                fontWeight="bold"
-                color="textHeader"
-                fontFamily="Hymmnos"
-                overflow="visible"
-                textAlign="center"
-              >
-                ({reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel}))
-              </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="text" textAlign="center">
+              <Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".14em">Reyvateil link established</Text>
+              <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="bold" color="text" textAlign="center">
                 {reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel})
               </Text>
 
@@ -546,11 +540,13 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                 mr={{ base: 0, md: 4 }}
                 mb={{ base: 4, md: 0 }}
                 border="1px solid"
-                borderColor="gray.300"
+                borderColor="border"
+                maxW={{ base: '100%', md: '420px' }}
+                maxH="520px"
               />
               <Box>
                 <Flex direction="row" align="center">
-                  <Text fontFamily="Hymmnos" fontSize="2xl" fontWeight="bold" color="textHeader">
+                  <Text fontSize="sm" fontWeight="bold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
                     Class:
                   </Text>
 
@@ -563,13 +559,13 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                     {reyvateil ? reyvateil.class : 'No class available.'}
                   </Text>
                 </Flex>
-                <Text fontSize="2xl" fontFamily="Hymmnos" fontWeight="semibold" color="textHeader">
+                <Text mt={4} fontSize="sm" fontWeight="semibold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
                   Features:
                 </Text>
                 <Text color="text">{reyvateil ? reyvateil.features : 'No features available.'}</Text>
 
                 <Box mt={2}>
-                  <Text fontSize="2xl" fontFamily="Hymmnos" fontWeight="semibold" color="textHeader">
+                  <Text fontSize="sm" fontWeight="semibold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
                     Stats:
                   </Text>
                   <ErrorBoundary>
@@ -579,10 +575,10 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                           <Box
                             key={stat}
                             p={2}
-                            bg="accent"
-                            borderRadius="md"
+                            bg="surfaceRaised"
+                            borderRadius="lg"
                             border="1px solid"
-                            borderColor="gray.200"
+                            borderColor="border"
                           >
                             <Text fontWeight="medium" color="text">
                               {capitalizeFirstLetter(stat.replace(/([A-Z])/g, ' $1'))}: {value}
@@ -608,26 +604,27 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         <Box
           w="100%"
           p={4}
-          bg="secondary"
+          bg="surface"
           borderWidth="1px"
-          borderColor="gray.200"
-          borderRadius="md"
-          boxShadow="sm"
+          borderColor="border"
+          borderRadius="panel"
+          boxShadow="panel"
         >
           <VStack spacing={4} align="start">
             <HungerBar currentHunger={hunger} maxHunger={100} />
-            <Text fontFamily="Hymmnos" fontSize="lg" fontWeight="semibold" mb={2} color="textHeader">
+            <Text fontSize="sm" fontWeight="semibold" mb={2} color="textMuted" textTransform="uppercase" letterSpacing=".1em">
               Abilities:
             </Text>
             <ErrorBoundary>
               <Grid
-                templateColumns="repeat(3, 1fr)"  // 3 columns
-                templateRows="repeat(2, 1fr)"    // 2 rows, total 6 cells
+                templateColumns={{ base: 'repeat(2, minmax(0, 1fr))', sm: 'repeat(3, minmax(0, 1fr))', lg: 'repeat(6, minmax(0, 1fr))' }}
                 gap={4}
                 justifyItems="center"
                 alignItems="center"
               >
                 {abilities?.map((ability) => {
+                  const invocation = resolveAbilityInvocation(ability);
+                  const translated = unlockedLexicon.has(invocation.lexiconEntryId);
                   const cooldownEndTime = cooldowns[ability.name] || 0;
                   const currentTime = Date.now();
                   const isCooldownActive = cooldownEndTime > currentTime;
@@ -638,15 +635,13 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                   return (
                     <GridItem key={ability.name}>
                       <VStack spacing={2} align="center">
-                        <Text fontSize="sm" textAlign="center" fontWeight="medium" color="text">
-                          {ability.name}
-                        </Text>
+                        <Box textAlign="center"><Text fontFamily="Hymmnos" fontSize="xl" color="textHeader">{invocation.headword}</Text>{translated && <Text fontSize="xs" color="textMuted">{ability.name}</Text>}</Box>
                         <Tooltip label={ability.name} aria-label={ability.name}>
                           <Button
                             onClick={() => handleAbilityClick(ability)}
                             borderRadius="full"
-                            width="90px"
-                            height="90px"
+                            width={{ base: '72px', md: '90px' }}
+                            height={{ base: '72px', md: '90px' }}
                             padding="0"
                             _hover={{ bg: 'gray.100' }}
                             _active={{ bg: 'gray.200' }}
@@ -688,17 +683,17 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         <Box
           w="100%"
           p={4}
-          bg="secondary"
+          bg="surface"
           borderWidth="1px"
-          borderColor="gray.200"
-          borderRadius="md"
-          boxShadow="sm"
+          borderColor="border"
+          borderRadius="panel"
+          boxShadow="panel"
         >
           <HStack spacing={4}>
-            <Button colorScheme="green" fontFamily="Hymmnos" onClick={handleFeedClick}>
+            <Button colorScheme="green" onClick={handleFeedClick}>
               Feed
             </Button>
-            <Button colorScheme="purple" fontFamily="Hymmnos" onClick={handleRitual}>
+            <Button colorScheme="purple" onClick={handleRitual}>
               Ritual
             </Button>
           </HStack>

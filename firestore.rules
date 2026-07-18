@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function admin() { return signedIn() && request.auth.token.admin == true; }
+    function self(userId) { return signedIn() && request.auth.uid == userId; }
+    function ownCyphers() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.unlockedCyphers;
+    }
+
+    match /users/{userId} {
+      allow create: if self(userId) && request.resource.data.keys().hasOnly(['email', 'createdAt']);
+      allow read: if self(userId) || admin();
+      allow update: if admin() || (self(userId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+        'reyvateilId', 'reyvateilName', 'reyvateilImageUrl', 'reyvateilLevel', 'level',
+        'reyvateilHunger', 'inventory', 'conditions', 'stats', 'unlockedRecipes', 'lastSeenAt'
+      ]));
+      allow delete: if admin();
+
+      match /cooldowns/{cooldownId} {
+        allow read, write: if self(userId) || admin();
+      }
+    }
+
+    match /privateMessages/{messageId} {
+      allow create, read, delete: if admin();
+      allow read: if signedIn() && resource.data.recipientId == request.auth.uid;
+      allow update: if admin() || (
+        signedIn() && resource.data.recipientId == request.auth.uid &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'acceptedAt', 'readAt'])
+      );
+    }
+
+    match /campaign/{documentId} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /songs/{songId} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /cyphers/{cypherId} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /hymmnosLexicon/{entryId} {
+      allow read: if admin() || (signedIn() && resource.data.cypherId in ownCyphers());
+      allow write: if admin();
+    }
+
+    match /imageGenerationUsage/{userId} {
+      allow read: if self(userId) || admin();
+      allow write: if false;
+    }
+
+    match /reyvateils/{reyvateilId}/abilities/{abilityId} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /{collectionName}/{documentId} {
+      allow read: if signedIn() && collectionName in [
+        'reyvateils', 'items', 'conditionDefinitions', 'bestiary', 'residentCodex',
+        'playerBosses', 'rituals'
+      ];
+      allow write: if admin();
+    }
+  }
+}

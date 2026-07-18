@@ -10,9 +10,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
 
-  if (currentUser === undefined) {
+  if (loading) {
     // While checking auth state
     return (
       <Flex justify="center" align="center" height="100vh">
@@ -21,7 +21,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     );
   }
 
-  return currentUser ? children : <Navigate to="/login" />;
+  return currentUser ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

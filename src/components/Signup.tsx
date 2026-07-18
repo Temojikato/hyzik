@@ -17,7 +17,7 @@ import {
   AlertIcon,
   Flex,
 } from '@chakra-ui/react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 const Signup: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
       const userDocRef = doc(db, 'users', user.uid);
       await setDoc(userDocRef, {
         email: user.email,
-        // Add other user-specific fields here
+        createdAt: serverTimestamp(),
       });
 
       // Redirect to Reyvateil Selection
@@ -61,18 +61,22 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center" bg="gray.50">
+    <Flex minH="100vh" align="center" justify="center" bg="background" p={4}>
       <Box
-        bg="white"
-        p={8}
-        rounded="md"
-        boxShadow="lg"
-        width={{ base: '90%', md: '500px' }}
+        bg="surface"
+        p={{ base: 6, md: 8 }}
+        border="1px solid"
+        borderColor="primary"
+        rounded="panel"
+        boxShadow="panel"
+        width="100%"
+        maxW="460px"
       >
         <VStack spacing={4} align="stretch">
           <Heading as="h2" size="lg" textAlign="center">
-            Sign Up
+            Create campaign access
           </Heading>
+          <Text textAlign="center" color="textMuted">Your Reyvateil selection follows after account creation.</Text>
           {error && (
             <Alert status="error">
               <AlertIcon />
@@ -99,7 +103,7 @@ const Signup: React.FC = () => {
               </FormControl>
               <Button
                 type="submit"
-                colorScheme="blue"
+                colorScheme="purple"
                 width="100%"
                 isLoading={loading}
               >
@@ -109,7 +113,7 @@ const Signup: React.FC = () => {
           </form>
           <Text textAlign="center">
             Already have an account?{' '}
-            <Link to="/login" style={{ color: 'blue' }}>
+            <Link to="/login" style={{ color: '#C5A7FF' }}>
               Log In
             </Link>
           </Text>

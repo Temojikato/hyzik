@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   Button,
-  IconButton,
   useDisclosure,
   Stack,
   Box,
@@ -13,13 +12,20 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Text,
+  Badge,
+  HStack,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { useCampaign } from '../contexts/CampaignContext';
 
 interface HeaderProps {
   onOpenBestiary: () => void;
   onOpenMaps: () => void;
   onOpenInventory: () => void;
   onOpenNPC: () => void;
+  onOpenTranslator: () => void;
   handleLogout: () => void;
 }
 
@@ -28,24 +34,38 @@ const Header: React.FC<HeaderProps> = ({
   onOpenMaps,
   onOpenInventory,
   onOpenNPC,
+  onOpenTranslator,
   handleLogout,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isAdmin } = useAuth();
+  const { currentSong } = useCampaign();
+
+  const actions = [
+    { label: 'Resident Codex', colorScheme: 'gray', variant: 'outline', onClick: onOpenNPC },
+    { label: 'Open Bestiary', colorScheme: 'red', variant: 'outline', onClick: onOpenBestiary },
+    { label: 'Open Maps', colorScheme: 'green', variant: 'outline', onClick: onOpenMaps },
+    { label: 'Open Inventory', colorScheme: 'blue', variant: 'outline', onClick: onOpenInventory },
+    { label: 'Translator', colorScheme: 'purple', variant: 'solid', onClick: onOpenTranslator },
+  ];
 
   return (
-    <Flex justify="space-between" align="center" mb={4}>
-      <Heading
+    <Flex justify="space-between" align="center" mb={5} gap={4} p={{ base: 3, md: 4 }} bg="rgba(10,14,23,.84)" border="1px solid" borderColor="border" borderRadius="panel" backdropFilter="blur(12px)" position="sticky" top={3} zIndex={1000} boxShadow="panel">
+      <Box minW={0}>
+       <Heading
         as="h1"
-        fontSize="4xl"
+        fontSize={{ base: '2xl', md: '3xl' }}
         fontWeight="bold"
         fontFamily="Hymmnos"
         color="textHeader"
       >
-        Hyzik
+        HYZIK
       </Heading>
+       <HStack spacing={2} display={{ base: 'none', xl: 'flex' }}><Badge colorScheme="purple">Tower link</Badge>{currentSong?.lines[0]?.hymmnos ? <><Text fontSize="xs" color="textMuted">Receiving:</Text><Text fontFamily="Hymmnos" fontSize="sm" color="textHeader" noOfLines={1}>{currentSong.lines[0].hymmnos}</Text></> : <Text fontSize="xs" color="textMuted">Awaiting song telemetry</Text>}</HStack>
+      </Box>
 
       {/* Mobile Hamburger Menu */}
-      <Box display={{ base: 'block', md: 'none' }}>
+      <Box display={{ base: 'block', lg: 'none' }}>
         <Button
           colorScheme="blue"
           variant="outline"
@@ -57,50 +77,9 @@ const Header: React.FC<HeaderProps> = ({
             <DrawerContent>
               <DrawerCloseButton />
               <DrawerBody>
-                <Stack spacing={4} mt={10}>
-                  <Button
-                    colorScheme="white"
-                    variant="outline"
-                    onClick={() => {
-                      onOpenNPC();
-                      onClose();
-                    }}
-                  >
-                    Resident Codex
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    variant="outline"
-                    fontFamily="Hymmnos"
-                    onClick={() => {
-                      onOpenBestiary();
-                      onClose();
-                    }}
-                  >
-                    Bestiary
-                  </Button>
-                  <Button
-                    colorScheme="green"
-                    variant="outline"
-                    fontFamily="Hymmnos"
-                    onClick={() => {
-                      onOpenMaps();
-                      onClose();
-                    }}
-                  >
-                    Maps
-                  </Button>
-                  <Button
-                    colorScheme="blue"
-                    variant="outline"
-                    fontFamily="Hymmnos"
-                    onClick={() => {
-                      onOpenInventory();
-                      onClose();
-                    }}
-                  >
-                    Inventory
-                  </Button>
+                <Stack spacing={3} mt={10}>
+                  {actions.map((action) => <Button key={action.label} colorScheme={action.colorScheme} variant={action.variant} fontFamily="Hymmnos" justifyContent="flex-start" onClick={() => { action.onClick(); onClose(); }}>{action.label}</Button>)}
+                  {isAdmin && <Button as={Link} to="/admin" colorScheme="orange" variant="outline" fontFamily="Hymmnos" justifyContent="flex-start" onClick={onClose}>Admin Portal</Button>}
                   <Button
                     colorScheme="red"
                     fontFamily="Hymmnos"
@@ -118,41 +97,10 @@ const Header: React.FC<HeaderProps> = ({
       </Box>
 
       {/* Desktop Buttons */}
-      <Flex display={{ base: 'none', md: 'flex' }}>
-        <Button
-          colorScheme="red"
-          variant="outline"
-          fontFamily="Hymmnos"
-          onClick={onOpenBestiary}
-          mr={2}
-        >
-          Open Bestiary
-        </Button>
-        <Button
-          colorScheme="green"
-          variant="outline"
-          fontFamily="Hymmnos"
-          onClick={onOpenMaps}
-          mr={2}
-        >
-          Open Maps
-        </Button>
-        <Button
-          colorScheme="blue"
-          variant="outline"
-          fontFamily="Hymmnos"
-          onClick={onOpenInventory}
-          mr={2}
-        >
-          Open Inventory
-        </Button>
-        <Button
-          colorScheme="red"
-          fontFamily="Hymmnos"
-          onClick={handleLogout}
-        >
-          Log Out
-        </Button>
+      <Flex display={{ base: 'none', lg: 'flex' }} gap={2} align="center" justify="flex-end" flexWrap="wrap">
+        {actions.map((action) => <Button key={action.label} colorScheme={action.colorScheme} variant={action.variant} fontFamily="Hymmnos" onClick={action.onClick} size={{ lg: 'sm', '2xl': 'md' }}>{action.label}</Button>)}
+        {isAdmin && <Button as={Link} to="/admin" colorScheme="orange" variant="outline" fontFamily="Hymmnos" size={{ lg: 'sm', '2xl': 'md' }}>Admin Portal</Button>}
+        <Button colorScheme="red" fontFamily="Hymmnos" onClick={handleLogout} size={{ lg: 'sm', '2xl': 'md' }}>Log Out</Button>
       </Flex>
     </Flex>
   );

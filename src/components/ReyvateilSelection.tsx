@@ -25,15 +25,19 @@ import {
   ModalFooter,
   useDisclosure,
   ModalCloseButton,
+  Divider,
+  HStack,
 } from '@chakra-ui/react';
 import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
-import { auth, db, storage } from '../Firebase';
+import { auth, db, storage, functions } from '../Firebase';
 import { Reyvateil } from '../types/Reyvateils';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
 import ReyvateilTest from './ReyvateilTest'; // Import the new component
+import { httpsCallable } from 'firebase/functions';
+import { FaWandMagicSparkles } from 'react-icons/fa6';
 
 const ReyvateilSelection: React.FC = () => {
   const { currentUser } = useAuth();
@@ -57,6 +61,10 @@ const ReyvateilSelection: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedClass, setSelectedClass] = useState<string>('');
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
+  const [portraitDirection, setPortraitDirection] = useState<string>('');
+  const [generatingPortrait, setGeneratingPortrait] = useState(false);
+  const imageGenerationEnabled = process.env.REACT_APP_ENABLE_IMAGE_GENERATION === 'true';
 
   // New state for managing the steps
   const [step, setStep] = useState<'initial' | 'select' | 'test'>('initial');
@@ -116,6 +124,8 @@ const ReyvateilSelection: React.FC = () => {
     setSelectedReyvateil(selected);
     setSelectedReyvateilId(reyvateilId);
     setSelectedImageUrl(selected?.images?.[0] || '');
+    setGeneratedImages([]);
+    setPortraitDirection('');
     onOpen();
   };
 
@@ -180,6 +190,24 @@ const ReyvateilSelection: React.FC = () => {
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImageUrl(imageUrl);
     onImageSelectionClose();
+  };
+
+  const handleGeneratePortrait = async () => {
+    if (!selectedReyvateil) return;
+    if (!imageGenerationEnabled) {
+      toast({ title: 'AI portraits are not enabled on this deployment', description: 'The supplied portraits remain free and fully supported.', status: 'info' });
+      return;
+    }
+    setGeneratingPortrait(true);
+    try {
+      const generate = httpsCallable<{ reyvateilName: string; reyvateilClass: string; direction: string }, { id: string; url: string }>(functions, 'generateReyvateilPortrait');
+      const result = await generate({ reyvateilName: selectedReyvateil.name, reyvateilClass: selectedReyvateil.class, direction: portraitDirection });
+      setGeneratedImages((current) => [result.data.url, ...current]);
+      setSelectedImageUrl(result.data.url);
+      toast({ title: 'Portrait generated', description: 'It has been selected. You can still choose any supplied form.', status: 'success' });
+    } catch (caught: any) {
+      toast({ title: 'Portrait generation is unavailable', description: caught?.message || 'Choose one of the supplied portraits and try again later.', status: 'warning', duration: 7000 });
+    } finally { setGeneratingPortrait(false); }
   };
 
   const handleClassFilterChange = (
@@ -275,7 +303,7 @@ const ReyvateilSelection: React.FC = () => {
         border="1px solid"
         borderColor="purple.500"
       >
-        <Button colorScheme="red" fontFamily="Hymmnos" onClick={handleLogout}>
+        <Button colorScheme="red" onClick={handleLogout}>
           Log Out
         </Button>
         <VStack spacing={6} align="stretch">
@@ -287,7 +315,6 @@ const ReyvateilSelection: React.FC = () => {
                 textAlign="center"
                 color="purple.300"
                 textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)"
-                fontFamily="hymmnos"
               >
                 Welcome! Choose an option:
               </Text>
@@ -331,7 +358,6 @@ const ReyvateilSelection: React.FC = () => {
                   Choose Your
                 </Text>
                 <Text
-                  fontFamily="Hymmnos"
                   fontSize="3xl"
                   fontWeight="bold"
                   textAlign="center"
@@ -421,15 +447,6 @@ const ReyvateilSelection: React.FC = () => {
                               {reyvateil.name}
                             </Text>
 
-                            <Text
-                              fontSize="xl"
-                              fontWeight="bold"
-                              color="purple.400"
-                              fontFamily="Hymmnos"
-                              ml={2}
-                            >
-                              ( + {reyvateil.name} + )
-                            </Text>
                           </Flex>
                           <Badge colorScheme="purple" variant="solid">
                             {reyvateil.class}
@@ -472,6 +489,15 @@ const ReyvateilSelection: React.FC = () => {
                 }}
               >
                 <VStack spacing={4}>
+                  <Box w="100%" p={4} border="1px solid" borderColor="purple.500" borderRadius="xl">
+                    <HStack mb={2}><FaWandMagicSparkles /><Text fontWeight="bold">Create a personal form (optional)</Text><Badge colorScheme={imageGenerationEnabled ? 'green' : 'gray'}>{imageGenerationEnabled ? 'Available' : 'Not configured'}</Badge></HStack>
+                    <Text fontSize="sm" color="gray.400" mb={3}>Describe clothing, mood, colors, or features. The campaign style and chosen Reyvateil remain fixed. Supplied forms below are always free.</Text>
+                    <Input value={portraitDirection} onChange={(event) => setPortraitDirection(event.target.value)} maxLength={500} placeholder="Example: silver braids, damaged violet circuitry, cautious expression…" />
+                    <Button mt={3} leftIcon={<FaWandMagicSparkles />} onClick={handleGeneratePortrait} isLoading={generatingPortrait} isDisabled={!imageGenerationEnabled}>Generate one portrait</Button>
+                  </Box>
+                  {generatedImages.length > 0 && <><Divider /><Text alignSelf="start" fontWeight="bold">Your generated forms</Text>{generatedImages.map((image) => <Box key={image} onClick={() => handleImageSelect(image)} cursor="pointer" border="2px solid" borderColor={selectedImageUrl === image ? 'purple.400' : 'transparent'} borderRadius="xl" overflow="hidden"><Image src={image} alt="Generated Reyvateil form" /></Box>)}</>}
+                  <Divider />
+                  <Text alignSelf="start" fontWeight="bold">Supplied forms</Text>
                   {selectedReyvateil?.images?.map((image) => (
                     <Box
                       key={image}
@@ -507,15 +533,6 @@ const ReyvateilSelection: React.FC = () => {
                       {selectedReyvateil.name}
                     </Text>
 
-                    <Text
-                      fontSize="xl"
-                      fontWeight="bold"
-                      color="purple.400"
-                      fontFamily="Hymmnos"
-                      ml={2}
-                    >
-                      ( + {selectedReyvateil.name} + )
-                    </Text>
                   </Flex>
                 </ModalHeader>
                 <ModalCloseButton color="gray.200" />
@@ -541,7 +558,6 @@ const ReyvateilSelection: React.FC = () => {
                     <Box ml={4}>
                       <Flex direction="row" align="center">
                         <Text
-                          fontFamily="Hymmnos"
                           fontSize="xl"
                           fontWeight="bold"
                           color="purple.400"
@@ -564,7 +580,6 @@ const ReyvateilSelection: React.FC = () => {
                       <br />
                       <br />
                       <Text
-                        fontFamily="Hymmnos"
                         fontSize="md"
                         color="purple.400"
                       >
@@ -600,8 +615,6 @@ const ReyvateilSelection: React.FC = () => {
                     onClick={handleSubmit}
                     isLoading={submissionLoading}
                     isDisabled={submissionError !== ''}
-                    fontFamily="Hymmnos"
-                    fontSize="2xl"
                     boxShadow="0 0 20px rgba(128, 90, 213, 0.5)"
                     _hover={{
                       bgGradient: 'linear(to-r, purple.500, pink.500)',

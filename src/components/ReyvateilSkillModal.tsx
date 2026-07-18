@@ -13,8 +13,14 @@ import {
   Text,
   Image,
   ModalFooter,
+  Box,
+  Badge,
+  HStack,
 } from '@chakra-ui/react';
 import { Ability } from '../types/Reyvateils';
+import { resolveAbilityInvocation } from '../utils/abilityHymmnos';
+import { useCampaign } from '../contexts/CampaignContext';
+import { FaVolumeHigh } from 'react-icons/fa6';
 
 interface ReyvateilSkillModalProps {
   isOpen: boolean;
@@ -33,11 +39,23 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
   remainingTime,
   onUseAbility,
 }) => {
+  const { unlockedLexicon } = useCampaign();
+  const invocation = resolveAbilityInvocation(ability);
+  const unlocked = unlockedLexicon.get(invocation.lexiconEntryId);
+  const playInvocation = () => {
+    if (ability.hymmnos?.audioUrl) {
+      void new Audio(ability.hymmnos.audioUrl).play();
+      return;
+    }
+    const romanized = invocation.pronunciation.match(/\(([^)]+)\)/)?.[1] || invocation.headword;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(romanized));
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay />
-      <ModalContent bg="black" color="white">
-        <ModalHeader>{ability.name}</ModalHeader>
+      <ModalContent>
+        <ModalHeader>{unlocked ? ability.name : 'Reyvateil invocation'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing={4} align="center">
@@ -48,7 +66,13 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
               objectFit="cover"
               filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
             />
-            <Text textAlign="center">{ability.description}</Text>
+            <Box w="100%" p={5} bg="blackAlpha.400" border="1px solid" borderColor="primary" borderRadius="xl" textAlign="center">
+              <Text fontFamily="Hymmnos" fontSize="4xl" color="textHeader">{invocation.headword}</Text>
+              <Text mt={2} fontWeight="bold">{invocation.pronunciation}</Text>
+              <HStack justify="center" mt={3}><Badge colorScheme={unlocked ? 'green' : 'purple'}>{unlocked ? unlocked.meaning : 'Translation locked by Cypher'}</Badge></HStack>
+              <Button mt={4} size="sm" variant="outline" leftIcon={<FaVolumeHigh />} onClick={playInvocation}>Play pronunciation</Button>
+            </Box>
+            <Box w="100%"><Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".12em">Mechanical effect</Text><Text mt={1}>{ability.description}</Text></Box>
             <Text fontWeight="bold">Cooldown: {ability.cooldown} seconds</Text>
             <Button
               onClick={onUseAbility}
@@ -56,7 +80,7 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
               isDisabled={isCooldownActive}
               opacity={isCooldownActive ? 0.6 : 1}
             >
-              {isCooldownActive ? `Cooldown (${remainingTime}s)` : 'Use'}
+              {isCooldownActive ? `Cooldown (${remainingTime}s)` : `Exclaim “${invocation.headword}” and activate`}
             </Button>
           </VStack>
         </ModalBody>

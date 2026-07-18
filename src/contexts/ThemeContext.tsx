@@ -1,8 +1,9 @@
 // src/contexts/ThemeContext.tsx
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { ThemeProvider, theme as defaultTheme, ChakraProvider, ThemeOverride } from "@chakra-ui/react";
+import React, { createContext, useContext, useMemo, useState, ReactNode } from "react";
+import { ChakraProvider, extendTheme, ThemeOverride } from "@chakra-ui/react";
 import { reyvateilThemes } from "../reyvateilThemes";
+import { omniaTheme } from '../theme';
 
 interface ThemeContextProps {
   currentTheme: ThemeOverride;
@@ -10,7 +11,7 @@ interface ThemeContextProps {
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
-  currentTheme: defaultTheme,
+  currentTheme: omniaTheme,
   setReyvateilTheme: () => {},
 });
 
@@ -21,15 +22,27 @@ interface ThemeProviderProps {
 }
 
 export const CustomThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState<ThemeOverride>(defaultTheme);
+  const [reyvateilThemeId, setReyvateilThemeId] = useState<string>(() => localStorage.getItem('omnia-theme') || '');
+
+  const currentTheme = useMemo(() => {
+    const selected = reyvateilThemes[reyvateilThemeId];
+    if (!selected) return omniaTheme;
+    // Reyvateil themes were created as complete Chakra themes. Merging the
+    // whole object can silently replace semantic surfaces and component
+    // contrast rules. Only carry across the intended character palette.
+    const selectedColors = (selected.colors || {}) as Record<string, string>;
+    const palette = ['primary', 'secondary', 'accent', 'background', 'text', 'textHeader']
+      .reduce<Record<string, string>>((result, token) => {
+        if (selectedColors[token]) result[token] = selectedColors[token];
+        return result;
+      }, {});
+    return extendTheme(omniaTheme, { colors: palette });
+  }, [reyvateilThemeId]);
 
   const setReyvateilTheme = (reyvateilId: string) => {
-    const selectedTheme = reyvateilThemes[reyvateilId];
-    if (selectedTheme) {
-      setCurrentTheme(selectedTheme);
-    } else {
-      setCurrentTheme(defaultTheme); // Fallback to default theme
-    }
+    setReyvateilThemeId(reyvateilThemes[reyvateilId] ? reyvateilId : '');
+    if (reyvateilThemes[reyvateilId]) localStorage.setItem('omnia-theme', reyvateilId);
+    else localStorage.removeItem('omnia-theme');
   };
 
   return (

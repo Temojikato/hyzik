@@ -258,7 +258,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="surface" color="text">
           <ModalHeader>{region.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody p={0}>
@@ -327,7 +327,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
               )}
 
               {/* Bottom Section: Region Information */}
-              <Box flex="1" p={4} bg="gray.50" overflowY="auto" {...infoBlurStyle}>
+              <Box flex="1" p={4} bg="surface" color="text" overflowY="auto" borderTop="1px solid" borderColor="border" {...infoBlurStyle}>
                 <Text fontWeight="bold" fontSize="lg" mb={2}>
                   Region Details
                 </Text>
@@ -356,10 +356,10 @@ const RegionModal: React.FC<RegionModalProps> = ({
                         <Box
                           key={mName}
                           p={2}
-                          bg="accent"
+                          bg="surfaceRaised"
                           borderRadius="md"
                           border="1px solid"
-                          borderColor="gray.200"
+                          borderColor="accent"
                           cursor="pointer"
                           onClick={() => handleMonsterClick(mName)}
                         >

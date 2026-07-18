@@ -24,6 +24,8 @@ import {
   List,
   ListItem,
   useToast,
+  Heading,
+  Flex,
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react'; // Correct import for keyframes
 import {
@@ -36,8 +38,6 @@ import {
 import { db } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Conditions';
-import { Item } from '../types/Reyvateils';
-import { color } from 'framer-motion';
 import BossBattleModal from './BossBattleModal';
 
 // Define pulsate animation for Progress bar
@@ -442,7 +442,10 @@ const PlayerInfo: React.FC = () => {
 
 
   return (
-    <Box ml={4} mr={4} mt={8}>
+    <Box mt={6} p={{ base: 4, md: 5 }} bg="surface" border="1px solid" borderColor="border" borderRadius="panel" boxShadow="panel">
+      <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap={3}>
+        <Box><Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".14em">Player state</Text><Heading size="md">Conditions & influence</Heading></Box>
+        <HStack>
       {/* Gain Condition Button */}
       <Button colorScheme="teal" onClick={onOpen}>
         Gain Condition
@@ -458,6 +461,8 @@ const PlayerInfo: React.FC = () => {
           Test Effect Activation
         </Button>
       )}
+        </HStack>
+      </Flex>
 
       {/* Gain Condition Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="lg"> {/* Increased size */}
@@ -550,13 +555,14 @@ const PlayerInfo: React.FC = () => {
               <Box
                 key={condition.name}
                 p={4}
-                bg="secondary"
+                bg="surfaceRaised"
                 borderWidth="1px"
-                borderColor={isActive ? (condition.color || 'purple') : 'black'}
-                borderRadius="md"
+                borderColor={isActive ? (condition.color || 'purple') : 'border'}
+                borderRadius="xl"
                 onClick={() => openConditionDetails(condition.name)}
                 cursor="pointer"
-                _hover={{ bg: 'gray.100' }}
+                _hover={{ borderColor: 'primary', transform: 'translateY(-1px)' }}
+                transition="all .18s ease"
                 animation={isActive ? `${borderGlow} 2s infinite` : undefined} // Apply borderGlow animation when active
               >
                 <HStack justifyContent="space-between">

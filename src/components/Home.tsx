@@ -13,25 +13,22 @@ import {
   Box,
   useDisclosure,
   useToast,
-  Input,
-  Button,
 } from '@chakra-ui/react';
 import ReyvateilInfo from './ReyvateilInfo';
 import { useNavigate } from 'react-router-dom';
-import { useThemeContext } from '../contexts/ThemeContext';
 import InventoryModal from './InventoryModal';
 import FullScreenMapModal from './FullScreenMapModal';
 import FullScreenBestiaryModal from './FullScreenBestiaryModal';
 import FullScreenNPCModal from './FullScreenNPCModal'; // Import the NPC modal component
 import Header from './Header'; // Import the Header component
 import PlayerInfo from './PlayerInfo';
+import TranslatorModal from './TranslatorModal';
 
 const Home: React.FC = () => {
   const { currentUser } = useAuth();
   const [reyvateil, setReyvateil] = useState<Reyvateil | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-  const { currentTheme } = useThemeContext();
   const [inventory, setInventory] = useState<Item[]>([]);
   const {
     isOpen,
@@ -42,6 +39,11 @@ const Home: React.FC = () => {
     isOpen: isOpenMaps,
     onOpen: onOpenMaps,
     onClose: onCloseMaps,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenTranslator,
+    onOpen: onOpenTranslator,
+    onClose: onCloseTranslator,
   } = useDisclosure();
   const {
     isOpen: isOpenBestiary,
@@ -222,19 +224,22 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Box p={4} bg="background">
+    <Box minH="100vh" p={{ base: 3, md: 5 }} bg="background">
+      <Box maxW="1600px" mx="auto">
       {/* Header Component with an added NPC button */}
       <Header
         onOpenBestiary={onOpenBestiary}
         onOpenMaps={onOpenMaps}
         onOpenInventory={onOpen}
         onOpenNPC={onOpenNPC} // Pass the onOpen function for NPC modal
+        onOpenTranslator={onOpenTranslator}
         handleLogout={handleLogout}
       />
 
       {/* Main content */}
       <ReyvateilInfo reyvateil={reyvateil} inventory={inventory} setInventory={setInventory} />
       <PlayerInfo />
+      </Box>
       <InventoryModal
         isOpen={isOpen}
         onClose={onClose}
@@ -264,6 +269,7 @@ const Home: React.FC = () => {
         onClose={onCloseNPC}
         currentUser={currentUser}
       />
+      <TranslatorModal isOpen={isOpenTranslator} onClose={onCloseTranslator} />
     </Box>
   );
 };

@@ -147,7 +147,7 @@ const BossBattleModal: React.FC<BossBattleModalProps> = ({
           {phase === 1 && (
             <VStack spacing={6} w="100%" h="100%" justify="center">
               <Box textAlign="center">
-                <Text fontFamily="Hymmnos" fontSize={{ base: '4xl', md: '6xl' }} fontWeight="bold">
+                <Text fontSize={{ base: '4xl', md: '6xl' }} fontWeight="bold" color="textHeader">
                   {defaultMainLabel}
                 </Text>
                 <Text fontSize={{ base: 'xl', md: '2xl' }} mt={2}>
@@ -225,13 +225,6 @@ const BossBattleModal: React.FC<BossBattleModalProps> = ({
                     borderRadius="md"
                   />
                   <Box textAlign="center">
-                    <Text
-                      fontFamily="Hymmnos"
-                      fontSize={{ base: '4xl', md: '6xl' }}
-                      fontWeight="bold"
-                    >
-                      Avatar of {sin} and {virtue}
-                    </Text>
                     <Text
                       fontSize={{ base: '2xl', md: '4xl' }}
                       fontWeight="bold"

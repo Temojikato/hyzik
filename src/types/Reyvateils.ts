@@ -1,11 +1,19 @@
 import { DocumentReference } from "firebase/firestore";
 
 export interface Ability {
+  id?: string;
   name: string;
   description: string;
   cooldown: number; // in seconds
   icon: string; // URL or local path to the icon image
   lastUsed?: Date | null;
+  hymmnos?: {
+    headword: string;
+    pronunciation?: string;
+    cypherId?: string;
+    lexiconEntryId?: string;
+    audioUrl?: string;
+  };
 }
 
 

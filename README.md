@@ -1,46 +1,73 @@
-# Getting Started with Create React App
+# Hyzik — Omnia campaign portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The player sheet, Tower references, maps, timers, conditions, inventory, crafting, Reyvateil systems, and campaign control surface for the Omnia campaign.
 
-## Available Scripts
+See the [persistent software backlog](./SOFTWARE_BACKLOG.md) for the original requirements and acceptance notes.
 
-In the project directory, you can run:
+## Local development
 
-### `npm start`
+```powershell
+npm install
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`npm run build` produces the Firebase Hosting bundle. The application uses Firebase Authentication, Firestore, Storage, Hosting, and an optional Cloud Function for protected portrait generation.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Campaign setup
 
-### `npm test`
+These are intentional administrative operations; they are not run from a browser:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```powershell
+# Rebuild the public, meaning-free lexicon and Hymmnos song catalog.
+npm run content:build
 
-### `npm run build`
+# Upload protected lexicon meanings, all 48 Cyphers, and campaign songs.
+npm run content:seed
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Grant the first admin account. Sign out and back in afterward.
+npm run admin:grant -- --email your-admin@example.com
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Verify that every item and recipe is coherent.
+npm run validate:items
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Upload the validated item and crafting catalog.
+npm run content:items
+```
 
-### `npm run eject`
+Set `GOOGLE_APPLICATION_CREDENTIALS` to a Firebase service-account JSON stored outside this repository. A workstation with Google application-default credentials may instead set `HYZIK_USE_APPLICATION_DEFAULT=true`. The historical `src/serviceAccountKey.json` must be rotated and removed from Git history; it is now ignored so it cannot be bundled or recommitted.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Hymmnos privacy model
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The React bundle contains only headwords, pronunciation, grammar metadata, Cypher IDs, and the campaign's Hymmnos lyric packets. English meanings are seeded to the protected `hymmnosLexicon` Firestore collection. Security rules allow players to read only entries covered by their unlocked Cyphers. Admin custom claims are authoritative.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Pronunciation uses a stored audio URL when available and a clearly labelled device-voice fallback otherwise. To pre-render selected words through ElevenLabs:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```powershell
+npm run audio:hymmnos -- --ids hymmnos,khal,fayra
+```
 
-## Learn More
+Set `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID` first. Rendering the entire lexicon requires the explicit `--all --confirm-cost` flags.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Optional GPT portrait generation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The OpenAI key is a Firebase Functions secret and is never exposed to React. The callable function requires Firebase Authentication, enforces a per-player monthly limit, stores results in Firebase Storage, and leaves all supplied portraits available as a no-cost fallback.
+
+```powershell
+firebase functions:secrets:set OPENAI_API_KEY
+cd functions
+npm install
+cd ..
+$env:REACT_APP_ENABLE_IMAGE_GENERATION='true'
+firebase deploy --only functions,hosting
+```
+
+The backend uses `gpt-image-2` through the Images API. Without the secret and client feature flag, the image-generation control is visibly unavailable and the original portrait workflow is unchanged.
+
+## Deployment
+
+```powershell
+npm run build
+firebase deploy --only firestore:rules,storage,functions,hosting
+```
+
+Deploying just `hosting` is safe when the backend secret has not been configured, but the new admin, translator, messages, and Cypher features need the included Firestore rules and seeded campaign documents for their complete behavior.

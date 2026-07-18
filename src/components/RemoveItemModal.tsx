@@ -20,6 +20,7 @@ import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
 import { doc, runTransaction } from 'firebase/firestore';
 import { db } from '../Firebase';
+import { serializeInventory } from '../utils/inventory';
 
 interface RemoveItemModalProps {
   isOpen: boolean;
@@ -67,13 +68,13 @@ const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
         if (itemIndex !== -1) {
           const inv = newInventory[itemIndex];
           if (inv.quantity) {
-            inv.quantity -= 1;
+            inv.quantity -= quantityToRemove;
             if (inv.quantity <= 0) {
               newInventory.splice(itemIndex, 1);
             }
           }
         }
-        transaction.update(userRef, { inventory: newInventory });
+        transaction.update(userRef, { inventory: serializeInventory(newInventory) });
       });
 
       // Update local state
@@ -83,7 +84,7 @@ const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
         if (itemIndex !== -1) {
           const inv = newInventory[itemIndex];
           if (inv.quantity) {
-            inv.quantity -= 1;
+            inv.quantity -= quantityToRemove;
             if (inv.quantity <= 0) {
               newInventory.splice(itemIndex, 1);
             }
@@ -115,7 +116,7 @@ const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>
       <ModalOverlay />
-      <ModalContent bg="secondary">
+      <ModalContent bg="surface" color="text">
         <ModalHeader color="textHeader">Remove Item</ModalHeader>
         <ModalCloseButton color="text" />
         <ModalBody>
@@ -128,7 +129,7 @@ const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
               value={quantityToRemove}
               onChange={(valueString) => setQuantityToRemove(Number(valueString))}
             >
-              <NumberInputField bg="white" />
+              <NumberInputField bg="surfaceRaised" color="text" />
             </NumberInput>
           </VStack>
         </ModalBody>

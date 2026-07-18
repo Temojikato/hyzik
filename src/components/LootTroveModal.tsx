@@ -105,7 +105,7 @@ const LootTroveModal: React.FC<LootTroveModalProps> = ({
       isCentered
     >
       <ModalOverlay />
-      <ModalContent bg="secondary">
+      <ModalContent bg="surface" color="text">
         <ModalHeader color="textHeader">Loot Troves</ModalHeader>
         <ModalCloseButton color="text" onClick={() => setSelectedCategory(null)} />
         <ModalBody>

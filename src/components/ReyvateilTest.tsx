@@ -411,7 +411,6 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
           textAlign="center"
           color="purple.300"
           mb={4}
-          fontFamily="hymmnos"
         >
           {classSpecificQuiz.title}
         </Text>
@@ -488,19 +487,9 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                   <Text fontSize="xl" fontWeight="bold" color="purple.400">
                     {selectedReyvateil.name}
                   </Text>
-                  <Text
-                    fontSize="xl"
-                    fontWeight="bold"
-                    color="purple.400"
-                    fontFamily="Hymmnos"
-                    ml={2}
-                  >
-                    ( + {selectedReyvateil.name} + )
-                  </Text>
                 </Flex>
                 <Flex direction="row" align="center" mt={2}>
                   <Text
-                    fontFamily="Hymmnos"
                     fontSize="xl"
                     fontWeight="bold"
                     color="purple.400"
@@ -516,7 +505,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                 </Text>
                 <br />
                 <br />
-                <Text fontFamily="Hymmnos" fontSize="md" color="purple.400">
+                <Text fontSize="md" color="purple.400">
                   Stats:
                 </Text>
                 {selectedReyvateil.stats ? (
