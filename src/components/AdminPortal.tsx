@@ -1,136 +1,225 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Alert, AlertIcon, Badge, Box, Button, Checkbox, CheckboxGroup, Flex, FormControl, FormLabel,
-  Grid, Heading, HStack, IconButton, Input, Select, SimpleGrid, Spinner, Stat, StatHelpText,
-  StatLabel, StatNumber, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody,
-  Td, Text, Textarea, Th, Thead, Tr, useToast, VStack,
+  Alert, AlertIcon, Badge, Box, Button, ChakraProvider, Checkbox, Divider, Flex, FormControl, FormLabel,
+  Grid, Heading, HStack, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
+  ModalHeader, ModalOverlay, NumberInput, NumberInputField, Select, SimpleGrid, Spinner, Stat, StatHelpText,
+  StatLabel, StatNumber, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Text,
+  Textarea, Th, Thead, Tr, useDisclosure, useToast, VStack, extendTheme,
 } from '@chakra-ui/react';
+import { collection, DocumentReference, getDocs } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
+import { getDownloadURL, ref } from 'firebase/storage';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRotateRight, FaEye, FaLanguage, FaMessage, FaMusic, FaUsers } from 'react-icons/fa6';
+import {
+  FaArrowLeft, FaArrowRotateRight, FaBolt, FaEye, FaGift, FaMessage, FaMusic, FaPlay,
+  FaPlus, FaSkull, FaTrash, FaUsers,
+} from 'react-icons/fa6';
+import { db, functions, storage } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
-import { grantCyphers, listPlayers, saveSong, sendPrivateMessages, setCurrentSong, subscribePlayers } from '../services/campaignService';
-import { CampaignSong, PlayerProfile } from '../types/Campaign';
-import { getYouTubeEmbedUrl } from '../utils/youtube';
-import Panel from './ui/Panel';
+import { mapData } from '../mapdata';
+import {
+  deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
+  sendPrivateMessages, setCurrentSong, setPlayerActive, setPlayersActive, startEncounter, subscribeEncounter,
+  subscribePlayers, updateEncounterParticipants, updatePlayerName,
+} from '../services/campaignService';
+import { CampaignSong, Encounter, EncounterMapFrame, EncounterParticipant, GrantKind, PlayerProfile } from '../types/Campaign';
+import { ConditionDefinition } from '../types/Conditions';
+import { Item } from '../types/Reyvateils';
+import { MonsterSpecies } from '../types/BestiaryTypes';
+import { fetchAllMonstersFromNestedDocs } from '../utils/fetchAllMonsters';
+import AdminMusicPlayer from './admin/AdminMusicPlayer';
 
-const playerLabel = (player: PlayerProfile) => player.displayName || player.email || player.reyvateilName || player.id;
-const conditionLabel = (condition: NonNullable<PlayerProfile['conditions']>[number]) => typeof condition === 'string' ? condition : `${condition.name}${condition.amount !== undefined ? ` ${condition.amount}` : ''}`;
+const adminTheme = extendTheme({
+  styles: { global: { 'html, body': { background: '#090d14', color: '#edf2f7' } } },
+  colors: { brand: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95' } },
+  components: {
+    Button: {
+      baseStyle: { borderRadius: '10px', fontWeight: '700' },
+      variants: {
+        solid: (props: { colorScheme?: string }) => ({
+          bg: props.colorScheme === 'red' ? '#b91c1c' : props.colorScheme === 'green' ? '#15803d' : props.colorScheme === 'gray' ? '#374151' : '#7c3aed',
+          color: '#ffffff',
+          _hover: { bg: props.colorScheme === 'red' ? '#991b1b' : props.colorScheme === 'green' ? '#166534' : props.colorScheme === 'gray' ? '#4b5563' : '#6d28d9' },
+        }),
+        outline: { bg: 'transparent', borderColor: '#46536a', color: '#edf2f7', _hover: { bg: '#202938' } },
+        ghost: { bg: 'transparent', color: '#edf2f7', _hover: { bg: '#202938' } },
+      },
+      defaultProps: { colorScheme: 'brand' },
+    },
+    Input: { variants: { outline: { field: { bg: '#0d131e', borderColor: '#354156', _hover: { borderColor: '#52617a' }, _focusVisible: { borderColor: '#8b5cf6', boxShadow: '0 0 0 1px #8b5cf6' } } } }, defaultProps: { variant: 'outline' } },
+    Select: { variants: { outline: { field: { bg: '#0d131e', borderColor: '#354156', '> option': { bg: '#111722' } } } }, defaultProps: { variant: 'outline' } },
+    Textarea: { variants: { outline: { bg: '#0d131e', borderColor: '#354156' } }, defaultProps: { variant: 'outline' } },
+    Table: { variants: { simple: { th: { color: '#8f9bb0', borderColor: '#2c3648' }, td: { borderColor: '#2c3648' } } } },
+  },
+});
 
-const previewPlayers: PlayerProfile[] = [
-  { id: 'preview-a', displayName: 'Aster', email: 'aster@example.com', reyvateilName: 'Melodia', level: 3, conditions: [{ name: 'Greed', amount: 22 }], unlockedCyphers: ['cypher-01', 'cypher-11'], stats: { resolve: 7 } },
-  { id: 'preview-b', displayName: 'Rook', email: 'rook@example.com', reyvateilName: 'Thundara', level: 2, conditions: [], unlockedCyphers: ['cypher-01'], stats: { insight: 4 } },
-  { id: 'preview-c', displayName: 'Vale', email: 'vale@example.com', reyvateilName: 'Vespera', level: 4, conditions: [{ name: 'Doubt', amount: 13 }], unlockedCyphers: Array.from({ length: 9 }, (_, index) => `cypher-${String(index + 1).padStart(2, '0')}`), stats: { arcana: 8 } },
-];
+const panel = { bg: '#111722', border: '1px solid #2c3648', borderRadius: '16px', boxShadow: '0 18px 45px rgba(0,0,0,.22)' };
+const playerLabel = (player: PlayerProfile) => player.displayName || player.email || player.reyvateilName || 'Unnamed player';
+const isPlayerActive = (player: PlayerProfile) => player.active !== false;
+const conditionLabel = (condition: NonNullable<PlayerProfile['conditions']>[number]) => typeof condition === 'string' ? condition : `${condition.name} ${condition.amount || 0}`;
+const slug = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || crypto.randomUUID();
 
-const AdminPortal: React.FC<{ previewMode?: boolean }> = ({ previewMode = false }) => {
+const RecipientPicker: React.FC<{ players: PlayerProfile[]; value: string[]; onChange: (ids: string[]) => void }> = ({ players, value, onChange }) => {
+  const active = players.filter(isPlayerActive);
+  const allSelected = active.length > 0 && active.every((player) => value.includes(player.id));
+  return <VStack align="stretch" maxH="470px" overflowY="auto" pr={1}>
+    <Checkbox isChecked={allSelected} onChange={(event) => onChange(event.target.checked ? active.map((player) => player.id) : [])} p={3} border="1px solid #2c3648" borderRadius="12px"><Text fontWeight="bold">Entire active party</Text><Text fontSize="xs" color="#8f9bb0">Inactive players are excluded</Text></Checkbox>
+    {players.map((player) => <Checkbox key={player.id} isDisabled={!isPlayerActive(player)} opacity={isPlayerActive(player) ? 1 : .42} isChecked={value.includes(player.id)} onChange={(event) => onChange(event.target.checked ? [...value, player.id] : value.filter((id) => id !== player.id))} p={3} border="1px solid #2c3648" borderRadius="12px"><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.reyvateilName || player.reyvateilId || 'No Reyvateil'}{!isPlayerActive(player) ? ' · paused' : ''}</Text></Checkbox>)}
+  </VStack>;
+};
+
+interface AdminItem extends Item { reference: DocumentReference }
+interface MonsterOption { id: string; name: string; tier: string; hp: number; armorClass?: number }
+
+const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode = false }) => {
   const { currentUser } = useAuth();
   const { songs, campaignState, currentSong } = useCampaign();
-  const [players, setPlayers] = useState<PlayerProfile[]>(previewMode ? previewPlayers : []);
+  const [players, setPlayers] = useState<PlayerProfile[]>([]);
+  const [conditions, setConditions] = useState<ConditionDefinition[]>([]);
+  const [items, setItems] = useState<AdminItem[]>([]);
+  const [monsterSpecies, setMonsterSpecies] = useState<MonsterSpecies[]>([]);
   const [loading, setLoading] = useState(!previewMode);
   const [error, setError] = useState('');
-  const [selectedPlayerId, setSelectedPlayerId] = useState(previewMode ? previewPlayers[0].id : '');
-  const [selectedCyphers, setSelectedCyphers] = useState<string[]>([]);
-  const [recipientIds, setRecipientIds] = useState<string[]>([]);
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [songDrafts, setSongDrafts] = useState<Record<string, string>>({});
-  const [playingUrl, setPlayingUrl] = useState('');
-  const toast = useToast();
+  const userModal = useDisclosure();
 
   const refreshPlayers = useCallback(async () => {
     if (previewMode) return;
-    setLoading(true); setError('');
-    try {
-      const rows = await listPlayers();
-      setPlayers(rows);
-      if (rows.length) setSelectedPlayerId((current) => current || rows[0].id);
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'Unable to load players.');
-    } finally { setLoading(false); }
+    setLoading(true);
+    try { setPlayers(await listPlayers()); setError(''); }
+    catch (caught) { setError(caught instanceof Error ? caught.message : 'Unable to load players.'); }
+    finally { setLoading(false); }
   }, [previewMode]);
 
   useEffect(() => {
-    if (previewMode) return undefined;
+    if (previewMode) {
+      setPlayers([{ id: 'preview-a', displayName: 'Aster', reyvateilName: 'Melodia', active: true, conditions: [{ name: 'Greed', amount: 22 }], unlockedCyphers: ['cypher-01'] }]);
+      setLoading(false);
+      return;
+    }
     void refreshPlayers();
     return subscribePlayers((rows) => { setPlayers(rows); setLoading(false); }, (caught) => setError(caught.message));
   }, [previewMode, refreshPlayers]);
+
   useEffect(() => {
-    const player = players.find((item) => item.id === selectedPlayerId);
-    setSelectedCyphers(player?.unlockedCyphers || []);
-  }, [players, selectedPlayerId]);
+    if (previewMode) return;
+    void Promise.all([
+      getDocs(collection(db, 'conditionDefinitions')).then((snapshot) => setConditions(snapshot.docs.map((entry) => entry.data() as ConditionDefinition))),
+      getDocs(collection(db, 'items')).then((snapshot) => setItems(snapshot.docs.map((entry) => ({ id: entry.id, ...entry.data(), reference: entry.ref } as AdminItem)))),
+      fetchAllMonstersFromNestedDocs().then(setMonsterSpecies),
+    ]).catch((caught) => setError(caught instanceof Error ? caught.message : String(caught)));
+  }, [previewMode]);
 
-  const activeConditions = useMemo(() => players.reduce((count, player) => count + (player.conditions?.length || 0), 0), [players]);
+  const activeConditions = useMemo(() => players.reduce((total, player) => total + (player.conditions?.length || 0), 0), [players]);
+  const activePlayers = useMemo(() => players.filter(isPlayerActive), [players]);
 
-  const selectSong = async (song: CampaignSong) => {
-    const youtubeUrl = songDrafts[song.id] ?? song.youtubeUrl ?? '';
-    const saved = { ...song, youtubeUrl };
-    try {
-      await saveSong(saved);
-      await setCurrentSong(saved);
-      setPlayingUrl(youtubeUrl);
-      toast({ title: `Now playing: ${song.title}`, status: 'success', duration: 2500 });
-    } catch (caught) { toast({ title: 'Could not change the current song', description: String(caught), status: 'error' }); }
-  };
-
-  const savePlayerCyphers = async () => {
-    if (!selectedPlayerId) return;
-    try { await grantCyphers(selectedPlayerId, selectedCyphers); await refreshPlayers(); toast({ title: 'Cyphers updated', status: 'success' }); }
-    catch (caught) { toast({ title: 'Could not update Cyphers', description: String(caught), status: 'error' }); }
-  };
-
-  const sendMessage = async () => {
-    if (!currentUser || !recipientIds.length || !message.trim()) return;
-    try {
-      await sendPrivateMessages(currentUser.uid, recipientIds, message.trim(), subject.trim());
-      setMessage(''); setSubject(''); setRecipientIds([]);
-      toast({ title: `Private message sent to ${recipientIds.length} player${recipientIds.length === 1 ? '' : 's'}`, status: 'success' });
-    } catch (caught) { toast({ title: 'Could not send message', description: String(caught), status: 'error' }); }
-  };
-
-  const embedUrl = getYouTubeEmbedUrl(playingUrl, true);
-
-  return (
-    <Box minH="100vh" p={{ base: 3, md: 6 }}>
-      <Flex maxW="1600px" mx="auto" direction="column" gap={5}>
-        <Flex justify="space-between" align="center" gap={4} flexWrap="wrap">
-          <Box><HStack color="textMuted" fontSize="sm"><Badge colorScheme="purple">ADMIN</Badge><Text>Omnia campaign control</Text></HStack><Heading mt={1}>Tower operations</Heading></Box>
-          <HStack><Button as={Link} to="/" leftIcon={<FaArrowLeft />} variant="outline">Player portal</Button><IconButton aria-label="Refresh players" icon={<FaArrowRotateRight />} onClick={refreshPlayers} /></HStack>
-        </Flex>
-        {error && <Alert status="error" borderRadius="xl"><AlertIcon />{error}</Alert>}
-        <SimpleGrid columns={{ base: 2, lg: 4 }} spacing={4}>
-          <Panel p={4}><Stat><StatLabel>Players</StatLabel><StatNumber>{players.length}</StatNumber><StatHelpText>registered accounts</StatHelpText></Stat></Panel>
-          <Panel p={4}><Stat><StatLabel>Active conditions</StatLabel><StatNumber>{activeConditions}</StatNumber><StatHelpText>across the party</StatHelpText></Stat></Panel>
-          <Panel p={4}><Stat><StatLabel>Current song</StatLabel><StatNumber fontSize="md" noOfLines={1}>{currentSong?.title || 'None'}</StatNumber><StatHelpText>player translators follow this</StatHelpText></Stat></Panel>
-          <Panel p={4}><Stat><StatLabel>Cypher capacity</StatLabel><StatNumber>48</StatNumber><StatHelpText>progressive language families</StatHelpText></Stat></Panel>
-        </SimpleGrid>
-        <Panel overflow="hidden">
-          <Tabs isLazy variant="enclosed-colored">
-            <TabList px={3} pt={3} overflowX="auto"><Tab><HStack><FaUsers /><Text>Players</Text></HStack></Tab><Tab><HStack><FaMusic /><Text>Music</Text></HStack></Tab><Tab><HStack><FaLanguage /><Text>Cyphers</Text></HStack></Tab><Tab><HStack><FaMessage /><Text>Messages</Text></HStack></Tab></TabList>
-            <TabPanels>
-              <TabPanel p={{ base: 3, md: 5 }}>
-                {loading ? <Flex py={12} justify="center"><Spinner /></Flex> : <TableContainer><Table variant="simple"><Thead><Tr><Th>Player</Th><Th>Reyvateil</Th><Th>Conditions</Th><Th>Cyphers</Th><Th textAlign="right">Portal</Th></Tr></Thead><Tbody>{players.map((player) => <Tr key={player.id}><Td><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="textMuted">{player.id}</Text></Td><Td>{player.reyvateilName || player.reyvateilId || 'Not selected'}</Td><Td><HStack>{player.conditions?.length ? player.conditions.slice(0, 3).map((condition, index) => <Badge key={`${conditionLabel(condition)}-${index}`} colorScheme="red">{conditionLabel(condition)}</Badge>) : <Badge colorScheme="green">Clear</Badge>}</HStack></Td><Td>{player.unlockedCyphers?.length || 0}/48</Td><Td textAlign="right"><Button as={Link} to={`/admin/players/${player.id}`} size="sm" leftIcon={<FaEye />} variant="outline">View only</Button></Td></Tr>)}</Tbody></Table></TableContainer>}
-              </TabPanel>
-              <TabPanel p={{ base: 3, md: 5 }}>
-                <Grid templateColumns={{ base: '1fr', xl: 'minmax(0, 1fr) 480px' }} gap={5}>
-                  <VStack align="stretch" spacing={3}>{songs.map((song) => <Box key={song.id} p={4} border="1px solid" borderColor={campaignState.currentSongId === song.id ? 'primary' : 'border'} borderRadius="xl" bg={campaignState.currentSongId === song.id ? 'purple.900' : 'transparent'}><Flex justify="space-between" gap={4} align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }}><Box><Text fontWeight="bold">{song.title}</Text><Text fontSize="sm" color="textMuted">{song.location || 'Campaign track'} · {song.lines.length} lyric packets</Text></Box><Button size="sm" onClick={() => selectSong(song)}>{campaignState.currentSongId === song.id ? 'Restart / sync' : 'Make current'}</Button></Flex><FormControl mt={3}><FormLabel fontSize="xs" color="textMuted">YouTube URL</FormLabel><Input size="sm" value={songDrafts[song.id] ?? song.youtubeUrl ?? ''} onChange={(event) => setSongDrafts((current) => ({ ...current, [song.id]: event.target.value }))} placeholder="https://youtube.com/watch?v=…" /></FormControl></Box>)}</VStack>
-                  <Panel p={4} alignSelf="start" position={{ xl: 'sticky' }} top={5}><Heading size="sm" mb={3}>Game-master playback</Heading>{embedUrl ? <Box as="iframe" title="Current song playback" src={embedUrl} allow="autoplay; encrypted-media" w="100%" aspectRatio="16/9" border={0} borderRadius="xl" /> : <Box aspectRatio="16/9" border="1px dashed" borderColor="border" borderRadius="xl" display="grid" placeItems="center" p={5}><Text textAlign="center" color="textMuted">Choose a song with a valid YouTube URL. Selection updates every player translator and starts playback here.</Text></Box>}</Panel>
-                </Grid>
-              </TabPanel>
-              <TabPanel p={{ base: 3, md: 5 }}>
-                <Flex gap={4} align={{ base: 'stretch', md: 'end' }} direction={{ base: 'column', md: 'row' }} mb={5}><FormControl maxW="520px"><FormLabel>Player</FormLabel><Select value={selectedPlayerId} onChange={(event) => setSelectedPlayerId(event.target.value)}>{players.map((player) => <option key={player.id} value={player.id}>{playerLabel(player)}</option>)}</Select></FormControl><Button onClick={savePlayerCyphers}>Save unlocks</Button><Button variant="outline" onClick={() => setSelectedCyphers(CYPHERS.map((cypher) => cypher.id))}>Unlock all</Button></Flex>
-                <CheckboxGroup value={selectedCyphers} onChange={(value) => setSelectedCyphers(value as string[])}><SimpleGrid columns={{ base: 1, md: 2, xl: 4 }} spacing={3}>{CYPHERS.map((cypher) => <Checkbox key={cypher.id} value={cypher.id} p={3} border="1px solid" borderColor={selectedCyphers.includes(cypher.id) ? cypher.color : 'border'} borderRadius="xl"><Text fontWeight="bold">{String(cypher.number).padStart(2, '0')} · {cypher.title}</Text><Text fontSize="xs" color="textMuted">{cypher.domain}</Text></Checkbox>)}</SimpleGrid></CheckboxGroup>
-              </TabPanel>
-              <TabPanel p={{ base: 3, md: 5 }}>
-                <Grid templateColumns={{ base: '1fr', lg: 'minmax(260px, .7fr) minmax(0, 1.3fr)' }} gap={6}><Box><Heading size="sm" mb={3}>Recipients</Heading><VStack align="stretch" maxH="470px" overflowY="auto"><Checkbox isChecked={recipientIds.length === players.length && players.length > 0} onChange={(event) => setRecipientIds(event.target.checked ? players.map((player) => player.id) : [])} p={3} border="1px solid" borderColor="border" borderRadius="xl"><Text fontWeight="bold">Entire party</Text></Checkbox>{players.map((player) => <Checkbox key={player.id} isChecked={recipientIds.includes(player.id)} onChange={(event) => setRecipientIds((current) => event.target.checked ? [...current, player.id] : current.filter((id) => id !== player.id))} p={3} border="1px solid" borderColor="border" borderRadius="xl"><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="textMuted">{player.reyvateilName || 'No Reyvateil'}</Text></Checkbox>)}</VStack></Box><VStack align="stretch" spacing={4}><Box><Heading size="sm">Discreet transmission</Heading><Text fontSize="sm" color="textMuted" mt={1}>It appears immediately but hides its contents behind a silent privacy prompt.</Text></Box><FormControl><FormLabel>Subject (optional)</FormLabel><Input value={subject} onChange={(event) => setSubject(event.target.value)} maxLength={80} /></FormControl><FormControl><FormLabel>Message</FormLabel><Textarea value={message} onChange={(event) => setMessage(event.target.value)} minH="220px" maxLength={2000} /></FormControl><Flex justify="space-between" align="center"><Text color="textMuted" fontSize="sm">{recipientIds.length} selected · {message.length}/2000</Text><Button leftIcon={<FaMessage />} onClick={sendMessage} isDisabled={!recipientIds.length || !message.trim()}>Send silently</Button></Flex></VStack></Grid>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Panel>
+  return <Box minH="100vh" bg="#090d14" color="#edf2f7" p={{ base: 3, md: 6 }}>
+    <Flex maxW="1680px" mx="auto" direction="column" gap={5}>
+      <Flex justify="space-between" align="center" gap={4} flexWrap="wrap">
+        <Box><HStack color="#8f9bb0" fontSize="sm"><Badge bg="#312e52" color="#c4b5fd">ADMIN</Badge><Text>Omnia campaign control</Text></HStack><Heading mt={1}>Tower operations</Heading></Box>
+        <HStack><Button as={Link} to="/" leftIcon={<FaArrowLeft />} variant="outline" borderColor="#4a5568">Player portal</Button><IconButton aria-label="Refresh players" icon={<FaArrowRotateRight />} onClick={refreshPlayers} /></HStack>
       </Flex>
-    </Box>
-  );
+      <AdminMusicPlayer song={currentSong} />
+      {error && <Alert status="error" bg="#3a1822" borderRadius="12px"><AlertIcon />{error}</Alert>}
+      <SimpleGrid columns={{ base: 2, lg: 4 }} spacing={4}>
+        <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Active players</StatLabel><StatNumber>{activePlayers.length}/{players.length}</StatNumber><StatHelpText color="#8f9bb0">session clocks running</StatHelpText></Stat></Box>
+        <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Conditions</StatLabel><StatNumber>{activeConditions}</StatNumber><StatHelpText color="#8f9bb0">across the party</StatHelpText></Stat></Box>
+        <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Current song</StatLabel><StatNumber fontSize="md" noOfLines={1}>{currentSong?.title || 'None'}</StatNumber><StatHelpText color="#8f9bb0">stored in Firestore</StatHelpText></Stat></Box>
+        <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Campaign state</StatLabel><StatNumber fontSize="md">{campaignState.battleActive ? 'IN COMBAT' : 'Exploration'}</StatNumber><StatHelpText color="#8f9bb0">{campaignState.timersPaused ? 'all timers paused' : 'timers follow player status'}</StatHelpText></Stat></Box>
+      </SimpleGrid>
+      <Box sx={panel} overflow="hidden">
+        <Tabs isLazy variant="unstyled">
+          <TabList px={3} pt={3} overflowX="auto" gap={1} borderBottom="1px solid #2c3648">{[
+            [<FaUsers />, 'Players'], [<FaGift />, 'Grant'], [<FaMessage />, 'Messages'], [<FaMusic />, 'Music'], [<FaSkull />, 'Encounter'],
+          ].map(([icon, label]) => <Tab key={String(label)} color="#a6b0c2" whiteSpace="nowrap" borderRadius="10px 10px 0 0" _selected={{ bg: '#252d3c', color: 'white' }}><HStack>{icon}<Text>{label}</Text></HStack></Tab>)}</TabList>
+          <TabPanels>
+            <TabPanel p={{ base: 3, md: 5 }}><PlayersPanel players={players} loading={loading} currentUid={currentUser?.uid} onCreate={userModal.onOpen} /></TabPanel>
+            <TabPanel p={{ base: 3, md: 5 }}><GrantPanel players={players} conditions={conditions} items={items} /></TabPanel>
+            <TabPanel p={{ base: 3, md: 5 }}><MessagePanel players={players} senderId={currentUser?.uid || ''} /></TabPanel>
+            <TabPanel p={{ base: 3, md: 5 }}><MusicPanel songs={songs} currentSongId={campaignState.currentSongId} /></TabPanel>
+            <TabPanel p={{ base: 3, md: 5 }}><EncounterPanel players={players} songs={songs} species={monsterSpecies} activeEncounterId={campaignState.activeEncounterId} /></TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
+    </Flex>
+    <CreateUserModal isOpen={userModal.isOpen} onClose={userModal.onClose} />
+  </Box>;
 };
+
+const PlayersPanel: React.FC<{ players: PlayerProfile[]; loading: boolean; currentUid?: string; onCreate: () => void }> = ({ players, loading, currentUid, onCreate }) => {
+  const toast = useToast();
+  const toggleAll = async (active: boolean) => { try { await setPlayersActive(players.map((player) => player.id), active); toast({ title: active ? 'Party activated' : 'Party paused', status: 'success' }); } catch (caught) { toast({ title: 'Could not update the party', description: String(caught), status: 'error' }); } };
+  const remove = async (player: PlayerProfile) => {
+    if (!window.confirm(`Permanently delete ${playerLabel(player)} from Authentication and Firestore?`)) return;
+    try { await httpsCallable<{ uid: string }, { uid: string }>(functions, 'adminDeleteUser')({ uid: player.id }); toast({ title: 'User deleted', status: 'success' }); }
+    catch (caught: any) { toast({ title: 'Could not delete user', description: caught?.message || String(caught), status: 'error' }); }
+  };
+  const rename = async (player: PlayerProfile) => { const next = window.prompt('Player name', player.displayName || ''); if (!next?.trim()) return; try { await updatePlayerName(player.id, next); toast({ title: 'Player name saved', status: 'success' }); } catch (caught) { toast({ title: 'Could not save name', description: String(caught), status: 'error' }); } };
+  return <VStack align="stretch" spacing={4}>
+    <Flex justify="space-between" gap={3} flexWrap="wrap"><Box><Heading size="md">Players</Heading><Text color="#8f9bb0">Names, session state, conditions, and portal access.</Text></Box><HStack flexWrap="wrap"><Button variant="outline" borderColor="#3f4c63" onClick={() => toggleAll(false)}>Pause all</Button><Button leftIcon={<FaBolt />} onClick={() => toggleAll(true)}>Activate all</Button><Button leftIcon={<FaPlus />} onClick={onCreate}>Create user</Button></HStack></Flex>
+    <HStack flexWrap="wrap"><Text color="#8f9bb0" fontSize="sm">Edit player name:</Text>{players.map((player) => <Button key={player.id} size="xs" variant="outline" borderColor="#46536a" onClick={() => rename(player)}>{playerLabel(player)}</Button>)}</HStack>
+    {loading ? <Flex py={12} justify="center"><Spinner /></Flex> : <TableContainer><Table variant="simple"><Thead><Tr><Th>Player</Th><Th>Status</Th><Th>Reyvateil</Th><Th>Conditions</Th><Th>Cyphers</Th><Th textAlign="right">Actions</Th></Tr></Thead><Tbody>{players.map((player) => <Tr key={player.id} opacity={isPlayerActive(player) ? 1 : .48}><Td><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.id}</Text></Td><Td><Button size="xs" colorScheme={isPlayerActive(player) ? 'green' : 'gray'} variant={isPlayerActive(player) ? 'solid' : 'outline'} onClick={() => setPlayerActive(player.id, !isPlayerActive(player))}>{isPlayerActive(player) ? 'Active' : 'Paused'}</Button></Td><Td>{player.reyvateilName || player.reyvateilId || 'Not selected'}</Td><Td><HStack>{player.conditions?.length ? player.conditions.slice(0, 3).map((condition, index) => <Badge key={`${conditionLabel(condition)}-${index}`} bg="#51252c" color="#fecaca">{conditionLabel(condition)}</Badge>) : <Badge bg="#163c32" color="#a7f3d0">Clear</Badge>}</HStack></Td><Td>{player.unlockedCyphers?.length || 0}/48</Td><Td><HStack justify="flex-end"><Button as={Link} to={`/admin/players/${player.id}`} size="xs" leftIcon={<FaEye />} variant="outline" borderColor="#46536a">View</Button><IconButton aria-label={`Delete ${playerLabel(player)}`} size="xs" colorScheme="red" variant="ghost" icon={<FaTrash />} isDisabled={player.id === currentUid} onClick={() => remove(player)} /></HStack></Td></Tr>)}</Tbody></Table></TableContainer>}
+  </VStack>;
+};
+
+const CreateUserModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [saving, setSaving] = useState(false); const toast = useToast();
+  const create = async () => { setSaving(true); try { await httpsCallable(functions, 'adminCreateUser')({ displayName: name.trim(), email: email.trim(), password }); toast({ title: `${name.trim()} created`, description: 'Authentication and the player database entry are ready.', status: 'success' }); setName(''); setEmail(''); setPassword(''); onClose(); } catch (caught: any) { toast({ title: 'Could not create user', description: caught?.message || String(caught), status: 'error' }); } finally { setSaving(false); } };
+  return <Modal isOpen={isOpen} onClose={onClose} isCentered><ModalOverlay bg="rgba(0,0,0,.72)" /><ModalContent bg="#111722" border="1px solid #354156"><ModalHeader>Create campaign user</ModalHeader><ModalCloseButton /><ModalBody><VStack spacing={4}><FormControl isRequired><FormLabel>Player name</FormLabel><Input value={name} onChange={(e) => setName(e.target.value)} /></FormControl><FormControl isRequired><FormLabel>Email</FormLabel><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></FormControl><FormControl isRequired><FormLabel>Temporary password</FormLabel><Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} /><Text color="#8f9bb0" fontSize="xs" mt={1}>At least 6 characters. Share it privately with the player.</Text></FormControl></VStack></ModalBody><ModalFooter><Button variant="ghost" mr={3} onClick={onClose}>Cancel</Button><Button onClick={create} isLoading={saving} isDisabled={!name.trim() || !email.trim() || password.length < 6}>Create user</Button></ModalFooter></ModalContent></Modal>;
+};
+
+const GrantPanel: React.FC<{ players: PlayerProfile[]; conditions: ConditionDefinition[]; items: AdminItem[] }> = ({ players, conditions, items }) => {
+  const [kind, setKind] = useState<GrantKind>('condition'); const [recipients, setRecipients] = useState<string[]>([]); const [selectedId, setSelectedId] = useState(''); const [search, setSearch] = useState(''); const [amount, setAmount] = useState(1); const [sending, setSending] = useState(false); const toast = useToast();
+  const options = useMemo(() => kind === 'condition' ? conditions.map((entry) => ({ id: entry.name, label: entry.name, hint: entry.type })) : kind === 'item' ? items.map((entry) => ({ id: entry.id, label: entry.name, hint: entry.category })) : CYPHERS.map((entry) => ({ id: entry.id, label: `${String(entry.number).padStart(2, '0')} · ${entry.title}`, hint: entry.domain })), [kind, conditions, items]);
+  const filtered = options.filter((option) => `${option.label} ${option.hint}`.toLowerCase().includes(search.toLowerCase())).slice(0, 50);
+  const send = async () => { if (!selectedId || !recipients.length) return; setSending(true); try { if (kind === 'condition') { const definition = conditions.find((entry) => entry.name === selectedId); await grantCondition(recipients, { name: selectedId, type: definition?.type, color: definition?.color }, amount); } else if (kind === 'item') { const item = items.find((entry) => entry.id === selectedId); if (!item) throw new Error('Item not found'); await grantItem(recipients, item.reference, amount); } else await grantCypherToPlayers(recipients, selectedId); toast({ title: `${kind === 'cypher' ? 'Cypher' : kind} granted to ${recipients.length} player${recipients.length === 1 ? '' : 's'}`, status: 'success' }); setSelectedId(''); setRecipients([]); } catch (caught) { toast({ title: 'Grant failed', description: String(caught), status: 'error' }); } finally { setSending(false); } };
+  return <Grid templateColumns={{ base: '1fr', lg: 'minmax(260px,.7fr) minmax(0,1.3fr)' }} gap={6}><Box><Heading size="sm" mb={3}>Recipients</Heading><RecipientPicker players={players} value={recipients} onChange={setRecipients} /></Box><VStack align="stretch" spacing={4}><Box><Heading size="md">Grant resources</Heading><Text color="#8f9bb0">One consistent dispatch flow for conditions, inventory, recipes, and Cyphers.</Text></Box><FormControl><FormLabel>Grant type</FormLabel><HStack>{(['condition', 'item', 'cypher'] as GrantKind[]).map((value) => <Button key={value} flex="1" variant={kind === value ? 'solid' : 'outline'} borderColor="#3f4c63" onClick={() => { setKind(value); setSelectedId(''); setSearch(''); }}>{value === 'cypher' ? 'Cypher' : value[0].toUpperCase() + value.slice(1)}</Button>)}</HStack></FormControl><FormControl><FormLabel>Search</FormLabel><Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={`Search ${kind}s…`} /></FormControl><Box border="1px solid #2c3648" borderRadius="12px" maxH="270px" overflowY="auto" p={2}>{filtered.map((option) => <Button key={option.id} w="full" justifyContent="space-between" variant={selectedId === option.id ? 'solid' : 'ghost'} mb={1} onClick={() => setSelectedId(option.id)}><Text noOfLines={1}>{option.label}</Text><Text fontSize="xs" opacity={.68}>{option.hint}</Text></Button>)}{!filtered.length && <Text color="#8f9bb0" p={4}>Nothing matches that search.</Text>}</Box>{kind !== 'cypher' && <FormControl maxW="220px"><FormLabel>Amount</FormLabel><NumberInput min={1} value={amount} onChange={(_, value) => setAmount(Number.isFinite(value) ? value : 1)}><NumberInputField /></NumberInput></FormControl>}<Flex justify="space-between" align="center"><Text color="#8f9bb0">{recipients.length} active recipient{recipients.length === 1 ? '' : 's'}</Text><Button leftIcon={<FaGift />} onClick={send} isLoading={sending} isDisabled={!selectedId || !recipients.length}>Send grant</Button></Flex></VStack></Grid>;
+};
+
+const MessagePanel: React.FC<{ players: PlayerProfile[]; senderId: string }> = ({ players, senderId }) => {
+  const [recipients, setRecipients] = useState<string[]>([]); const [subject, setSubject] = useState(''); const [message, setMessage] = useState(''); const [sending, setSending] = useState(false); const toast = useToast();
+  const send = async () => { if (!senderId || !recipients.length || !message.trim()) return; setSending(true); try { await sendPrivateMessages(senderId, recipients, message.trim(), subject.trim()); setMessage(''); setSubject(''); setRecipients([]); toast({ title: 'Silent message sent', status: 'success' }); } catch (caught) { toast({ title: 'Message failed', description: String(caught), status: 'error' }); } finally { setSending(false); } };
+  return <Grid templateColumns={{ base: '1fr', lg: 'minmax(260px,.7fr) minmax(0,1.3fr)' }} gap={6}><Box><Heading size="sm" mb={3}>Recipients</Heading><RecipientPicker players={players} value={recipients} onChange={setRecipients} /></Box><VStack align="stretch" spacing={4}><Box><Heading size="md">Discreet transmission</Heading><Text color="#8f9bb0">Contents stay hidden behind the player’s silent privacy prompt.</Text></Box><FormControl><FormLabel>Subject (optional)</FormLabel><Input value={subject} maxLength={80} onChange={(e) => setSubject(e.target.value)} /></FormControl><FormControl><FormLabel>Message</FormLabel><Textarea minH="240px" value={message} maxLength={2000} onChange={(e) => setMessage(e.target.value)} /></FormControl><Flex justify="space-between"><Text color="#8f9bb0">{recipients.length} selected · {message.length}/2000</Text><Button leftIcon={<FaMessage />} onClick={send} isLoading={sending} isDisabled={!recipients.length || !message.trim()}>Send silently</Button></Flex></VStack></Grid>;
+};
+
+const emptySong = (): CampaignSong => ({ id: '', title: '', location: '', youtubeUrl: '', lines: [] });
+const MusicPanel: React.FC<{ songs: CampaignSong[]; currentSongId?: string }> = ({ songs, currentSongId }) => {
+  const [draft, setDraft] = useState<CampaignSong | null>(null); const [lyrics, setLyrics] = useState(''); const [saving, setSaving] = useState(false); const toast = useToast();
+  const edit = (song?: CampaignSong) => { const next = song ? { ...song } : emptySong(); setDraft(next); setLyrics(next.lines.map((line) => line.hymmnos).join('\n')); };
+  const save = async () => { if (!draft?.title.trim()) return; setSaving(true); const song = { ...draft, id: draft.id || `${slug(draft.title)}-${crypto.randomUUID().slice(0, 8)}`, title: draft.title.trim(), lines: lyrics.split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((hymmnos) => ({ hymmnos })) }; try { await saveSong(song); setDraft(null); toast({ title: 'Song saved permanently', description: 'The track and YouTube link are stored in Firestore.', status: 'success' }); } catch (caught) { toast({ title: 'Could not save song', description: String(caught), status: 'error' }); } finally { setSaving(false); } };
+  const remove = async (song: CampaignSong) => { if (!window.confirm(`Delete “${song.title}” from the campaign library?`)) return; try { await deleteSong(song.id); toast({ title: 'Song deleted', status: 'success' }); } catch (caught) { toast({ title: 'Could not delete song', description: String(caught), status: 'error' }); } };
+  return <VStack align="stretch" spacing={4}><Flex justify="space-between"><Box><Heading size="md">Permanent music library</Heading><Text color="#8f9bb0">Every title, lyric packet, and YouTube link is stored in Firestore.</Text></Box><Button leftIcon={<FaPlus />} onClick={() => edit()}>Add song</Button></Flex><SimpleGrid columns={{ base: 1, xl: 2 }} spacing={3}>{songs.map((song) => <Box key={song.id} p={4} border="1px solid" borderColor={song.id === currentSongId ? '#8b5cf6' : '#2c3648'} bg={song.id === currentSongId ? '#211a38' : '#0d131e'} borderRadius="12px"><Flex justify="space-between" gap={3}><Box minW={0}><Text fontWeight="bold" noOfLines={1}>{song.title}</Text><Text color="#8f9bb0" fontSize="sm">{song.location || 'Campaign track'} · {song.lines.length} lyric lines</Text></Box><HStack><IconButton aria-label="Play" icon={<FaPlay />} size="sm" onClick={() => setCurrentSong(song)} /><Button size="sm" variant="outline" borderColor="#46536a" onClick={() => edit(song)}>Edit</Button><IconButton aria-label="Delete" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => remove(song)} /></HStack></Flex></Box>)}</SimpleGrid>{!songs.length && <Box border="1px dashed #3f4c63" borderRadius="12px" p={10} textAlign="center"><Text color="#8f9bb0">No songs yet. Add the first permanent campaign track.</Text></Box>}
+    <Modal isOpen={!!draft} onClose={() => setDraft(null)} size="xl"><ModalOverlay bg="rgba(0,0,0,.72)" /><ModalContent bg="#111722" border="1px solid #354156"><ModalHeader>{draft?.id ? 'Edit song' : 'Add song'}</ModalHeader><ModalCloseButton /><ModalBody><VStack spacing={4}><FormControl isRequired><FormLabel>Title</FormLabel><Input value={draft?.title || ''} onChange={(e) => setDraft((current) => current ? { ...current, title: e.target.value } : current)} /></FormControl><FormControl><FormLabel>Campaign location</FormLabel><Input value={draft?.location || ''} onChange={(e) => setDraft((current) => current ? { ...current, location: e.target.value } : current)} /></FormControl><FormControl><FormLabel>YouTube URL</FormLabel><Input value={draft?.youtubeUrl || ''} onChange={(e) => setDraft((current) => current ? { ...current, youtubeUrl: e.target.value } : current)} /></FormControl><FormControl><FormLabel>Hymmnos lyrics</FormLabel><Textarea value={lyrics} onChange={(e) => setLyrics(e.target.value)} minH="220px" placeholder="One line per lyric packet" /></FormControl></VStack></ModalBody><ModalFooter><Button variant="ghost" mr={3} onClick={() => setDraft(null)}>Cancel</Button><Button onClick={save} isLoading={saving} isDisabled={!draft?.title.trim()}>Save song</Button></ModalFooter></ModalContent></Modal>
+  </VStack>;
+};
+
+const EncounterPanel: React.FC<{ players: PlayerProfile[]; songs: CampaignSong[]; species: MonsterSpecies[]; activeEncounterId?: string }> = ({ players, songs, species, activeEncounterId }) => {
+  const [encounter, setEncounter] = useState<Encounter | null>(null);
+  useEffect(() => activeEncounterId ? subscribeEncounter(activeEncounterId, setEncounter) : (setEncounter(null), undefined), [activeEncounterId]);
+  return encounter && encounter.status === 'active' ? <BattleScreen encounter={encounter} /> : <EncounterBuilder players={players} songs={songs} species={species} />;
+};
+
+const EncounterBuilder: React.FC<{ players: PlayerProfile[]; songs: CampaignSong[]; species: MonsterSpecies[] }> = ({ players, songs, species }) => {
+  const [name, setName] = useState('New encounter'); const [playerIds, setPlayerIds] = useState<string[]>([]); const [songId, setSongId] = useState(''); const [monsterId, setMonsterId] = useState(''); const [monsters, setMonsters] = useState<EncounterParticipant[]>([]); const [floorKey, setFloorKey] = useState(''); const [map, setMap] = useState<EncounterMapFrame | undefined>(); const [starting, setStarting] = useState(false); const toast = useToast();
+  const floors = useMemo(() => mapData.flatMap((category) => category.floors.map((floor) => ({ key: `${category.id}:${floor.id}`, floor }))), []);
+  const monsterOptions = useMemo<MonsterOption[]>(() => species.flatMap((entry) => Object.entries(entry.Tiers || {}).map(([tier, data]) => { const con = Number(data.Stats?.Constitution); const multiplier = tier.toLowerCase().includes('greater') ? 4 : tier.toLowerCase().includes('regular') ? 2 : 1; return { id: `${entry.categoryId}|${entry.name}|${tier}`, name: data.Name || `${tier} ${entry.name}`, tier, hp: Number.isFinite(con) ? Math.max(1, (10 + con * 2) * multiplier) : 10 * multiplier }; })), [species]);
+  const chooseFloor = async (key: string) => { setFloorKey(key); const selected = floors.find((entry) => entry.key === key); if (!selected) { setMap(undefined); return; } try { const imageUrl = await getDownloadURL(ref(storage, `maps/${selected.floor.name}.jpg`)); setMap({ floorId: selected.floor.id, floorName: selected.floor.name, imageUrl, focusX: 50, focusY: 50, zoom: 2 }); } catch { setMap(undefined); toast({ title: 'Map image unavailable', status: 'warning' }); } };
+  const addMonster = () => { const option = monsterOptions.find((entry) => entry.id === monsterId); if (!option) return; setMonsters((current) => [...current, { id: crypto.randomUUID(), sourceId: option.id, kind: 'monster', name: option.name, monsterTier: option.tier, hp: option.hp, maxHp: option.hp, armorClass: option.armorClass }]); };
+  const begin = async () => { const party: EncounterParticipant[] = players.filter((player) => playerIds.includes(player.id)).map((player): EncounterParticipant => ({ id: `player-${player.id}`, sourceId: player.id, kind: 'player', name: playerLabel(player), hp: Number(player.stats?.hp || 10), maxHp: Number(player.stats?.maxHp || player.stats?.hp || 10), armorClass: player.stats?.armorClass })); const participants: EncounterParticipant[] = [...party, ...monsters]; if (!participants.length) return; setStarting(true); try { await startEncounter({ name: name.trim() || 'Encounter', song: songs.find((song) => song.id === songId), map, participants }); toast({ title: 'Battle started', description: 'Every player timer is paused until combat ends.', status: 'success' }); } catch (caught) { toast({ title: 'Could not start encounter', description: String(caught), status: 'error' }); } finally { setStarting(false); } };
+  return <VStack align="stretch" spacing={5}><Box><Heading size="md">Encounter builder</Heading><Text color="#8f9bb0">Assemble combat, choose its score, and frame the exact 8K map area.</Text></Box><SimpleGrid columns={{ base: 1, xl: 2 }} spacing={6}><VStack align="stretch" spacing={4}><FormControl><FormLabel>Encounter name</FormLabel><Input value={name} onChange={(e) => setName(e.target.value)} /></FormControl><FormControl><FormLabel>Battle music</FormLabel><Select value={songId} onChange={(e) => setSongId(e.target.value)}><option value="">Keep current music</option>{songs.map((song) => <option key={song.id} value={song.id}>{song.title}</option>)}</Select></FormControl><Box><FormLabel>Party members</FormLabel><RecipientPicker players={players} value={playerIds} onChange={setPlayerIds} /></Box><Divider borderColor="#2c3648" /><FormControl><FormLabel>Add monster</FormLabel><HStack><Select value={monsterId} onChange={(e) => setMonsterId(e.target.value)}><option value="">Choose monster and tier</option>{monsterOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</Select><Button onClick={addMonster} isDisabled={!monsterId}>Add</Button></HStack></FormControl><VStack align="stretch">{monsters.map((monster) => <Flex key={monster.id} p={3} bg="#0d131e" borderRadius="10px" justify="space-between"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color="#8f9bb0">Starting HP {monster.hp}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>)}</VStack></VStack><VStack align="stretch" spacing={4}><FormControl><FormLabel>Battle map</FormLabel><Select value={floorKey} onChange={(e) => chooseFloor(e.target.value)}><option value="">No map</option>{floors.map((entry) => <option key={entry.key} value={entry.key}>{entry.floor.name}</option>)}</Select></FormControl>{map ? <><Box position="relative" aspectRatio="16/9" overflow="hidden" borderRadius="14px" border="1px solid #354156" cursor="crosshair" onClick={(event) => { const rect = event.currentTarget.getBoundingClientRect(); setMap({ ...map, focusX: ((event.clientX - rect.left) / rect.width) * 100, focusY: ((event.clientY - rect.top) / rect.height) * 100 }); }}><Box as="img" src={map.imageUrl} w="100%" h="100%" objectFit="cover" transform={`scale(${map.zoom})`} transformOrigin={`${map.focusX}% ${map.focusY}%`} transition="transform .2s" /><Box position="absolute" left="50%" top="50%" transform="translate(-50%,-50%)" w="24px" h="24px" border="2px solid #f8fafc" borderRadius="full" boxShadow="0 0 0 2px #8b5cf6" /></Box><FormControl><FormLabel>Zoom ({map.zoom.toFixed(1)}×)</FormLabel><Input type="range" min="1" max="8" step=".25" value={map.zoom} onChange={(e) => setMap({ ...map, zoom: Number(e.target.value) })} /></FormControl><Text color="#8f9bb0" fontSize="sm">Click the map to center the battle. The saved frame is shown throughout combat.</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">Choose an available floor map.</Text></Box>}</VStack></SimpleGrid><Flex justify="flex-end"><Button size="lg" leftIcon={<FaSkull />} onClick={begin} isLoading={starting} isDisabled={!playerIds.length && !monsters.length}>Start battle and pause all timers</Button></Flex></VStack>;
+};
+
+const BattleScreen: React.FC<{ encounter: Encounter }> = ({ encounter }) => {
+  const [participants, setParticipants] = useState(encounter.participants); const [saving, setSaving] = useState(false); const toast = useToast();
+  useEffect(() => setParticipants(encounter.participants), [encounter.participants]);
+  const update = (id: string, patch: Partial<EncounterParticipant>) => setParticipants((current) => current.map((entry) => entry.id === id ? { ...entry, ...patch } : entry));
+  const persist = async (next = participants) => { setSaving(true); try { await updateEncounterParticipants(encounter.id, next); } finally { setSaving(false); } };
+  const ordered = [...participants].sort((a, b) => (b.initiative ?? -999) - (a.initiative ?? -999));
+  const finish = async () => { if (!window.confirm('End this battle and resume eligible player timers?')) return; try { await endEncounter(encounter.id); toast({ title: 'Battle ended', description: 'Global timer pause released.', status: 'success' }); } catch (caught) { toast({ title: 'Could not end battle', description: String(caught), status: 'error' }); } };
+  return <VStack align="stretch" spacing={5}><Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><Button colorScheme="red" onClick={finish}>End battle</Button></Flex><Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}><VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" borderColor="#46536a" onClick={() => persist()} isLoading={saving}>Save battle state</Button></VStack><Box>{encounter.map ? <><Box aspectRatio="16/9" overflow="hidden" borderRadius="14px" border="1px solid #354156"><Box as="img" src={encounter.map.imageUrl} w="100%" h="100%" objectFit="cover" transform={`scale(${encounter.map.zoom})`} transformOrigin={`${encounter.map.focusX}% ${encounter.map.focusY}%`} /></Box><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box></Grid></VStack>;
+};
+
+const AdminPortal: React.FC<{ previewMode?: boolean }> = (props) => <ChakraProvider theme={adminTheme} resetCSS={false}><AdminPortalContent {...props} /></ChakraProvider>;
 
 export default AdminPortal;

@@ -47,7 +47,7 @@ interface ReyvateilInfoProps {
 
 const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, setInventory }) => {
   const { currentUser } = useAuth();
-  const { unlockedLexicon } = useCampaign();
+  const { unlockedLexicon, timersRunning, timerEpoch, timerClockReady } = useCampaign();
   const { setReyvateilTheme } = useThemeContext(); // Access theme context
   const [selectedAbility, setSelectedAbility] = useState<Ability | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,13 +66,14 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
   // Initialize cooldowns from localStorage
   useEffect(() => {
     const initializeCooldowns = () => {
+      if (!timerClockReady) return;
       const allCooldowns = getAllCooldowns();
       const updatedCooldowns: Record<string, number> = {};
 
       const currentTime = Date.now();
 
       Object.entries(allCooldowns).forEach(([abilityName, endTime]) => {
-        if (typeof endTime === 'number' && endTime > currentTime) {
+        if (typeof endTime === 'number' && (endTime > currentTime || !timersRunning)) {
           updatedCooldowns[abilityName] = endTime;
         } else {
           clearCooldown(abilityName);
@@ -83,10 +84,11 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
     };
 
     initializeCooldowns();
-  }, []);
+  }, [timerClockReady, timerEpoch, timersRunning]);
 
   // Update cooldowns every second
   useEffect(() => {
+    if (!timersRunning) return undefined;
     const timer = setInterval(() => {
       const currentTime = Date.now();
       const updatedCooldowns: Record<string, number> = {};
@@ -103,10 +105,11 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [cooldowns]);
+  }, [cooldowns, timersRunning]);
 
   // Fetch selected image and user data
   useEffect(() => {
+    let hungerInterval: ReturnType<typeof setInterval> | undefined;
     const fetchSelectedImage = async () => {
       if (currentUser && reyvateil) {
         try {
@@ -132,7 +135,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           }
 
           // Decrement every hour (3,600,000 ms)
-          const interval = setInterval(() => {
+          if (timersRunning) hungerInterval = setInterval(() => {
             setHunger((prev) => {
               const newValue = Math.max(prev - 10, 0);
 
@@ -145,9 +148,6 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
               return newValue;
             });
           }, 3600000); // every hour
-
-          // Cleanup on unmount
-          return () => clearInterval(interval);
         } catch (error) {
           console.error('Error fetching selected Reyvateil image:', error);
           setSelectedImageUrl(reyvateil.image || '');
@@ -156,7 +156,8 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
     };
 
     fetchSelectedImage();
-  }, [currentUser, reyvateil]);
+    return () => { if (hungerInterval) clearInterval(hungerInterval); };
+  }, [currentUser, reyvateil, timersRunning]);
 
   // Set theme based on Reyvateil's name
   useEffect(() => {
@@ -224,6 +225,11 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         return;
       }
 
+      if (!timersRunning) {
+        toast({ title: 'Campaign clock paused', description: 'Abilities cannot begin a cooldown while your session clock is paused.', status: 'info', duration: 3500 });
+        return;
+      }
+
       const currentTime = Date.now();
       const cooldownEndTime = currentTime + ability.cooldown * 1000;
 
@@ -236,7 +242,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         [ability.name]: cooldownEndTime,
       }));
     },
-    [currentUser, reyvateil, toast]
+    [currentUser, reyvateil, timersRunning, toast]
   );
 
   // Handle feeding the Reyvateil

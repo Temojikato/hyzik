@@ -21,6 +21,7 @@ import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 const Signup: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
@@ -48,6 +49,12 @@ const Signup: React.FC = () => {
       const userDocRef = doc(db, 'users', user.uid);
       await setDoc(userDocRef, {
         email: user.email,
+        displayName: nameRef.current!.value.trim(),
+        active: false,
+        conditions: [],
+        inventory: [],
+        unlockedCyphers: [],
+        unlockedRecipes: [],
         createdAt: serverTimestamp(),
       });
 
@@ -85,6 +92,10 @@ const Signup: React.FC = () => {
           )}
           <form onSubmit={handleSubmit}>
             <VStack spacing={4} align="stretch">
+              <FormControl id="name" isRequired>
+                <FormLabel>Your name</FormLabel>
+                <Input ref={nameRef} maxLength={80} placeholder="What should the party call you?" />
+              </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input type="email" ref={emailRef} placeholder="Enter your email" />

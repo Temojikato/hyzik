@@ -1,10 +1,15 @@
 import {
+  arrayUnion,
   collection,
+  deleteDoc,
   doc,
   documentId,
+  DocumentReference,
+  getDoc,
   getDocs,
   onSnapshot,
   query,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -15,6 +20,9 @@ import { db } from '../Firebase';
 import {
   CampaignSong,
   CampaignState,
+  Encounter,
+  EncounterMapFrame,
+  EncounterParticipant,
   MessageStatus,
   PlayerProfile,
   PrivateMessage,
@@ -40,12 +48,25 @@ export const setCurrentSong = async (song: CampaignSong) => {
     currentSongId: song.id,
     currentSongTitle: song.title,
     youtubeUrl: song.youtubeUrl || '',
+    songLibraryInitialized: true,
     updatedAt: serverTimestamp(),
   }, { merge: true });
 };
 
 export const saveSong = async (song: CampaignSong) => {
   await setDoc(doc(db, 'songs', song.id), { ...song, updatedAt: serverTimestamp() }, { merge: true });
+  await setDoc(doc(db, 'campaign', 'current'), { songLibraryInitialized: true, updatedAt: serverTimestamp() }, { merge: true });
+};
+
+export const deleteSong = async (songId: string) => {
+  await deleteDoc(doc(db, 'songs', songId));
+  const stateRef = doc(db, 'campaign', 'current');
+  const state = await getDoc(stateRef);
+  await setDoc(stateRef, {
+    songLibraryInitialized: true,
+    ...(state.data()?.currentSongId === songId ? { currentSongId: '', currentSongTitle: '', youtubeUrl: '' } : {}),
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
 };
 
 export const subscribePrivateMessages = (
@@ -70,6 +91,10 @@ export const updateMessageStatus = async (messageId: string, status: MessageStat
     status,
     ...(timestampField ? { [timestampField]: serverTimestamp() } : {}),
   });
+};
+
+export const discardPrivateMessage = async (messageId: string) => {
+  await deleteDoc(doc(db, 'privateMessages', messageId));
 };
 
 export const sendPrivateMessages = async (
@@ -110,6 +135,116 @@ export const subscribePlayers = (
 
 export const grantCyphers = async (userId: string, cypherIds: string[]) => {
   await updateDoc(doc(db, 'users', userId), { unlockedCyphers: cypherIds });
+};
+
+export const setPlayerActive = async (userId: string, active: boolean) => {
+  await updateDoc(doc(db, 'users', userId), {
+    active,
+    ...(active ? { activatedAt: serverTimestamp() } : { pausedAt: serverTimestamp() }),
+  });
+};
+
+export const updatePlayerName = async (userId: string, displayName: string) => {
+  await updateDoc(doc(db, 'users', userId), { displayName: displayName.trim() });
+};
+
+export const setPlayersActive = async (userIds: string[], active: boolean) => {
+  const batch = writeBatch(db);
+  userIds.forEach((userId) => batch.update(doc(db, 'users', userId), {
+    active,
+    ...(active ? { activatedAt: serverTimestamp() } : { pausedAt: serverTimestamp() }),
+  }));
+  await batch.commit();
+};
+
+export const grantCondition = async (
+  recipientIds: string[],
+  condition: { name: string; type?: string; color?: string },
+  amount: number,
+) => runTransaction(db, async (transaction) => {
+  const refs = recipientIds.map((id) => doc(db, 'users', id));
+  const snapshots = await Promise.all(refs.map((ref) => transaction.get(ref)));
+  snapshots.forEach((snapshot, index) => {
+    const existing = (snapshot.data()?.conditions || []) as Array<string | { name: string; amount?: number; type?: string; color?: string }>;
+    const normalized = existing.map((entry) => typeof entry === 'string' ? { name: entry, amount: 0 } : { ...entry });
+    const match = normalized.find((entry) => entry.name.toLowerCase() === condition.name.toLowerCase());
+    if (match) match.amount = Math.max(0, Number(match.amount || 0) + amount);
+    else if (amount > 0) normalized.push({ ...condition, amount });
+    transaction.update(refs[index], { conditions: normalized.filter((entry) => Number(entry.amount || 0) > 0) });
+  });
+});
+
+export const grantItem = async (
+  recipientIds: string[],
+  itemRef: DocumentReference,
+  quantity: number,
+) => runTransaction(db, async (transaction) => {
+  const refs = recipientIds.map((id) => doc(db, 'users', id));
+  const snapshots = await Promise.all(refs.map((ref) => transaction.get(ref)));
+  snapshots.forEach((snapshot, index) => {
+    const inventory = [...(snapshot.data()?.inventory || [])] as Array<{ reference: DocumentReference; quantity: number }>;
+    const match = inventory.find((entry) => entry.reference?.path === itemRef.path);
+    if (match) match.quantity = Math.max(0, Number(match.quantity || 0) + quantity);
+    else if (quantity > 0) inventory.push({ reference: itemRef, quantity });
+    transaction.update(refs[index], { inventory: inventory.filter((entry) => entry.quantity > 0) });
+  });
+});
+
+export const grantCypherToPlayers = async (recipientIds: string[], cypherId: string) => {
+  const batch = writeBatch(db);
+  recipientIds.forEach((id) => batch.update(doc(db, 'users', id), { unlockedCyphers: arrayUnion(cypherId) }));
+  await batch.commit();
+};
+
+export const subscribeEncounter = (
+  encounterId: string,
+  onValue: (encounter: Encounter | null) => void,
+  onError?: (error: Error) => void,
+) => onSnapshot(doc(db, 'encounters', encounterId), (snapshot) => {
+  onValue(snapshot.exists() ? ({ id: snapshot.id, ...snapshot.data() } as Encounter) : null);
+}, onError);
+
+export const startEncounter = async (input: {
+  name: string;
+  song?: CampaignSong;
+  map?: EncounterMapFrame;
+  participants: EncounterParticipant[];
+}) => {
+  const encounterRef = doc(collection(db, 'encounters'));
+  const batch = writeBatch(db);
+  batch.set(encounterRef, {
+    name: input.name,
+    status: 'active',
+    songId: input.song?.id || '',
+    map: input.map || null,
+    participants: input.participants,
+    createdAt: serverTimestamp(),
+    startedAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+  batch.set(doc(db, 'campaign', 'current'), {
+    activeEncounterId: encounterRef.id,
+    battleActive: true,
+    timersPaused: true,
+    timersPausedAt: serverTimestamp(),
+    ...(input.song ? { currentSongId: input.song.id, currentSongTitle: input.song.title, youtubeUrl: input.song.youtubeUrl || '' } : {}),
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
+  await batch.commit();
+  return encounterRef.id;
+};
+
+export const updateEncounterParticipants = async (encounterId: string, participants: EncounterParticipant[]) => {
+  await updateDoc(doc(db, 'encounters', encounterId), { participants, updatedAt: serverTimestamp() });
+};
+
+export const endEncounter = async (encounterId: string) => {
+  const batch = writeBatch(db);
+  batch.update(doc(db, 'encounters', encounterId), { status: 'complete', endedAt: serverTimestamp(), updatedAt: serverTimestamp() });
+  batch.set(doc(db, 'campaign', 'current'), {
+    activeEncounterId: '', battleActive: false, timersPaused: false, timersResumedAt: serverTimestamp(), updatedAt: serverTimestamp(),
+  }, { merge: true });
+  await batch.commit();
 };
 
 export const subscribeUnlockedLexicon = (

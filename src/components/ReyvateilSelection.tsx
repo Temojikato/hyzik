@@ -41,7 +41,7 @@ import { FaWandMagicSparkles } from 'react-icons/fa6';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const ReyvateilSelection: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, profile } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,6 +67,8 @@ const ReyvateilSelection: React.FC = () => {
   const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [portraitDirection, setPortraitDirection] = useState<string>('');
   const [generatingPortrait, setGeneratingPortrait] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const [savingName, setSavingName] = useState(false);
   const imageGenerationEnabled = process.env.REACT_APP_ENABLE_IMAGE_GENERATION === 'true';
 
   // New state for managing the steps
@@ -284,6 +286,28 @@ const ReyvateilSelection: React.FC = () => {
     return (
       <Flex justify="center" align="center" height="60vh">
         <Spinner size="xl" color="purple.400" />
+      </Flex>
+    );
+  }
+
+  if (profile && !profile.displayName) {
+    const savePlayerName = async () => {
+      if (!currentUser || !playerName.trim()) return;
+      setSavingName(true);
+      try {
+        await setDoc(doc(db, 'users', currentUser.uid), { displayName: playerName.trim() }, { merge: true });
+        toast({ title: 'Name recorded', description: 'Now choose the Reyvateil who will accompany you.', status: 'success' });
+      } finally { setSavingName(false); }
+    };
+    return (
+      <Flex minH="100vh" align="center" justify="center" bgGradient="linear(to-br, gray.900, purple.900, black)" p={4}>
+        <Box bg="gray.800" border="1px solid" borderColor="purple.500" borderRadius="xl" p={8} maxW="520px" w="full">
+          <VStack align="stretch" spacing={5}>
+            <Box><Text fontSize="2xl" fontWeight="bold">Before the song begins</Text><Text color="gray.300" mt={2}>Enter the name the other players and campaign controls should use for you.</Text></Box>
+            <FormControl isRequired><FormLabel>Your name</FormLabel><Input value={playerName} onChange={(event) => setPlayerName(event.target.value)} maxLength={80} autoFocus /></FormControl>
+            <Button colorScheme="purple" onClick={savePlayerName} isLoading={savingName} isDisabled={!playerName.trim()}>Continue to Reyvateil selection</Button>
+          </VStack>
+        </Box>
       </Flex>
     );
   }

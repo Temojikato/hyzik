@@ -9,7 +9,6 @@ initializeApp();
 const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY');
 
 const clean = (value, max) => typeof value === 'string' ? value.trim().slice(0, max) : '';
-
 exports.generateReyvateilPortrait = onCall({
   region: 'europe-west1',
   secrets: [OPENAI_API_KEY],

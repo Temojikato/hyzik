@@ -14,6 +14,9 @@ export interface PlayerProfile {
   unlockedRecipes?: string[];
   inventory?: unknown[];
   lastSeenAt?: Timestamp;
+  active?: boolean;
+  activatedAt?: Timestamp;
+  pausedAt?: Timestamp;
 }
 
 export interface CypherDefinition {
@@ -59,6 +62,48 @@ export interface CampaignState {
   currentSongId?: string;
   currentSongTitle?: string;
   youtubeUrl?: string;
+  songLibraryInitialized?: boolean;
+  battleActive?: boolean;
+  timersPaused?: boolean;
+  timersPausedAt?: Timestamp;
+  timersResumedAt?: Timestamp;
+  activeEncounterId?: string;
+  updatedAt?: Timestamp;
+}
+
+export type GrantKind = 'condition' | 'item' | 'cypher';
+
+export interface EncounterMapFrame {
+  floorId: string;
+  floorName: string;
+  imageUrl: string;
+  focusX: number;
+  focusY: number;
+  zoom: number;
+}
+
+export interface EncounterParticipant {
+  id: string;
+  sourceId: string;
+  kind: 'player' | 'monster';
+  name: string;
+  initiative?: number;
+  hp: number;
+  maxHp: number;
+  armorClass?: number;
+  monsterTier?: string;
+}
+
+export interface Encounter {
+  id: string;
+  name: string;
+  status: 'active' | 'complete';
+  songId?: string;
+  map?: EncounterMapFrame;
+  participants: EncounterParticipant[];
+  createdAt?: Timestamp;
+  startedAt?: Timestamp;
+  endedAt?: Timestamp;
   updatedAt?: Timestamp;
 }
 

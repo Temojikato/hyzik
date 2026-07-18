@@ -40,6 +40,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Conditions';
 import BossBattleModal from './BossBattleModal';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
+import { useCampaign } from '../contexts/CampaignContext';
 
 // Define pulsate animation for Progress bar
 const pulsate = keyframes`
@@ -57,6 +58,7 @@ const borderGlow = keyframes`
 
 const PlayerInfo: React.FC = () => {
   const { currentUser } = useAuth();
+  const { timersRunning } = useCampaign();
   const [conditions, setConditions] = useState<UserCondition[]>([]);
   const [conditionDefinitions, setConditionDefinitions] = useState<ConditionDefinition[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // For Gain Condition Modal
@@ -321,6 +323,7 @@ const PlayerInfo: React.FC = () => {
 
   // Effect to handle periodic checks for activating effects
   useEffect(() => {
+    if (!timersRunning) return undefined;
     // Function to perform checks
     const performCheck = () => {
       checkConditions(); // Regular check without forcing
@@ -343,11 +346,11 @@ const PlayerInfo: React.FC = () => {
       // Cleanup interval on unmount or when dependencies change
       return () => clearInterval(intervalId);
     }
-  }, [conditions, conditionDefinitions]);
+  }, [conditions, conditionDefinitions, timersRunning]);
 
   // Timer useEffect
   useEffect(() => {
-    if (effectTimer === null) return;
+    if (effectTimer === null || !timersRunning) return;
 
     // If an interval is already set, do not set another
     if (timerRef.current) return;
@@ -375,7 +378,7 @@ const PlayerInfo: React.FC = () => {
         timerRef.current = null;
       }
     };
-  }, [effectTimer]);
+  }, [effectTimer, timersRunning]);
 
   // Inside your PlayerInfo component
   const getRandomDuration = (min: number, max: number): number => {

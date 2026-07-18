@@ -8,9 +8,16 @@
   "storage": {
     "rules": "storage.rules"
   },
-  "functions": {
-    "source": "functions"
-  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "portrait"
+    },
+    {
+      "source": "functions-admin",
+      "codebase": "admin"
+    }
+  ],
   "hosting": {
     "public": "build",
     "ignore": [

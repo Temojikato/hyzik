@@ -40,8 +40,8 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackDismiss(isOpen, onClose);
-  const { isAdmin } = useAuth();
-  const { currentSong } = useCampaign();
+  const { isAdmin, currentUser, profile } = useAuth();
+  const { currentSong, timersRunning } = useCampaign();
 
   const actions = [
     { label: 'Resident Codex', colorScheme: 'gray', variant: 'outline', onClick: onOpenNPC },
@@ -63,6 +63,9 @@ const Header: React.FC<HeaderProps> = ({
       >
         HYZIK
       </Heading>
+       <Text fontSize="sm" fontWeight="semibold" color="textHeader" noOfLines={1}>{profile?.displayName || currentUser?.displayName || 'Unnamed Diver'}</Text>
+       <Text fontSize="10px" color="textMuted" noOfLines={1}>{currentUser?.uid}</Text>
+       <Badge mt={1} colorScheme={timersRunning ? 'green' : 'gray'}>{timersRunning ? 'Session active' : 'Timers paused'}</Badge>
        <HStack spacing={2} display={{ base: 'none', xl: 'flex' }}><Badge colorScheme="purple">Tower link</Badge>{currentSong?.lines[0]?.hymmnos ? <><Text fontSize="xs" color="textMuted">Receiving:</Text><Text fontFamily="Hymmnos" fontSize="sm" color="textHeader" noOfLines={1}>{currentSong.lines[0].hymmnos}</Text></> : <Text fontSize="xs" color="textMuted">Awaiting song telemetry</Text>}</HStack>
       </Box>
 

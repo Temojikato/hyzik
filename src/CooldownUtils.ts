@@ -48,3 +48,11 @@ export const getAllCooldowns = (): Record<string, number> => {
   }
   return cooldowns;
 };
+
+/** Move every local cooldown forward by time spent in a paused campaign clock. */
+export const shiftAllCooldowns = (milliseconds: number) => {
+  if (!Number.isFinite(milliseconds) || milliseconds <= 0) return;
+  Object.entries(getAllCooldowns()).forEach(([abilityName, endTime]) => {
+    setCooldown(abilityName, endTime + milliseconds);
+  });
+};

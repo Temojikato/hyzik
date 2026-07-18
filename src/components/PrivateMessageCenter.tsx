@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react';
 import { FaEye, FaEyeSlash, FaShieldHalved } from 'react-icons/fa6';
 import { useAuth } from '../contexts/AuthContext';
-import { subscribePrivateMessages, updateMessageStatus } from '../services/campaignService';
+import { discardPrivateMessage, subscribePrivateMessages, updateMessageStatus } from '../services/campaignService';
 import { PrivateMessage } from '../types/Campaign';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 
@@ -34,7 +34,7 @@ const PrivateMessageCenter: React.FC = () => {
 
   const dismiss = async () => {
     if (!active) return;
-    await updateMessageStatus(active.id, active.status === 'accepted' ? 'read' : 'dismissed');
+    await discardPrivateMessage(active.id);
     setActive(null);
   };
 

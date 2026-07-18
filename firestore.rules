@@ -9,11 +9,15 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow create: if self(userId) && request.resource.data.keys().hasOnly(['email', 'createdAt']);
+      allow create: if self(userId) && request.resource.data.keys().hasOnly([
+        'email', 'displayName', 'active', 'conditions', 'inventory', 'unlockedCyphers',
+        'unlockedRecipes', 'createdAt'
+      ]);
       allow read: if self(userId) || admin();
       allow update: if admin() || (self(userId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
         'reyvateilId', 'reyvateilName', 'reyvateilImageUrl', 'reyvateilLevel', 'level',
-        'reyvateilHunger', 'inventory', 'conditions', 'stats', 'unlockedRecipes', 'lastSeenAt'
+        'reyvateilHunger', 'inventory', 'conditions', 'stats', 'unlockedRecipes', 'lastSeenAt',
+        'displayName'
       ]));
       allow delete: if admin();
 
@@ -25,6 +29,7 @@ service cloud.firestore {
     match /privateMessages/{messageId} {
       allow create, read, delete: if admin();
       allow read: if signedIn() && resource.data.recipientId == request.auth.uid;
+      allow delete: if signedIn() && resource.data.recipientId == request.auth.uid;
       allow update: if admin() || (
         signedIn() && resource.data.recipientId == request.auth.uid &&
         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'acceptedAt', 'readAt'])
@@ -37,6 +42,11 @@ service cloud.firestore {
     }
 
     match /songs/{songId} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
+    match /encounters/{encounterId} {
       allow read: if signedIn();
       allow write: if admin();
     }
