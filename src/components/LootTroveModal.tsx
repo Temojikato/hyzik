@@ -16,6 +16,7 @@ import lootTroveData from "../dataSets/lootTroves.json";
 import { rollLoot, addLootToInventory, RolledLoot } from "../utils/lootLogic";
 import { User } from "firebase/auth";
 import { Item } from "../types/Reyvateils";
+import { useBackDismiss } from "../contexts/BackNavigationContext";
 
 // Interfaces matching our JSON structure:
 export interface Tier {
@@ -64,6 +65,7 @@ const LootTroveModal: React.FC<LootTroveModalProps> = ({
   inventory,
   setInventory
 }) => {
+  useBackDismiss(isOpen, onClose);
   const toast = useToast();
   const categories: LootCategory[] = lootTroveData.categories;
   const [selectedCategory, setSelectedCategory] = useState<LootCategory | null>(null);

@@ -12,6 +12,7 @@ import {
 import MapPage from './MapPage'; // your existing MapPage
 import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface FullScreenMapModalProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ interface FullScreenMapModalProps {
 }
 
 const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose, inventory, setInventory, currentUser }) => {
+  useBackDismiss(isOpen, onClose);
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered motionPreset="slideInBottom">
       <ModalOverlay />

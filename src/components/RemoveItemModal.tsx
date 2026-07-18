@@ -21,6 +21,7 @@ import { User } from 'firebase/auth';
 import { doc, runTransaction } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { serializeInventory } from '../utils/inventory';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface RemoveItemModalProps {
   isOpen: boolean;
@@ -39,6 +40,7 @@ const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
   setInventory,
   currentUser,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const [quantityToRemove, setQuantityToRemove] = useState<number>(1);
   const toast = useToast();
 

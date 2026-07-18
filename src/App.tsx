@@ -15,6 +15,7 @@ import AdminPortal from './components/AdminPortal';
 import AdminPlayerPreview from './components/AdminPlayerPreview';
 import PrivateMessageCenter from './components/PrivateMessageCenter';
 import TranslatorPreview from './components/TranslatorPreview';
+import { BackNavigationProvider } from './contexts/BackNavigationContext';
 
 const App: React.FC = () => {
   return (
@@ -22,8 +23,9 @@ const App: React.FC = () => {
       <CustomThemeProvider>
         <CampaignProvider>
           <Router>
-            <PrivateMessageCenter />
-            <Routes>
+            <BackNavigationProvider>
+              <PrivateMessageCenter />
+              <Routes>
             {/* Protected Home Route */}
             <Route
               path="/"
@@ -51,7 +53,8 @@ const App: React.FC = () => {
             <Route path="/admin/players/:playerId" element={<PrivateRoute><AdminRoute><AdminPlayerPreview /></AdminRoute></PrivateRoute>} />
             {process.env.NODE_ENV === 'development' && <Route path="/__design/admin" element={<AdminPortal previewMode />} />}
             {process.env.NODE_ENV === 'development' && <Route path="/__design/translator" element={<TranslatorPreview />} />}
-            </Routes>
+              </Routes>
+            </BackNavigationProvider>
           </Router>
         </CampaignProvider>
       </CustomThemeProvider>

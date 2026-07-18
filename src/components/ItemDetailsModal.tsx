@@ -26,6 +26,7 @@ import { db } from '../Firebase';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import { serializeInventory } from '../utils/inventory';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface ItemDetailsModalProps {
   isOpen: boolean;
@@ -48,6 +49,7 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
   unlockedRecipes,
   setUnlockedRecipes,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const {
     isOpen: isRemoveModalOpen,
     onOpen: onRemoveModalOpen,

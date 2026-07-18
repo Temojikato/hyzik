@@ -24,6 +24,7 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import { getFirestore, collection, query, where, getDocs, runTransaction, doc } from 'firebase/firestore';
 import { serializeInventory } from '../utils/inventory';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface RecipeDetailsModalProps {
   isOpen: boolean;
@@ -46,6 +47,7 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
   setInventory,
   currentUser,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const toast = useToast();
   const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
   const [loadingImage, setLoadingImage] = useState<boolean>(true);

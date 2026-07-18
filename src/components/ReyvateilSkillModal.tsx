@@ -20,6 +20,7 @@ import { Ability } from '../types/Reyvateils';
 import { resolveAbilityInvocation } from '../utils/abilityHymmnos';
 import { useCampaign } from '../contexts/CampaignContext';
 import { FaVolumeHigh } from 'react-icons/fa6';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface ReyvateilSkillModalProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
   remainingTime,
   onUseAbility,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const { unlockedLexicon } = useCampaign();
   const invocation = resolveAbilityInvocation(ability);
   const unlocked = unlockedLexicon.get(invocation.lexiconEntryId);

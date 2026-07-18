@@ -27,6 +27,7 @@ import TiersSwiper from './TiersSwiper';
 import TierImage from './TierImage';
 import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface FullScreenBestiaryModalProps {
   isOpen: boolean;
@@ -43,6 +44,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
   setInventory,
   currentUser
 }) => {
+  useBackDismiss(isOpen, onClose);
   const [allSpecies, setAllSpecies] = useState<MonsterSpecies[]>([]);
   const [allCategories, setAllCategories] = useState<MonsterCategory[]>([]);
   const [loading, setLoading] = useState(false);
@@ -58,6 +60,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
     onOpen: openDetails,
     onClose: closeDetails,
   } = useDisclosure();
+  useBackDismiss(isDetailsOpen, closeDetails);
 
   // Fetch all categories and monsters from Firestore when modal is open
   useEffect(() => {

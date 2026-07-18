@@ -7,6 +7,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import 'swiper/css';
 import NPCImage from './NPCImage';
 import { NPCImageFile } from '../types/ResidentCodexTypes';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface FullScreenImageGalleryProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ const FullScreenImageGallery: React.FC<FullScreenImageGalleryProps> = ({
   initialIndex = 0,
   locked = false,
 }) => {
+  useBackDismiss(isOpen, onClose);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {

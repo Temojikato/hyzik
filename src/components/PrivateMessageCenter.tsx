@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash, FaShieldHalved } from 'react-icons/fa6';
 import { useAuth } from '../contexts/AuthContext';
 import { subscribePrivateMessages, updateMessageStatus } from '../services/campaignService';
 import { PrivateMessage } from '../types/Campaign';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const PrivateMessageCenter: React.FC = () => {
   const { currentUser } = useAuth();
@@ -25,8 +26,6 @@ const PrivateMessageCenter: React.FC = () => {
     if (!active && nextPopup) setActive(nextPopup);
   }, [active, nextPopup]);
 
-  if (!currentUser) return null;
-
   const accept = async () => {
     if (!active) return;
     await updateMessageStatus(active.id, 'accepted');
@@ -44,6 +43,10 @@ const PrivateMessageCenter: React.FC = () => {
     setSnoozedIds((current) => [...current, active.id]);
     setActive(null);
   };
+
+  useBackDismiss(Boolean(active), active?.status === 'waiting' ? notNow : dismiss);
+
+  if (!currentUser) return null;
 
   return (
     <>

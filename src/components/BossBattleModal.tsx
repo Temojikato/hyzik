@@ -17,6 +17,7 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface BossBattleModalProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ const BossBattleModal: React.FC<BossBattleModalProps> = ({
   sin,
   virtue,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const navigate = useNavigate();
 
   // Logout using signOut from firebase/auth.

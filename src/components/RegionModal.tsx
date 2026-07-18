@@ -26,6 +26,7 @@ import { getMonsterByName } from '../utils/fetchAllMonsters';
 import { User } from 'firebase/auth';
 import { Item } from '../types/Reyvateils';
 import InteractiveMapRegionTown from './InteractiveMapRegionTown';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface RegionModalProps {
   region: MapRegion;
@@ -54,6 +55,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
   setInventory,
   currentUser
 }) => {
+  useBackDismiss(isOpen, onClose);
   // State and refs for interactive image (same as your working code)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -154,6 +156,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
     onOpen: openMonsterModal,
     onClose: closeMonsterModal,
   } = useDisclosure();
+  useBackDismiss(isMonsterModalOpen, closeMonsterModal);
 
   async function handleMonsterClick(monsterName: string) {
     const monster = await getMonsterByName(monsterName);

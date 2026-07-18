@@ -22,6 +22,7 @@ import { MonsterSpecies } from '../types/BestiaryTypes';
 import TiersSwiper from './TiersSwiper';
 import { User } from 'firebase/auth';
 import { Item } from '../types/Reyvateils';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface MapAreaModalProps {
   area: MapArea;
@@ -44,6 +45,7 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
   setInventory,
   currentUser
 }) => {
+  useBackDismiss(isOpen, onClose);
   // For handling region clicks (opens the RegionModal)
   const [selectedRegion, setSelectedRegion] = useState<MapRegion | null>(null);
   const [regionModalOpen, setRegionModalOpen] = useState(false);
@@ -63,6 +65,7 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
     onOpen: openMonsterModal,
     onClose: closeMonsterModal,
   } = useDisclosure();
+  useBackDismiss(isMonsterModalOpen, closeMonsterModal);
 
   async function handleAreaMonsterClick(monsterName: string) {
     const monster = await getMonsterByName(monsterName);

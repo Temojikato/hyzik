@@ -27,6 +27,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import NPCImage from './NPCImage';
 import FullScreenImageGallery from './FullScreenImageGallery';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 type CategoryMode = 'workplace' | 'families' | 'faction';
 const categoryModes: CategoryMode[] = ['workplace', 'families', 'faction'];
@@ -36,6 +37,7 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
   onClose,
   currentUser,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const [allNPCs, setAllNPCs] = useState<NPC[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,6 +49,7 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
   // For NPC detail modal
   const [selectedNPC, setSelectedNPC] = useState<NPC | null>(null);
   const { isOpen: isDetailsOpen, onOpen: openDetails, onClose: closeDetails } = useDisclosure();
+  useBackDismiss(isDetailsOpen, closeDetails);
 
   // For zero-UI fullscreen gallery
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);

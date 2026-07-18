@@ -16,6 +16,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { Item } from '../types/Reyvateils';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface FeedModalProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ interface FeedModalProps {
 }
 
 const FeedModal: React.FC<FeedModalProps> = ({ isOpen, onClose, inventory, onConfirm }) => {
+  useBackDismiss(isOpen, onClose);
   
   // Filter out only items that are of the category "Lesser Spirit Food"
   const feedItems = inventory.filter((item) => item.category === 'Lesser Spirit Food');

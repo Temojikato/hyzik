@@ -38,6 +38,7 @@ import { signOut } from 'firebase/auth';
 import ReyvateilTest from './ReyvateilTest'; // Import the new component
 import { httpsCallable } from 'firebase/functions';
 import { FaWandMagicSparkles } from 'react-icons/fa6';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const ReyvateilSelection: React.FC = () => {
   const { currentUser } = useAuth();
@@ -49,6 +50,8 @@ const ReyvateilSelection: React.FC = () => {
     onOpen: onImageSelectionOpen,
     onClose: onImageSelectionClose,
   } = useDisclosure();
+  useBackDismiss(isOpen, onClose);
+  useBackDismiss(isImageSelectionOpen, onImageSelectionClose);
   const [reyvateils, setReyvateils] = useState<Reyvateil[]>([]);
   const [selectedReyvateilId, setSelectedReyvateilId] = useState<string>('');
   const [selectedReyvateil, setSelectedReyvateil] = useState<Reyvateil | null>(

@@ -34,6 +34,7 @@ import {
 import { Item, Reyvateil } from '../types/Reyvateils'; // Ensure these types are correctly defined
 import { User } from 'firebase/auth';
 import { serializeInventory } from '../utils/inventory';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface AddItemModalProps {
   isOpen: boolean;
@@ -57,6 +58,7 @@ const AddItemModal: React.FC<AddItemModalProps> = ({
   inventory,
   setInventory,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const [itemOptions, setItemOptions] = useState<SelectOption[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);

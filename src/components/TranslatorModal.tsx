@@ -11,6 +11,7 @@ import HymmnosText from './HymmnosText';
 import LexiconEntryModal from './LexiconEntryModal';
 import { PublicLexiconEntry } from '../types/Campaign';
 import { buildProgressiveTranslation } from '../utils/hymmnosTranslation';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const SongTranslation: React.FC<{ hymmnos: string; publicLexicon: PublicLexiconEntry[]; unlockedLexicon: ReturnType<typeof useCampaign>['unlockedLexicon'] }> = ({ hymmnos, publicLexicon, unlockedLexicon }) => {
   const translation = useMemo(() => buildProgressiveTranslation(hymmnos, publicLexicon, unlockedLexicon), [hymmnos, publicLexicon, unlockedLexicon]);
@@ -23,6 +24,7 @@ const SongTranslation: React.FC<{ hymmnos: string; publicLexicon: PublicLexiconE
 };
 
 const TranslatorModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  useBackDismiss(isOpen, onClose);
   const { currentSong, publicLexicon, unlockedLexicon, lexiconAvailable } = useCampaign();
   const { profile } = useAuth();
   const [search, setSearch] = useState('');

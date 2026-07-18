@@ -4,6 +4,7 @@ import { FaVolumeHigh } from 'react-icons/fa6';
 import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
 import { PublicLexiconEntry } from '../types/Campaign';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const speak = (entry: PublicLexiconEntry, audioUrl?: string) => {
   if (audioUrl) {
@@ -16,6 +17,7 @@ const speak = (entry: PublicLexiconEntry, audioUrl?: string) => {
 };
 
 const LexiconEntryModal: React.FC<{ entry: PublicLexiconEntry; isOpen: boolean; onClose: () => void }> = ({ entry, isOpen, onClose }) => {
+  useBackDismiss(isOpen, onClose);
   const { unlockedLexicon } = useCampaign();
   const unlocked = unlockedLexicon.get(entry.id);
   const cypher = CYPHERS.find((item) => item.id === entry.cypherId);

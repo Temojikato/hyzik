@@ -26,6 +26,7 @@ import { getFirestore, collection, query, where, getDocs } from 'firebase/firest
 import { useToast } from '@chakra-ui/react';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface CraftingModalProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
   setInventory,
   currentUser,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const [recipes, setRecipes] = useState<Item[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Item | null>(null);
   const {

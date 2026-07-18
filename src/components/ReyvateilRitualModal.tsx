@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { MdCheckCircle, MdRadioButtonUnchecked, MdStar } from 'react-icons/md';
 import { Item, Reyvateil } from '../types/Reyvateils';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface ReyvateilRitualModalProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ interface ReyvateilRitualModalProps {
 }
 
 const ReyvateilRitualModal: React.FC<ReyvateilRitualModalProps> = ({ isOpen, onClose, reyvateil, userLevel, unlockedRecipes, inventory, levelUp, handleRecipeUnlock }) => {
+  useBackDismiss(isOpen, onClose);
   const hasRequiredItemsForNextLevel = (requirements: Item[]): boolean => {
     return requirements.every(req => {
       const itemInInventory = inventory.find((item: Item) => item.name === req.name);

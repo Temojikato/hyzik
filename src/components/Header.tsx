@@ -19,6 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useCampaign } from '../contexts/CampaignContext';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface HeaderProps {
   onOpenBestiary: () => void;
@@ -38,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({
   handleLogout,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackDismiss(isOpen, onClose);
   const { isAdmin } = useAuth();
   const { currentSong } = useCampaign();
 

@@ -39,6 +39,7 @@ import { db } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Conditions';
 import BossBattleModal from './BossBattleModal';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 // Define pulsate animation for Progress bar
 const pulsate = keyframes`
@@ -59,6 +60,7 @@ const PlayerInfo: React.FC = () => {
   const [conditions, setConditions] = useState<UserCondition[]>([]);
   const [conditionDefinitions, setConditionDefinitions] = useState<ConditionDefinition[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // For Gain Condition Modal
+  useBackDismiss(isOpen, onClose);
   const [selectedCondition, setSelectedCondition] = useState<string>('');
   const [conditionValue, setConditionValue] = useState<number>(1);
   const toast = useToast();
@@ -69,6 +71,7 @@ const PlayerInfo: React.FC = () => {
     onOpen: onDetailsOpen,
     onClose: onDetailsClose,
   } = useDisclosure(); // For Condition Details Modal
+  useBackDismiss(isDetailsOpen, onDetailsClose);
   const [currentCondition, setCurrentCondition] = useState<string>('');
 
   // State to track the currently active effect
@@ -80,6 +83,7 @@ const PlayerInfo: React.FC = () => {
     onOpen: onEffectModalOpen,
     onClose: onEffectModalClose,
   } = useDisclosure(); // For Effect Activated Modal
+  useBackDismiss(isEffectModalOpen, onEffectModalClose);
 
   // Timer states
   const [effectTimer, setEffectTimer] = useState<number | null>(null);

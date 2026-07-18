@@ -30,6 +30,7 @@ import {
   QuizData,
   QuizQuestion,
 } from '../types/ReyvateilsQuizzes';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 // ─── DYNAMIC IMPORTS FOR CLASS-SPECIFIC QUIZZES ─────────────────────────
 const classSpecificQuizzes: { [key: string]: () => Promise<any> } = {
@@ -100,6 +101,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
     onOpen: onImageSelectionOpen,
     onClose: onImageSelectionClose,
   } = useDisclosure();
+  useBackDismiss(isImageSelectionOpen, onImageSelectionClose);
 
   // ─── UTILITY: SHUFFLE AN ARRAY ─────────────────────────────────────────
   const shuffleArray = <T,>(array: T[]): T[] => {

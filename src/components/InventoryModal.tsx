@@ -30,6 +30,7 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import CraftingModal from './CraftingModal';
 import LootTroveModal from './LootTroveModal';
+import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface InventoryModalProps {
   isOpen: boolean;
@@ -52,6 +53,7 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
   unlockedRecipes,
   setUnlockedRecipes,
 }) => {
+  useBackDismiss(isOpen, onClose);
   const {
     isOpen: isAddItemOpen,
     onOpen: onAddItemOpen,
