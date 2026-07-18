@@ -12,7 +12,6 @@ import {
   VStack,
   Text,
   Image,
-  ModalFooter,
   Box,
   Badge,
   HStack,
@@ -84,11 +83,6 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
             </Button>
           </VStack>
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={onClose} colorScheme="gray">
-            Close
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

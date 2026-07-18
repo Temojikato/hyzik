@@ -278,7 +278,6 @@ const RecipeDetailsModal: React.FC<RecipeDetailsModalProps> = ({
             <Button colorScheme="green" onClick={handleCraft} mr={3}>
               Craft
             </Button>
-            <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -8,8 +8,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Button,
   Box,
   Text,
   Flex,
@@ -17,15 +15,12 @@ import {
   Tooltip,
   useMediaQuery,
   SimpleGrid,
-  Badge,
-  VStack,
   useDisclosure,
 } from '@chakra-ui/react';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { FaExpand, FaCompress, FaPlus, FaMinus, FaUndo } from 'react-icons/fa';
 import { MapRegion, MapArea, MapFloor } from '../mapdata';
-import TierSwiper from './TiersSwiper'; // Your existing TierSwiper component
-import { MonsterSpecies, MonsterTier } from '../types/BestiaryTypes';
+import { MonsterSpecies } from '../types/BestiaryTypes';
 import TiersSwiper from './TiersSwiper';
 import { getMonsterByName } from '../utils/fetchAllMonsters';
 import { User } from 'firebase/auth';
@@ -152,10 +147,6 @@ const RegionModal: React.FC<RegionModalProps> = ({
   // If region.locked is true, blur the entire info panel.
   // Otherwise, if monstersDocumented is false, blur only the monsters list.
   const infoBlurStyle = region.locked ? { filter: 'blur(8px)' } : {};
-  const monstersBlurStyle = (!region.monstersDocumented && !region.locked)
-    ? { filter: 'blur(8px)' }
-    : {};
-
   // --- New: State for handling monster clicks inside the region ---
   const [selectedMonster, setSelectedMonster] = useState<MonsterSpecies | null>(null);
   const {
@@ -372,11 +363,6 @@ const RegionModal: React.FC<RegionModalProps> = ({
               </Box>
             </Flex>
           </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
@@ -402,11 +388,6 @@ const RegionModal: React.FC<RegionModalProps> = ({
                 setInventory={setInventory}
               />
             </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" onClick={closeMonsterModal}>
-                Close
-              </Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
       )}

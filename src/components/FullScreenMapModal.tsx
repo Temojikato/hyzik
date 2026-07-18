@@ -8,10 +8,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  ModalFooter,
-  Button,
-  useDisclosure,
-  background
 } from '@chakra-ui/react';
 import MapPage from './MapPage'; // your existing MapPage
 import { Item } from '../types/Reyvateils';
@@ -36,11 +32,6 @@ const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose
           {/* Render the entire MapPage here */}
           <MapPage inventory={inventory} setInventory={setInventory} currentUser={currentUser}/>
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={onClose} colorScheme="blue">
-            Close
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

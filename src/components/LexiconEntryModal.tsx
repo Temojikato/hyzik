@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Button, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Text, VStack } from '@chakra-ui/react';
+import { Badge, Button, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Text, VStack } from '@chakra-ui/react';
 import { FaVolumeHigh } from 'react-icons/fa6';
 import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
@@ -34,7 +34,6 @@ const LexiconEntryModal: React.FC<{ entry: PublicLexiconEntry; isOpen: boolean; 
             {!unlocked?.audioUrl && <Text fontSize="xs" color="textMuted">Device voice fallback. A pre-rendered ElevenLabs file can replace this automatically when its audio URL is added to the lexicon entry.</Text>}
           </VStack>
         </ModalBody>
-        <ModalFooter><Button onClick={onClose}>Close</Button></ModalFooter>
       </ModalContent>
     </Modal>
   );

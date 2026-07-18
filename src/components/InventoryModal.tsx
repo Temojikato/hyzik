@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
-  Heading,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -13,13 +12,11 @@ import {
   ModalCloseButton,
   VStack,
   Text,
-  ModalFooter,
   useDisclosure,
   Grid,
   Input,
   Select,
   HStack,
-  Spacer,
   Spinner,
   Image,
 } from '@chakra-ui/react';
@@ -243,11 +240,6 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
               </Grid>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose} colorScheme="gray">
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 

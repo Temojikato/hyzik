@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Box,
   Button,
   Text,
@@ -19,7 +18,6 @@ import {
   useDisclosure,
   VStack,
   Heading,
-  Image,
   Switch
 } from '@chakra-ui/react';
 
@@ -269,11 +267,6 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
               </Box>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
@@ -302,11 +295,6 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
                   currentUser={currentUser}
                 />
               </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" onClick={closeDetails}>
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

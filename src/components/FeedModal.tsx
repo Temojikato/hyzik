@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  ModalCloseButton,
   Button,
   VStack,
   Text,
@@ -48,6 +49,7 @@ const FeedModal: React.FC<FeedModalProps> = ({ isOpen, onClose, inventory, onCon
       <ModalOverlay />
       <ModalContent bg="surface" color="text">
         <ModalHeader color="textHeader">Choose Feed Item</ModalHeader>
+        <ModalCloseButton />
         <ModalBody>
           {feedItems.length > 0 ? (
             <RadioGroup onChange={setSelectedItemId} value={selectedItemId}>

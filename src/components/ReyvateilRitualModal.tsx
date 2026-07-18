@@ -5,7 +5,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   ModalCloseButton,
   Button,
   Text,
@@ -137,11 +136,6 @@ const ReyvateilRitualModal: React.FC<ReyvateilRitualModalProps> = ({ isOpen, onC
             })}
           </VStack>
         </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal >
   );

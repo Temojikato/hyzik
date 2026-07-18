@@ -7,7 +7,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Box,
   Button,
   Text,
@@ -18,7 +17,6 @@ import {
   Heading,
   Image,
   useDisclosure,
-  HStack,
   Wrap,
   WrapItem,
 } from '@chakra-ui/react';
@@ -393,11 +391,6 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
               )}
             </Box>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
@@ -412,11 +405,6 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
               <ModalBody>
                 {renderNPCDetails(selectedNPC)}
               </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" onClick={closeDetails}>
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

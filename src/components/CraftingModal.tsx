@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Button,
   Grid,
   Text,
   Image,
@@ -18,9 +17,7 @@ import {
   Input,
   Select,
   HStack,
-  Spacer,
   VStack,
-  ModalFooter,
 } from '@chakra-ui/react';
 import { User } from 'firebase/auth';
 import { Item } from '../types/Reyvateils';
@@ -211,11 +208,6 @@ const CraftingModal: React.FC<CraftingModalProps> = ({
               </Grid>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose} colorScheme="gray">
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 

@@ -176,9 +176,6 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
                 Dissimulate
               </Button>
             )}
-            <Button onClick={onClose} ml={3}>
-              Close
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

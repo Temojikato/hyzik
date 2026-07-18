@@ -53,6 +53,7 @@ export const omniaTheme = extendTheme({
       baseStyle: {
         dialog: { bg: 'surface', color: 'text', border: '1px solid', borderColor: 'border', borderRadius: 'panel' },
         overlay: { bg: 'rgba(2,4,9,.76)', backdropFilter: 'blur(7px)' },
+        closeButton: { color: 'textMuted', top: 3, right: 3, borderRadius: 'full', _hover: { bg: 'whiteAlpha.100', color: 'text' } },
       },
     },
     Drawer: {

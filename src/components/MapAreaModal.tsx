@@ -8,24 +8,16 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Button,
   Box,
   Text,
   Flex,
   SimpleGrid,
-  Input,
-  Switch,
-  Heading,
-  VStack,
-  Badge,
 } from '@chakra-ui/react';
 import { MapArea, MapFloor, MapRegion } from '../mapdata';
 import InteractiveMapArea from './InteractiveMapArea';
 import RegionModal from './RegionModal';
 import { useDisclosure } from '@chakra-ui/react';
 import { getMonsterByName } from '../utils/fetchAllMonsters';
-import TierSwiper from './TiersSwiper';
 import { MonsterSpecies } from '../types/BestiaryTypes';
 import TiersSwiper from './TiersSwiper';
 import { User } from 'firebase/auth';
@@ -82,9 +74,6 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
 
   // Blur styles:
   const infoBlurStyle = area.locked ? { filter: 'blur(8px)' } : {};
-  const monstersBlurStyle = (!area.monstersDocumented && !area.locked)
-    ? { filter: 'blur(8px)' }
-    : {};
   const regionsBlurStyle = area.locked ? { filter: 'blur(8px)' } : {};
 
   return (
@@ -184,11 +173,6 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
               </Box>
             </Flex>
           </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
@@ -219,11 +203,6 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
                 currentUser={currentUser}
               />
             </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" onClick={closeMonsterModal}>
-                Close
-              </Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
       )}
