@@ -409,3 +409,12 @@ This order minimizes rework while preserving the user's priorities:
 ## Append new ideas below
 
 Add dated notes here first if an idea does not yet fit a numbered section. Promote it into the backlog once its intended behavior is clear.
+
+### 2026-07-19 — Authoritative combat profiles and bestiary completion
+
+- The encounter builder must never invent, default, or ask for combat statistics. It only consumes authoritative database values.
+- Define a canonical combat schema for every creature tier, including at minimum Max HP and Armor Class; initiative remains rolled/entered when combat begins.
+- Audit every nested bestiary tier. Several construct tiers currently have empty `Stats` objects, while most other entries contain only ability scores and no HP/AC.
+- Author balanced combat values from the creature lore, tier, abilities, and intended floor difficulty, then migrate them into Firestore and the repository’s canonical bestiary source together.
+- Add persistent player `combatStats` records (current HP, Max HP, Armor Class) outside the encounter builder and populate them during the eventual character/combat setup flow.
+- Add an automated completeness audit that blocks encounters and names every creature/player whose authoritative combat profile is missing or malformed.

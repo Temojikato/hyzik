@@ -30,6 +30,7 @@ import { ConditionDefinition } from '../types/Conditions';
 import { Item } from '../types/Reyvateils';
 import { MonsterSpecies } from '../types/BestiaryTypes';
 import { fetchAllMonstersFromNestedDocs } from '../utils/fetchAllMonsters';
+import { getEncounterParticipantIssues } from '../utils/encounter';
 import AdminMusicPlayer from './admin/AdminMusicPlayer';
 
 const adminTheme = extendTheme({
@@ -57,7 +58,7 @@ const adminTheme = extendTheme({
 });
 
 const panel = { bg: '#111722', border: '1px solid #2c3648', borderRadius: '16px', boxShadow: '0 18px 45px rgba(0,0,0,.22)' };
-const playerLabel = (player: PlayerProfile) => player.displayName || player.email || player.reyvateilName || 'Unnamed player';
+const playerLabel = (player: PlayerProfile) => player.displayName || player.email || player.reyvateilName || player.reyvateilId || 'Unnamed player';
 const isPlayerActive = (player: PlayerProfile) => player.active !== false;
 const conditionLabel = (condition: NonNullable<PlayerProfile['conditions']>[number]) => typeof condition === 'string' ? condition : `${condition.name} ${condition.amount || 0}`;
 const slug = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || crypto.randomUUID();
@@ -73,6 +74,10 @@ const RecipientPicker: React.FC<{ players: PlayerProfile[]; value: string[]; onC
 
 interface AdminItem extends Item { reference: DocumentReference }
 interface MonsterOption { id: string; name: string; tier: string; hp: number; armorClass?: number }
+const finitePositive = (...values: unknown[]) => {
+  const match = values.map(Number).find((value) => Number.isFinite(value) && value > 0);
+  return match;
+};
 
 const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode = false }) => {
   const { currentUser } = useAuth();
@@ -396,13 +401,13 @@ const EncounterBuilderDraggable: React.FC<{
   const toast = useToast();
   const floors = useMemo(() => mapData.flatMap((category) => category.floors.map((floor) => ({ key: `${category.id}:${floor.id}`, floor }))), []);
   const monsterOptions = useMemo<MonsterOption[]>(() => species.flatMap((entry) => Object.entries(entry.Tiers || {}).map(([tier, data]) => {
-    const constitution = Number(data.Stats?.Constitution);
-    const multiplier = tier.toLowerCase().includes('greater') ? 4 : tier.toLowerCase().includes('regular') ? 2 : 1;
+    const stats = data.Stats || {};
     return {
       id: `${entry.categoryId}|${entry.name}|${tier}`,
       name: data.Name || `${tier} ${entry.name}`,
       tier,
-      hp: Number.isFinite(constitution) ? Math.max(1, (10 + constitution * 2) * multiplier) : 10 * multiplier,
+      hp: finitePositive(stats.HP, stats.MaxHP, stats.HitPoints, stats['Hit Points']) || 0,
+      armorClass: finitePositive(stats.AC, stats.ArmorClass, stats['Armor Class']),
     };
   })), [species]);
 
@@ -424,17 +429,26 @@ const EncounterBuilderDraggable: React.FC<{
     if (!option) return;
     setMonsters((current) => [...current, {
       id: crypto.randomUUID(), sourceId: option.id, kind: 'monster', name: option.name,
-      monsterTier: option.tier, hp: option.hp, maxHp: option.hp,
+      monsterTier: option.tier, hp: option.hp, maxHp: option.hp, armorClass: option.armorClass,
     }]);
   };
-
   const begin = async () => {
-    const party: EncounterParticipant[] = players.filter((player) => playerIds.includes(player.id)).map((player): EncounterParticipant => ({
-      id: `player-${player.id}`, sourceId: player.id, kind: 'player', name: playerLabel(player),
-      hp: Number(player.stats?.hp || 10), maxHp: Number(player.stats?.maxHp || player.stats?.hp || 10), armorClass: player.stats?.armorClass,
-    }));
+    const party: EncounterParticipant[] = players.filter((player) => playerIds.includes(player.id)).map((player): EncounterParticipant => {
+      const maxHp = finitePositive(player.combatStats?.maxHp) || 0;
+      const currentHp = finitePositive(player.combatStats?.currentHp, maxHp) || 0;
+      const armorClass = finitePositive(player.combatStats?.armorClass);
+      return {
+        id: `player-${player.id}`, sourceId: player.id, kind: 'player', name: playerLabel(player),
+        hp: currentHp, maxHp, armorClass,
+      };
+    });
     const participants = [...party, ...monsters];
     if (!participants.length) return;
+    const issues = getEncounterParticipantIssues(participants);
+    if (issues.length) {
+      toast({ title: 'Database combat profiles are incomplete', description: issues.join(' · '), status: 'warning', duration: 9000, isClosable: true });
+      return;
+    }
     setStarting(true);
     try {
       await startEncounter({ name: name.trim() || 'Encounter', song: songs.find((song) => song.id === songId), map, participants });
@@ -454,7 +468,10 @@ const EncounterBuilderDraggable: React.FC<{
           <Box><FormLabel>Party members</FormLabel><RecipientPicker players={players} value={playerIds} onChange={setPlayerIds} /></Box>
           <Divider borderColor="#2c3648" />
           <FormControl><FormLabel>Add monster</FormLabel><HStack><Select value={monsterId} onChange={(event) => setMonsterId(event.target.value)}><option value="">Choose monster and tier</option>{monsterOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</Select><Button onClick={addMonster} isDisabled={!monsterId}>Add</Button></HStack></FormControl>
-          <VStack align="stretch">{monsters.map((monster) => <Flex key={monster.id} p={3} bg="#0d131e" borderRadius="10px" justify="space-between"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color="#8f9bb0">Starting HP {monster.hp}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>)}</VStack>
+          <VStack align="stretch" spacing={2}>{monsters.map((monster) => {
+            const complete = monster.maxHp > 0 && Number(monster.armorClass) > 0;
+            return <Flex key={monster.id} p={3} bg="#0d131e" border="1px solid" borderColor={complete ? '#2c3648' : '#7f1d1d'} borderRadius="10px" justify="space-between" align="center"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color={complete ? '#8f9bb0' : '#fca5a5'}>{complete ? `Database: ${monster.maxHp} HP · AC ${monster.armorClass}` : 'Database combat profile incomplete (requires HP and AC)'}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>;
+          })}</VStack>
         </VStack>
         <VStack align="stretch" spacing={4}>
           <FormControl><FormLabel>Battle map</FormLabel><Select value={floorKey} onChange={(event) => chooseFloor(event.target.value)}><option value="">No map</option>{floors.map((entry) => <option key={entry.key} value={entry.key}>{entry.floor.name}</option>)}</Select></FormControl>

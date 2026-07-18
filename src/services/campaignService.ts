@@ -30,6 +30,7 @@ import {
   PrivateMessage,
   UnlockedLexiconEntry,
 } from '../types/Campaign';
+import { assertEncounterParticipants, serializeEncounterParticipants } from '../utils/encounter';
 
 export const subscribeCampaignState = (
   onValue: (state: CampaignState) => void,
@@ -279,14 +280,16 @@ export const startEncounter = async (input: {
   map?: EncounterMapFrame;
   participants: EncounterParticipant[];
 }) => {
+  assertEncounterParticipants(input.participants);
   const encounterRef = doc(collection(db, 'encounters'));
   const batch = writeBatch(db);
+  const participants = serializeEncounterParticipants(input.participants);
   batch.set(encounterRef, {
     name: input.name,
     status: 'active',
     songId: input.song?.id || '',
     map: input.map || null,
-    participants: input.participants,
+    participants,
     createdAt: serverTimestamp(),
     startedAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
@@ -304,7 +307,8 @@ export const startEncounter = async (input: {
 };
 
 export const updateEncounterParticipants = async (encounterId: string, participants: EncounterParticipant[]) => {
-  await updateDoc(doc(db, 'encounters', encounterId), { participants, updatedAt: serverTimestamp() });
+  assertEncounterParticipants(participants, true);
+  await updateDoc(doc(db, 'encounters', encounterId), { participants: serializeEncounterParticipants(participants), updatedAt: serverTimestamp() });
 };
 
 export const endEncounter = async (encounterId: string) => {

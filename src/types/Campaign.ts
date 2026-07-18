@@ -10,6 +10,11 @@ export interface PlayerProfile {
   level?: number;
   conditions?: Array<string | { name: string; type?: string; amount?: number; color?: string }>;
   stats?: Record<string, number>;
+  combatStats?: {
+    currentHp?: number;
+    maxHp?: number;
+    armorClass?: number;
+  };
   unlockedCyphers?: string[];
   unlockedRecipes?: string[];
   inventory?: unknown[];
