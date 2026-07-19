@@ -7,7 +7,7 @@ This is the source of truth for the post-gold economy. Code constants live in `s
 - **Favor Points (Favor)** are spendable city credit. Donations and positive barter awards add Favor; purchases and negative barter awards spend it.
 - **Faction reputation** is permanent trust with one faction. It is never spent. It unlocks rare stock and improves prices.
 - Every donation, automated purchase, inventory transfer, currency migration, and manually recorded barter creates an immutable entry in `economyTransactions`.
-- The admin Economy tab shows available Favor, lifetime Favor earned/spent, faction contributions, a per-player reputation graph, and the last 300 literal transactions.
+- The admin Economy tab shows available Favor, lifetime Favor earned/spent, faction contributions, a per-player reputation graph, and the complete literal transaction history.
 
 ## Gold
 

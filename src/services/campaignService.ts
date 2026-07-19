@@ -16,7 +16,6 @@ import {
   updateDoc,
   where,
   writeBatch,
-  limit,
 } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { functions } from '../Firebase';
@@ -97,7 +96,7 @@ export const subscribePrivateMessages = (
 export const subscribeEconomyTransactions = (
   onValue: (transactions: EconomyTransaction[]) => void,
   onError?: (error: Error) => void,
-) => onSnapshot(query(collection(db, 'economyTransactions'), orderBy('createdAtMs', 'desc'), limit(300)), (snapshot) => {
+) => onSnapshot(query(collection(db, 'economyTransactions'), orderBy('createdAtMs', 'desc')), (snapshot) => {
   onValue(snapshot.docs.map((entry) => ({ id: entry.id, ...entry.data() } as EconomyTransaction)));
 }, onError);
 
