@@ -112,7 +112,11 @@ const ReyvateilSelection: React.FC = () => {
         const reyvateilsSnapshot = await getDocs(reyvateilsCol);
         const reyvateilsList: Reyvateil[] = reyvateilsSnapshot.docs.map((docSnap) => {
           const remote = docSnap.data() as Omit<Reyvateil, 'id'>;
-          return { id: docSnap.id, ...remote, combat: remote.combat || combatCatalog[docSnap.id] };
+          const bundledCombat = combatCatalog[docSnap.id];
+          const combat = bundledCombat && Number(remote.combat?.catalogVersion || 0) < bundledCombat.catalogVersion
+            ? bundledCombat
+            : remote.combat || bundledCombat;
+          return { id: docSnap.id, ...remote, combat };
         });
 
         const reyvateilsWithImages = await Promise.all(

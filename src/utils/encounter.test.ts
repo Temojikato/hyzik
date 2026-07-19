@@ -4,7 +4,7 @@ describe('serializeEncounterParticipants', () => {
   it('removes undefined optional fields before writing a Firestore array', () => {
     const [participant] = serializeEncounterParticipants([{
       id: 'player-a', sourceId: 'a', kind: 'player', name: 'Aster', hp: 10, maxHp: 10,
-      initiative: undefined, armorClass: undefined, monsterTier: undefined,
+      initiative: undefined, armorClass: undefined, monsterTier: undefined, songHearing: undefined,
     }]);
 
     expect(participant).toEqual({
@@ -16,8 +16,8 @@ describe('serializeEncounterParticipants', () => {
   it('preserves valid optional combat fields', () => {
     expect(serializeEncounterParticipants([{
       id: 'monster-a', sourceId: 'slime', kind: 'monster', name: 'Slime', hp: 20, maxHp: 20,
-      initiative: 12, armorClass: 14, monsterTier: 'Greater',
-    }])[0]).toMatchObject({ initiative: 12, armorClass: 14, monsterTier: 'Greater' });
+      initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible',
+    }])[0]).toMatchObject({ initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible' });
   });
 
   it('rejects missing required combat values with the combatant name', () => {

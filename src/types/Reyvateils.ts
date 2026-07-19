@@ -20,6 +20,7 @@ export type CombatAptitudeKey = 'force' | 'finesse' | 'guard' | 'resonance' | 'f
 export type CombatActionType = 'action' | 'quick' | 'reaction' | 'passive';
 export type CombatAbilityReset = 'turn' | 'round' | 'encounter' | 'passive';
 export type CombatSongForm = 'verse' | 'canticle';
+export type CombatSongAudience = 'performer' | 'chosen-hearer' | 'area-hearers' | 'all-hearers';
 
 export interface CombatAbility {
   id: string;
@@ -31,12 +32,14 @@ export interface CombatAbility {
   range: number;
   damageType: string;
   tags: string[];
+  levelRequired?: number;
   icon?: string;
   hymmnos?: Ability['hymmnos'];
 }
 
 export interface CombatSong extends CombatAbility {
   songForm: CombatSongForm;
+  audience: CombatSongAudience;
   levelRequired: number;
   chantRounds: number;
   durationRounds: number | null;
@@ -44,6 +47,7 @@ export interface CombatSong extends CombatAbility {
 }
 
 export interface ReyvateilCombatProfile {
+  catalogVersion: number;
   id: string;
   specialtyTitle: string;
   role: string;

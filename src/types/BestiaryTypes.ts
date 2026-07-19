@@ -17,6 +17,8 @@ export interface MonsterTier {
   Stats?: Record<string, string>; // e.g. { Strength: "10", Dexterity: "10" }
   Locked?: boolean;
   Loot?: LootEntry[];
+  /** Whether this creature can be affected by audible Song Magic. */
+  SongHearing?: 'audible' | 'soundless';
 }
 
 export interface MonsterSpecies {

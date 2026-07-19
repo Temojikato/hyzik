@@ -73,7 +73,7 @@ const RecipientPicker: React.FC<{ players: PlayerProfile[]; value: string[]; onC
 };
 
 interface AdminItem extends Item { reference: DocumentReference }
-interface MonsterOption { id: string; name: string; tier: string; hp: number; armorClass?: number }
+interface MonsterOption { id: string; name: string; tier: string; hp: number; armorClass?: number; songHearing?: EncounterParticipant['songHearing'] }
 const finitePositive = (...values: unknown[]) => {
   const match = values.map(Number).find((value) => Number.isFinite(value) && value > 0);
   return match;
@@ -419,6 +419,7 @@ const EncounterBuilderDraggable: React.FC<{
       tier,
       hp: finitePositive(stats.HP, stats.MaxHP, stats.HitPoints, stats['Hit Points']) || 0,
       armorClass: finitePositive(stats.AC, stats.ArmorClass, stats['Armor Class']),
+      songHearing: data.SongHearing,
     };
   })), [species]);
 
@@ -441,6 +442,7 @@ const EncounterBuilderDraggable: React.FC<{
     setMonsters((current) => [...current, {
       id: crypto.randomUUID(), sourceId: option.id, kind: 'monster', name: option.name,
       monsterTier: option.tier, hp: option.hp, maxHp: option.hp, armorClass: option.armorClass,
+      songHearing: option.songHearing,
     }]);
   };
   const begin = async () => {
@@ -481,7 +483,7 @@ const EncounterBuilderDraggable: React.FC<{
           <FormControl><FormLabel>Add monster</FormLabel><HStack><Select value={monsterId} onChange={(event) => setMonsterId(event.target.value)}><option value="">Choose monster and tier</option>{monsterOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</Select><Button onClick={addMonster} isDisabled={!monsterId}>Add</Button></HStack></FormControl>
           <VStack align="stretch" spacing={2}>{monsters.map((monster) => {
             const complete = monster.maxHp > 0 && Number(monster.armorClass) > 0;
-            return <Flex key={monster.id} p={3} bg="#0d131e" border="1px solid" borderColor={complete ? '#2c3648' : '#7f1d1d'} borderRadius="10px" justify="space-between" align="center"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color={complete ? '#8f9bb0' : '#fca5a5'}>{complete ? `Database: ${monster.maxHp} HP · AC ${monster.armorClass}` : 'Database combat profile incomplete (requires HP and AC)'}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>;
+            return <Flex key={monster.id} p={3} bg="#0d131e" border="1px solid" borderColor={complete ? '#2c3648' : '#7f1d1d'} borderRadius="10px" justify="space-between" align="center"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color={complete ? '#8f9bb0' : '#fca5a5'}>{complete ? `Database: ${monster.maxHp} HP · AC ${monster.armorClass}` : 'Database combat profile incomplete (requires HP and AC)'}</Text><Text fontSize="xs" color={monster.songHearing ? (monster.songHearing === 'soundless' ? '#f0abfc' : '#86efac') : '#8f9bb0'}>Song Hearing: {monster.songHearing === 'soundless' ? 'Soundless — immune' : monster.songHearing === 'audible' ? 'Audible — affected' : 'not documented'}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>;
           })}</VStack>
         </VStack>
         <VStack align="stretch" spacing={4}>
@@ -540,7 +542,7 @@ const BattleScreenViewport: React.FC<{ encounter: Encounter }> = ({ encounter })
     <VStack align="stretch" spacing={5}>
       <Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><BattleActions encounter={encounter} onFinish={finish} /></Flex>
       {encounter.turn?.phase === 'active' && <Flex p={3} bg="#163c32" border="1px solid #34d399" borderRadius="12px" justify="space-between"><Text fontWeight="bold">Acting now: {participants.find((entry) => entry.id === encounter.turn?.activeParticipantId)?.name || 'Unknown combatant'}</Text><Badge colorScheme="green">Round {encounter.turn.round}</Badge></Flex>}
-      <Flex p={3} bg={encounter.activeSong ? '#3b183f' : '#0d131e'} border={`1px solid ${encounter.activeSong ? '#e879f9' : '#2c3648'}`} borderRadius="12px" justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" color="#8f9bb0">PERFORMANCE CHANNEL</Text><Text fontWeight="bold">{encounter.activeSong ? encounter.activeSong.songName : 'Silent'}</Text>{encounter.activeSong && <Text fontSize="sm" color="#d8b4fe">{encounter.activeSong.performerName} · {encounter.activeSong.stage === 'chanting' ? `activates round ${encounter.activeSong.activatesAtRound}` : encounter.activeSong.endsAfterRound ? `active through round ${encounter.activeSong.endsAfterRound}` : 'active until interrupted'}</Text>}</Box><Badge alignSelf="center" colorScheme={encounter.activeSong?.stage === 'chanting' ? 'yellow' : encounter.activeSong ? 'pink' : 'gray'}>{encounter.activeSong?.stage || 'no Canticle'}</Badge></Flex>
+      <Flex p={3} bg={encounter.activeSong ? '#3b183f' : '#0d131e'} border={`1px solid ${encounter.activeSong ? '#e879f9' : '#2c3648'}`} borderRadius="12px" justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" color="#8f9bb0">PERFORMANCE CHANNEL</Text><Text fontWeight="bold">{encounter.activeSong ? encounter.activeSong.songName : 'Silent'}</Text>{encounter.activeSong && <><Text fontSize="sm" color="#d8b4fe">{encounter.activeSong.performerName} · {encounter.activeSong.stage === 'chanting' ? `activates round ${encounter.activeSong.activatesAtRound}` : encounter.activeSong.endsAfterRound ? `active through round ${encounter.activeSong.endsAfterRound}` : 'active until interrupted'}</Text><Text fontSize="xs" color="#f5d0fe">Audience: every creature that can hear it. Soundless monsters are immune.</Text></>}</Box><Badge alignSelf="center" colorScheme={encounter.activeSong?.stage === 'chanting' ? 'yellow' : encounter.activeSong ? 'pink' : 'gray'}>{encounter.activeSong?.stage || 'no Canticle'}</Badge></Flex>
       <Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}>
         <VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" onClick={persist} isLoading={saving}>Save battle state</Button></VStack>
         <Box>{encounter.map ? <><BattleMapViewport map={encounter.map} /><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · exact saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box>

@@ -8,6 +8,12 @@ const combatCatalog = require('./combatCatalog.json');
 initializeApp();
 
 const clean = (value, max) => typeof value === 'string' ? value.trim().slice(0, max) : '';
+const currentCombatCatalog = (registered, reyvateilId) => {
+  const bundled = combatCatalog[reyvateilId];
+  if (!registered) return bundled;
+  if (bundled && Number(registered.catalogVersion || 0) < Number(bundled.catalogVersion || 0)) return bundled;
+  return registered;
+};
 const requireAdmin = (request) => {
   if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
   if (request.auth.token.admin !== true) throw new HttpsError('permission-denied', 'Administrator access required.');
@@ -77,7 +83,7 @@ exports.selectReyvateilProfile = onCall({ region: 'europe-west1', cors: true }, 
   const reyvateilSnapshot = await db.collection('reyvateils').doc(reyvateilId).get();
   if (!reyvateilSnapshot.exists) throw new HttpsError('not-found', 'That Reyvateil is not registered.');
   const reyvateil = reyvateilSnapshot.data();
-  const combat = Array.isArray(reyvateil.combat?.combatSongs) ? reyvateil.combat : combatCatalog[reyvateilId];
+  const combat = currentCombatCatalog(reyvateil.combat, reyvateilId);
   if (!combat || !Array.isArray(combat.combatAbilities) || combat.combatAbilities.length < 10 || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4 || !Array.isArray(combat.socialAbilities) || combat.socialAbilities.length < 10) {
     throw new HttpsError('failed-precondition', 'That Reyvateil combat profile has not been prepared yet.');
   }
@@ -88,7 +94,9 @@ exports.selectReyvateilProfile = onCall({ region: 'europe-west1', cors: true }, 
     combat.socialAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:social-v1`,
   );
   const userRef = db.collection('users').doc(request.auth.uid);
-  if (!reyvateil.combat) await reyvateilSnapshot.ref.set({ combat }, { merge: true });
+  if (Number(reyvateil.combat?.catalogVersion || 0) < Number(combat.catalogVersion || 0)) {
+    await reyvateilSnapshot.ref.set({ combat }, { merge: true });
+  }
   await userRef.set({
     reyvateilId,
     reyvateilName: clean(reyvateil.name, 100),
@@ -178,7 +186,7 @@ exports.ensureCombatProfile = onCall({ region: 'europe-west1', cors: true }, asy
   const reyvateilRef = db.collection('reyvateils').doc(reyvateilId);
   const reyvateilSnapshot = await reyvateilRef.get();
   const registeredCombat = reyvateilSnapshot.data()?.combat;
-  const combat = Array.isArray(registeredCombat?.combatSongs) ? registeredCombat : combatCatalog[reyvateilId];
+  const combat = currentCombatCatalog(registeredCombat, reyvateilId);
   if (!combat || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4) throw new HttpsError('failed-precondition', 'This Reyvateil has no complete combat and Song catalog.');
   const previousHp = Number(user.combatStats?.currentHp);
   const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
@@ -287,16 +295,17 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     if (!ability) {
       const inherited = player.combatProfile?.inheritedCombatAbilityIds || [];
       const reyvateilSnapshot = await transaction.get(db.collection('reyvateils').doc(clean(player.reyvateilId, 80)));
+      const reyvateilId = clean(player.reyvateilId, 80);
       const registeredCombat = reyvateilSnapshot.data()?.combat;
-      const combat = Array.isArray(registeredCombat?.combatSongs) ? registeredCombat : combatCatalog[clean(player.reyvateilId, 80)];
+      const combat = currentCombatCatalog(registeredCombat, reyvateilId);
       const technique = combat?.combatAbilities?.find((entry) => entry.id === abilityId);
       song = combat?.combatSongs?.find((entry) => entry.id === abilityId) || null;
       if (technique && !inherited.includes(abilityId)) throw new HttpsError('permission-denied', 'That technique was not inherited by your Reyvateil.');
       ability = technique || song;
     }
     if (!ability) throw new HttpsError('not-found', 'That combat technique or Song no longer exists.');
-    if (song && Number(player.combatProfile?.level || 1) < Number(song.levelRequired || 1)) {
-      throw new HttpsError('failed-precondition', `That Song unlocks at level ${song.levelRequired}.`);
+    if (Number(player.combatProfile?.level || 1) < Number(ability.levelRequired || 1)) {
+      throw new HttpsError('failed-precondition', `That ${song ? 'Song' : 'technique'} unlocks at level ${ability.levelRequired}.`);
     }
     if (ability.actionType === 'passive') throw new HttpsError('failed-precondition', 'Passive techniques are always active.');
     const turn = encounter.turn;
@@ -324,6 +333,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
       songId: song.id,
       songName: clean(song.name, 120),
       form: 'canticle',
+      audience: song.audience || 'all-hearers',
       performerParticipantId: participant.id,
       performerSourceId: request.auth.uid,
       performerName: clean(participant.name, 120),

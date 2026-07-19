@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import { CombatAptitudeKey } from './Reyvateils';
+import { CombatAptitudeKey, CombatSongAudience } from './Reyvateils';
 
 export interface PlayerCombatProfile {
   version: number;
@@ -137,6 +137,7 @@ export interface EncounterParticipant {
   maxHp: number;
   armorClass?: number;
   monsterTier?: string;
+  songHearing?: 'audible' | 'soundless';
   turnResources?: {
     actionAvailable: boolean;
     quickAvailable: boolean;
@@ -160,6 +161,7 @@ export interface ActiveCombatSong {
   songId: string;
   songName: string;
   form: 'canticle';
+  audience: CombatSongAudience;
   performerParticipantId: string;
   performerSourceId: string;
   performerName: string;

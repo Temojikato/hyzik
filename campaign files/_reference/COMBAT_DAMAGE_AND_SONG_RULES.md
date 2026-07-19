@@ -51,8 +51,11 @@ Songs are separate from techniques and every Reyvateil has a level-gated reperto
 
 - A **Verse** is a single-sentence instant. It resolves immediately and never interrupts another Song.
 - A **Canticle** is a sustained stanza. Only one Canticle can hold the encounter-wide performance channel. Starting any Canticle immediately cuts the old one short, even when the same performer starts it.
+- Song Magic is audible. A creature must be able to hear a Song to receive its effect.
+- Canticles are allegiance-blind: every creature that can hear the performance receives its stated effect, including the performer, allies, and enemies. Beneficial Canticles can therefore strengthen an audible enemy; harmful Canticles can endanger allies.
+- A monster tier may declare `SongHearing: "soundless"` to be immune to audible Song Magic, or `SongHearing: "audible"` to confirm that it is susceptible. A missing value means its hearing adaptation has not yet been documented and the administrator decides at the table.
 - A Canticle may have `chantRounds` before its effect becomes active.
 - A Canticle with `durationRounds: null` lasts until interrupted or combat ends. A numbered duration expires automatically as rounds advance.
 - Song-focused identities know six potential Songs; other identities know four. Only one or two begin at level 1. The server rejects invocations below `levelRequired`.
+- Content below the player’s current level is presented as a sealed lock: its mechanics, Hymmnos invocation, and translation remain concealed until it unlocks.
 - Every Song has an optional `audioUrl`. Empty audio slots are valid now and can receive MP3 performances later without changing the combat model.
-

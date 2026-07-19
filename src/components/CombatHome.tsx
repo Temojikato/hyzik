@@ -22,7 +22,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { FaBolt, FaShieldHalved, FaVolumeHigh } from 'react-icons/fa6';
+import { FaBolt, FaLock, FaShieldHalved, FaVolumeHigh } from 'react-icons/fa6';
 import { useAuth } from '../contexts/AuthContext';
 import { useCampaign } from '../contexts/CampaignContext';
 import { activateCombatAbility, subscribeEncounter } from '../services/campaignService';
@@ -52,6 +52,20 @@ const commonActions = (combat: PlayerCombatProfile) => [
 
 const actionLabel: Record<string, string> = { action: 'Action', quick: 'Quick', reaction: 'Reaction', passive: 'Passive' };
 const resetLabel: Record<string, string> = { turn: 'each turn', round: 'each round', encounter: 'per encounter', passive: 'always' };
+const songAudienceLabel: Record<CombatSong['audience'], string> = {
+  performer: 'Performer must hear',
+  'chosen-hearer': 'Chosen hearer',
+  'area-hearers': 'All hearers in area',
+  'all-hearers': 'All who hear',
+};
+
+const songAudienceRule = (song: CombatSong) => song.audience === 'all-hearers'
+  ? 'Every creature that can hear it is affected: performer, allies, and enemies. Creatures with Soundless Song Hearing are unaffected.'
+  : song.audience === 'area-hearers'
+    ? 'Every creature in the area that can hear the Verse is affected.'
+    : song.audience === 'performer'
+      ? 'The performer must be able to hear their own Verse.'
+      : 'The chosen target must be able to hear the Verse.';
 
 const asInvocationAbility = (ability: CombatAbility): Ability => ({
   id: ability.id,
@@ -68,7 +82,7 @@ const abilityUnavailableReason = (
   encounter: Encounter | null,
   playerLevel = 1,
 ) => {
-  const levelRequired = Number((ability as Partial<CombatSong>).levelRequired || 1);
+  const levelRequired = Number(ability.levelRequired || 1);
   if (playerLevel < levelRequired) return `Unlocks at level ${levelRequired}`;
   if (ability.actionType === 'passive') return 'Passive — always active';
   if (!encounter || encounter.status !== 'active') return 'Available during combat';
@@ -100,6 +114,8 @@ const TechniqueCard: React.FC<{
   const spoken = getAbilitySpokenForm(invocation);
   const reason = abilityUnavailableReason(ability, participant, encounter, combatProfile.level);
   const song = kind === 'song' ? ability as CombatSong : null;
+  const levelRequired = Number(ability.levelRequired || 1);
+  const levelLocked = combatProfile.level < levelRequired;
   const resolvedDescription = resolveCombatText(ability.description, combatProfile);
   const play = () => {
     window.speechSynthesis.cancel();
@@ -115,7 +131,7 @@ const TechniqueCard: React.FC<{
         description: song?.songForm === 'verse'
           ? 'The Verse resolved without interrupting the active Canticle.'
           : song?.songForm === 'canticle'
-            ? 'Any previous Canticle has been cut short by the server.'
+            ? 'Any previous Canticle has been cut short. Every creature that can hear this one is subject to its stated effect.'
             : 'The action has been committed to the combat record.',
         status: 'success',
       });
@@ -123,16 +139,34 @@ const TechniqueCard: React.FC<{
       toast({ title: 'Invocation refused', description: caught?.message || String(caught), status: 'warning', duration: 6000 });
     } finally { setActivating(false); }
   };
+  if (levelLocked) {
+    return (
+      <Box position="relative" minH="270px" overflow="hidden" border="1px solid" borderColor="whiteAlpha.300" bg="blackAlpha.500" borderRadius="xl" aria-label={`${kind === 'song' ? 'Song' : 'Technique'} locked until level ${levelRequired}`}>
+        <Box p={5} filter="blur(7px)" opacity={0.28} userSelect="none" aria-hidden="true">
+          <Heading size="md" fontFamily="Hymmnos">{invocation.headword}</Heading>
+          <HStack mt={3}><Badge>{actionLabel[ability.actionType]}</Badge><Badge>{ability.damageType}</Badge></HStack>
+          <Text mt={6}>{resolvedDescription}</Text>
+          <Box mt={5} h="72px" borderRadius="lg" bg="whiteAlpha.200" />
+        </Box>
+        <VStack position="absolute" inset={0} justify="center" spacing={3} px={6} textAlign="center" bg="blackAlpha.600">
+          <Flex boxSize="56px" borderRadius="full" bg="purple.900" border="1px solid" borderColor="purple.300" align="center" justify="center"><FaLock size="24px" /></Flex>
+          <Badge colorScheme="purple" fontSize="sm" px={3} py={1}>LOCKED</Badge>
+          <Heading size="md">Sealed {kind === 'song' ? 'Song' : 'Technique'}</Heading>
+          <Text color="textMuted">Reach level {levelRequired} to reveal and invoke this {kind === 'song' ? 'Song' : 'technique'}.</Text>
+        </VStack>
+      </Box>
+    );
+  }
   return (
     <Box p={4} border="1px solid" borderColor="whiteAlpha.300" bg="blackAlpha.300" borderRadius="xl">
       <Flex justify="space-between" gap={3} align="start">
-        <Box><Heading size="md" fontFamily="Hymmnos" overflowWrap="anywhere">{invocation.headword}</Heading><Text fontSize="sm" fontWeight="bold" color={translated ? 'green.200' : 'purple.200'}>{translated ? ability.name : 'Translation locked by Cypher'}</Text><HStack mt={2} spacing={2} flexWrap="wrap"><Badge colorScheme="purple">{actionLabel[ability.actionType]}</Badge><Badge variant="outline">{ability.uses || '∞'} {resetLabel[ability.reset]}</Badge>{song && <><Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'}>{song.songForm === 'verse' ? 'Verse · instant' : 'Canticle · continuous'}</Badge><Badge colorScheme={combatProfile.level >= song.levelRequired ? 'green' : 'gray'}>Level {song.levelRequired}</Badge></>}</HStack></Box>
+        <Box><Heading size="md" fontFamily="Hymmnos" overflowWrap="anywhere">{invocation.headword}</Heading><Text fontSize="sm" fontWeight="bold" color={translated ? 'green.200' : 'purple.200'}>{translated ? ability.name : 'Translation locked by Cypher'}</Text><HStack mt={2} spacing={2} flexWrap="wrap"><Badge colorScheme="purple">{actionLabel[ability.actionType]}</Badge><Badge variant="outline">{ability.uses || '∞'} {resetLabel[ability.reset]}</Badge>{song && <><Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'}>{song.songForm === 'verse' ? 'Verse · instant' : 'Canticle · continuous'}</Badge><Badge colorScheme="teal">{songAudienceLabel[song.audience || (song.songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer')]}</Badge><Badge colorScheme={combatProfile.level >= song.levelRequired ? 'green' : 'gray'}>Level {song.levelRequired}</Badge></>}</HStack></Box>
         <Badge colorScheme="orange">{ability.damageType}</Badge>
       </Flex>
       <Text mt={3} fontSize="sm">{resolvedDescription}</Text>
       {song && <Text mt={2} fontSize="xs" color="textMuted">{song.songForm === 'verse'
         ? 'Resolves immediately and never interrupts a Canticle.'
-        : `${song.chantRounds ? `${song.chantRounds} round of chanting · ` : 'No chant · '}${song.durationRounds ? `${song.durationRounds} active rounds` : 'lasts until interrupted or combat ends'} · replaces any active Canticle.`}</Text>}
+        : `${song.chantRounds ? `${song.chantRounds} round of chanting · ` : 'No chant · '}${song.durationRounds ? `${song.durationRounds} active rounds` : 'lasts until interrupted or combat ends'} · replaces any active Canticle.`} <b>Audience:</b> {songAudienceRule({ ...song, audience: song.audience || (song.songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer') })}</Text>}
       <Box mt={4} p={3} borderRadius="lg" bg="blackAlpha.500">
         <Text fontFamily="Hymmnos" fontSize="2xl" color="textHeader" overflowWrap="anywhere">{invocation.headword}</Text>
         <Text fontSize="xs" mt={1} color="textMuted">{invocation.pronunciation}</Text>
@@ -225,9 +259,9 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
 
       <Box><Flex justify="space-between" align="center" mb={3}><Heading size="md">Derived combat values</Heading><Button size="sm" variant="outline" onClick={damageReference.onOpen}>Damage types</Button></Flex><SimpleGrid columns={{ base: 2, md: 5 }} spacing={3}><Box p={4} bg="blackAlpha.300" borderRadius="xl"><HStack><FaShieldHalved /><Text>Defence</Text></HStack><Text fontSize="2xl" fontWeight="bold">{combatProfile.derived.defense}</Text></Box><Box p={4} bg="blackAlpha.300" borderRadius="xl"><HStack><FaBolt /><Text>Initiative</Text></HStack><Text fontSize="2xl" fontWeight="bold">+{combatProfile.derived.initiative}</Text></Box><Box p={4} bg="blackAlpha.300" borderRadius="xl"><Text>Technique attack</Text><Text fontSize="2xl" fontWeight="bold">+{combatProfile.derived.techniqueAttack}</Text></Box><Box p={4} bg="blackAlpha.300" borderRadius="xl"><Text>Song attack</Text><Text fontSize="2xl" fontWeight="bold">+{combatProfile.derived.songAttack}</Text></Box><Box p={4} bg="blackAlpha.300" borderRadius="xl"><Text>Save difficulty</Text><Text fontSize="2xl" fontWeight="bold">{combatProfile.derived.saveDifficulty}</Text></Box></SimpleGrid></Box>
 
-      {campaignState.battleActive && <Box p={4} borderRadius="xl" border="1px solid" borderColor={activeSong ? 'pink.300' : 'whiteAlpha.300'} bg={activeSong ? 'pink.900' : 'blackAlpha.300'}><Flex justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" textTransform="uppercase" letterSpacing=".12em" color="textMuted">Shared performance channel</Text><Heading size="sm" mt={1}>{activeSong ? activeSong.songName : 'No Canticle is active'}</Heading>{activeSong && <Text mt={1}>{activeSong.performerName} · {activeSong.stage === 'chanting' ? `chanting until round ${activeSong.activatesAtRound}` : activeSong.endsAfterRound ? `active through round ${activeSong.endsAfterRound}` : 'active until interrupted or combat ends'}</Text>}</Box><Badge alignSelf="center" colorScheme={activeSong?.stage === 'chanting' ? 'yellow' : activeSong ? 'pink' : 'gray'}>{activeSong?.stage || 'silent'}</Badge></Flex><Text mt={2} fontSize="xs" color="textMuted">A new Canticle cuts this one short. Verses resolve instantly and leave this channel untouched.</Text></Box>}
+      {campaignState.battleActive && <Box p={4} borderRadius="xl" border="1px solid" borderColor={activeSong ? 'pink.300' : 'whiteAlpha.300'} bg={activeSong ? 'pink.900' : 'blackAlpha.300'}><Flex justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" textTransform="uppercase" letterSpacing=".12em" color="textMuted">Shared performance channel</Text><Heading size="sm" mt={1}>{activeSong ? activeSong.songName : 'No Canticle is active'}</Heading>{activeSong && <Text mt={1}>{activeSong.performerName} · {activeSong.stage === 'chanting' ? `chanting until round ${activeSong.activatesAtRound}` : activeSong.endsAfterRound ? `active through round ${activeSong.endsAfterRound}` : 'active until interrupted or combat ends'} · all creatures who hear it are affected</Text>}</Box><Badge alignSelf="center" colorScheme={activeSong?.stage === 'chanting' ? 'yellow' : activeSong ? 'pink' : 'gray'}>{activeSong?.stage || 'silent'}</Badge></Flex><Text mt={2} fontSize="xs" color="textMuted">A new Canticle cuts this one short. Verses resolve instantly and leave this channel untouched. Soundless creatures cannot be affected by audible Song Magic.</Text></Box>}
 
-      <Box><Heading size="md">Songs</Heading><Text color="textMuted" mt={1} mb={4}>Every Reyvateil knows both forms. Verses are instant single-sentence workings; Canticles are sustained stanzas and only one can hold the encounter-wide performance channel.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={4}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</Box>
+      <Box><Heading size="md">Songs</Heading><Text color="textMuted" mt={1} mb={4}>Every Reyvateil knows both forms. Verses are instant, directed workings. Canticles are sustained stanzas heard by the whole battlefield: their effects apply equally to every creature capable of hearing them, regardless of allegiance. Only one Canticle can hold the encounter-wide performance channel.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={4}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</Box>
 
       <Box><Heading size="md">Inherited techniques</Heading><Text color="textMuted" mt={1} mb={4}>Five techniques were inherited from {reyvateil.name}’s ten-technique constellation. A future ritual may rewrite this inheritance.</Text><Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={4}>{techniques.map((ability) => <TechniqueCard key={ability.id} ability={ability} combatProfile={combatProfile} participant={participant} encounter={encounter} />)}</Grid></Box>
 
@@ -235,7 +269,7 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
 
       <Box p={5} borderRadius="xl" border="1px solid" borderColor="whiteAlpha.300"><Heading size="sm">Growth pattern</Heading><Text mt={2}>Gain {combat.growth.hitPointsPerLevel} maximum HP per level. Raise one aptitude at levels {combat.growth.aptitudeIncreaseLevels.join(', ')} (cap {combat.growth.aptitudeCap}). Inherit another technique at levels {combat.growth.newTechniqueLevels.join(' and ')}. This identity’s {combat.growth.songCapacity}-Song repertoire unlocks further Songs at levels {combat.growth.newSongLevels.join(', ') || '—'}. Evolution becomes possible at level {combat.growth.evolutionLevel}.</Text></Box>
 
-      <Box p={5} borderRadius="xl" border="1px solid" borderColor="whiteAlpha.300"><Heading size="sm">Combat language</Heading><SimpleGrid columns={{ base: 1, md: 2 }} spacing={3} mt={3}><Text><b>Attack:</b> roll d20 + the listed attack bonus against the target’s Defence. Meeting or exceeding Defence hits.</Text><Text><b>Saving throw:</b> the target rolls d20 + the named aptitude against the attacker’s Save Difficulty. Advantage means roll twice and keep the higher result.</Text><Text><b>Turn:</b> one Action, one Quick action, movement, and one Reaction before your next turn. The portal spends these automatically when invoked.</Text><Text><b>Exposed:</b> the next attack against the creature has advantage, then Exposed ends. <b>Rooted:</b> movement becomes 0.</Text><Text><b>Silenced:</b> Hymmnos techniques and Songs cannot be activated. <b>Prone:</b> adjacent attacks have advantage; standing costs half movement.</Text><Text><b>Resistance:</b> halve the affected damage after other reductions. Temporary HP is lost before ordinary HP.</Text><Text><b>Song channel:</b> Verses are instant. A Canticle may require chanting, then remains active for its duration; a new Canticle interrupts the old one regardless of performer.</Text><Text><b>Resolution:</b> the portal records committed actions and resources; dice, targets, damage, and conditions remain table-visible decisions controlled by the administrator.</Text></SimpleGrid></Box>
+      <Box p={5} borderRadius="xl" border="1px solid" borderColor="whiteAlpha.300"><Heading size="sm">Combat language</Heading><SimpleGrid columns={{ base: 1, md: 2 }} spacing={3} mt={3}><Text><b>Attack:</b> roll d20 + the listed attack bonus against the target’s Defence. Meeting or exceeding Defence hits.</Text><Text><b>Saving throw:</b> the target rolls d20 + the named aptitude against the attacker’s Save Difficulty. Advantage means roll twice and keep the higher result.</Text><Text><b>Turn:</b> one Action, one Quick action, movement, and one Reaction before your next turn. The portal spends these automatically when invoked.</Text><Text><b>Exposed:</b> the next attack against the creature has advantage, then Exposed ends. <b>Rooted:</b> movement becomes 0.</Text><Text><b>Silenced:</b> Hymmnos techniques and Songs cannot be activated. <b>Prone:</b> adjacent attacks have advantage; standing costs half movement.</Text><Text><b>Resistance:</b> halve the affected damage after other reductions. Temporary HP is lost before ordinary HP.</Text><Text><b>Song audibility:</b> a Song only affects creatures able to hear it. Canticles do not distinguish friend from foe; every audible creature receives the stated effect. A creature documented as Soundless is immune to audible Song Magic.</Text><Text><b>Song channel:</b> Verses are instant. A Canticle may require chanting, then remains active for its duration; a new Canticle interrupts the old one regardless of performer.</Text><Text><b>Resolution:</b> the portal records committed actions and resources; dice, targets, damage, and conditions remain table-visible decisions controlled by the administrator.</Text></SimpleGrid></Box>
       <DamageTypeReference isOpen={damageReference.isOpen} onClose={damageReference.onClose} />
     </VStack>
   );

@@ -154,60 +154,62 @@ const roleTemplates = {
 // Every Reyvateil knows a complete Song set in addition to inherited
 // techniques. Verses resolve immediately and never interrupt a Canticle.
 // Canticles occupy the one shared performance channel for the encounter.
+// Their effects are audible, not allegiance-aware: unless a Song explicitly
+// says otherwise, every creature capable of hearing it is affected.
 const roleSongTemplates = {
   vanguard: [
     ['Warcry Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 5 spaces. On a hit, deal 1d8 + Resonance {damage} damage.'],
-    ['Unbroken Verse', 'verse', 'round', 1, 0, 0, 'Gain temporary HP equal to 1d6 + Guard and advantage on your next melee attack this turn.'],
-    ['Marching Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first allied hit each round deals +1d4 {damage} damage.'],
-    ['Cataclysm Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, enemies within 3 spaces cannot take reactions and take Resonance {damage} damage at the start of their turns for 3 rounds.'],
+    ['Unbroken Verse', 'verse', 'round', 1, 0, 0, 'Gain temporary HP equal to 1d6 + Guard and advantage on your next melee attack this turn.', 'performer'],
+    ['Marching Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature\'s first hit each round deals +1d4 {damage} damage.'],
+    ['Cataclysm Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature within 3 spaces cannot take reactions and takes Resonance {damage} damage at the start of its turn for 3 rounds.'],
   ],
   bulwark: [
     ['Shelter Verse', 'verse', 'turn', 1, 0, 0, 'One ally within 5 spaces gains +2 Defense until your next turn.'],
     ['Rebuke Verse', 'verse', 'round', 1, 0, 0, 'Make a Song attack against one target within 5 spaces. On a hit, deal 1d6 + Resonance {damage} damage and it cannot move closer to an ally this turn.'],
-    ['Rampart Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, allies within 3 spaces gain +1 Defense.'],
-    ['Citadel Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 3 spaces gain resistance to {damage} damage and cannot be forcibly moved for 3 rounds.'],
+    ['Rampart Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature within 3 spaces gains +1 Defense.'],
+    ['Citadel Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature within 3 spaces gains resistance to {damage} damage and cannot be forcibly moved for 3 rounds.'],
   ],
   striker: [
     ['Killing Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 6 spaces. On a hit, deal 1d10 + Resonance {damage} damage.'],
     ['Opening Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Exposed on failure.'],
-    ['Predator Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first hit against an Exposed enemy each round deals +1d6 {damage} damage.'],
-    ['Final Quiet Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, your attacks score a critical hit on 19 or 20 for 3 rounds.'],
+    ['Predator Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature\'s first hit against an Exposed target each round deals +1d6 {damage} damage.'],
+    ['Final Quiet Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature scores a critical hit on 19 or 20 with its attacks for 3 rounds.'],
   ],
   skirmisher: [
     ['Waystep Verse', 'verse', 'turn', 1, 0, 0, 'Move up to 3 spaces, then make a Song attack against one target within 3 spaces for 1d8 + Resonance {damage} damage.'],
-    ['Afterimage Verse', 'verse', 'round', 1, 0, 0, 'Move up to half your movement without provoking reactions and gain +2 Defense until your next turn.'],
-    ['Gale Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, allies gain 2 movement and the first space they leave each turn does not provoke reactions.'],
-    ['Zero-Distance Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies may teleport 2 spaces instead of taking their normal movement for 3 rounds.'],
+    ['Afterimage Verse', 'verse', 'round', 1, 0, 0, 'Move up to half your movement without provoking reactions and gain +2 Defense until your next turn.', 'performer'],
+    ['Gale Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature gains 2 movement and the first space it leaves each turn does not provoke reactions.'],
+    ['Zero-Distance Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature may teleport 2 spaces instead of taking its normal movement for 3 rounds.'],
   ],
   controller: [
     ['Binding Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 6 spaces. On a hit, deal 1d6 + Resonance {damage} damage and Root it until its next turn.'],
     ['Dissonance Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.'],
-    ['Pressure Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, enemies suffering a condition take Resonance {damage} damage at the start of their turns.'],
-    ['Closed-World Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, create a 4-space field for 3 rounds. Enemies treat it as difficult terrain and cannot leave without spending an action.'],
+    ['Pressure Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature suffering a condition takes Resonance {damage} damage at the start of its turn.'],
+    ['Closed-World Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, create a 4-space field for 3 rounds. Each affected creature treats it as difficult terrain and cannot leave without spending an action.'],
   ],
   support: [
     ['Mending Verse', 'verse', 'turn', 1, 0, 0, 'One creature within 5 spaces restores 1d8 + Resonance HP.'],
     ['Cleansing Verse', 'verse', 'round', 1, 0, 0, 'End one harmful condition on a creature within 5 spaces or grant it temporary HP equal to Focus.'],
-    ['Restoration Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first wounded ally to begin a turn within 4 spaces restores Resonance HP.'],
-    ['Grand Chorus Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 4 spaces gain advantage on their first attack each round for 3 rounds.'],
+    ['Restoration Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first wounded affected creature to begin a turn within 4 spaces restores Resonance HP.'],
+    ['Grand Chorus Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature within 4 spaces gains advantage on its first attack each round for 3 rounds.'],
   ],
   channeler: [
     ['Bolting Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 8 spaces. On a hit, deal 1d10 + Resonance {damage} damage.'],
-    ['Wave Verse', 'verse', 'round', 1, 0, 0, 'Make a Song attack against the Defense of each target in a 4-space line. On a hit, deal 2d6 {damage} damage.'],
-    ['Conduit Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first maximum damage die rolled by an ally each round grants it temporary HP equal to Resonance.'],
-    ['Overload Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, the first allied Song or technique hit each round deals +2d6 {damage} damage for 3 rounds.'],
+    ['Wave Verse', 'verse', 'round', 1, 0, 0, 'Make a Song attack against the Defense of each target in a 4-space line. On a hit, deal 2d6 {damage} damage.', 'area-hearers'],
+    ['Conduit Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first maximum damage die rolled by each affected creature each round grants it temporary HP equal to Resonance.'],
+    ['Overload Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature\'s first Song or technique hit each round deals +2d6 {damage} damage for 3 rounds.'],
   ],
   tactician: [
     ['Directive Verse', 'verse', 'turn', 1, 0, 0, 'One ally within 6 spaces may immediately make a basic Strike using your Focus bonus.'],
     ['Readiness Verse', 'verse', 'round', 1, 0, 0, 'One ally within 6 spaces regains its reaction and may move 2 spaces without provoking.'],
-    ['Formation Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, one willing ally may move 1 space whenever another ally ends its turn.'],
-    ['Perfect-Sequence Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, the first allied miss each round may be rerolled for 3 rounds.'],
+    ['Formation Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, one willing affected creature may move 1 space whenever another affected creature ends its turn.'],
+    ['Perfect-Sequence Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, the first miss by an affected creature each round may be rerolled for 3 rounds.'],
   ],
 };
 
 const advancedSongTemplates = [
   ['Ascendant Verse', 'verse', 'encounter', 2, 0, 0, 'Make a Song attack against one target within 8 spaces. On a hit, deal 3d8 + Resonance {damage} damage; on a miss, deal half damage.'],
-  ['Sovereign Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 5 spaces gain +2 Defence and add 1d8 {damage} damage to their first hit each round for 3 rounds.'],
+  ['Sovereign Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, each affected creature within 5 spaces gains +2 Defence and adds 1d8 {damage} damage to its first hit each round for 3 rounds.'],
 ];
 
 const socialTemplates = [
@@ -257,12 +259,20 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
     };
   });
   const songTemplates = songFocused ? [...roleSongTemplates[role], ...advancedSongTemplates] : roleSongTemplates[role];
-  const combatSongs = songTemplates.map(([suffix, songForm, reset, uses, chantRounds, durationRounds, effect], index) => {
+  const combatSongs = songTemplates.map(([suffix, songForm, reset, uses, chantRounds, durationRounds, effect, audienceOverride], index) => {
     const name = `${motifs[index % motifs.length]} ${suffix}`;
+    const audience = audienceOverride || (songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer');
+    const audibilityRule = audience === 'all-hearers'
+      ? 'Every creature that can hear this Canticle is affected, including the performer, allies, and enemies.'
+      : audience === 'area-hearers'
+        ? 'This Verse affects every creature in its area that can hear it.'
+        : audience === 'performer'
+          ? 'The performer must be able to hear their own Verse.'
+          : 'The chosen target must be able to hear this Verse.';
     return {
       id: `${id}-song-${slug(name)}`,
       name,
-      description: effect.replaceAll('{damage}', damageType).replaceAll('Defense', 'Defence'),
+      description: `${audibilityRule} ${effect.replaceAll('{damage}', damageType).replaceAll('Defense', 'Defence')}`,
       actionType: 'action',
       reset,
       uses,
@@ -270,6 +280,7 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
       damageType,
       tags: [role, damageType, 'song', songForm],
       songForm,
+      audience,
       levelRequired: songUnlockLevels[index],
       chantRounds,
       durationRounds,
@@ -291,6 +302,7 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
   const maxHp = 16 + aptitudes.guard * 4 + (role === 'vanguard' ? 4 : role === 'bulwark' ? 8 : 0);
   const defense = 10 + aptitudes.guard + Math.max(aptitudes.finesse, aptitudes.focus);
   return [id, {
+    catalogVersion: 2,
     id,
     specialtyTitle,
     role,

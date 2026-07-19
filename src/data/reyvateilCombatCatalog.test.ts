@@ -9,6 +9,7 @@ describe('Reyvateil combat catalog', () => {
   it('gives all forty-two Reyvateils complete, distinct identity pools', () => {
     expect(Object.keys(catalog)).toHaveLength(42);
     Object.values(catalog).forEach((profile) => {
+      expect(profile.catalogVersion).toBeGreaterThanOrEqual(2);
       expect(profile.specialtyTitle).toBeTruthy();
       expect(Object.keys(profile.aptitudes)).toEqual(['force', 'finesse', 'guard', 'resonance', 'focus', 'tempo']);
       expect(profile.combatAbilities).toHaveLength(10);
@@ -41,6 +42,19 @@ describe('Reyvateil combat catalog', () => {
       expect(profile.combatSongs.some((song) => song.songForm === 'verse')).toBe(true);
       expect(profile.combatSongs.some((song) => song.songForm === 'canticle')).toBe(true);
       expect(profile.growth.songCapacity).toBe(profile.combatSongs.length);
+    });
+  });
+
+  it('makes Song audibility explicit and treats every Canticle as allegiance-blind', () => {
+    Object.values(catalog).forEach((profile) => {
+      profile.combatSongs.forEach((song) => {
+        expect(['performer', 'chosen-hearer', 'area-hearers', 'all-hearers']).toContain(song.audience);
+        expect(song.description).toMatch(/hear/i);
+        if (song.songForm === 'canticle') {
+          expect(song.audience).toBe('all-hearers');
+          expect(song.description).toMatch(/performer, allies, and enemies/i);
+        }
+      });
     });
   });
 

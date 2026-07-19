@@ -126,11 +126,11 @@ const Home: React.FC = () => {
           const registeredCombat = reyvateilData.combat as ReyvateilCombatProfile | undefined;
           const bundledCombat = combatCatalog[reyvateilSnap.id];
           // Catalog rollouts must not strand existing Firestore Reyvateils. Until
-          // the admin runs the persistence sync, use the bundled canonical
-          // profile whenever the registered copy predates combat Songs.
-          const currentCombat = Array.isArray(registeredCombat?.combatSongs)
-            ? registeredCombat
-            : bundledCombat || registeredCombat;
+          // the admin persists the new catalog, the versioned bundled profile is
+          // authoritative whenever the registered copy predates it.
+          const currentCombat = bundledCombat && Number(registeredCombat?.catalogVersion || 0) < bundledCombat.catalogVersion
+            ? bundledCombat
+            : registeredCombat || bundledCombat;
           setReyvateil({
             id: reyvateilSnap.id,
             name: reyvateilData.name,
