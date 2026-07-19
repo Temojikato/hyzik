@@ -3,6 +3,7 @@ import { Button, Text, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { useCampaign } from '../contexts/CampaignContext';
 import LexiconEntryModal from './LexiconEntryModal';
 import { PublicLexiconEntry } from '../types/Campaign';
+import { createHymmnosLexiconLookup, resolveHymmnosToken } from '../utils/hymmnosLexiconLookup';
 
 interface HymmnosTextProps {
   children: string;
@@ -14,16 +15,13 @@ const HymmnosText: React.FC<HymmnosTextProps> = ({ children, showTranslation = t
   const { publicLexicon, unlockedLexicon } = useCampaign();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = React.useState<PublicLexiconEntry | null>(null);
-  const lookup = useMemo(() => new Map(publicLexicon.map((entry) => [entry.headword.toLowerCase(), entry])), [publicLexicon]);
+  const lookup = useMemo(() => createHymmnosLexiconLookup(publicLexicon), [publicLexicon]);
   const parts = children.split(/([A-Za-z][A-Za-z0-9.'-]*)/g);
 
   return (
     <Text as="span" lineHeight="1.9">
       {parts.map((part, index) => {
-        const exactEntry = lookup.get(part.toLowerCase());
-        const trailingPunctuation = exactEntry ? '' : (part.match(/[.,!?;:]+$/)?.[0] || '');
-        const visibleWord = trailingPunctuation ? part.slice(0, -trailingPunctuation.length) : part;
-        const entry = exactEntry || lookup.get(visibleWord.toLowerCase());
+        const { entry, visibleWord, trailingPunctuation } = resolveHymmnosToken(part, lookup);
         if (!entry) return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
         const unlocked = unlockedLexicon.get(entry.id);
         return (
@@ -39,9 +37,9 @@ const HymmnosText: React.FC<HymmnosTextProps> = ({ children, showTranslation = t
               textDecoration={unlocked ? 'underline dotted' : undefined}
               onClick={() => { setSelected(entry); onOpen(); }}
             >
-              {exactEntry ? part : visibleWord}
+              {visibleWord}
             </Button>
-          </Tooltip>{exactEntry ? '' : trailingPunctuation}</React.Fragment>
+          </Tooltip>{trailingPunctuation}</React.Fragment>
         );
       })}
       {selected && <LexiconEntryModal entry={selected} isOpen={isOpen} onClose={onClose} />}

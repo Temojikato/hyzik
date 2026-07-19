@@ -139,6 +139,7 @@ const TechniqueCard: React.FC<{
   const invocation = resolveAbilityInvocation(asInvocationAbility(ability));
   const translation = invocation.parts.map((part) => unlockedLexicon.get(part.id));
   const translated = translation.every(Boolean);
+  const visibleTranslation = translation.map((part) => part?.meaning || '•••').join(' · ');
   const spoken = getAbilitySpokenForm(invocation);
   const reason = abilityUnavailableReason(ability, participant, encounter, combatProfile.level, dailyUses);
   const song = kind === 'song' ? ability as CombatSong : null;
@@ -180,7 +181,7 @@ const TechniqueCard: React.FC<{
     <Box mt={3} p={compact ? 2.5 : 3} borderRadius="lg" bg="blackAlpha.500">
       <Text fontFamily="Hymmnos" fontSize={compact ? 'xl' : '2xl'} color="textHeader" overflowWrap="anywhere">{invocation.headword}</Text>
       <Text fontSize="xs" mt={1} color="textMuted">{invocation.pronunciation}</Text>
-      <Text fontSize="xs" mt={1} color={translated ? 'green.300' : 'purple.200'}>{translated ? translation.map((part) => part?.meaning).join(' · ') : 'Translation locked by Cypher'}</Text>
+      <Text fontSize="xs" mt={1} color={translation.some(Boolean) ? 'green.300' : 'textMuted'}>{visibleTranslation}</Text>
       <Button mt={2} size="xs" variant="ghost" leftIcon={<FaVolumeHigh />} onClick={play}>Pronounce “{spoken}”</Button>
       {song?.audioUrl && <Button mt={2} ml={2} size="xs" variant="outline" leftIcon={<FaVolumeHigh />} onClick={() => void new Audio(song.audioUrl).play()}>Play scored Song</Button>}
     </Box>
@@ -206,13 +207,13 @@ const TechniqueCard: React.FC<{
   return <>
     <Box display={{ base: 'block', md: 'none' }} border="1px solid" borderColor={expanded ? 'purple.400' : 'whiteAlpha.300'} bg="blackAlpha.300" borderRadius="xl" overflow="hidden">
       <Flex as="button" type="button" w="full" px={3} py={3} textAlign="left" align="center" gap={3} onClick={() => setExpanded((value) => !value)} aria-expanded={expanded}>
-        <Box minW={0} flex="1"><Text fontWeight="bold" noOfLines={1}>{translated ? ability.name : 'Translation locked by Cypher'}</Text><Text fontFamily="Hymmnos" color="textHeader" fontSize="md" noOfLines={1}>{invocation.headword}</Text><HStack mt={1.5} spacing={1.5}><Badge colorScheme="purple" fontSize="9px">{actionLabel[ability.actionType]}</Badge>{song && <Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'} fontSize="9px">{song.songForm}</Badge>}<Badge colorScheme="orange" fontSize="9px">{ability.damageType}</Badge></HStack></Box>
+        <Box minW={0} flex="1"><Text fontWeight="bold" noOfLines={1}>{translated ? ability.name : visibleTranslation}</Text><Text fontFamily="Hymmnos" color="textHeader" fontSize="md" noOfLines={1}>{invocation.headword}</Text><HStack mt={1.5} spacing={1.5}><Badge colorScheme="purple" fontSize="9px">{actionLabel[ability.actionType]}</Badge>{song && <Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'} fontSize="9px">{song.songForm}</Badge>}<Badge colorScheme="orange" fontSize="9px">{ability.damageType}</Badge></HStack></Box>
         <Box color="textMuted">{expanded ? <FaChevronUp /> : <FaChevronDown />}</Box>
       </Flex>
       <Collapse in={expanded} animateOpacity><Box px={3} pb={3} pt={2} borderTop="1px solid" borderColor="whiteAlpha.200">{details(true)}</Box></Collapse>
     </Box>
     <Box display={{ base: 'none', md: 'block' }} p={4} border="1px solid" borderColor="whiteAlpha.300" bg="blackAlpha.300" borderRadius="xl">
-      <Flex justify="space-between" gap={3} align="start"><Box><Heading size="md" fontFamily="Hymmnos" overflowWrap="anywhere">{invocation.headword}</Heading><Text fontSize="sm" fontWeight="bold" color={translated ? 'green.200' : 'purple.200'}>{translated ? ability.name : 'Translation locked by Cypher'}</Text><HStack mt={2} spacing={2} flexWrap="wrap"><Badge colorScheme="purple">{actionLabel[ability.actionType]}</Badge><Badge variant="outline">{ability.uses || '∞'} {resetLabel[ability.reset]}</Badge>{song && <><Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'}>{song.songForm === 'verse' ? 'Verse · instant' : 'Canticle · continuous'}</Badge><Badge colorScheme="teal">{songAudienceLabel[song.audience || (song.songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer')]}</Badge><Badge colorScheme={combatProfile.level >= song.levelRequired ? 'green' : 'gray'}>Level {song.levelRequired}</Badge></>}</HStack></Box><Badge colorScheme="orange">{ability.damageType}</Badge></Flex>
+      <Flex justify="space-between" gap={3} align="start"><Box><Heading size="md" fontFamily="Hymmnos" overflowWrap="anywhere">{invocation.headword}</Heading><Text fontSize="sm" fontWeight="bold" color={translation.some(Boolean) ? 'green.200' : 'textMuted'}>{translated ? ability.name : visibleTranslation}</Text><HStack mt={2} spacing={2} flexWrap="wrap"><Badge colorScheme="purple">{actionLabel[ability.actionType]}</Badge><Badge variant="outline">{ability.uses || '∞'} {resetLabel[ability.reset]}</Badge>{song && <><Badge colorScheme={song.songForm === 'verse' ? 'cyan' : 'pink'}>{song.songForm === 'verse' ? 'Verse · instant' : 'Canticle · continuous'}</Badge><Badge colorScheme="teal">{songAudienceLabel[song.audience || (song.songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer')]}</Badge><Badge colorScheme={combatProfile.level >= song.levelRequired ? 'green' : 'gray'}>Level {song.levelRequired}</Badge></>}</HStack></Box><Badge colorScheme="orange">{ability.damageType}</Badge></Flex>
       <Box mt={3}>{details()}</Box>
     </Box>
   </>;

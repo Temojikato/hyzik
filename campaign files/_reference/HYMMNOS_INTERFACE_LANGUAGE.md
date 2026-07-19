@@ -5,11 +5,13 @@ The player portal treats Hymmnos as its native interface language. Common is a C
 ## Display contract
 
 - Flavor, identity, navigation, and section labels render in canonical romanized Hymmnos through the Hymmnos font.
-- The Common translation appears directly underneath only when every registered word in that phrase has been unlocked.
-- An unavailable translation reads `Translation locked by Cypher` and does not reveal a partial phrase.
+- The Common translation appears directly underneath once every registered word in that phrase has been unlocked.
+- Before that, the translation line resolves word by word. An unlocked word shows its canonical meaning and each unknown word occupies its position as `•••`, matching the campaign lyric translator.
 - Proper names and numbers remain themselves. They do not invent dictionary meanings.
 - Mechanical values and instructions required to play safely remain readable: stats, HP, numerical effects, action requirements, timers, encounter state, and explicit rules.
 - Interface phrases are compressed nominal labels. They are non-executable and therefore do not use Emotion Sounds or Song Magic execution grammar.
+- Hymmnos lookup is case-sensitive before any compatibility fallback. For example, `DIA` is the computer command “input/dialog,” while `dia` is the Central noun “king/throne/ruler.”
+- Emotion Sounds are identified as grammatical state encodings in the lexicon modal. Their canonical gloss may be a clause: `wa` is Emotion Sound III and means “It doesn't matter—I will accept things the way they are now.”
 
 ## Starter Cyphers
 

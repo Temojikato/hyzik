@@ -1,6 +1,7 @@
 import publicLexiconJson from '../generated/hymmnosPublicIndex.json';
 import { PublicLexiconEntry } from '../types/Campaign';
 import { Ability } from '../types/Reyvateils';
+import { createHymmnosLexiconLookup, resolveHymmnosToken } from './hymmnosLexiconLookup';
 
 export interface AbilityInvocation {
   id: string;
@@ -12,7 +13,7 @@ export interface AbilityInvocation {
 }
 
 const entries = publicLexiconJson as PublicLexiconEntry[];
-const byHeadword = new Map(entries.map((entry) => [entry.headword.toLowerCase(), entry]));
+const lexiconLookup = createHymmnosLexiconLookup(entries);
 
 const coreRules: Array<[RegExp, string]> = [
   [/heal|cure|restore|mend|regenerat|health|reviv/i, 'y.y.'],
@@ -122,7 +123,7 @@ const qualifierRules: Array<[RegExp, string]> = [
 const slug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const resolveParts = (headwords: string[]) => headwords.map((headword) => {
-  const entry = byHeadword.get(headword.toLowerCase());
+  const entry = resolveHymmnosToken(headword, lexiconLookup).entry;
   if (!entry) throw new Error(`Canonical Hymmnos index is missing “${headword}”.`);
   return entry;
 });

@@ -44,6 +44,7 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
   const invocation = resolveAbilityInvocation(ability);
   const unlockedParts = invocation.parts.map((part) => unlockedLexicon.get(part.id));
   const isTranslationUnlocked = unlockedParts.every(Boolean);
+  const visibleTranslation = unlockedParts.map((part) => part?.meaning || '•••').join(' · ');
   const spokenForm = getAbilitySpokenForm(invocation);
   const playInvocation = () => {
     if (ability.hymmnos?.audioUrl) {
@@ -71,7 +72,7 @@ const ReyvateilSkillModal: React.FC<ReyvateilSkillModalProps> = ({
             <Box w="100%" p={5} bg="blackAlpha.400" border="1px solid" borderColor="primary" borderRadius="xl" textAlign="center">
               <Text fontFamily="Hymmnos" fontSize="4xl" color="textHeader" overflowWrap="anywhere">{invocation.headword}</Text>
               <Text mt={2} fontWeight="bold">{invocation.pronunciation}</Text>
-              <HStack justify="center" mt={3}><Badge colorScheme={isTranslationUnlocked ? 'green' : 'purple'}>{isTranslationUnlocked ? unlockedParts.map((part) => part?.meaning).join(' · ') : 'Translation locked by Cypher'}</Badge></HStack>
+              <HStack justify="center" mt={3}><Badge colorScheme={unlockedParts.some(Boolean) ? 'green' : 'gray'}>{visibleTranslation}</Badge></HStack>
               <Button mt={4} size="sm" variant="outline" leftIcon={<FaVolumeHigh />} onClick={playInvocation}>Play pronunciation</Button>
             </Box>
             <Box w="100%"><Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".12em">Mechanical effect</Text><Text mt={1}>{ability.description}</Text></Box>

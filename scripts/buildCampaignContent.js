@@ -50,7 +50,22 @@ const songTitle = (markdown, fallback) => {
 };
 
 const buildSongs = (publicEntries) => {
-  const lookup = new Map(publicEntries.map((entry) => [entry.headword.toLowerCase(), entry.id]));
+  const exactLookup = new Map(publicEntries.map((entry) => [entry.headword, entry.id]));
+  const foldedLookup = new Map();
+  publicEntries.forEach((entry) => {
+    const key = entry.headword.toLowerCase();
+    foldedLookup.set(key, [...(foldedLookup.get(key) || []), entry.id]);
+  });
+  const resolveTokenId = (token) => {
+    const candidates = [token];
+    while (/[.,!?;:]$/.test(candidates[candidates.length - 1])) candidates.push(candidates[candidates.length - 1].slice(0, -1));
+    for (const candidate of candidates) if (exactLookup.has(candidate)) return exactLookup.get(candidate);
+    for (const candidate of candidates) {
+      const matches = foldedLookup.get(candidate.toLowerCase()) || [];
+      if (matches.length === 1) return matches[0];
+    }
+    return undefined;
+  };
   const files = fs.readdirSync(songsDirectory).filter((name) => name.endsWith('.md')).sort();
   const songs = files.map((file) => {
     const markdown = fs.readFileSync(path.join(songsDirectory, file), 'utf8');
@@ -66,7 +81,7 @@ const buildSongs = (publicEntries) => {
       }
       if (/instrumental|no words|non-lexical/i.test(line)) continue;
       const words = line.match(/[A-Za-z][A-Za-z0-9.'-]*/g) || [];
-      const tokenIds = words.map((word) => lookup.get(word.toLowerCase()) || lookup.get(word.replace(/[.,!?;:]+$/, '').toLowerCase())).filter(Boolean);
+      const tokenIds = words.map(resolveTokenId).filter(Boolean);
       lines.push({ hymmnos: line, tokenIds, direction });
     }
     const key = file.replace(/\.md$/i, '');

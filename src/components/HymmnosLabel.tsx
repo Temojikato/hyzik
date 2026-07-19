@@ -4,6 +4,7 @@ import { useCampaign } from '../contexts/CampaignContext';
 import { HymmnosInterfacePhrase } from '../data/hymmnosInterface';
 import { PublicLexiconEntry } from '../types/Campaign';
 import HymmnosText from './HymmnosText';
+import { createHymmnosLexiconLookup, hymmnosTokens, resolveHymmnosToken } from '../utils/hymmnosLexiconLookup';
 
 interface HymmnosLabelProps extends Omit<BoxProps, 'children'> {
   phrase: HymmnosInterfacePhrase;
@@ -23,12 +24,14 @@ const HymmnosLabel: React.FC<HymmnosLabelProps> = ({
 }) => {
   const { publicLexicon, unlockedLexicon } = useCampaign();
   const entries = useMemo(() => {
-    const lookup = new Map(publicLexicon.map((entry) => [entry.headword.toLowerCase(), entry]));
-    return (phrase.hymmnos.match(/[A-Za-z][A-Za-z0-9.'-]*/g) || [])
-      .map((word) => lookup.get(word.toLowerCase()))
+    const lookup = createHymmnosLexiconLookup(publicLexicon);
+    return hymmnosTokens(phrase.hymmnos)
+      .map((word) => resolveHymmnosToken(word, lookup).entry)
       .filter((entry): entry is PublicLexiconEntry => Boolean(entry));
   }, [phrase.hymmnos, publicLexicon]);
-  const translated = entries.length === 0 || entries.every((entry) => unlockedLexicon.has(entry.id));
+  const meanings = entries.map((entry) => unlockedLexicon.get(entry.id)?.meaning);
+  const knownWords = meanings.filter(Boolean).length;
+  const translated = entries.length === 0 || knownWords === entries.length;
 
   return (
     <Box {...boxProps}>
@@ -40,8 +43,13 @@ const HymmnosLabel: React.FC<HymmnosLabelProps> = ({
         <Text fontFamily="Hymmnos" color="textHeader" lineHeight="1.15" {...scriptProps}>{phrase.hymmnos}</Text>
       )}
       {showTranslation && (
-        <Text mt={0.5} fontSize="xs" lineHeight="1.2" color={translated ? 'teal.200' : 'purple.200'} {...translationProps}>
-          {translated ? phrase.translation : 'Translation locked by Cypher'}
+        <Text mt={0.5} fontSize="xs" lineHeight="1.2" color={translated || knownWords ? 'teal.200' : 'textMuted'} aria-label={translated ? phrase.translation : 'Partially deciphered translation'} {...translationProps}>
+          {translated ? phrase.translation : meanings.map((meaning, index) => (
+            <React.Fragment key={`${entries[index]?.id || 'unknown'}-${index}`}>
+              {index > 0 && <Text as="span" opacity={0.55}> · </Text>}
+              <Text as="span" opacity={meaning ? 1 : 0.55}>{meaning || '•••'}</Text>
+            </React.Fragment>
+          ))}
         </Text>
       )}
     </Box>
