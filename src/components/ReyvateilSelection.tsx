@@ -288,8 +288,27 @@ const ReyvateilSelection: React.FC = () => {
       <Flex minH="100vh" align="center" justify="center" bgGradient="linear(to-br, gray.900, purple.900, black)" p={4}>
         <Box bg="gray.800" border="1px solid" borderColor="purple.500" borderRadius="xl" p={8} maxW="520px" w="full">
           <VStack align="stretch" spacing={5}>
-            <Box><Text fontSize="2xl" fontWeight="bold">Before the song begins</Text><Text color="gray.300" mt={2}>Enter the name the other players and campaign controls should use for you.</Text></Box>
-            <FormControl isRequired><FormLabel>Your name</FormLabel><Input value={playerName} onChange={(event) => setPlayerName(event.target.value)} maxLength={80} autoFocus /></FormControl>
+            <Box><Text fontSize="2xl" fontWeight="bold">Inscribe your name</Text><Text color="gray.300" mt={2}>Choose the name the other players and campaign controls should use for you before the song begins.</Text></Box>
+            <Box
+              minH="150px"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              border="1px solid"
+              borderColor="purple.400"
+              borderRadius="lg"
+              bg="blackAlpha.400"
+              px={5}
+              py={4}
+              textAlign="center"
+              aria-live="polite"
+            >
+              <Text fontSize="xs" letterSpacing="0.24em" color="purple.200" mb={3}>HYMMNOS INSCRIPTION</Text>
+              {playerName ? <Text fontFamily="Hymmnos" fontSize={{ base: '4xl', md: '5xl' }} lineHeight="1.15" overflowWrap="anywhere">{playerName}</Text> : <Text color="gray.500" fontStyle="italic">Your inscription will appear here</Text>}
+              <Text fontSize="xs" color="gray.400" mt={3}>This is your chosen name rendered in Hymmnos script, not a translation.</Text>
+            </Box>
+            <FormControl isRequired><FormLabel>Your name in common script</FormLabel><Input value={playerName} onChange={(event) => setPlayerName(event.target.value)} maxLength={80} autoFocus /></FormControl>
             <Button colorScheme="purple" onClick={savePlayerName} isLoading={savingName} isDisabled={!playerName.trim()}>Continue to Reyvateil selection</Button>
           </VStack>
         </Box>

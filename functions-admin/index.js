@@ -305,16 +305,15 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
 exports.adminCreateUser = onCall({ region: 'europe-west1', cors: true }, async (request) => {
   requireAdmin(request);
   const email = clean(request.data?.email, 254).toLowerCase();
-  const displayName = clean(request.data?.displayName, 80);
   const password = typeof request.data?.password === 'string' ? request.data.password : '';
-  if (!email || !displayName || password.length < 6) {
-    throw new HttpsError('invalid-argument', 'Name, valid email, and a password of at least 6 characters are required.');
+  if (!email || password.length < 6) {
+    throw new HttpsError('invalid-argument', 'A valid email and a password of at least 6 characters are required.');
   }
   let created;
   try {
-    created = await getAuth().createUser({ email, displayName, password });
+    created = await getAuth().createUser({ email, password });
     await getFirestore().collection('users').doc(created.uid).set({
-      email, displayName, active: false, conditions: [], inventory: [], unlockedCyphers: [], unlockedRecipes: [],
+      email, displayName: '', active: false, conditions: [], inventory: [], unlockedCyphers: [], unlockedRecipes: [],
       createdAt: FieldValue.serverTimestamp(),
     });
   } catch (error) {
@@ -322,7 +321,7 @@ exports.adminCreateUser = onCall({ region: 'europe-west1', cors: true }, async (
     console.error('Admin user creation failed', error);
     throw new HttpsError(error?.code === 'auth/email-already-exists' ? 'already-exists' : 'internal', error?.message || 'Could not create user.');
   }
-  return { uid: created.uid, email, displayName };
+  return { uid: created.uid, email };
 });
 
 exports.adminDeleteUser = onCall({ region: 'europe-west1', cors: true }, async (request) => {
