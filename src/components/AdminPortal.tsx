@@ -21,7 +21,7 @@ import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
 import { mapData } from '../mapdata';
 import {
-  advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
+  adminRevivePlayer, advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
   sendGrantDeliveries, sendPrivateMessages, setCurrentSong, setPlayerActive, setPlayersActive, startEncounter, subscribeEncounter,
   subscribePlayers, updateEncounterParticipants, updatePlayerName,
 } from '../services/campaignService';
@@ -59,16 +59,21 @@ const adminTheme = extendTheme({
 
 const panel = { bg: '#111722', border: '1px solid #2c3648', borderRadius: '16px', boxShadow: '0 18px 45px rgba(0,0,0,.22)' };
 const playerLabel = (player: PlayerProfile) => player.displayName || player.email || player.reyvateilName || player.reyvateilId || 'Unnamed player';
-const isPlayerActive = (player: PlayerProfile) => player.active !== false;
+const isPlayerActive = (player: PlayerProfile) => player.active !== false && player.mortality?.dead !== true;
 const conditionLabel = (condition: NonNullable<PlayerProfile['conditions']>[number]) => typeof condition === 'string' ? condition : `${condition.name} ${condition.amount || 0}`;
 const slug = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || crypto.randomUUID();
+const mortalityGrantOptions = [
+  { id: 'permanent-damage', label: 'Permanent Damage', hint: 'Attack roll 10–16 · death at 5' },
+  { id: 'lost-limb', label: 'Lost Limb', hint: 'Attack roll 17–20 · death at 3' },
+  { id: 'death', label: 'Instant Death', hint: 'Attack roll 21+' },
+];
 
 const RecipientPicker: React.FC<{ players: PlayerProfile[]; value: string[]; onChange: (ids: string[]) => void }> = ({ players, value, onChange }) => {
   const active = players.filter(isPlayerActive);
   const allSelected = active.length > 0 && active.every((player) => value.includes(player.id));
   return <VStack align="stretch" maxH="470px" overflowY="auto" pr={1}>
     <Checkbox isChecked={allSelected} onChange={(event) => onChange(event.target.checked ? active.map((player) => player.id) : [])} p={3} border="1px solid #2c3648" borderRadius="12px"><Text fontWeight="bold">Entire active party</Text><Text fontSize="xs" color="#8f9bb0">Inactive players are excluded</Text></Checkbox>
-    {players.map((player) => <Checkbox key={player.id} isDisabled={!isPlayerActive(player)} opacity={isPlayerActive(player) ? 1 : .42} isChecked={value.includes(player.id)} onChange={(event) => onChange(event.target.checked ? [...value, player.id] : value.filter((id) => id !== player.id))} p={3} border="1px solid #2c3648" borderRadius="12px"><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.reyvateilName || player.reyvateilId || 'No Reyvateil'}{!isPlayerActive(player) ? ' · paused' : ''}</Text></Checkbox>)}
+    {players.map((player) => <Checkbox key={player.id} isDisabled={!isPlayerActive(player)} opacity={isPlayerActive(player) ? 1 : .42} isChecked={value.includes(player.id)} onChange={(event) => onChange(event.target.checked ? [...value, player.id] : value.filter((id) => id !== player.id))} p={3} border="1px solid #2c3648" borderRadius="12px"><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.reyvateilName || player.reyvateilId || 'No Reyvateil'}{player.mortality?.dead ? ' · dead' : !isPlayerActive(player) ? ' · paused' : ''}</Text></Checkbox>)}
   </VStack>;
 };
 
@@ -172,11 +177,16 @@ const PlayersPanel: React.FC<{ players: PlayerProfile[]; loading: boolean; curre
     try { await httpsCallable<{ uid: string }, { uid: string }>(functions, 'adminDeleteUser')({ uid: player.id }); toast({ title: 'User deleted', status: 'success' }); }
     catch (caught: any) { toast({ title: 'Could not delete user', description: caught?.message || String(caught), status: 'error' }); }
   };
+  const revive = async (player: PlayerProfile) => {
+    if (!window.confirm(`Invoke a rare revival for ${playerLabel(player)}? Their permanent injuries and lost limbs remain recorded.`)) return;
+    try { await adminRevivePlayer(player.id); toast({ title: `${playerLabel(player)} revived`, description: 'Reyvateil protection restored at 1 HP. Injury history was retained.', status: 'success' }); }
+    catch (caught: any) { toast({ title: 'Revival failed', description: caught?.message || String(caught), status: 'error' }); }
+  };
   const rename = async (player: PlayerProfile) => { const next = window.prompt('Player name', player.displayName || ''); if (!next?.trim()) return; try { await updatePlayerName(player.id, next); toast({ title: 'Player name saved', status: 'success' }); } catch (caught) { toast({ title: 'Could not save name', description: String(caught), status: 'error' }); } };
   return <VStack align="stretch" spacing={4}>
     <Flex justify="space-between" gap={3} flexWrap="wrap"><Box><Heading size="md">Players</Heading><Text color="#8f9bb0">Names, session state, conditions, and portal access.</Text></Box><HStack flexWrap="wrap"><Button variant="outline" borderColor="#3f4c63" onClick={() => toggleAll(false)}>Pause all</Button><Button leftIcon={<FaBolt />} onClick={() => toggleAll(true)}>Activate all</Button><Button leftIcon={<FaPlus />} onClick={onCreate}>Create user</Button></HStack></Flex>
     <HStack flexWrap="wrap"><Text color="#8f9bb0" fontSize="sm">Edit player name:</Text>{players.map((player) => <Button key={player.id} size="xs" variant="outline" borderColor="#46536a" onClick={() => rename(player)}>{playerLabel(player)}</Button>)}</HStack>
-    {loading ? <Flex py={12} justify="center"><Spinner /></Flex> : <TableContainer><Table variant="simple"><Thead><Tr><Th>Player</Th><Th>Status</Th><Th>Reyvateil</Th><Th>Conditions</Th><Th>Cyphers</Th><Th textAlign="right">Actions</Th></Tr></Thead><Tbody>{players.map((player) => <Tr key={player.id} opacity={isPlayerActive(player) ? 1 : .48}><Td><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.id}</Text></Td><Td><Button size="xs" colorScheme={isPlayerActive(player) ? 'green' : 'gray'} variant={isPlayerActive(player) ? 'solid' : 'outline'} onClick={() => setPlayerActive(player.id, !isPlayerActive(player))}>{isPlayerActive(player) ? 'Active' : 'Paused'}</Button></Td><Td>{player.reyvateilName || player.reyvateilId || 'Not selected'}</Td><Td><HStack>{player.conditions?.length ? player.conditions.slice(0, 3).map((condition, index) => <Badge key={`${conditionLabel(condition)}-${index}`} bg="#51252c" color="#fecaca">{conditionLabel(condition)}</Badge>) : <Badge bg="#163c32" color="#a7f3d0">Clear</Badge>}</HStack></Td><Td>{player.unlockedCyphers?.length || 0}/48</Td><Td><HStack justify="flex-end"><Button as={Link} to={`/admin/players/${player.id}`} size="xs" leftIcon={<FaEye />} variant="outline" borderColor="#46536a">View</Button><IconButton aria-label={`Delete ${playerLabel(player)}`} size="xs" colorScheme="red" variant="ghost" icon={<FaTrash />} isDisabled={player.id === currentUid} onClick={() => remove(player)} /></HStack></Td></Tr>)}</Tbody></Table></TableContainer>}
+    {loading ? <Flex py={12} justify="center"><Spinner /></Flex> : <TableContainer><Table variant="simple"><Thead><Tr><Th>Player</Th><Th>Status</Th><Th>Reyvateil</Th><Th>Damage</Th><Th>Conditions</Th><Th>Cyphers</Th><Th textAlign="right">Actions</Th></Tr></Thead><Tbody>{players.map((player) => <Tr key={player.id} opacity={player.mortality?.dead ? .38 : isPlayerActive(player) ? 1 : .48} filter={player.mortality?.dead ? 'grayscale(1)' : undefined}><Td><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">{player.id}</Text></Td><Td>{player.mortality?.dead ? <Badge colorScheme="red">DEAD</Badge> : <Button size="xs" colorScheme={isPlayerActive(player) ? 'green' : 'gray'} variant={isPlayerActive(player) ? 'solid' : 'outline'} onClick={() => setPlayerActive(player.id, !isPlayerActive(player))}>{isPlayerActive(player) ? 'Active' : 'Paused'}</Button>}</Td><Td>{player.reyvateilName || player.reyvateilId || 'Not selected'}</Td><Td><HStack><Badge colorScheme="orange">PD {player.mortality?.permanentDamage || 0}/5</Badge><Badge colorScheme="red">Limbs {player.mortality?.lostLimbs?.length || 0}/3</Badge></HStack></Td><Td><HStack>{player.conditions?.length ? player.conditions.slice(0, 3).map((condition, index) => <Badge key={`${conditionLabel(condition)}-${index}`} bg="#51252c" color="#fecaca">{conditionLabel(condition)}</Badge>) : <Badge bg="#163c32" color="#a7f3d0">Clear</Badge>}</HStack></Td><Td>{player.unlockedCyphers?.length || 0}/48</Td><Td><HStack justify="flex-end">{player.mortality?.dead && <Button size="xs" colorScheme="green" onClick={() => revive(player)}>Revive</Button>}<Button as={Link} to={`/admin/players/${player.id}`} size="xs" leftIcon={<FaEye />} variant="outline" borderColor="#46536a">View</Button><IconButton aria-label={`Delete ${playerLabel(player)}`} size="xs" colorScheme="red" variant="ghost" icon={<FaTrash />} isDisabled={player.id === currentUid} onClick={() => remove(player)} /></HStack></Td></Tr>)}</Tbody></Table></TableContainer>}
   </VStack>;
 };
 
@@ -205,13 +215,16 @@ const GrantDeliveryPanel: React.FC<{
   const [selectedId, setSelectedId] = useState('');
   const [search, setSearch] = useState('');
   const [amount, setAmount] = useState(1);
+  const [damageDetail, setDamageDetail] = useState('');
   const [sending, setSending] = useState(false);
   const toast = useToast();
   const options = useMemo(() => kind === 'condition'
     ? conditions.map((entry) => ({ id: entry.name, label: entry.name, hint: entry.type }))
     : kind === 'item'
       ? items.map((entry) => ({ id: entry.id, label: entry.name, hint: entry.category }))
-      : CYPHERS.map((entry) => ({ id: entry.id, label: `${String(entry.number).padStart(2, '0')} · ${entry.title}`, hint: entry.domain })),
+      : kind === 'cypher'
+        ? CYPHERS.map((entry) => ({ id: entry.id, label: `${String(entry.number).padStart(2, '0')} · ${entry.title}`, hint: entry.domain }))
+        : mortalityGrantOptions,
   [kind, conditions, items]);
   const filtered = options.filter((option) => `${option.label} ${option.hint}`.toLowerCase().includes(search.toLowerCase())).slice(0, 50);
 
@@ -227,18 +240,20 @@ const GrantDeliveryPanel: React.FC<{
         recipientIds: recipients,
         kind,
         resourceId: selectedId,
-        label: kind === 'condition' ? selectedId : kind === 'item' ? item?.name || selectedId : cypher?.title || selectedId,
-        amount: kind === 'cypher' ? 1 : amount,
+        label: kind === 'condition' ? selectedId : kind === 'item' ? item?.name || selectedId : kind === 'cypher' ? cypher?.title || selectedId : mortalityGrantOptions.find((entry) => entry.id === selectedId)?.label || selectedId,
+        amount: kind === 'cypher' || selectedId === 'death' ? 1 : amount,
         conditionType: condition?.type,
         conditionColor: condition?.color,
+        damageDetail: kind === 'damage' ? damageDetail : '',
       });
       toast({
         title: `Discovery sent to ${recipients.length} player${recipients.length === 1 ? '' : 's'}`,
-        description: kind === 'item' ? 'They can keep it or reveal it to the active party.' : 'It will be applied when they open it.',
+        description: kind === 'item' ? 'They can keep it or reveal it to the active party.' : kind === 'damage' ? 'The mortal consequence will be recorded when they open it.' : 'It will be applied when they open it.',
         status: 'success',
       });
       setSelectedId('');
       setRecipients([]);
+      setDamageDetail('');
     } catch (caught) {
       toast({ title: 'Delivery failed', description: String(caught), status: 'error' });
     } finally { setSending(false); }
@@ -249,13 +264,14 @@ const GrantDeliveryPanel: React.FC<{
       <Box><Heading size="sm" mb={3}>Recipients</Heading><RecipientPicker players={players} value={recipients} onChange={setRecipients} /></Box>
       <VStack align="stretch" spacing={4}>
         <Box><Heading size="md">Send a discovery</Heading><Text color="#8f9bb0">The player receives a silent sealed popup. Resources are applied only after they open and resolve it.</Text></Box>
-        <FormControl><FormLabel>Grant type</FormLabel><HStack>{(['condition', 'item', 'cypher'] as GrantKind[]).map((value) => <Button key={value} flex="1" variant={kind === value ? 'solid' : 'outline'} borderColor="#3f4c63" onClick={() => { setKind(value); setSelectedId(''); setSearch(''); }}>{value === 'cypher' ? 'Cypher' : value[0].toUpperCase() + value.slice(1)}</Button>)}</HStack></FormControl>
+        <FormControl><FormLabel>Grant type</FormLabel><SimpleGrid columns={{ base: 2, md: 4 }} spacing={2}>{(['condition', 'item', 'cypher', 'damage'] as GrantKind[]).map((value) => <Button key={value} variant={kind === value ? 'solid' : 'outline'} borderColor="#3f4c63" onClick={() => { setKind(value); setSelectedId(''); setSearch(''); setDamageDetail(''); }}>{value === 'cypher' ? 'Cypher' : value[0].toUpperCase() + value.slice(1)}</Button>)}</SimpleGrid></FormControl>
         <FormControl><FormLabel>Search</FormLabel><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={`Search ${kind}s…`} /></FormControl>
         <Box border="1px solid #2c3648" borderRadius="12px" maxH="270px" overflowY="auto" p={2}>
           {filtered.map((option) => <Button key={option.id} w="full" justifyContent="space-between" variant={selectedId === option.id ? 'solid' : 'ghost'} mb={1} onClick={() => setSelectedId(option.id)}><Text noOfLines={1}>{option.label}</Text><Text fontSize="xs" opacity={.68}>{option.hint}</Text></Button>)}
           {!filtered.length && <Text color="#8f9bb0" p={4}>Nothing matches that search.</Text>}
         </Box>
-        {kind !== 'cypher' && <FormControl maxW="220px"><FormLabel>Amount</FormLabel><NumberInput min={1} value={amount} onChange={(_, value) => setAmount(Number.isFinite(value) ? value : 1)}><NumberInputField /></NumberInput></FormControl>}
+        {kind !== 'cypher' && selectedId !== 'death' && <FormControl maxW="220px"><FormLabel>{kind === 'damage' ? 'Count' : 'Amount'}</FormLabel><NumberInput min={1} max={kind === 'damage' ? 20 : undefined} value={amount} onChange={(_, value) => setAmount(Number.isFinite(value) ? value : 1)}><NumberInputField /></NumberInput></FormControl>}
+        {kind === 'damage' && selectedId === 'lost-limb' && <FormControl><FormLabel>Limb description</FormLabel><Input value={damageDetail} onChange={(event) => setDamageDetail(event.target.value)} placeholder="e.g. left arm" /></FormControl>}
         <Flex justify="space-between" align="center"><Text color="#8f9bb0">{recipients.length} active recipient{recipients.length === 1 ? '' : 's'}</Text><Button leftIcon={<FaGift />} onClick={send} isLoading={sending} isDisabled={!senderId || !selectedId || !recipients.length}>Send discovery</Button></Flex>
       </VStack>
     </Grid>
@@ -448,7 +464,8 @@ const EncounterBuilderDraggable: React.FC<{
   const begin = async () => {
     const party: EncounterParticipant[] = players.filter((player) => playerIds.includes(player.id)).map((player): EncounterParticipant => {
       const maxHp = finitePositive(player.combatStats?.maxHp) || 0;
-      const currentHp = finitePositive(player.combatStats?.currentHp, maxHp) || 0;
+      const storedHp = Number(player.combatStats?.currentHp);
+      const currentHp = Number.isFinite(storedHp) && storedHp >= 0 ? Math.min(maxHp, storedHp) : maxHp;
       const armorClass = finitePositive(player.combatStats?.armorClass);
       return {
         id: `player-${player.id}`, sourceId: player.id, kind: 'player', name: playerLabel(player),
@@ -532,7 +549,8 @@ const BattleScreenViewport: React.FC<{ encounter: Encounter }> = ({ encounter })
   useEffect(() => setParticipants(encounter.participants), [encounter.participants]);
   const update = (id: string, change: Partial<EncounterParticipant>) => setParticipants((current) => current.map((entry) => entry.id === id ? { ...entry, ...change } : entry));
   const persist = async () => { setSaving(true); try { await updateEncounterParticipants(encounter.id, participants); } finally { setSaving(false); } };
-  const ordered = [...participants].sort((a, b) => (b.initiative ?? -999) - (a.initiative ?? -999));
+  const ordered = [...participants].sort((a, b) => Number(Boolean(a.dead)) - Number(Boolean(b.dead)) || (b.initiative ?? -999) - (a.initiative ?? -999));
+  const activeParticipant = participants.find((entry) => entry.id === encounter.turn?.activeParticipantId);
   const finish = async () => {
     if (!window.confirm('End this battle and resume eligible player timers?')) return;
     try { await endEncounter(encounter.id); toast({ title: 'Battle ended', description: 'Global timer pause released.', status: 'success' }); }
@@ -541,10 +559,10 @@ const BattleScreenViewport: React.FC<{ encounter: Encounter }> = ({ encounter })
   return (
     <VStack align="stretch" spacing={5}>
       <Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><BattleActions encounter={encounter} onFinish={finish} /></Flex>
-      {encounter.turn?.phase === 'active' && <Flex p={3} bg="#163c32" border="1px solid #34d399" borderRadius="12px" justify="space-between"><Text fontWeight="bold">Acting now: {participants.find((entry) => entry.id === encounter.turn?.activeParticipantId)?.name || 'Unknown combatant'}</Text><Badge colorScheme="green">Round {encounter.turn.round}</Badge></Flex>}
-      <Flex p={3} bg={encounter.activeSong ? '#3b183f' : '#0d131e'} border={`1px solid ${encounter.activeSong ? '#e879f9' : '#2c3648'}`} borderRadius="12px" justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" color="#8f9bb0">PERFORMANCE CHANNEL</Text><Text fontWeight="bold">{encounter.activeSong ? encounter.activeSong.songName : 'Silent'}</Text>{encounter.activeSong && <><Text fontSize="sm" color="#d8b4fe">{encounter.activeSong.performerName} · {encounter.activeSong.stage === 'chanting' ? `activates round ${encounter.activeSong.activatesAtRound}` : encounter.activeSong.endsAfterRound ? `active through round ${encounter.activeSong.endsAfterRound}` : 'active until interrupted'}</Text><Text fontSize="xs" color="#f5d0fe">Audience: every creature that can hear it. Soundless monsters are immune.</Text></>}</Box><Badge alignSelf="center" colorScheme={encounter.activeSong?.stage === 'chanting' ? 'yellow' : encounter.activeSong ? 'pink' : 'gray'}>{encounter.activeSong?.stage || 'no Canticle'}</Badge></Flex>
+      {encounter.turn?.phase === 'active' && <Flex p={3} bg="#163c32" border="1px solid #34d399" borderRadius="12px" justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontWeight="bold">Acting now: {activeParticipant?.name || 'Unknown combatant'}</Text>{activeParticipant?.turnResources && <Text fontSize="xs" color="#a7f3d0">Action {activeParticipant.turnResources.actionAvailable ? 'ready' : 'spent'} · Song {activeParticipant.turnResources.songAvailable === false ? 'spent' : 'ready'}{activeParticipant.turnResources.quickAvailable ? ' · Quick follow-up ready' : ''}</Text>}</Box><Badge colorScheme="green">Round {encounter.turn.round}</Badge></Flex>}
+      <Flex p={3} bg={encounter.activeSong ? '#3b183f' : '#0d131e'} border={`1px solid ${encounter.activeSong ? '#e879f9' : '#2c3648'}`} borderRadius="12px" justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="xs" color="#8f9bb0">PERFORMANCE CHANNEL</Text><Text fontWeight="bold">{encounter.activeSong ? encounter.activeSong.songName : 'Silent'}</Text>{encounter.activeSong && <><Text fontSize="sm" color="#d8b4fe">{encounter.activeSong.performerName} · {encounter.activeSong.stage === 'chanting' ? `activates round ${encounter.activeSong.activatesAtRound}` : encounter.activeSong.endsAfterRound ? `active through round ${encounter.activeSong.endsAfterRound}` : 'active until interrupted'}</Text><Text fontSize="xs" color="#f5d0fe">Audience: every creature that can hear it. The performer must spend Song on each turn to sustain it. Soundless monsters are immune.</Text></>}</Box><Badge alignSelf="center" colorScheme={encounter.activeSong?.stage === 'chanting' ? 'yellow' : encounter.activeSong ? 'pink' : 'gray'}>{encounter.activeSong?.stage || 'no Canticle'}</Badge></Flex>
       <Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}>
-        <VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" onClick={persist} isLoading={saving}>Save battle state</Button></VStack>
+        <VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={!entry.dead && index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px" opacity={entry.dead ? .42 : 1} filter={entry.dead ? 'grayscale(1)' : undefined}><Text textAlign="center" fontSize="xl" fontWeight="bold">{entry.dead ? '—' : index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><HStack spacing={1}><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge>{entry.dead && <Badge colorScheme="red">DEAD · SKIPPED</Badge>}</HStack></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" onClick={persist} isLoading={saving}>Save battle state</Button></VStack>
         <Box>{encounter.map ? <><BattleMapViewport map={encounter.map} /><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · exact saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box>
       </Grid>
     </VStack>
@@ -556,7 +574,7 @@ const BattleScreen: React.FC<{ encounter: Encounter }> = ({ encounter }) => {
   useEffect(() => setParticipants(encounter.participants), [encounter.participants]);
   const update = (id: string, patch: Partial<EncounterParticipant>) => setParticipants((current) => current.map((entry) => entry.id === id ? { ...entry, ...patch } : entry));
   const persist = async (next = participants) => { setSaving(true); try { await updateEncounterParticipants(encounter.id, next); } finally { setSaving(false); } };
-  const ordered = [...participants].sort((a, b) => (b.initiative ?? -999) - (a.initiative ?? -999));
+  const ordered = [...participants].sort((a, b) => Number(Boolean(a.dead)) - Number(Boolean(b.dead)) || (b.initiative ?? -999) - (a.initiative ?? -999));
   const finish = async () => { if (!window.confirm('End this battle and resume eligible player timers?')) return; try { await endEncounter(encounter.id); toast({ title: 'Battle ended', description: 'Global timer pause released.', status: 'success' }); } catch (caught) { toast({ title: 'Could not end battle', description: String(caught), status: 'error' }); } };
   return <VStack align="stretch" spacing={5}><Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><Button colorScheme="red" onClick={finish}>End battle</Button></Flex><Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}><VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" borderColor="#46536a" onClick={() => persist()} isLoading={saving}>Save battle state</Button></VStack><Box>{encounter.map ? <><Box aspectRatio="16/9" overflow="hidden" borderRadius="14px" border="1px solid #354156"><Box as="img" src={encounter.map.imageUrl} w="100%" h="100%" objectFit="cover" transform={`scale(${encounter.map.zoom})`} transformOrigin={`${encounter.map.focusX}% ${encounter.map.focusY}%`} /></Box><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box></Grid></VStack>;
 };

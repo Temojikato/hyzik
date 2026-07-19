@@ -12,7 +12,10 @@ import {
   Alert,
   AlertIcon,
   Box,
+  Badge,
   Button,
+  Heading,
+  Text,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -257,6 +260,7 @@ const Home: React.FC = () => {
     const inherited = new Set(profile?.combatProfile?.inheritedSocialAbilityIds || []);
     return { ...reyvateil, abilities: inherited.size ? pool.filter((ability) => ability.id && inherited.has(ability.id)) : reyvateil.abilities };
   }, [profile?.combatProfile?.inheritedSocialAbilityIds, reyvateil]);
+  const isDead = profile?.mortality?.dead === true;
 
   if (loading) {
     return (
@@ -278,7 +282,14 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Box minH="100vh" p={{ base: 3, md: 5 }} bg="background">
+    <Box minH="100vh" p={{ base: 3, md: 5 }} bg="background" filter={isDead ? 'grayscale(1)' : undefined} opacity={isDead ? 0.58 : 1} transition="filter .2s ease, opacity .2s ease">
+      {isDead && <Box position="fixed" inset={0} zIndex={1400} pointerEvents="none" display="grid" placeItems="center" bg="blackAlpha.300">
+        <Box px={{ base: 6, md: 10 }} py={{ base: 4, md: 6 }} bg="rgba(5, 8, 15, .88)" border="2px solid" borderColor="whiteAlpha.500" borderRadius="2xl" textAlign="center" boxShadow="0 24px 80px rgba(0,0,0,.7)">
+          <Badge colorScheme="red" fontSize="sm">MORTAL RECORD</Badge>
+          <Heading mt={2} size={{ base: 'lg', md: 'xl' }} letterSpacing=".12em">DECEASED</Heading>
+          <Text mt={2} color="whiteAlpha.800">{profile?.mortality?.deathCause || 'The mortal body could not survive its wounds.'}</Text>
+        </Box>
+      </Box>}
       <Box maxW="1600px" mx="auto">
       {/* Header Component with an added NPC button */}
       <Header

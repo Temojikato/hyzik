@@ -42,7 +42,50 @@ const removeInventoryEntry = (inventory, reference, amount) => {
 };
 const activeAudience = async (db, finderId) => {
   const snapshot = await db.collection('users').get();
-  return snapshot.docs.filter((entry) => entry.id !== finderId && entry.data().active !== false).map((entry) => entry.id);
+  return snapshot.docs.filter((entry) => entry.id !== finderId && entry.data().active !== false && entry.data().mortality?.dead !== true).map((entry) => entry.id);
+};
+
+const normalizedMortality = (value = {}) => ({
+  permanentDamage: Math.max(0, Math.floor(Number(value.permanentDamage || 0))),
+  lostLimbs: Array.isArray(value.lostLimbs) ? value.lostLimbs.map((entry) => clean(String(entry), 80)).filter(Boolean) : [],
+  dead: value.dead === true,
+  deathCause: clean(value.deathCause, 180),
+  updatedAtMs: Number(value.updatedAtMs || 0),
+  ...(Number(value.revivedAtMs || 0) > 0 ? { revivedAtMs: Number(value.revivedAtMs) } : {}),
+});
+const applyMortalityConsequence = (current, consequence, amount = 1, detail = '') => {
+  const mortality = normalizedMortality(current);
+  const count = Math.max(1, Math.min(20, Math.floor(Number(amount || 1))));
+  if (consequence === 'permanent-damage') mortality.permanentDamage += count;
+  else if (consequence === 'lost-limb') {
+    const label = clean(detail, 80) || 'Unspecified limb';
+    for (let index = 0; index < count; index += 1) mortality.lostLimbs.push(count > 1 ? `${label} ${index + 1}` : label);
+  } else if (consequence === 'death') {
+    mortality.dead = true;
+    mortality.deathCause = 'Unprotected attack roll of 21 or higher';
+  } else throw new HttpsError('invalid-argument', 'Unknown mortal consequence.');
+  if (!mortality.dead && mortality.lostLimbs.length >= 3) {
+    mortality.dead = true;
+    mortality.deathCause = 'Three lost limbs';
+  }
+  if (!mortality.dead && mortality.permanentDamage >= 5) {
+    mortality.dead = true;
+    mortality.deathCause = 'Five permanent injuries';
+  }
+  mortality.updatedAtMs = Date.now();
+  return mortality;
+};
+
+const activeEncounterForUser = async (transaction, db, userId) => {
+  const campaignSnapshot = await transaction.get(db.collection('campaign').doc('current'));
+  const encounterId = clean(campaignSnapshot.data()?.activeEncounterId, 128);
+  if (!encounterId) return null;
+  const ref = db.collection('encounters').doc(encounterId);
+  const snapshot = await transaction.get(ref);
+  if (!snapshot.exists || snapshot.data().status !== 'active') return null;
+  const participants = (snapshot.data().participants || []).map((entry) => ({ ...entry }));
+  const participant = participants.find((entry) => entry.kind === 'player' && entry.sourceId === userId);
+  return participant ? { ref, participants, participant, activeSong: snapshot.data().activeSong || null } : null;
 };
 
 const deterministicSubset = (ids, count, seed) => {
@@ -119,7 +162,8 @@ const buildPlayerCombatState = ({ combat, user = {}, uid, reyvateilId, level: re
 
 const freshTurnResources = () => ({
   actionAvailable: true,
-  quickAvailable: true,
+  songAvailable: true,
+  quickAvailable: false,
   reactionAvailable: true,
   roundUses: {},
   encounterUses: {},
@@ -135,6 +179,7 @@ const universalCombatAbilities = {
 };
 
 const initiativeSequence = (participants) => participants
+  .filter((participant) => participant.dead !== true)
   .map((participant, index) => ({ participant, index }))
   .sort((a, b) => Number(b.participant.initiative) - Number(a.participant.initiative) || a.index - b.index)
   .map(({ participant }) => participant.id);
@@ -243,21 +288,40 @@ exports.advanceEncounterTurn = onCall({ region: 'europe-west1', cors: true }, as
     if (!snapshot.exists || snapshot.data().status !== 'active') throw new HttpsError('failed-precondition', 'This battle is no longer active.');
     const encounter = snapshot.data();
     const participants = Array.isArray(encounter.participants) ? encounter.participants.map((entry) => ({ ...entry })) : [];
-    if (!participants.length || participants.some((entry) => !Number.isFinite(Number(entry.initiative)))) {
-      throw new HttpsError('failed-precondition', 'Enter initiative for every combatant before starting turns.');
+    if (!participants.length || participants.some((entry) => entry.dead !== true && !Number.isFinite(Number(entry.initiative)))) {
+      throw new HttpsError('failed-precondition', 'Enter initiative for every living combatant before starting turns.');
     }
     const sequence = initiativeSequence(participants);
+    if (!sequence.length) throw new HttpsError('failed-precondition', 'No living combatants remain in initiative.');
     const previous = encounter.turn || { phase: 'initiative', round: 1, activeIndex: -1, serial: 0 };
     const oldIndex = previous.activeParticipantId ? sequence.indexOf(previous.activeParticipantId) : -1;
-    const activeIndex = previous.phase === 'initiative' || oldIndex < 0 ? 0 : (oldIndex + 1) % sequence.length;
-    const wrapped = previous.phase === 'active' && oldIndex >= 0 && activeIndex === 0;
+    let activeIndex = 0;
+    let wrapped = false;
+    if (previous.phase === 'active' && oldIndex >= 0) {
+      activeIndex = (oldIndex + 1) % sequence.length;
+      wrapped = activeIndex === 0;
+    } else if (previous.phase === 'active' && previous.activeParticipantId) {
+      // The acting combatant may have died during their turn. Continue from
+      // their former position instead of restarting initiative at the top.
+      const priorSequence = Array.isArray(previous.sequence) ? previous.sequence : [];
+      const priorIndex = priorSequence.indexOf(previous.activeParticipantId);
+      for (let offset = 1; priorIndex >= 0 && offset <= priorSequence.length; offset += 1) {
+        const candidate = priorSequence[(priorIndex + offset) % priorSequence.length];
+        const candidateIndex = sequence.indexOf(candidate);
+        if (candidateIndex >= 0) {
+          activeIndex = candidateIndex;
+          wrapped = priorIndex + offset >= priorSequence.length;
+          break;
+        }
+      }
+    }
     const round = Math.max(1, Number(previous.round || 1) + (wrapped ? 1 : 0));
     const activeParticipantId = sequence[activeIndex];
     const active = participants.find((entry) => entry.id === activeParticipantId);
     participants.forEach((participant) => {
       const resources = participant.turnResources || freshTurnResources();
       if (participant.id === activeParticipantId) {
-        participant.turnResources = { ...resources, actionAvailable: true, quickAvailable: true, reactionAvailable: true };
+        participant.turnResources = { ...resources, actionAvailable: true, songAvailable: true, quickAvailable: false, reactionAvailable: true };
       } else {
         participant.turnResources = resources;
       }
@@ -269,6 +333,15 @@ exports.advanceEncounterTurn = onCall({ region: 'europe-west1', cors: true }, as
     };
     let activeSong = encounter.activeSong ? { ...encounter.activeSong } : null;
     const songLog = [];
+    if (activeSong && previous.phase === 'active' && previous.activeParticipantId === activeSong.performerParticipantId
+      && Number(activeSong.lastSustainedTurnSerial ?? -1) !== Number(previous.serial || 0)) {
+      songLog.push({
+        id: crypto.randomUUID(), action: 'ability-used', round,
+        participantId: activeSong.performerParticipantId, participantName: clean(activeSong.performerName, 120),
+        abilityId: activeSong.songId, abilityName: clean(activeSong.songName, 120), songEvent: 'canticle-unsustained', createdAtMs: Date.now(),
+      });
+      activeSong = null;
+    }
     if (wrapped && activeSong?.stage === 'chanting' && round >= Number(activeSong.activatesAtRound || round)) {
       activeSong.stage = 'active';
       songLog.push({
@@ -311,6 +384,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     const participants = encounter.participants.map((entry) => ({ ...entry }));
     const participant = participants.find((entry) => entry.kind === 'player' && entry.sourceId === request.auth.uid);
     if (!participant) throw new HttpsError('permission-denied', 'You are not part of this encounter.');
+    if (participant.dead === true || player.mortality?.dead === true) throw new HttpsError('failed-precondition', 'A deceased combatant cannot act. Only the administrator can invoke a revival.');
     let ability = universalCombatAbilities[abilityId];
     let song = null;
     if (!ability) {
@@ -334,16 +408,25 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     if (ability.actionType !== 'reaction' && turn.activeParticipantId !== participant.id) {
       throw new HttpsError('failed-precondition', 'Wait for your turn.');
     }
-    const resources = { ...freshTurnResources(), ...(participant.turnResources || {}) };
+    const previousResources = participant.turnResources || {};
+    const resources = { ...freshTurnResources(), ...previousResources };
+    // Encounters opened before the Song/Quick economy stored Quick as ready at
+    // turn start. Do not let that legacy shape grant a free follow-up.
+    if (!Object.prototype.hasOwnProperty.call(previousResources, 'songAvailable')) resources.quickAvailable = false;
     resources.roundUses = { ...(resources.roundUses || {}) };
     resources.encounterUses = { ...(resources.encounterUses || {}) };
-    if (ability.actionType === 'action' && !resources.actionAvailable) throw new HttpsError('failed-precondition', 'Your action has already been spent.');
-    if (ability.actionType === 'quick' && !resources.quickAvailable) throw new HttpsError('failed-precondition', 'Your quick action has already been spent.');
+    if (song && !resources.songAvailable) throw new HttpsError('failed-precondition', 'Your Song has already been spent.');
+    if (!song && ability.actionType === 'action' && !resources.actionAvailable) throw new HttpsError('failed-precondition', 'Your action has already been spent.');
+    if (ability.actionType === 'quick' && !resources.quickAvailable) throw new HttpsError('failed-precondition', 'Use an Action technique before its Quick follow-up.');
     if (ability.actionType === 'reaction' && !resources.reactionAvailable) throw new HttpsError('failed-precondition', 'Your reaction has already been spent.');
     const round = Number(turn.round || 1);
     if (ability.reset === 'round' && resources.roundUses[ability.id] === round) throw new HttpsError('failed-precondition', 'That technique resets next round.');
     if (ability.reset === 'encounter' && Number(resources.encounterUses[ability.id] || 0) >= Number(ability.uses || 1)) throw new HttpsError('failed-precondition', 'That technique is spent for this encounter.');
-    if (ability.actionType === 'action') resources.actionAvailable = false;
+    if (song) resources.songAvailable = false;
+    if (!song && ability.actionType === 'action') {
+      resources.actionAvailable = false;
+      resources.quickAvailable = true;
+    }
     if (ability.actionType === 'quick') resources.quickAvailable = false;
     if (ability.actionType === 'reaction') resources.reactionAvailable = false;
     if (ability.reset === 'round') resources.roundUses[ability.id] = round;
@@ -364,6 +447,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
       endsAfterRound: Number.isFinite(Number(song.durationRounds)) && song.durationRounds !== null
         ? round + Number(song.chantRounds || 0) + Number(song.durationRounds) - 1
         : null,
+      lastSustainedTurnSerial: Number(turn.serial || 0),
       ...(song.audioUrl ? { audioUrl: clean(song.audioUrl, 2000) } : {}),
     } : encounter.activeSong || null;
     const combatLog = [...(encounter.combatLog || []), {
@@ -376,6 +460,97 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     }].slice(-80);
     transaction.update(encounterRef, { participants, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
     return { abilityId: ability.id, abilityName: ability.name, resources, activeSong };
+  });
+});
+
+exports.continueCombatSong = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const encounterId = clean(request.data?.encounterId, 128);
+  if (!encounterId) throw new HttpsError('invalid-argument', 'Encounter is required.');
+  const db = getFirestore();
+  const encounterRef = db.collection('encounters').doc(encounterId);
+  return db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(encounterRef);
+    if (!snapshot.exists || snapshot.data().status !== 'active') throw new HttpsError('failed-precondition', 'There is no active battle.');
+    const encounter = snapshot.data();
+    const turn = encounter.turn;
+    const activeSong = encounter.activeSong ? { ...encounter.activeSong } : null;
+    if (!activeSong) throw new HttpsError('failed-precondition', 'There is no Canticle to sustain.');
+    if (activeSong.performerSourceId !== request.auth.uid) throw new HttpsError('permission-denied', 'Only the performer can sustain this Canticle.');
+    const participants = (encounter.participants || []).map((entry) => ({ ...entry }));
+    const participant = participants.find((entry) => entry.id === activeSong.performerParticipantId && entry.sourceId === request.auth.uid);
+    if (!participant) throw new HttpsError('permission-denied', 'The performer is no longer in this encounter.');
+    if (participant.dead === true) throw new HttpsError('failed-precondition', 'A deceased performer cannot sustain a Canticle.');
+    if (!turn || turn.phase !== 'active' || turn.activeParticipantId !== participant.id) throw new HttpsError('failed-precondition', 'Sustain the Canticle during your turn.');
+    const resources = { ...freshTurnResources(), ...(participant.turnResources || {}) };
+    resources.roundUses = { ...(resources.roundUses || {}) };
+    resources.encounterUses = { ...(resources.encounterUses || {}) };
+    if (!resources.songAvailable) throw new HttpsError('failed-precondition', 'Your Song has already been spent.');
+    resources.songAvailable = false;
+    participant.turnResources = resources;
+    activeSong.lastSustainedTurnSerial = Number(turn.serial || 0);
+    const combatLog = [...(encounter.combatLog || []), {
+      id: crypto.randomUUID(), action: 'ability-used', round: Number(turn.round || 1),
+      participantId: participant.id, participantName: clean(participant.name, 120),
+      abilityId: activeSong.songId, abilityName: clean(activeSong.songName, 120),
+      songEvent: 'canticle-sustained', createdAtMs: Date.now(),
+    }].slice(-80);
+    transaction.update(encounterRef, { participants, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    return { songId: activeSong.songId, songName: activeSong.songName, resources, activeSong };
+  });
+});
+
+exports.applyMortalConsequence = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const consequence = clean(request.data?.consequence, 40);
+  const detail = clean(request.data?.detail, 80);
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(request.auth.uid);
+  return db.runTransaction(async (transaction) => {
+    const userSnapshot = await transaction.get(userRef);
+    if (!userSnapshot.exists) throw new HttpsError('not-found', 'Your player profile is missing.');
+    const user = userSnapshot.data();
+    if (user.mortality?.dead === true) throw new HttpsError('failed-precondition', 'You are already dead. Only the administrator can invoke a revival.');
+    const activeEncounter = await activeEncounterForUser(transaction, db, request.auth.uid);
+    const currentHp = activeEncounter ? Number(activeEncounter.participant.hp) : Number(user.combatStats?.currentHp);
+    if (!Number.isFinite(currentHp) || currentHp > 0) throw new HttpsError('failed-precondition', 'Mortal consequences can only be self-recorded after Reyvateil protection reaches 0 HP.');
+    const mortality = applyMortalityConsequence(user.mortality, consequence, 1, detail);
+    const userUpdate = { mortality };
+    if (mortality.dead) userUpdate.combatStats = { ...(user.combatStats || {}), currentHp: 0 };
+    transaction.set(userRef, userUpdate, { merge: true });
+    if (activeEncounter) {
+      activeEncounter.participant.dead = mortality.dead;
+      if (mortality.dead) activeEncounter.participant.hp = 0;
+      transaction.update(activeEncounter.ref, {
+        participants: activeEncounter.participants,
+        ...(mortality.dead && activeEncounter.activeSong?.performerSourceId === request.auth.uid ? { activeSong: null } : {}),
+        updatedAt: FieldValue.serverTimestamp(),
+      });
+    }
+    return { mortality };
+  });
+});
+
+exports.adminRevivePlayer = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const userId = clean(request.data?.userId, 128);
+  if (!userId) throw new HttpsError('invalid-argument', 'Choose a player to revive.');
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(userId);
+  return db.runTransaction(async (transaction) => {
+    const userSnapshot = await transaction.get(userRef);
+    if (!userSnapshot.exists) throw new HttpsError('not-found', 'That player no longer exists.');
+    const user = userSnapshot.data();
+    const revivedAtMs = Date.now();
+    const mortality = { ...normalizedMortality(user.mortality), dead: false, deathCause: '', updatedAtMs: revivedAtMs, revivedAtMs };
+    const activeEncounter = await activeEncounterForUser(transaction, db, userId);
+    transaction.update(userRef, { mortality, 'combatStats.currentHp': 1 });
+    if (activeEncounter) {
+      activeEncounter.participant.dead = false;
+      activeEncounter.participant.hp = Math.max(1, Number(activeEncounter.participant.hp || 0));
+      transaction.update(activeEncounter.ref, { participants: activeEncounter.participants, updatedAt: FieldValue.serverTimestamp() });
+    }
+    return { userId, mortality };
   });
 });
 
@@ -422,7 +597,7 @@ exports.getActiveParty = onCall({ region: 'europe-west1', cors: true }, async (r
   const snapshot = await getFirestore().collection('users').get();
   return {
     players: snapshot.docs
-      .filter((entry) => entry.id !== request.auth.uid && entry.data().active !== false)
+      .filter((entry) => entry.id !== request.auth.uid && entry.data().active !== false && entry.data().mortality?.dead !== true)
       .map((entry) => ({
         id: entry.id,
         displayName: clean(entry.data().displayName, 80) || clean(entry.data().email, 120) || 'Unnamed player',
@@ -582,6 +757,21 @@ exports.claimGrantDelivery = onCall({ region: 'europe-west1', cors: true }, asyn
       transaction.update(userRef, { conditions });
     } else if (kind === 'cypher') {
       transaction.update(userRef, { unlockedCyphers: FieldValue.arrayUnion(clean(delivery.resourceId, 128)) });
+    } else if (kind === 'damage') {
+      const mortality = applyMortalityConsequence(userSnapshot.data().mortality, clean(delivery.resourceId, 40), amount, clean(delivery.damageDetail, 80));
+      const activeEncounter = await activeEncounterForUser(transaction, db, targetUserId);
+      const userUpdate = { mortality };
+      if (mortality.dead) userUpdate.combatStats = { ...(userSnapshot.data().combatStats || {}), currentHp: 0 };
+      transaction.set(userRef, userUpdate, { merge: true });
+      if (activeEncounter) {
+        activeEncounter.participant.dead = mortality.dead;
+        if (mortality.dead) activeEncounter.participant.hp = 0;
+        transaction.update(activeEncounter.ref, {
+          participants: activeEncounter.participants,
+          ...(mortality.dead && activeEncounter.activeSong?.performerSourceId === targetUserId ? { activeSong: null } : {}),
+          updatedAt: FieldValue.serverTimestamp(),
+        });
+      }
     } else {
       throw new HttpsError('invalid-argument', 'Unknown grant type.');
     }

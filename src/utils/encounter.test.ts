@@ -16,8 +16,8 @@ describe('serializeEncounterParticipants', () => {
   it('preserves valid optional combat fields', () => {
     expect(serializeEncounterParticipants([{
       id: 'monster-a', sourceId: 'slime', kind: 'monster', name: 'Slime', hp: 20, maxHp: 20,
-      initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible',
-    }])[0]).toMatchObject({ initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible' });
+      initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible', dead: false,
+    }])[0]).toMatchObject({ initiative: 12, armorClass: 14, monsterTier: 'Greater', songHearing: 'audible', dead: false });
   });
 
   it('rejects missing required combat values with the combatant name', () => {
@@ -32,5 +32,14 @@ describe('serializeEncounterParticipants', () => {
     expect(() => assertEncounterParticipants([{
       id: 'monster-a', sourceId: 'slime', kind: 'monster', name: 'Slime', hp: 0, maxHp: 20, armorClass: 12,
     }], true)).not.toThrow();
+  });
+
+  it('allows an unprotected player at zero HP to enter combat but still rejects a zero-HP monster', () => {
+    expect(() => assertEncounterParticipants([{
+      id: 'player-a', sourceId: 'a', kind: 'player', name: 'Aster', hp: 0, maxHp: 20, armorClass: 12,
+    }])).not.toThrow();
+    expect(() => assertEncounterParticipants([{
+      id: 'monster-a', sourceId: 'slime', kind: 'monster', name: 'Slime', hp: 0, maxHp: 20, armorClass: 12,
+    }])).toThrow('current HP');
   });
 });

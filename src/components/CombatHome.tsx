@@ -17,6 +17,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Progress,
+  Select,
   SimpleGrid,
   Tab,
   TabList,
@@ -36,10 +37,10 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { FaBolt, FaChevronDown, FaChevronUp, FaCircleQuestion, FaLock, FaShieldHalved, FaVolumeHigh } from 'react-icons/fa6';
+import { FaBolt, FaChevronDown, FaChevronUp, FaCircleQuestion, FaHeartCrack, FaLock, FaShieldHalved, FaSkull, FaVolumeHigh } from 'react-icons/fa6';
 import { useAuth } from '../contexts/AuthContext';
 import { useCampaign } from '../contexts/CampaignContext';
-import { activateCombatAbility, subscribeEncounter } from '../services/campaignService';
+import { activateCombatAbility, applyMortalConsequence, continueCombatSong, subscribeEncounter } from '../services/campaignService';
 import { Encounter, EncounterParticipant, PlayerCombatProfile, PlayerProfile } from '../types/Campaign';
 import { Ability, CombatAbility, CombatAptitudeKey, CombatSong, Reyvateil } from '../types/Reyvateils';
 import { getAbilitySpokenForm, resolveAbilityInvocation } from '../utils/abilityHymmnos';
@@ -65,7 +66,7 @@ const commonActions = (combat: PlayerCombatProfile) => [
   ['universal-shove', 'Shove', resolveShoveText(combat)],
 ];
 
-const actionLabel: Record<string, string> = { action: 'Action', quick: 'Quick', reaction: 'Reaction', passive: 'Passive' };
+const actionLabel: Record<string, string> = { action: 'Action', song: 'Song', quick: 'Quick follow-up', reaction: 'Reaction', passive: 'Passive' };
 const resetLabel: Record<string, string> = { turn: 'each turn', round: 'each round', encounter: 'per encounter', passive: 'always' };
 const songAudienceLabel: Record<CombatSong['audience'], string> = {
   performer: 'Performer must hear',
@@ -105,8 +106,9 @@ const abilityUnavailableReason = (
   if (encounter.turn?.phase !== 'active') return 'Waiting for initiative';
   const resources = participant.turnResources;
   if (ability.actionType !== 'reaction' && encounter.turn.activeParticipantId !== participant.id) return 'Wait for your turn';
+  if (ability.actionType === 'song' && resources?.songAvailable === false) return 'Song spent';
   if (ability.actionType === 'action' && resources?.actionAvailable === false) return 'Action spent';
-  if (ability.actionType === 'quick' && resources?.quickAvailable === false) return 'Quick action spent';
+  if (ability.actionType === 'quick' && resources?.quickAvailable !== true) return 'Use an Action technique first';
   if (ability.actionType === 'reaction' && resources?.reactionAvailable === false) return 'Reaction spent';
   if (ability.reset === 'round' && resources?.roundUses?.[ability.id] === encounter.turn.round) return 'Resets next round';
   if (ability.reset === 'encounter' && Number(resources?.encounterUses?.[ability.id] || 0) >= ability.uses) return 'Spent for this encounter';
@@ -148,7 +150,11 @@ const TechniqueCard: React.FC<{
           ? 'The Verse resolved without interrupting the active Canticle.'
           : song?.songForm === 'canticle'
             ? 'Any previous Canticle has been cut short. Every creature that can hear this one is subject to its stated effect.'
-            : 'The action has been committed to the combat record.',
+            : ability.actionType === 'action'
+              ? 'Your Action is spent. One Quick follow-up is now available this turn.'
+              : ability.actionType === 'quick'
+                ? 'Your Quick follow-up has been spent.'
+                : 'The technique has been committed to the combat record.',
         status: 'success',
       });
     } catch (caught: any) {
@@ -157,7 +163,7 @@ const TechniqueCard: React.FC<{
   };
   const songRule = song ? (song.songForm === 'verse'
     ? 'Resolves immediately and never interrupts a Canticle.'
-    : `${song.chantRounds ? `${song.chantRounds} round of chanting · ` : 'No chant · '}${song.durationRounds ? `${song.durationRounds} active rounds` : 'lasts until interrupted or combat ends'} · replaces any active Canticle.`) : '';
+    : `${song.chantRounds ? `${song.chantRounds} round of chanting · ` : 'No chant · '}${song.durationRounds ? `${song.durationRounds} active rounds` : 'lasts until interrupted or combat ends'} · replaces any active Canticle · spend your Song each turn to sustain it.`) : '';
   const details = (compact = false) => <>
     <Text fontSize={compact ? 'sm' : 'sm'}>{resolvedDescription}</Text>
     {song && <Text mt={2} fontSize="xs" color="textMuted">{songRule} <b>Audience:</b> {songAudienceRule({ ...song, audience: song.audience || (song.songForm === 'canticle' ? 'all-hearers' : 'chosen-hearer') })}</Text>}
@@ -213,7 +219,7 @@ const CommonActionCard: React.FC<{ action: string[]; participant?: EncounterPart
     setUsing(true);
     try {
       await activateCombatAbility(encounter.id, id);
-      toast({ title: `${name} committed`, status: 'success' });
+      toast({ title: `${name} committed`, description: 'Your Action is spent. One Quick follow-up is now available this turn.', status: 'success' });
     } catch (caught: any) {
       toast({ title: 'Action refused', description: caught?.message || String(caught), status: 'warning' });
     } finally { setUsing(false); }
@@ -301,14 +307,69 @@ const StatsReference: React.FC<{
   </Modal>;
 };
 
+const MortalityReference: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  hp: number;
+  profile: PlayerProfile;
+}> = ({ isOpen, onClose, hp, profile }) => {
+  const [limb, setLimb] = useState('Left arm');
+  const [busy, setBusy] = useState('');
+  const toast = useToast();
+  const mortality = profile.mortality || { permanentDamage: 0, lostLimbs: [], dead: false };
+  const unprotected = hp <= 0 && !mortality.dead;
+  const apply = async (consequence: 'permanent-damage' | 'lost-limb' | 'death', detail?: string) => {
+    if (consequence === 'death' && !window.confirm('Record immediate death? Only an administrator can invoke a revival.')) return;
+    setBusy(consequence);
+    try {
+      const result = await applyMortalConsequence(consequence, detail);
+      toast({
+        title: result.mortality?.dead ? 'The mortal wound was fatal' : consequence === 'lost-limb' ? `${detail || 'A limb'} lost` : 'Permanent Damage recorded',
+        description: result.mortality?.dead ? 'You are now dead and will be skipped in initiative.' : 'The injury is permanently recorded.',
+        status: result.mortality?.dead ? 'error' : 'warning',
+        duration: 7000,
+      });
+    } catch (caught: any) {
+      toast({ title: 'Could not record mortal damage', description: caught?.message || String(caught), status: 'error' });
+    } finally { setBusy(''); }
+  };
+  const scale = [
+    ['Below 10', 'No lasting injury', 'The unprotected attack fails to cause a permanent consequence.'],
+    ['10–16', 'Permanent Damage', 'Record one permanent injury. Five recorded injuries cause death.'],
+    ['17–20', 'Lost Limb', 'Record the limb that was destroyed or severed. Three lost limbs cause death.'],
+    ['21+', 'Instant Death', 'The unprotected mortal body dies immediately.'],
+  ];
+  return <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'full', md: '4xl' }} scrollBehavior="inside">
+    <ModalOverlay />
+    <ModalContent bg="backgroundSecondary" color="textBody">
+      <ModalHeader><HStack><FaHeartCrack /><Text>HP and mortal injury</Text></HStack></ModalHeader>
+      <ModalCloseButton />
+      <ModalBody pb={6}>
+        <Box p={4} border="1px solid" borderColor={mortality.dead ? 'red.400' : unprotected ? 'orange.400' : 'whiteAlpha.300'} borderRadius="xl" bg="blackAlpha.400">
+          <Heading size="sm">{mortality.dead ? 'Deceased' : unprotected ? 'Reyvateil protection lost' : 'Reyvateil protection active'}</Heading>
+          <Text mt={2} color="textMuted">HP represents the supernatural protection maintained by your Reyvateil. At 0 HP that protection is gone: attacks strike an ordinary mortal body and use the unprotected attack-roll scale below.</Text>
+        </Box>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3} mt={5}>{scale.map(([roll, title, body]) => <Box key={roll} p={4} border="1px solid" borderColor="whiteAlpha.300" borderRadius="xl"><Badge colorScheme={roll === '21+' ? 'red' : roll === '17–20' ? 'orange' : roll === '10–16' ? 'yellow' : 'gray'}>{roll}</Badge><Text mt={2} fontWeight="bold">{title}</Text><Text mt={1} fontSize="sm" color="textMuted">{body}</Text></Box>)}</SimpleGrid>
+        <Box mt={5} p={4} borderRadius="xl" bg="blackAlpha.400"><Heading size="sm">Permanent record</Heading><HStack mt={3} flexWrap="wrap"><Badge colorScheme="orange">Permanent Damage {mortality.permanentDamage}/5</Badge><Badge colorScheme="red">Lost Limbs {mortality.lostLimbs.length}/3</Badge>{mortality.dead && <Badge colorScheme="red">DEAD · {mortality.deathCause || 'fatal injury'}</Badge>}</HStack>{mortality.lostLimbs.length > 0 && <Text mt={2} fontSize="sm" color="textMuted">Lost: {mortality.lostLimbs.join(', ')}</Text>}</Box>
+        {unprotected && <Box mt={5} p={4} border="1px solid" borderColor="red.500" borderRadius="xl"><Heading size="sm">Record the unprotected attack</Heading><Text mt={1} fontSize="sm" color="textMuted">Choose the result indicated by the enemy’s final attack roll.</Text><SimpleGrid columns={{ base: 1, md: 3 }} spacing={3} mt={4}><Button colorScheme="yellow" onClick={() => apply('permanent-damage')} isLoading={busy === 'permanent-damage'}>10–16 · Permanent Damage</Button><VStack><Select value={limb} onChange={(event) => setLimb(event.target.value)} bg="blackAlpha.400"><option>Left arm</option><option>Right arm</option><option>Left leg</option><option>Right leg</option><option>Other limb</option></Select><Button w="full" colorScheme="orange" onClick={() => apply('lost-limb', limb)} isLoading={busy === 'lost-limb'}>17–20 · Lose limb</Button></VStack><Button colorScheme="red" leftIcon={<FaSkull />} onClick={() => apply('death')} isLoading={busy === 'death'}>21+ · Die</Button></SimpleGrid></Box>}
+        {!unprotected && !mortality.dead && <Text mt={5} color="textMuted" textAlign="center">Mortal outcomes can only be self-recorded while HP is 0. The administrator may also issue them through Damage grants.</Text>}
+      </ModalBody>
+    </ModalContent>
+  </Modal>;
+};
+
 const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = ({ reyvateil, profile }) => {
   const { currentUser } = useAuth();
   const { campaignState } = useCampaign();
+  const toast = useToast();
   const [encounter, setEncounter] = useState<Encounter | null>(null);
+  const [sustainingSong, setSustainingSong] = useState(false);
   const damageReference = useDisclosure();
   const statsReference = useDisclosure();
+  const hpReference = useDisclosure();
   useBackDismiss(damageReference.isOpen, damageReference.onClose);
   useBackDismiss(statsReference.isOpen, statsReference.onClose);
+  useBackDismiss(hpReference.isOpen, hpReference.onClose);
   useEffect(() => {
     if (!campaignState.activeEncounterId) { setEncounter(null); return undefined; }
     return subscribeEncounter(campaignState.activeEncounterId, setEncounter, () => setEncounter(null));
@@ -330,6 +391,20 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
   const techniqueAptitude = combatProfile.techniqueAptitude || combat.techniqueAptitude;
   const songs = combat.combatSongs || [];
   const activeSong = encounter?.activeSong;
+  const ownsActiveSong = Boolean(activeSong && activeSong.performerSourceId === currentUser?.uid);
+  const maySustainSong = Boolean(ownsActiveSong && isTurn && participant?.turnResources?.songAvailable !== false);
+  const sustainActiveSong = async () => {
+    if (!encounter || !activeSong) return;
+    setSustainingSong(true);
+    try {
+      await continueCombatSong(encounter.id);
+      toast({ title: `${activeSong.songName} sustained`, description: 'Your Song for this turn is spent; your Action and movement remain available.', status: 'success' });
+    } catch (caught: any) {
+      toast({ title: 'The Canticle faltered', description: caught?.message || String(caught), status: 'warning', duration: 6000 });
+    } finally {
+      setSustainingSong(false);
+    }
+  };
   const activeCombatant = encounter?.participants.find((entry) => entry.id === encounter.turn?.activeParticipantId)?.name;
   const derivedValues = [
     { label: 'Defence', value: combatProfile.derived.defense, icon: <FaShieldHalved /> },
@@ -347,34 +422,43 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
           <Box minW={0} flex="1"><Text color="textMuted" fontSize="10px" textTransform="uppercase" letterSpacing=".1em">{combat.role} · level {combatProfile.level}</Text><Heading fontSize="xl" lineHeight="1.1" noOfLines={2}>{combat.specialtyTitle}</Heading><Text mt={1} fontSize="xs" color="textMuted" noOfLines={1}>{reyvateil.name} · {combat.damageType}</Text></Box>
         </Flex>
         <Progress mt={3} size="sm" value={(hp / Math.max(1, maxHp)) * 100} colorScheme={hp / maxHp < .3 ? 'red' : 'green'} borderRadius="full" />
-        <Flex mt={2} justify="space-between" align="center" gap={2}><Text fontWeight="bold" fontSize="sm">{hp} / {maxHp} HP</Text><Badge colorScheme={campaignState.battleActive ? (isTurn ? 'green' : 'red') : 'gray'}>{campaignState.battleActive ? (isTurn ? 'YOUR TURN' : `ROUND ${encounter?.turn?.round || 1}`) : 'EXPLORATION'}</Badge></Flex>
-        {campaignState.battleActive && <Text mt={1} fontSize="xs" color="textMuted" noOfLines={1}>{isTurn ? `Action ${participant?.turnResources?.actionAvailable === false ? 'spent' : 'ready'} · Quick ${participant?.turnResources?.quickAvailable === false ? 'spent' : 'ready'}` : `${activeCombatant || 'Initiative'} is acting`}</Text>}
+        <Flex mt={2} justify="space-between" align="center" gap={2}><HStack><Text fontWeight="bold" fontSize="sm">{hp} / {maxHp} HP</Text><Button size="xs" variant="ghost" leftIcon={<FaCircleQuestion />} onClick={hpReference.onOpen}>HP</Button></HStack><Badge colorScheme={campaignState.battleActive ? (isTurn ? 'green' : 'red') : 'gray'}>{campaignState.battleActive ? (isTurn ? 'YOUR TURN' : `ROUND ${encounter?.turn?.round || 1}`) : 'EXPLORATION'}</Badge></Flex>
+        {campaignState.battleActive && <Text mt={1} fontSize="xs" color="textMuted" noOfLines={1}>{isTurn ? `Action ${participant?.turnResources?.actionAvailable === false ? 'spent' : 'ready'} · Song ${participant?.turnResources?.songAvailable === false ? 'spent' : 'ready'} · Move ${combatProfile.derived.movement}${participant?.turnResources?.quickAvailable ? ' · Quick ready' : ''}` : `${activeCombatant || 'Initiative'} is acting`}</Text>}
       </Box>
       <Flex display={{ base: 'none', md: 'flex' }} p={6} borderRadius="2xl" bg="blackAlpha.400" border="1px solid" borderColor={isTurn ? 'green.300' : 'whiteAlpha.300'} gap={5} align="center" wrap="wrap">
         <Image src={profile.reyvateilImageUrl || reyvateil.image} alt={reyvateil.name} boxSize={{ base: '100px', md: '140px' }} objectFit="cover" borderRadius="full" border="3px solid" borderColor="primary" />
-        <Box flex="1" minW="240px"><Text color="textMuted" textTransform="uppercase" letterSpacing=".12em">{combat.role} · level {profile.combatProfile.level}</Text><Heading>{combat.specialtyTitle}</Heading><Text mt={1}>{reyvateil.name} translates {combat.damageType} through a {combat.role} combat doctrine.</Text><Progress mt={4} value={(hp / Math.max(1, maxHp)) * 100} colorScheme={hp / maxHp < .3 ? 'red' : 'green'} borderRadius="full" /><Text mt={1} fontWeight="bold">{hp} / {maxHp} HP</Text></Box>
-        <Box minW="220px" p={4} borderRadius="xl" bg={isTurn ? 'green.900' : 'blackAlpha.400'}><Badge colorScheme={campaignState.battleActive ? 'red' : 'gray'}>{campaignState.battleActive ? `ROUND ${encounter?.turn?.round || 1}` : 'OUT OF COMBAT'}</Badge><Heading size="md" mt={2}>{isTurn ? 'Your turn' : activeCombatant ? `${activeCombatant} is acting` : 'Waiting for initiative'}</Heading>{isTurn && <Text mt={1}>Action {participant?.turnResources?.actionAvailable === false ? 'spent' : 'ready'} · Quick {participant?.turnResources?.quickAvailable === false ? 'spent' : 'ready'}</Text>}</Box>
+        <Box flex="1" minW="240px"><Text color="textMuted" textTransform="uppercase" letterSpacing=".12em">{combat.role} · level {profile.combatProfile.level}</Text><Heading>{combat.specialtyTitle}</Heading><Text mt={1}>{reyvateil.name} translates {combat.damageType} through a {combat.role} combat doctrine.</Text><Progress mt={4} value={(hp / Math.max(1, maxHp)) * 100} colorScheme={hp / maxHp < .3 ? 'red' : 'green'} borderRadius="full" /><HStack mt={1}><Text fontWeight="bold">{hp} / {maxHp} HP</Text><Button size="xs" variant="ghost" leftIcon={<FaCircleQuestion />} onClick={hpReference.onOpen}>How HP works</Button></HStack></Box>
+        <Box minW="220px" p={4} borderRadius="xl" bg={isTurn ? 'green.900' : 'blackAlpha.400'}><Badge colorScheme={campaignState.battleActive ? 'red' : 'gray'}>{campaignState.battleActive ? `ROUND ${encounter?.turn?.round || 1}` : 'OUT OF COMBAT'}</Badge><Heading size="md" mt={2}>{isTurn ? 'Your turn' : activeCombatant ? `${activeCombatant} is acting` : 'Waiting for initiative'}</Heading>{isTurn && <Text mt={1}>Action {participant?.turnResources?.actionAvailable === false ? 'spent' : 'ready'} · Song {participant?.turnResources?.songAvailable === false ? 'spent' : 'ready'} · Movement {combatProfile.derived.movement}{participant?.turnResources?.quickAvailable ? ' · Quick follow-up ready' : ''}</Text>}</Box>
       </Flex>
+
+      {(hp <= 0 || profile.mortality?.dead || Number(profile.mortality?.permanentDamage || 0) > 0 || Number(profile.mortality?.lostLimbs?.length || 0) > 0) && <Flex p={4} borderRadius="xl" border="1px solid" borderColor={profile.mortality?.dead ? 'red.500' : hp <= 0 ? 'orange.400' : 'whiteAlpha.300'} bg={profile.mortality?.dead ? 'red.900' : 'blackAlpha.400'} align="center" gap={3} flexWrap="wrap"><FaHeartCrack /><Box flex="1"><Text fontWeight="bold">{profile.mortality?.dead ? 'DECEASED' : hp <= 0 ? 'Protection lost · mortal body exposed' : 'Permanent mortal injuries'}</Text><Text fontSize="sm" color="textMuted">Permanent Damage {profile.mortality?.permanentDamage || 0}/5 · Lost Limbs {profile.mortality?.lostLimbs?.length || 0}/3{profile.mortality?.dead ? ` · ${profile.mortality.deathCause || 'fatal injury'}` : ''}</Text></Box><Button size="sm" colorScheme={profile.mortality?.dead ? 'red' : 'orange'} onClick={hpReference.onOpen}>{hp <= 0 && !profile.mortality?.dead ? 'Record mortal damage' : 'View record'}</Button></Flex>}
 
       <Box><Flex justify="space-between" align="center" mb={{ base: 2, md: 3 }}><Heading size={{ base: 'sm', md: 'md' }}>Combat aptitudes</Heading><Button size={{ base: 'xs', md: 'sm' }} variant="ghost" leftIcon={<FaCircleQuestion />} onClick={statsReference.onOpen}>Stats explained</Button></Flex><SimpleGrid columns={{ base: 3, md: 3, xl: 6 }} spacing={{ base: 2, md: 3 }}>{Object.entries(combatProfile.aptitudes).map(([key, value]) => <Tooltip key={key} label={aptitudeLabels[key]?.hint}><Box p={{ base: 2, md: 4 }} minH={{ base: '62px', md: 'auto' }} bg="blackAlpha.300" borderRadius={{ base: 'lg', md: 'xl' }} border="1px solid" borderColor="whiteAlpha.300"><Text color="textMuted" fontSize={{ base: '9px', md: 'xs' }} textTransform="uppercase" noOfLines={1}>{aptitudeLabels[key]?.label || key}</Text><Text fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.2" fontWeight="bold">+{value}</Text></Box></Tooltip>)}</SimpleGrid></Box>
 
       <Box><Flex justify="space-between" align="center" mb={{ base: 2, md: 3 }}><Heading size={{ base: 'sm', md: 'md' }}>Derived values</Heading><Button size={{ base: 'xs', md: 'sm' }} variant="outline" onClick={damageReference.onOpen}>Damage types</Button></Flex><SimpleGrid columns={{ base: 3, md: 5 }} spacing={{ base: 2, md: 3 }}>{derivedValues.map((entry) => <Box key={entry.label} p={{ base: 2, md: 4 }} minH={{ base: '62px', md: 'auto' }} bg="blackAlpha.300" borderRadius={{ base: 'lg', md: 'xl' }}><HStack spacing={1.5}>{entry.icon}<Text fontSize={{ base: '9px', md: 'md' }} color={{ base: 'textMuted', md: 'inherit' }} textTransform={{ base: 'uppercase', md: 'none' }} noOfLines={1}>{entry.label}</Text></HStack><Text fontSize={{ base: 'xl', md: '2xl' }} lineHeight="1.2" fontWeight="bold">{entry.value}</Text></Box>)}</SimpleGrid></Box>
 
-      {campaignState.battleActive && <Box p={{ base: 3, md: 4 }} borderRadius="xl" border="1px solid" borderColor={activeSong ? 'pink.300' : 'whiteAlpha.300'} bg={activeSong ? 'pink.900' : 'blackAlpha.300'}><Flex justify="space-between" gap={3} flexWrap="wrap"><Box><Text fontSize="10px" textTransform="uppercase" letterSpacing=".12em" color="textMuted">Shared performance channel</Text><Heading size="sm" mt={1}>{activeSong ? activeSong.songName : 'No Canticle is active'}</Heading>{activeSong && <Text mt={1} fontSize={{ base: 'xs', md: 'md' }}>{activeSong.performerName} · {activeSong.stage === 'chanting' ? `chanting until round ${activeSong.activatesAtRound}` : activeSong.endsAfterRound ? `active through round ${activeSong.endsAfterRound}` : 'active until interrupted or combat ends'} · all hearers affected</Text>}</Box><Badge alignSelf="center" colorScheme={activeSong?.stage === 'chanting' ? 'yellow' : activeSong ? 'pink' : 'gray'}>{activeSong?.stage || 'silent'}</Badge></Flex><Text mt={2} fontSize="xs" color="textMuted" display={{ base: 'none', md: 'block' }}>A new Canticle cuts this one short. Verses resolve instantly and leave this channel untouched. Soundless creatures cannot be affected by audible Song Magic.</Text></Box>}
+      {campaignState.battleActive && <Box p={{ base: 3, md: 4 }} borderRadius="xl" border="1px solid" borderColor={activeSong ? 'pink.300' : 'whiteAlpha.300'} bg={activeSong ? 'pink.900' : 'blackAlpha.300'}>
+        <Flex justify="space-between" gap={3} flexWrap="wrap">
+          <Box><Text fontSize="10px" textTransform="uppercase" letterSpacing=".12em" color="textMuted">Shared performance channel</Text><Heading size="sm" mt={1}>{activeSong ? activeSong.songName : 'No Canticle is active'}</Heading>{activeSong && <Text mt={1} fontSize={{ base: 'xs', md: 'md' }}>{activeSong.performerName} · {activeSong.stage === 'chanting' ? `chanting until round ${activeSong.activatesAtRound}` : activeSong.endsAfterRound ? `active through round ${activeSong.endsAfterRound}` : 'active until interrupted or combat ends'} · all hearers affected</Text>}</Box>
+          <VStack align="end" spacing={2}><Badge colorScheme={activeSong?.stage === 'chanting' ? 'yellow' : activeSong ? 'pink' : 'gray'}>{activeSong?.stage || 'silent'}</Badge>{ownsActiveSong && <Button size="sm" colorScheme="pink" onClick={sustainActiveSong} isLoading={sustainingSong} isDisabled={!maySustainSong}>{maySustainSong ? 'Sustain with Song' : isTurn ? 'Song spent' : 'Sustain on your turn'}</Button>}</VStack>
+        </Flex>
+        <Text mt={2} fontSize="xs" color="textMuted">A Canticle breaks if its performer ends a turn without spending Song to sustain it. A new Canticle also cuts it short. Verses use Song but do not interrupt the channel.</Text>
+      </Box>}
 
       <Tabs defaultIndex={0} isLazy variant="unstyled">
         <TabList p={1} bg="blackAlpha.400" border="1px solid" borderColor="whiteAlpha.300" borderRadius="xl"><Tab flex="1" minH="44px" borderRadius="lg" fontWeight="bold" _selected={{ bg: 'primary', color: 'white' }}>Techniques <Badge ml={2} colorScheme="gray">{techniques.length}</Badge></Tab><Tab flex="1" minH="44px" borderRadius="lg" fontWeight="bold" _selected={{ bg: 'primary', color: 'white' }}>Songs <Badge ml={2} colorScheme="gray">{songs.length}</Badge></Tab></TabList>
         <TabPanels>
           <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Inherited techniques</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Five techniques inherited from {reyvateil.name}. Tap a row to inspect or activate it.</Text><Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{techniques.map((ability) => <TechniqueCard key={ability.id} ability={ability} combatProfile={combatProfile} participant={participant} encounter={encounter} />)}</Grid><Divider my={{ base: 4, md: 6 }} borderColor="whiteAlpha.300" /><Heading size={{ base: 'sm', md: 'md' }}>Universal actions</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Reliable actions shared by every combatant.</Text><SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={{ base: 2, md: 3 }}>{commonActions(combatProfile).map((action) => <CommonActionCard key={action[0]} action={action} participant={participant} encounter={encounter} />)}</SimpleGrid></TabPanel>
-          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Song repertoire</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Verses resolve instantly. Canticles fill the shared channel and affect every creature that can hear them, friend or foe.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</TabPanel>
+          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Song repertoire</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Song is separate from Action. Spend it on one Verse, begin a Canticle, or sustain your existing Canticle. Canticles affect every creature that can hear them, friend or foe.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</TabPanel>
         </TabPanels>
       </Tabs>
 
       <ResponsiveInfoPanel title="Growth and progression"><Text fontSize={{ base: 'sm', md: 'md' }}>Gain {combat.growth.hitPointsPerLevel} maximum HP per level. Aptitudes increase automatically at levels {combat.growth.aptitudeIncreaseLevels.join(', ')} in this doctrine’s order: {combat.growth.aptitudeGrowthOrder.map((key) => aptitudeLabels[key].label).join(' → ')} (cap {combat.growth.aptitudeCap}). Inherit another technique at levels {combat.growth.newTechniqueLevels.join(' and ')}. This identity’s {combat.growth.songCapacity}-Song repertoire unlocks further Songs at levels {combat.growth.newSongLevels.join(', ') || '—'}. Evolution becomes possible at level {combat.growth.evolutionLevel}.</Text></ResponsiveInfoPanel>
 
-      <ResponsiveInfoPanel title="Combat rules"><SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}><Text><b>Attack:</b> roll d20 + the listed attack bonus against the target’s Defence. Meeting or exceeding Defence hits.</Text><Text><b>Saving throw:</b> the target rolls d20 + the named aptitude against the attacker’s Save Difficulty. Advantage means roll twice and keep the higher result.</Text><Text><b>Turn:</b> one Action, one Quick action, movement, and one Reaction before your next turn.</Text><Text><b>Exposed:</b> the next attack against the creature has advantage, then Exposed ends. <b>Rooted:</b> movement becomes 0.</Text><Text><b>Silenced:</b> Hymmnos techniques and Songs cannot be activated. <b>Prone:</b> adjacent attacks have advantage; standing costs half movement.</Text><Text><b>Resistance:</b> halve the affected damage after other reductions. Temporary HP is lost first.</Text><Text><b>Song audibility:</b> a Song only affects creatures able to hear it. Canticles do not distinguish friend from foe. Soundless creatures are immune.</Text><Text><b>Song channel:</b> Verses are instant. A new Canticle interrupts the old one regardless of performer.</Text></SimpleGrid></ResponsiveInfoPanel>
+      <ResponsiveInfoPanel title="Combat rules"><SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}><Text><b>Attack:</b> roll d20 + the listed attack bonus against the target’s Defence. Meeting or exceeding Defence hits.</Text><Text><b>Saving throw:</b> the target rolls d20 + the named aptitude against the attacker’s Save Difficulty. Advantage means roll twice and keep the higher result.</Text><Text><b>Turn:</b> movement, one Action, and one Song. Action activates a universal/inherited technique or an item. Song performs a Verse, begins a Canticle, or sustains your Canticle.</Text><Text><b>Quick:</b> not a separate action. Committing an Action technique unlocks one Quick follow-up that turn. Songs and items do not unlock it.</Text><Text><b>Reaction:</b> one reactive technique between the starts of your turns. Passives remain continuously active.</Text><Text><b>Canticle sustain:</b> spend Song on every one of your turns or the Canticle breaks when that turn ends.</Text><Text><b>Exposed:</b> the next attack against the creature has advantage, then Exposed ends. <b>Rooted:</b> movement becomes 0.</Text><Text><b>Silenced:</b> Hymmnos techniques and Songs cannot be activated. <b>Prone:</b> adjacent attacks have advantage; standing costs half movement.</Text><Text><b>Resistance:</b> halve the affected damage after other reductions. Temporary HP is lost first.</Text><Text><b>Song audibility:</b> a Song only affects creatures able to hear it. Canticles do not distinguish friend from foe. Soundless creatures are immune.</Text><Text><b>Song channel:</b> Verses are instant. A new Canticle interrupts the old one regardless of performer.</Text></SimpleGrid></ResponsiveInfoPanel>
       <DamageTypeReference isOpen={damageReference.isOpen} onClose={damageReference.onClose} />
       <StatsReference isOpen={statsReference.isOpen} onClose={statsReference.onClose} combat={{ ...combatProfile, techniqueAptitude }} growthOrder={combat.growth.aptitudeGrowthOrder} />
+      <MortalityReference isOpen={hpReference.isOpen} onClose={hpReference.onClose} hp={hp} profile={profile} />
     </VStack>
   );
 };

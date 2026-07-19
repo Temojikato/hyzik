@@ -9,7 +9,7 @@ describe('Reyvateil combat catalog', () => {
   it('gives all forty-two Reyvateils complete, distinct identity pools', () => {
     expect(Object.keys(catalog)).toHaveLength(42);
     Object.values(catalog).forEach((profile) => {
-      expect(profile.catalogVersion).toBeGreaterThanOrEqual(3);
+      expect(profile.catalogVersion).toBeGreaterThanOrEqual(4);
       expect(profile.specialtyTitle).toBeTruthy();
       expect(Object.keys(profile.aptitudes)).toEqual(['force', 'finesse', 'guard', 'resonance', 'focus', 'tempo']);
       expect(profile.combatAbilities).toHaveLength(10);
@@ -50,7 +50,17 @@ describe('Reyvateil combat catalog', () => {
       expect(profile.combatSongs.some((song) => song.levelRequired > 1)).toBe(true);
       expect(profile.combatSongs.some((song) => song.songForm === 'verse')).toBe(true);
       expect(profile.combatSongs.some((song) => song.songForm === 'canticle')).toBe(true);
+      expect(profile.combatSongs.every((song) => song.actionType === 'song')).toBe(true);
       expect(profile.growth.songCapacity).toBe(profile.combatSongs.length);
+    });
+  });
+
+  it('treats Quick as a limited technique follow-up rather than a Song or passive', () => {
+    Object.values(catalog).forEach((profile) => {
+      const quickTechniques = profile.combatAbilities.filter((ability) => ability.actionType === 'quick');
+      expect(quickTechniques).toHaveLength(2);
+      expect(quickTechniques.every((ability) => ability.reset === 'round')).toBe(true);
+      expect(profile.combatSongs.some((song) => song.actionType === 'quick')).toBe(false);
     });
   });
 

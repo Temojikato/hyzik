@@ -6,7 +6,8 @@ export const getEncounterParticipantIssues = (
 ): string[] => participants.flatMap((participant) => {
   const missing: string[] = [];
   if (!Number.isFinite(participant.maxHp) || participant.maxHp <= 0) missing.push('Max HP');
-  if (!Number.isFinite(participant.hp) || (allowZeroHp ? participant.hp < 0 : participant.hp <= 0)) missing.push('current HP');
+  const zeroHpIsValid = allowZeroHp || participant.kind === 'player';
+  if (!Number.isFinite(participant.hp) || (zeroHpIsValid ? participant.hp < 0 : participant.hp <= 0)) missing.push('current HP');
   if (!Number.isFinite(participant.armorClass) || Number(participant.armorClass) <= 0) missing.push('AC');
   return missing.length ? [`${participant.name}: ${missing.join(', ')}`] : [];
 });
@@ -27,5 +28,6 @@ export const serializeEncounterParticipants = (participants: EncounterParticipan
   ...(Number.isFinite(participant.armorClass) ? { armorClass: participant.armorClass } : {}),
   ...(participant.monsterTier ? { monsterTier: participant.monsterTier } : {}),
   ...(participant.songHearing ? { songHearing: participant.songHearing } : {}),
+  ...(participant.dead !== undefined ? { dead: participant.dead } : {}),
   ...(participant.turnResources ? { turnResources: participant.turnResources } : {}),
 }));

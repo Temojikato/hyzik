@@ -135,6 +135,7 @@ export const sendGrantDeliveries = async (input: {
   amount?: number;
   conditionType?: string;
   conditionColor?: string;
+  damageDetail?: string;
 }) => {
   const batch = writeBatch(db);
   const groupId = crypto.randomUUID();
@@ -150,6 +151,7 @@ export const sendGrantDeliveries = async (input: {
       amount: Math.max(1, Math.floor(Number(input.amount || 1))),
       conditionType: input.conditionType || '',
       conditionColor: input.conditionColor || '',
+      damageDetail: input.damageDetail || '',
       source: 'admin',
       status: 'waiting',
       audienceIds: [],
@@ -324,6 +326,21 @@ export const advanceEncounterTurn = async (encounterId: string) => {
 export const activateCombatAbility = async (encounterId: string, abilityId: string) => {
   const callable = httpsCallable<{ encounterId: string; abilityId: string }, { abilityId: string; abilityName: string }>(functions, 'activateCombatAbility');
   return (await callable({ encounterId, abilityId })).data;
+};
+
+export const continueCombatSong = async (encounterId: string) => {
+  const callable = httpsCallable<{ encounterId: string }, { songId: string; songName: string }>(functions, 'continueCombatSong');
+  return (await callable({ encounterId })).data;
+};
+
+export const applyMortalConsequence = async (consequence: 'permanent-damage' | 'lost-limb' | 'death', detail?: string) => {
+  const callable = httpsCallable<{ consequence: string; detail?: string }, { mortality: PlayerProfile['mortality'] }>(functions, 'applyMortalConsequence');
+  return (await callable({ consequence, detail })).data;
+};
+
+export const adminRevivePlayer = async (userId: string) => {
+  const callable = httpsCallable<{ userId: string }, { userId: string; mortality: PlayerProfile['mortality'] }>(functions, 'adminRevivePlayer');
+  return (await callable({ userId })).data;
 };
 
 export const endEncounter = async (encounterId: string) => {

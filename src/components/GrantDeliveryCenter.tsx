@@ -7,7 +7,7 @@ import {
 import { doc, getDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { getDownloadURL, ref } from 'firebase/storage';
-import { FaBoxOpen, FaGift, FaPeopleGroup, FaShieldHalved } from 'react-icons/fa6';
+import { FaBoxOpen, FaGift, FaHeartCrack, FaPeopleGroup, FaShieldHalved } from 'react-icons/fa6';
 import { db, functions, storage } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { subscribeGrantDeliveries } from '../services/campaignService';
@@ -108,7 +108,13 @@ const GrantDeliveryCenter: React.FC = () => {
       await call('claimGrantDelivery', { deliveryId: active.id, mode: 'accept' });
       setConfirmation(active.kind === 'cypher'
         ? `Cypher acquired: ${active.label}. Its language remains unlocked permanently.`
-        : `You gained ${active.amount} ${active.label}.`);
+        : active.kind === 'damage'
+          ? active.resourceId === 'death'
+            ? 'The attack was fatal. You are dead.'
+            : active.resourceId === 'lost-limb'
+              ? `You lost ${active.amount} limb${active.amount === 1 ? '' : 's'}${active.damageDetail ? `: ${active.damageDetail}` : ''}.`
+              : `You gained ${active.amount} Permanent Damage.`
+          : `You gained ${active.amount} ${active.label}.`);
       setStage('confirmation');
     } catch (caught: any) { toast({ title: 'Could not open discovery', description: caught?.message || String(caught), status: 'error' }); }
   };
@@ -152,7 +158,7 @@ const GrantDeliveryCenter: React.FC = () => {
   if (!currentUser) return null;
   const finder = active?.recipientId === currentUser.uid;
   const transfer = active?.status === 'transfer-waiting';
-  const sealedTitle = active?.kind === 'condition' ? 'A change awaits you' : active?.kind === 'cypher' ? 'A Cypher awaits you' : 'You found something';
+  const sealedTitle = active?.kind === 'condition' ? 'A change awaits you' : active?.kind === 'cypher' ? 'A Cypher awaits you' : active?.kind === 'damage' ? 'Your mortality has been tested' : 'You found something';
 
   return (
     <>
@@ -160,7 +166,7 @@ const GrantDeliveryCenter: React.FC = () => {
       <Modal isOpen={Boolean(active)} onClose={snooze} closeOnOverlayClick={false} isCentered size="lg">
         <ModalOverlay bg="rgba(3,5,10,.88)" />
         <ModalContent bg="#0D111B" border="1px solid" borderColor="gray.600" color="white">
-          <ModalHeader><HStack><FaShieldHalved /><Text>{stage === 'confirmation' ? 'Resolved' : transfer ? 'Item transfer' : stage === 'shared' ? 'Party discovery' : sealedTitle}</Text></HStack></ModalHeader>
+          <ModalHeader><HStack>{active?.kind === 'damage' ? <FaHeartCrack /> : <FaShieldHalved />}<Text>{stage === 'confirmation' ? 'Resolved' : transfer ? 'Item transfer' : stage === 'shared' ? 'Party discovery' : sealedTitle}</Text></HStack></ModalHeader>
           {stage !== 'confirmation' && <ModalCloseButton aria-label="Close for now" />}
           <ModalBody>
             {stage === 'sealed' && <VStack spacing={5} py={5}><Box p={5} borderRadius="full" bg="whiteAlpha.100"><FaBoxOpen size="42" /></Box><Text textAlign="center" color="gray.300">This discovery is hidden until you are ready to look.</Text><Badge colorScheme="gray">Silent · private · no preview</Badge></VStack>}

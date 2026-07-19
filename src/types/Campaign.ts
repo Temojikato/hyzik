@@ -40,6 +40,7 @@ export interface PlayerProfile {
     armorClass?: number;
   };
   combatProfile?: PlayerCombatProfile;
+  mortality?: MortalityState;
   unlockedCyphers?: string[];
   unlockedRecipes?: string[];
   inventory?: unknown[];
@@ -47,6 +48,17 @@ export interface PlayerProfile {
   active?: boolean;
   activatedAt?: Timestamp;
   pausedAt?: Timestamp;
+}
+
+export type MortalConsequence = 'permanent-damage' | 'lost-limb' | 'death';
+
+export interface MortalityState {
+  permanentDamage: number;
+  lostLimbs: string[];
+  dead: boolean;
+  deathCause?: string;
+  updatedAtMs?: number;
+  revivedAtMs?: number;
 }
 
 export interface CypherDefinition {
@@ -101,7 +113,7 @@ export interface CampaignState {
   updatedAt?: Timestamp;
 }
 
-export type GrantKind = 'condition' | 'item' | 'cypher';
+export type GrantKind = 'condition' | 'item' | 'cypher' | 'damage';
 
 export interface GrantDelivery {
   id: string;
@@ -114,6 +126,7 @@ export interface GrantDelivery {
   amount: number;
   conditionType?: string;
   conditionColor?: string;
+  damageDetail?: string;
   status: 'waiting' | 'shared' | 'transfer-waiting';
   source?: 'admin' | 'loot' | 'transfer';
   audienceIds?: string[];
@@ -141,8 +154,10 @@ export interface EncounterParticipant {
   armorClass?: number;
   monsterTier?: string;
   songHearing?: 'audible' | 'soundless';
+  dead?: boolean;
   turnResources?: {
     actionAvailable: boolean;
+    songAvailable: boolean;
     quickAvailable: boolean;
     reactionAvailable: boolean;
     roundUses: Record<string, number>;
@@ -172,6 +187,7 @@ export interface ActiveCombatSong {
   startedRound: number;
   activatesAtRound: number;
   endsAfterRound: number | null;
+  lastSustainedTurnSerial?: number;
   audioUrl?: string;
 }
 
