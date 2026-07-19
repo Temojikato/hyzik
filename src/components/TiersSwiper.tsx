@@ -7,7 +7,6 @@ import {
   Heading,
   useBreakpointValue,
   Grid,
-  GridItem,
   Button,
   useToast
 } from '@chakra-ui/react';
@@ -15,7 +14,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 
-import { MonsterTier, MonsterLore, MonsterSpecies } from '../types/BestiaryTypes';
+import { MonsterTier, MonsterSpecies } from '../types/BestiaryTypes';
 import TierImage from './TierImage';
 import { rollLootSource } from '../services/campaignService';
 import { Item } from '../types/Reyvateils';
@@ -239,6 +238,7 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
                     <Text fontWeight="bold" color="white" noOfLines={1}>
                       {tier.Name || `Tier ${idx + 1}`}
                     </Text>
+                    {tier.ChaosTier && <Badge mt={2} colorScheme="pink">Chaos apex · roll every turn</Badge>}
                     {tier.Description && (
                       <Text mt={2} fontSize="sm" color="gray.200">
                         {tier.Description}
@@ -277,6 +277,19 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
                             • {ability}
                           </Text>
                         ))}
+                      </Box>
+                    )}
+                    {tier.ChaosTable && tier.ChaosTable.length > 0 && (
+                      <Box mt={4} p={3} bg="blackAlpha.500" border="1px solid" borderColor="pink.300" borderRadius="md" textAlign="left">
+                        <Text color="pink.200" fontWeight="bold" mb={1}>Chaos Flux table</Text>
+                        <Text color="gray.300" fontSize="xs" mb={3}>Roll at the start of every turn. Unless a result says otherwise, targets are chosen randomly from every eligible creature.</Text>
+                        <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={2}>
+                          {tier.ChaosTable.map((entry) => (
+                            <Box key={entry.Roll} p={2} bg="blackAlpha.400" borderRadius="md">
+                              <Text color="pink.100" fontSize="sm"><strong>{entry.Roll}.</strong> {entry.Effect}</Text>
+                            </Box>
+                          ))}
+                        </Grid>
                       </Box>
                     )}
                   </Box>

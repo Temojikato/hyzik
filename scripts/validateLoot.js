@@ -8,7 +8,7 @@ const itemNames = new Set(fs.readdirSync(itemDirectory).filter((name) => name.en
 const troves = JSON.parse(fs.readFileSync(path.join(root, 'src', 'dataSets', 'lootTroves.json'), 'utf8'));
 const sources = [];
 troves.categories.forEach((category) => category.tiers.forEach((tier) => sources.push({ kind: 'trove', label: `${category.category} ${tier.id}`, tier: sourceTierFromLabel(tier.id, 'trove'), loot: tier.loot })));
-['slimes.js', 'constructs.js', 'avatars.js', 'Reyvateils.js'].forEach((file) => {
+['slimes.js', 'constructs.js', 'beasts.js', 'aberrations.js', 'avatars.js', 'Reyvateils.js'].forEach((file) => {
   const catalog = require(path.join(root, 'src', 'dataSets', file));
   Object.values(catalog).forEach((species) => Object.entries(species.Tiers || {}).forEach(([tierName, tier]) => sources.push({ kind: 'monster', label: `${species.Name || 'Monster'} ${tierName}`, tier: sourceTierFromLabel(`${species.Name || ''} ${tierName}`, 'monster'), loot: tier.Loot || [] })));
 });

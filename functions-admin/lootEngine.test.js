@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { JACKPOT_CHANCE, inferEntryRarity, rollLootBundle } = require('./lootEngine');
+const { JACKPOT_CHANCE, inferEntryRarity, rollLootBundle, sourceTierFromLabel } = require('./lootEngine');
 
 const sequence = (...values) => {
   let index = 0;
@@ -16,6 +16,11 @@ test('source tiers hard-cap explicit rarity', () => {
   assert.equal(inferEntryRarity({ itemName: 'Impossible Relic', rarity: 'artifact', itemChance: 1 }, 2), 'epic');
   assert.equal(inferEntryRarity({ itemName: 'Impossible Relic', rarity: 'artifact', itemChance: 1 }, 3), 'legendary');
   assert.equal(inferEntryRarity({ itemName: 'Impossible Relic', rarity: 'artifact', itemChance: 1 }, 4), 'artifact');
+});
+
+test('Chaos apexes and unique encounters use the highest loot source tier', () => {
+  assert.equal(sourceTierFromLabel('Water Slime Chaos', 'monster'), 4);
+  assert.equal(sourceTierFromLabel('Venestria The Tangled Vine Unique', 'monster'), 4);
 });
 
 test('a jackpot selects the highest tangible rarity and never Nothing', () => {

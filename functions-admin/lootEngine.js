@@ -129,7 +129,7 @@ const rollLootBundle = (loot, { sourceTier = 1, maxItems = 1, random = Math.rand
 
 const sourceTierFromLabel = (label, sourceKind = 'monster') => {
   const text = String(label || '').toLowerCase();
-  if (/avatar|ancient|orichalcum|celestial|royal|grand|mythic/.test(text)) return 4;
+  if (/chaos|unique|avatar|ancient|orichalcum|celestial|royal|grand|mythic/.test(text)) return 4;
   if (/greater|gold|glimmer|luxurious/.test(text)) return 3;
   if (/regular|silver|rich|hidden|forest|fishing spot/.test(text)) return 2;
   return sourceKind === 'trove' && /serene|cave/.test(text) ? 4 : 1;

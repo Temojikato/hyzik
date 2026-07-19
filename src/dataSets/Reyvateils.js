@@ -1,44 +1,54 @@
 module.exports = {
-  "Venestria, The Tangled Vine": {
+  'Venestria, The Tangled Vine': {
     Locked: false,
     Lore: {
-      Formation:
-        "Once a companion of an aspiring diver, their name lost to time, this creature has slept in its own roots for generations. Some have tried to tame it, most never return. Those who did now speak in riddles overcome by madness, hence little is known about this creature except its name etched into their minds.",
-      "Social Tendencies":
-        "Seeing how everyone returns mentally broken - or doesn't - Venestria is not expected to have any social capabilities.",
-      Habitat:
-        "From peeking through the windows and the 1 or 2 Divers that went in without interacting with Venestria we know that the whole room is filled with sharp-looking thorns. The bottom of the room is filled with the danger-sand, both hindering Venestria from coming out and alerting new Divers to turn away.",
-      Behavior:
-        "Unknown - Theorized to be dangerous and aggressive"
+      Formation: 'Venestria was once the Reyvateil of an aspiring Diver whose name has been lost. Separated from both necklace and sanctuary, she slept inside her own roots for generations while Chaos distorted the unfinished bond.',
+      'Social Tendencies': 'Venestria is a unique person, not a repeatable species. Survivors who tried to communicate returned speaking in riddles and displaying severe psychic damage; whether this was malice, panic, or an attempted Song is unknown.',
+      Habitat: 'A sealed first-floor chamber choked with white roots and cutting thorns. Danger-sand across the floor both warns Divers away and prevents the rooted Venestria from easily leaving.',
+      Behavior: 'She hides her small body inside a much larger root network, reacting to movement, song, and attempted contact as though they were fragments of an old emergency. Her exact intentions remain unknown.',
+      Rarity: 'Unique. There is only one Venestria.',
     },
     LoreLocked: false,
-    Name: "Venestria The Tangled Vine",
+    Name: 'Venestria, The Tangled Vine',
     Tiers: {
-      Minor: {
-        // In this tier, the loot table totals 100% with valid loot summing to 65% and a fallback "Nothing" at 35%.
+      Unique: {
+        id: 'Unique',
         Loot: [
-          { itemName: "Venestria's heart", itemChance: 100 },
-          { itemName: "Precious Gem", itemChance: 20 },
-          { itemName: "Essence of Nature", itemChance: 15 },
-          { itemName: "Nothing", itemChance: 35 }
+          { itemName: "Venestria's heart", itemChance: 100, rarity: 'artifact' },
+          { itemName: 'Precious Gem', itemChance: 20, rarity: 'uncommon' },
+          { itemName: 'Essence of Nature', itemChance: 15, rarity: 'rare' },
+          { itemName: 'Nothing', itemChance: 35, rarity: 'common' },
         ],
         Locked: false,
-        Name: "Venestria, The Tangled Vine",
+        Name: 'Venestria, The Tangled Vine',
+        SongHearing: 'audible',
         Stats: {
-          Strength: "???",
-          Dexterity: "???",
-          Constitution: "???",
-          Intelligence: "???",
-          Wisdom: "???",
-          Charisma: "???"
+          'Hit Points': '168',
+          Defence: '17',
+          Initiative: '+4',
+          Movement: '2 spaces',
+          Force: '+3',
+          Finesse: '+4',
+          Guard: '+5',
+          Focus: '+6',
+          Tempo: '+2',
+          Resonance: '+8',
+          'Attack Bonus': '+7',
+          'Save Difficulty': '16',
+          'Damage Type': 'Nature / Psychic',
+          'Threat Tier': 'Unique',
+          Resistances: 'Nature, Psychic',
+          Vulnerabilities: 'Fire after Rootbody is exposed',
         },
         Abilities: [
-          "Is basically invisible when bunched between forestry and brush.",
-          "Unknown"
+          'Thorn Choir: Make an attack (+7) against Defence at 7 spaces. On a hit, deal 3d8 + 5 nature damage and pull the target 2 spaces toward the roots.',
+          'Rootbody: Venestria begins hidden inside one of four root-hearts. Until the correct heart is exposed, damage against her is halved and destroying a false heart triggers Tangled Recollection.',
+          'Tangled Recollection: One audible creature must beat Save Difficulty 16 with Focus or repeat its previous movement and chosen target on its next turn, even if circumstances have changed.',
+          'Unfinished Return: The first time Venestria reaches 0 HP, every surviving root-heart loses 25 HP and she returns inside one of them with the same total HP lost by those hearts.',
+          'Abandoned Song: At the end of each round, if no creature addressed Venestria without attacking her, the room gains one verse of the abandoned Song. At three verses, every audible creature takes 4d10 psychic damage and must beat Save Difficulty 16 with Focus or become Silenced for 1 round.',
         ],
-        Description:
-          "This legendary Avatar stands as a testament to ancient power. Revered and feared in equal measure, it quietly watches over its treasure-filled pods and exerts a mysterious influence over its slime progeny."
-      }
-    }
-  }
+        Description: 'An abandoned Reyvateil whose attempt to survive separation became a room-sized root system. Venestria is not a type or tier of monster: the encounter is the personal, corrupted remainder of one lost bond.',
+      },
+    },
+  },
 };

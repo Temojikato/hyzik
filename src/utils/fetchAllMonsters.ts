@@ -15,6 +15,9 @@ export async function fetchAllMonstersFromNestedDocs(): Promise<MonsterSpecies[]
 
     for (const [speciesName, speciesData] of Object.entries(data)) {
 
+      // Category metadata shares the document with its species entries.
+      if (speciesName === 'description' || !speciesData || typeof speciesData !== 'object' || !(speciesData as any).Tiers) continue;
+
       const speciesObj: MonsterSpecies = {
         categoryId,
         name: speciesName,

@@ -8,7 +8,7 @@ export const getEncounterParticipantIssues = (
   if (!Number.isFinite(participant.maxHp) || participant.maxHp <= 0) missing.push('Max HP');
   const zeroHpIsValid = allowZeroHp || participant.kind === 'player';
   if (!Number.isFinite(participant.hp) || (zeroHpIsValid ? participant.hp < 0 : participant.hp <= 0)) missing.push('current HP');
-  if (!Number.isFinite(participant.armorClass) || Number(participant.armorClass) <= 0) missing.push('AC');
+  if (!Number.isFinite(participant.armorClass) || Number(participant.armorClass) <= 0) missing.push('Defence');
   return missing.length ? [`${participant.name}: ${missing.join(', ')}`] : [];
 });
 

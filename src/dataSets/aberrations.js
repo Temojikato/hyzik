@@ -1,0 +1,188 @@
+const { createCatalog } = require('./monsterCatalogFactory');
+
+const aberrationLore = (formation, habitat, behavior, rarity, social = 'No stable social pattern has survived repeated observation.') => ({
+  Formation: formation,
+  'Social Tendencies': social,
+  Habitat: habitat,
+  Behavior: behavior,
+  Rarity: rarity,
+});
+
+const blueprints = [
+  {
+    name: 'Echo Husk', role: 'controller', damageType: 'psychic', attackName: 'Borrowed Last Word', attackRange: '7 spaces', adaptation: 'a death, confession, or warning repeated until Chaos built a body around the sound', locked: false,
+    lore: aberrationLore('A repeated voice acquires weight, then outline, then a hollow body. It was never the speaker whose voice it wears.', 'Execution rooms, abandoned camps, failed sanctuaries, and corridors that repeat a final sentence.', 'It repeats one phrase with changing intent and forces witnesses to complete remembered actions.', 'Uncommon; often misidentified as a ghost.', 'Two husks may trade final words, but this is resonance rather than companionship.'),
+    resistances: 'Psychic, Sonic', passives: ['Last Phrase: Record the first sentence spoken in the encounter. Once per round the husk may repeat it; any declared game action in that sentence is treated as an instruction against Save Difficulty 12 Focus.'],
+    abilities: [
+      'Compelled Repetition: On a hit, the target must repeat its previous movement on its next turn before moving freely.',
+      'Voice Without Body: Use Borrowed Last Word from any space where a creature spoke since the husk\'s previous turn.',
+      'Endless Warning: Create a 4-space fear zone; entering it requires Focus against Save Difficulty {dc} or ends movement.',
+    ],
+    chaosEffects: [
+      'Last Word First: Resolve a random creature\'s declared action before it chooses targets.',
+      'Speaker Replaced: The husk and a random audible creature exchange voices and all Song targeting until next round.',
+      'Echo Injures Origin: Repeat the highest damage dealt this round against its original source.',
+      'Warning Becomes Door: The fear zone teleports entrants to a random edge space.',
+      'Sentence Loses Subject: A random ability affects every eligible target instead of one.',
+      'Husk Remembers Future: Announce one random Chaos result and resolve it at the start of next round without rolling.',
+    ],
+    loot: { common: ['Ink', 'Worn Cloth'], uncommon: ['Phantom Dust', 'Fragment of Melody'], rare: ['Echo Ritual'], epic: ['Ancient Manuscript'], legendary: ['Unheard Ritual'] },
+  },
+  {
+    name: 'Grief Leech', role: 'support', damageType: 'psychic', attackName: 'Sorrow Barb', attackRange: '5 spaces', adaptation: 'unprocessed loss condensed into a parasite that treats mourning as nutrition', locked: false,
+    lore: aberrationLore('Chaos gives physical appetite to grief shed after a death. The resulting leech attaches to memories rather than flesh.', 'Infirmaries, grave sites, abandoned equipment caches, and rooms where parties lost members.', 'It keeps victims functional enough to produce more grief, then intensifies loss when food runs low.', 'Common after disasters and rare elsewhere.', 'Swarms orbit the creature carrying the strongest unresolved loss.'),
+    resistances: 'Psychic', passives: ['Feed on Loss: When any creature falls to 0 HP, heal 25 HP and gain +2 Attack until next round.'],
+    abilities: [
+      'Attach to Memory: On a hit, mark the target; healing it also heals this aberration for half as much.',
+      'Fresh Absence: A target beats Save Difficulty {dc} with Focus or cannot receive healing until next turn.',
+      'Mourning Swarm: Every marked target takes {damage} psychic damage, then one random mark ends.',
+    ],
+    chaosEffects: [
+      'Grief Before Loss: Feed on Loss triggers for a random living creature without reducing it to 0 HP.',
+      'Mourner Is Dead: A random creature appears dead to allies and cannot receive their targeted effects until next round.',
+      'Loss Heals: All psychic damage heals and all healing deals psychic damage until next turn.',
+      'Attach to Joy: Mark the creature with the most temporary HP and steal those HP.',
+      'Sorrow Divides: Duplicate every active mark onto a random second target.',
+      'No One Mourns: End every mark and passive emotional effect; gain 10 HP for each ended effect.',
+    ],
+    loot: { common: ['Worn Cloth', 'Broken Trinket'], uncommon: ['Night Oil', 'Fragment of Tranquility'], rare: ['Shard of Tranquility'], epic: ['Dreaming Ritual'], legendary: ['Old Emblem'] },
+  },
+  {
+    name: 'Folded Witness', role: 'ambusher', damageType: 'void', attackName: 'Impossible Angle', attackRange: '6 spaces', adaptation: 'the concept of seeing an event from mutually exclusive positions until the observations folded together',
+    lore: aberrationLore('A spatial contradiction acquires eyes, limbs, and too many points of view. Its body is an agreement between angles that cannot coexist.', 'Cornered rooms, mirrored junctions, stairways that return incorrectly, and map seams.', 'It watches until noticed, then changes which side of distance is real.', 'Rare; reliable drawings of one contradict each other.'),
+    resistances: 'Void', passives: ['All Angles: It ignores cover. Attacks against it from more than 3 spaces choose the attacker\'s intended space or its mirrored space at random.'],
+    abilities: [
+      'Fold Distance: Treat any two visible spaces as adjacent until next turn.',
+      'Witnessed Twice: After a creature attacks, repeat the attack from the opposite direction against a random eligible target.',
+      'Corner Inside Body: Trap one adjacent target; Guard against Save Difficulty {dc} escapes, otherwise it is removed until the witness moves.',
+    ],
+    chaosEffects: [
+      'Every Angle Is Front: Every creature loses flanking and rear-position benefits until next turn.',
+      'Map Folds Occupants: Pair creatures randomly and move each pair to one shared space.',
+      'Witness Creates Event: Repeat a random action from the previous round with random targets.',
+      'Inside Is Farther: Adjacent attacks have 8-space range; ranged attacks require adjacency.',
+      'Corner Multiplies: Create four copies of a terrain corner, each occupying a random empty space.',
+      'Observation Ends Object: One random unattended terrain feature ceases to exist while watched and returns when no creature can see it.',
+    ],
+    loot: { common: ['Glass', 'Chalk'], uncommon: ['Mirror', 'Pure Illusion Essence'], rare: ['Fragment of Arcana'], epic: ['Mystic Crystal'], legendary: ['Artifact Wondrous Item'] },
+  },
+  {
+    name: 'False Door', role: 'guardian', damageType: 'void', attackName: 'Threshold Bite', attackRange: '2 spaces', adaptation: 'the desire for an exit made physical where no exit existed',
+    lore: aberrationLore('Unlike the Ancient D00R-K33P, this is not architecture. Chaos grows a convincing exit around trapped creatures\' certainty that escape must be somewhere.', 'Dead ends, prison rooms, repeating corridors, and walls people have struck in desperation.', 'It waits to be opened. Once recognized as false, it may move to another wall or imitate a familiar doorway.', 'Uncommon in labyrinthine floors.', 'Several may form a route that circulates prey between mouths.'),
+    resistances: 'Void, Psychic', passives: ['Inviting Exit: The first creature to see it each encounter beats Save Difficulty 12 Focus or must approach and attempt to open it.'],
+    abilities: [
+      'Swallow Route: On a hit, remove the target until the end of its next turn; it returns from a random doorway.',
+      'Familiar Threshold: Copy the appearance and apparent destination of any door a target remembers.',
+      'Wall Migration: Move to any visible wall and make Threshold Bite against an adjacent creature.',
+    ],
+    chaosEffects: [
+      'Real Door Becomes False: Choose a random actual exit; it uses Threshold Bite on the next creature crossing it.',
+      'Destination Eats Origin: Swallow Route also removes the doorway used to return until next round.',
+      'Everyone Opens: Pull all creatures 3 spaces toward the nearest doorway.',
+      'Familiar Room: Replace visible terrain with a random creature\'s remembered safe place until next turn.',
+      'Door Is Carried: Attach to a random creature; other creatures may enter its space and emerge adjacent to another random creature.',
+      'Exit Exists Briefly: Open a real route out of combat until round end; any creature may leave permanently.',
+    ],
+    loot: { common: ['Wood', 'Rusty Key'], uncommon: ['Padlock', 'Old Relic'], rare: ['Mystic Seal'], epic: ['Ancient Wood'], legendary: ['Artifact Wondrous Item'] },
+  },
+  {
+    name: 'Clock-Eater', role: 'controller', damageType: 'arcane', attackName: 'Minute Mandible', attackRange: '4 spaces', adaptation: 'the impatience of trapped creatures and the time discarded by broken routines',
+    lore: aberrationLore('Chaos forms a segmented predator around missing intervals. Its translucent abdomen contains clock hands that point nowhere.', 'Looping trials, abandoned watch posts, stalled machinery, and rooms with uneven time.', 'It bites durations from effects, rest, wounds, and eventually lives.', 'Rare and usually detected through missing time rather than sight.'),
+    resistances: 'Arcane', passives: ['Eat Duration: At round end, reduce one random ongoing effect by 1 round and heal 10 HP.'],
+    abilities: [
+      'Steal Turn: On a hit, reduce the target\'s initiative by 5; if this moves it below the Clock-Eater, it gains 10 temporary HP.',
+      'Digest Recovery: Increase one target\'s per-encounter or daily spent ability lock by 1 round for this encounter only.',
+      'Regurgitate Moment: Restore one ended terrain or condition effect for 1 round under its control.',
+    ],
+    chaosEffects: [
+      'Eat Entire Round: End the current round immediately after this turn.',
+      'Minutes Hatch: Create d4 Minor Clock-Eaters at 1 HP each.',
+      'Duration Reverses: Every ongoing effect gains 1 round instead of losing it at round end.',
+      'Clock Chooses Wound: Repeat damage dealt exactly one round ago against a random creature.',
+      'Initiative Is Hunger: Swap this aberration\'s initiative with the highest initiative.',
+      'Regurgitate Tomorrow: A random creature takes its next turn now and skips it in the next round.',
+    ],
+    loot: { common: ['Hourglass', 'Metal Scrap'], uncommon: ['Arcane Gear', 'Fragment of Focus'], rare: ['Ticking Ritual'], epic: ['Ancient Manuscript'], legendary: ['Master Gear'] },
+  },
+  {
+    name: 'Hollow Choir', role: 'artillery', damageType: 'sonic', attackName: 'Many-Mouthed Verse', attackRange: '9 spaces', adaptation: 'the concept of a Song continuing after every singer has vanished',
+    lore: aberrationLore('Empty robes, mouths, or masks gather around a Song with no living performer. It is not a Reyvateil and does not use valid Hymmnos; it imitates the shape of performance.', 'Ruined stages, corrupted relay halls, dead sanctuaries, and places where a Canticle failed.', 'It sings effects that resemble Song Magic but lack stable meaning, often stealing an active Canticle\'s audience.', 'Very rare; silence does not always end it.', 'Individual mouths disagree about melody, target, and whether the Choir exists.'),
+    resistances: 'Sonic, Psychic', passives: ['Counterfeit Audience: It is soundless for Song targeting but its own attacks count as audible to every creature on the battlefield.'],
+    abilities: [
+      'Steal Canticle: End the active Canticle and repeat its mechanical effect on random eligible creatures for 1 round.',
+      'Choir Split: Make Many-Mouthed Verse against three different random targets, dealing half damage each.',
+      'Empty Sustain: If no creature spends Song this round, heal 30 HP and take an extra Action next turn.',
+    ],
+    chaosEffects: [
+      'Audience Performs: Every audible creature repeats the last Verse against a random target.',
+      'Silence Has Voice: Soundless creatures take {damage} sonic damage; audible creatures become Silenced.',
+      'Canticle Without Effect: The active Canticle continues occupying the channel but produces no effect until next round.',
+      'Mouths Choose Song: Activate a random locked Song belonging to a random Reyvateil present for 1 round.',
+      'Singer Is Target: Redirect every Song effect this round to its performer only.',
+      'No Common Tempo: Reroll initiative separately after each turn until round end.',
+    ],
+    loot: { common: ['Worn Cloth', 'Bell'], uncommon: ['Fragment of Melody', 'Phantom Dust'], rare: ['Shard of Harmony'], epic: ['Acapella Ritual'], legendary: ['Unheard Ritual'] },
+  },
+  {
+    name: 'Skin of Yesterday', role: 'ambusher', damageType: 'psychic', attackName: 'Familiar Hand', attackRange: '2 spaces', adaptation: 'a human survivor who surrendered identity piece by piece until Chaos preserved only the version others remembered',
+    lore: aberrationLore('One of the category\'s human exceptions. A lost Diver survived by discarding memories, choices, and eventually the body that made them.', 'Old expedition routes, abandoned camps, rooms associated with a missing party, and near former sanctuaries.', 'It imitates a person remembered by its witnesses and asks to be trusted before it attacks.', 'Extremely rare; every confirmed specimen implies an unrecorded catastrophe.', 'It seeks people who remember the identity it currently wears.'),
+    resistances: 'Psychic, Shadow', passives: ['Remember Me: At encounter start choose a random player. Until that player harms it, the Skin cannot target them and they have disadvantage on attacks against it.'],
+    abilities: [
+      'Wear Trust: Copy one passive or reaction from the remembered target until next round.',
+      'Old Gesture: Force the remembered target to move or use a non-damaging Action as it did on its previous turn; Focus against Save Difficulty {dc} resists.',
+      'Discard Injury: Once per encounter, shed its current appearance and return to half maximum HP in a random adjacent space.',
+    ],
+    chaosEffects: [
+      'Yesterday Is Player: Exchange its name, image, and initiative marker with a random player until next round.',
+      'Trust Chooses Violence: The remembered target immediately attacks a random ally if able.',
+      'Skin Without Body: Become untargetable until it copies an ability, then appear at that ability\'s target.',
+      'Injury Belongs to Memory: Redirect the next damage it takes to the remembered target.',
+      'Everyone Remembers Differently: Create one copy per witness; only one chosen randomly can take damage.',
+      'Discard Person: End Remember Me and remove one random passive from its former target for the encounter.',
+    ],
+    loot: { common: ['Worn Cloth', 'Broken Trinket'], uncommon: ['Journal', 'Old Relic'], rare: ['Fragment of Shadows'], epic: ['Ancient Manuscript'], legendary: ['Royal Emblem'] },
+  },
+  {
+    name: 'Hunger That Walks', role: 'brute', damageType: 'void', attackName: 'Consume Boundary', attackRange: '2 spaces', adaptation: 'scarcity and appetite stripped of any creature that could be satisfied',
+    lore: aberrationLore('Chaos makes hunger physical without granting it a stomach, endpoint, or preferred food.', 'Empty larders, harvested ecosystems, abandoned hoards, and routes where parties starved.', 'It removes material from whatever is nearest and grows larger without appearing fuller.', 'Uncommon in depleted regions and absent where resources remain balanced.'),
+    resistances: 'Void', passives: ['Unsatisfied: Whenever an item, terrain feature, summon, or creature is destroyed within 5 spaces, gain 8 temporary HP.'],
+    abilities: [
+      'Eat Equipment: On a hit, the target chooses one carried mundane item to destroy or takes an extra {damage} void damage.',
+      'Empty Reach: Destroy one adjacent non-artifact terrain space and extend its reach through that absence until next turn.',
+      'Starvation Field: Healing and temporary HP are halved within 4 spaces.',
+    ],
+    chaosEffects: [
+      'Hunger Eats Hunger: Lose all temporary HP, then every other creature loses the same amount.',
+      'Consume Category: Randomly choose items, terrain, summons, buffs, or light; remove one instance from every creature or space.',
+      'Fullness Is Wound: The creature with the most current HP takes {damage} void damage.',
+      'Empty Becomes Mouth: Every destroyed terrain space makes Consume Boundary against its nearest creature.',
+      'Appetite Changes Target: Healing, damage, and item use each select random eligible targets until next turn.',
+      'Nothing Left to Eat: Become inert if no unattended item or terrain is within 5 spaces; otherwise consume all of them and heal 10 HP each.',
+    ],
+    loot: { common: ['Bones', 'Broken Trinket'], uncommon: ['Dark Essence', 'Monster Eye'], rare: ['Fragment of Darkness'], epic: ['Void Ritual'], legendary: ['Artifact Weapon'] },
+  },
+  {
+    name: 'Unwritten Thing', role: 'controller', damageType: 'arcane', attackName: 'Missing Rule', attackRange: '8 spaces', adaptation: 'a new law attempting to exist before the Tower has language or machinery to describe it',
+    lore: aberrationLore('Some Chaos concepts arrive before reality has a category for them. The body appears as gaps between whatever observers expect to see.', 'Freshly changed floors, Intransigent-like rule failures, sealed research halls, and the edge of containment breaches.', 'It tests incompatible behaviors until the environment accepts one as true.', 'Exceptionally rare and never reliably classified.', 'If several are present, each may be an observation of the same unfinished concept.'),
+    resistances: 'Arcane, Void', passives: ['Undefined: At encounter start roll d6 to determine resistance: 1 fire, 2 frost, 3 lightning, 4 sonic, 5 psychic, 6 metal. Reroll each round.'],
+    abilities: [
+      'Propose Rule: Choose movement, attacks, Songs, healing, or terrain. The first use of that category each round requires Focus against Save Difficulty {dc} or fails without spending its resource.',
+      'Erase Exception: Ignore one immunity, resistance, or targeting restriction for its next attack.',
+      'Accepted Definition: Once per encounter, make the current Propose Rule persist until this aberration is defeated.',
+    ],
+    chaosDie: 'd8',
+    chaosEffects: [
+      'Rule Applies Backward: Propose Rule affects every matching action already taken this round.',
+      'Definition Changes Mid-Sentence: Replace the target, damage type, and area of a random pending effect.',
+      'Exception Becomes Law: One random immunity possessed by any creature is granted to all creatures until next turn.',
+      'Category Missing: Randomly disable movement, Actions, Songs, reactions, or items for all creatures until next round.',
+      'Unwritten Target: One creature cannot be referred to by name and cannot be directly targeted until next turn.',
+      'Tower Accepts Error: Permanently alter one destructible terrain feature according to the last effect used on it.',
+      'Contradict Definition: Resolve both success and failure of the next saving throw; choose which consequence remains randomly.',
+      'No Rule Survives: End every ongoing effect, field, mark, summon, and Canticle, including this aberration\'s effects.',
+    ],
+    loot: { common: ['Arcane Dust', 'Paper'], uncommon: ['Fragment of Arcana', 'Enchantment Crystal'], rare: ['Cosmic Dust'], epic: ['Ancient Ritual'], legendary: ['Artifact Wondrous Item'] },
+  },
+];
+
+module.exports = createCatalog(blueprints);

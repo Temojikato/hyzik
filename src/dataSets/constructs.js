@@ -214,3 +214,8 @@ module.exports = {
     }
   }
 };
+
+// Preserve the originally authored models while completing their purpose-based
+// series and adding the Ancient infrastructure that would logically surround
+// them throughout the Tower.
+module.exports = require('./constructBlueprints')(module.exports);

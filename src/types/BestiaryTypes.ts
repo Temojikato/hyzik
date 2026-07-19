@@ -19,6 +19,10 @@ export interface MonsterTier {
   Loot?: LootEntry[];
   /** Whether this creature can be affected by audible Song Magic. */
   SongHearing?: 'audible' | 'soundless';
+  /** Repeatable creature populations reserve this flag for their apex Chaos state. */
+  ChaosTier?: boolean;
+  /** Explicit combat RNG for a Chaos state; roll once at the start of its turn. */
+  ChaosTable?: Array<{ Roll: string; Effect: string }>;
 }
 
 export interface MonsterSpecies {

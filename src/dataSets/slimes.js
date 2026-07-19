@@ -480,3 +480,7 @@ module.exports = {
     }
   }
 };
+
+// Preserve all authored legacy descriptions and loot while completing every
+// combat profile, correcting tier names, and adding the wider Tower ecology.
+module.exports = require('./slimeBlueprints')(module.exports);

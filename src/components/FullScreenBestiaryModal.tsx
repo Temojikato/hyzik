@@ -74,7 +74,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
       // Fetch all species
       fetchAllMonstersFromNestedDocs()
         .then((monsters) => setAllSpecies(monsters.filter((specie) => {
-          return (specie.name != undefined && specie.name != "description")
+          return (specie.name !== undefined && specie.name !== "description")
         })))
         .catch((err) => console.error('Error fetching monsters:', err))
         .finally(() => setLoading(false));
@@ -141,8 +141,9 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
     if (!selectedMonster?.Tiers) return [];
     // Convert from Record<string, MonsterTier> to MonsterTier[]
     const baseArray = Object.entries(selectedMonster.Tiers).map(([id, val]) => ({ ...val, id }));
-    // Reverse the order if you want oldest => newest or similar
-    return baseArray.reverse();
+    // Dataset insertion order is the canonical progression: Minor, Regular,
+    // Greater, then Chaos. Unique creatures simply provide one entry.
+    return baseArray;
   }, [selectedMonster]);
 
   return (

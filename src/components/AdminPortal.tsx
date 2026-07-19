@@ -515,7 +515,7 @@ const EncounterBuilderDraggable: React.FC<{
       name: data.Name || `${tier} ${entry.name}`,
       tier,
       hp: finitePositive(stats.HP, stats.MaxHP, stats.HitPoints, stats['Hit Points']) || 0,
-      armorClass: finitePositive(stats.AC, stats.ArmorClass, stats['Armor Class']),
+      armorClass: finitePositive(stats.Defence, stats.Defense, stats.AC, stats.ArmorClass, stats['Armor Class']),
       songHearing: data.SongHearing,
     };
   })), [species]);
@@ -581,7 +581,7 @@ const EncounterBuilderDraggable: React.FC<{
           <FormControl><FormLabel>Add monster</FormLabel><HStack><Select value={monsterId} onChange={(event) => setMonsterId(event.target.value)}><option value="">Choose monster and tier</option>{monsterOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</Select><Button onClick={addMonster} isDisabled={!monsterId}>Add</Button></HStack></FormControl>
           <VStack align="stretch" spacing={2}>{monsters.map((monster) => {
             const complete = monster.maxHp > 0 && Number(monster.armorClass) > 0;
-            return <Flex key={monster.id} p={3} bg="#0d131e" border="1px solid" borderColor={complete ? '#2c3648' : '#7f1d1d'} borderRadius="10px" justify="space-between" align="center"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color={complete ? '#8f9bb0' : '#fca5a5'}>{complete ? `Database: ${monster.maxHp} HP · AC ${monster.armorClass}` : 'Database combat profile incomplete (requires HP and AC)'}</Text><Text fontSize="xs" color={monster.songHearing ? (monster.songHearing === 'soundless' ? '#f0abfc' : '#86efac') : '#8f9bb0'}>Song Hearing: {monster.songHearing === 'soundless' ? 'Soundless — immune' : monster.songHearing === 'audible' ? 'Audible — affected' : 'not documented'}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>;
+            return <Flex key={monster.id} p={3} bg="#0d131e" border="1px solid" borderColor={complete ? '#2c3648' : '#7f1d1d'} borderRadius="10px" justify="space-between" align="center"><Box><Text fontWeight="bold">{monster.name}</Text><Text fontSize="xs" color={complete ? '#8f9bb0' : '#fca5a5'}>{complete ? `Database: ${monster.maxHp} HP · Defence ${monster.armorClass}` : 'Database combat profile incomplete (requires HP and Defence)'}</Text><Text fontSize="xs" color={monster.songHearing ? (monster.songHearing === 'soundless' ? '#f0abfc' : '#86efac') : '#8f9bb0'}>Song Hearing: {monster.songHearing === 'soundless' ? 'Soundless — immune' : monster.songHearing === 'audible' ? 'Audible — affected' : 'not documented'}</Text></Box><IconButton aria-label="Remove monster" icon={<FaTrash />} size="sm" variant="ghost" colorScheme="red" onClick={() => setMonsters((current) => current.filter((entry) => entry.id !== monster.id))} /></Flex>;
           })}</VStack>
         </VStack>
         <VStack align="stretch" spacing={4}>
