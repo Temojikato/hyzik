@@ -15,6 +15,7 @@ const songMetadata = {
   PERPETUAL_SLIME_ROOM_THE_HOARD_THAT_WAITS: ['The Hoard That Waits', 'Perpetual Slime Room'],
   VENESTRIA_THEME_TEST: ['Venestria — Abandoned Song', 'Tower Floor 1'],
 };
+const { assignCypherId } = require('./hymmnosCypherAssignment');
 
 const slug = (value) => value
   .normalize('NFKD')
@@ -36,7 +37,7 @@ const buildLexicon = () => {
       pronunciation: entry.pronunciation,
       partOfSpeech: entry.part_of_speech,
       dialect: entry.dialect,
-      cypherId: `cypher-${String((index % 48) + 1).padStart(2, '0')}`,
+      cypherId: assignCypherId(entry),
     };
   });
   fs.writeFileSync(path.join(outputDirectory, 'hymmnosPublicIndex.json'), `${JSON.stringify(publicEntries)}\n`);

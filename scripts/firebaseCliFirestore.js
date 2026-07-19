@@ -3,6 +3,7 @@ const path = require('path');
 
 const projectId = 'hyzik-5edfd';
 const baseUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents`;
+const databaseName = `projects/${projectId}/databases/(default)`;
 
 const getCliAccessToken = async () => {
   const cliAuthPath = path.join(path.dirname(process.execPath), 'node_modules', 'firebase-tools', 'lib', 'auth.js');
@@ -87,4 +88,24 @@ const listDocuments = async (collectionId) => {
   return documents;
 };
 
-module.exports = { mergeDocument, listDocuments };
+const updateDocuments = async (collectionId, rows) => {
+  for (let start = 0; start < rows.length; start += 400) {
+    const page = rows.slice(start, start + 400);
+    const writes = page.map(({ id, data }) => ({
+      update: {
+        name: `${databaseName}/documents/${collectionId}/${id}`,
+        fields: encodeFields(data),
+      },
+      updateMask: { fieldPaths: Object.keys(data).filter((key) => data[key] !== undefined) },
+    }));
+    const result = await request(`https://firestore.googleapis.com/v1/${databaseName}/documents:batchWrite`, {
+      method: 'POST',
+      body: JSON.stringify({ writes }),
+    });
+    const failed = (result.status || []).find((status) => Number(status.code || 0) !== 0);
+    if (failed) throw new Error(`Firestore batch write failed: ${failed.message || `status ${failed.code}`}`);
+    console.log(`Updated ${Math.min(start + 400, rows.length)}/${rows.length} ${collectionId} documents.`);
+  }
+};
+
+module.exports = { mergeDocument, listDocuments, updateDocuments };

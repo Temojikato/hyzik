@@ -24,7 +24,6 @@ import {
   List,
   ListItem,
   useToast,
-  Heading,
   Flex,
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react'; // Correct import for keyframes
@@ -41,6 +40,8 @@ import { ConditionDefinition, UserCondition, ConditionEffect } from '../types/Co
 import BossBattleModal from './BossBattleModal';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 import { useCampaign } from '../contexts/CampaignContext';
+import HymmnosLabel from './HymmnosLabel';
+import { UI_HYMMNOS } from '../data/hymmnosInterface';
 
 // Define pulsate animation for Progress bar
 const pulsate = keyframes`
@@ -451,7 +452,7 @@ const PlayerInfo: React.FC = () => {
   return (
     <Box mt={6} p={{ base: 4, md: 5 }} bg="surface" border="1px solid" borderColor="border" borderRadius="panel" boxShadow="panel">
       <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap={3}>
-        <Box><Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".14em">Player state</Text><Heading size="md">Conditions & influence</Heading></Box>
+        <Box><HymmnosLabel phrase={UI_HYMMNOS.playerState} scriptProps={{ fontSize: 'sm' }} /><HymmnosLabel mt={1} phrase={UI_HYMMNOS.conditions} scriptProps={{ fontSize: 'xl', fontWeight: 'bold' }} /></Box>
         <HStack>
       {/* Gain Condition Button */}
       <Button colorScheme="teal" onClick={onOpen}>

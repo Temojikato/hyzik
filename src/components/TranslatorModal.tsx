@@ -5,7 +5,6 @@ import {
 } from '@chakra-ui/react';
 import { FaLock, FaMusic, FaVolumeHigh } from 'react-icons/fa6';
 import { useCampaign } from '../contexts/CampaignContext';
-import { useAuth } from '../contexts/AuthContext';
 import { CYPHERS } from '../data/cyphers';
 import HymmnosText from './HymmnosText';
 import LexiconEntryModal from './LexiconEntryModal';
@@ -25,8 +24,7 @@ const SongTranslation: React.FC<{ hymmnos: string; publicLexicon: PublicLexiconE
 
 const TranslatorModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   useBackDismiss(isOpen, onClose);
-  const { currentSong, publicLexicon, unlockedLexicon, lexiconAvailable } = useCampaign();
-  const { profile } = useAuth();
+  const { currentSong, publicLexicon, unlockedLexicon, unlockedCypherIds, lexiconAvailable } = useCampaign();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<PublicLexiconEntry | null>(null);
   const [tabIndex, setTabIndex] = useState(0);
@@ -35,7 +33,7 @@ const TranslatorModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ i
     const entries = needle ? publicLexicon.filter((entry) => entry.headword.toLowerCase().includes(needle) || unlockedLexicon.get(entry.id)?.meaning.toLowerCase().includes(needle)) : publicLexicon;
     return entries.slice(0, 160);
   }, [publicLexicon, search, unlockedLexicon]);
-  const unlockedCyphers = profile?.unlockedCyphers || [];
+  const unlockedCyphers = unlockedCypherIds;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside">

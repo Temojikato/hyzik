@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 import { subscribeCampaignState, subscribeSongs, subscribeUnlockedLexicon } from '../services/campaignService';
 import { CampaignSong, CampaignState, PublicLexiconEntry, UnlockedLexiconEntry } from '../types/Campaign';
 import { clearAllCooldowns, shiftAllCooldowns } from '../CooldownUtils';
+import { STARTER_CYPHER_IDS } from '../data/cyphers';
 
 interface CampaignContextValue {
   campaignState: CampaignState;
@@ -12,6 +13,7 @@ interface CampaignContextValue {
   currentSong: CampaignSong | null;
   publicLexicon: PublicLexiconEntry[];
   unlockedLexicon: Map<string, UnlockedLexiconEntry>;
+  unlockedCypherIds: string[];
   lexiconAvailable: boolean;
   timersRunning: boolean;
   timerEpoch: number;
@@ -27,6 +29,7 @@ const CampaignContext = createContext<CampaignContextValue>({
   currentSong: fallbackSongs[0] || null,
   publicLexicon,
   unlockedLexicon: new Map(),
+  unlockedCypherIds: [...STARTER_CYPHER_IDS],
   lexiconAvailable: false,
   timersRunning: false,
   timerEpoch: 0,
@@ -44,7 +47,8 @@ export const CampaignProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [campaignReady, setCampaignReady] = useState(false);
   const [timerEpoch, setTimerEpoch] = useState(0);
   const [timerClockReady, setTimerClockReady] = useState(false);
-  const unlockedCypherKey = (profile?.unlockedCyphers || []).join('|');
+  const unlockedCypherIds = useMemo(() => [...new Set([...STARTER_CYPHER_IDS, ...(profile?.unlockedCyphers || [])])], [profile?.unlockedCyphers]);
+  const unlockedCypherKey = unlockedCypherIds.join('|');
 
   useEffect(() => {
     if (!currentUser) return undefined;
@@ -129,7 +133,7 @@ export const CampaignProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [campaignReady, campaignState.battleActive, campaignState.timersPaused, campaignState.timersPausedAt, campaignState.timersResumedAt, currentUser, profile, shouldRunTimers]);
 
   return (
-    <CampaignContext.Provider value={{ campaignState, songs, currentSong, publicLexicon, unlockedLexicon, lexiconAvailable, timersRunning, timerEpoch, timerClockReady }}>
+    <CampaignContext.Provider value={{ campaignState, songs, currentSong, publicLexicon, unlockedLexicon, unlockedCypherIds, lexiconAvailable, timersRunning, timerEpoch, timerClockReady }}>
       {children}
     </CampaignContext.Provider>
   );

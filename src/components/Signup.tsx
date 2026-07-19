@@ -18,6 +18,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { STARTER_CYPHER_IDS } from '../data/cyphers';
 
 const Signup: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -53,7 +54,7 @@ const Signup: React.FC = () => {
         active: false,
         conditions: [],
         inventory: [],
-        unlockedCyphers: [],
+        unlockedCyphers: [...STARTER_CYPHER_IDS],
         unlockedRecipes: [],
         createdAt: serverTimestamp(),
       });

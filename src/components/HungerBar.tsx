@@ -8,6 +8,8 @@ import {
   usePrefersReducedMotion,
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
+import HymmnosLabel from './HymmnosLabel';
+import { UI_HYMMNOS } from '../data/hymmnosInterface';
 
 interface HungerBarProps {
   currentHunger: number;
@@ -96,7 +98,7 @@ const HungerBar: React.FC<HungerBarProps> = ({
 
   return (
     <VStack align="stretch" spacing={1} w="full" position="relative">
-      <Text fontWeight="bold">Hunger</Text>
+      <HymmnosLabel phrase={UI_HYMMNOS.hunger} scriptProps={{ fontSize: 'lg', fontWeight: 'bold' }} />
 
       {/* Outer container: 30px tall. We place label inside it as well. */}
       <Box position="relative" w="full" h="30px" overflow="visible">

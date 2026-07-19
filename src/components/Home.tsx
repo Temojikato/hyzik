@@ -33,6 +33,8 @@ import { useCampaign } from '../contexts/CampaignContext';
 import combatCatalogJson from '../generated/reyvateilCombatCatalog.json';
 import { ReyvateilCombatProfile } from '../types/Reyvateils';
 import { httpsCallable } from 'firebase/functions';
+import HymmnosLabel from './HymmnosLabel';
+import { UI_HYMMNOS } from '../data/hymmnosInterface';
 
 const combatCatalog = combatCatalogJson as Record<string, ReyvateilCombatProfile>;
 
@@ -302,9 +304,9 @@ const Home: React.FC = () => {
       />
 
       <Flex mt={{ base: 2, md: 4 }} p={1} bg="blackAlpha.400" borderRadius="xl" w={{ base: 'full', md: 'fit-content' }} border="1px solid" borderColor="whiteAlpha.300">
-        <Button flex={{ base: 1, md: 'initial' }} size={{ base: 'sm', md: 'md' }} variant={profileMode === 'social' ? 'solid' : 'ghost'} onClick={() => setProfileMode('social')}>Social profile</Button>
-        <Button flex={{ base: 1, md: 'initial' }} size={{ base: 'sm', md: 'md' }} ml={1} variant={profileMode === 'combat' ? 'solid' : 'ghost'} onClick={() => setProfileMode('combat')}>
-          Combat profile{campaignState.battleActive ? ' · LIVE' : ''}
+        <Button flex={{ base: 1, md: 'initial' }} h="auto" py={2} variant={profileMode === 'social' ? 'solid' : 'ghost'} onClick={() => setProfileMode('social')} aria-label="Social profile"><HymmnosLabel phrase={UI_HYMMNOS.socialProfile} interactive={false} scriptProps={{ fontSize: { base: 'sm', md: 'md' }, fontWeight: 'bold' }} /></Button>
+        <Button flex={{ base: 1, md: 'initial' }} h="auto" py={2} ml={1} variant={profileMode === 'combat' ? 'solid' : 'ghost'} onClick={() => setProfileMode('combat')} aria-label="Combat profile">
+          <Box><HymmnosLabel phrase={UI_HYMMNOS.combatProfile} interactive={false} scriptProps={{ fontSize: { base: 'sm', md: 'md' }, fontWeight: 'bold' }} />{campaignState.battleActive && <Badge colorScheme="red">LIVE</Badge>}</Box>
         </Button>
       </Flex>
       {profileMode === 'combat' && reyvateil && profile ? <CombatHome reyvateil={reyvateil} profile={profile} /> : <>

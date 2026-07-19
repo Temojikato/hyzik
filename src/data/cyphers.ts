@@ -30,4 +30,9 @@ export const CYPHERS: CypherDefinition[] = titles.map((title, index) => {
   };
 });
 
+// These are structural language families, not plot vocabulary. They give a
+// new player enough translated UI to understand how Cyphers work without
+// revealing Song, Magic, Death, Chaos, or other campaign-critical concepts.
+export const STARTER_CYPHER_IDS = ['cypher-01', 'cypher-02', 'cypher-03', 'cypher-38'] as const;
+
 export const cypherForIndex = (index: number) => CYPHERS[index % CYPHERS.length].id;

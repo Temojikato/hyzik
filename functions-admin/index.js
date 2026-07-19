@@ -9,6 +9,8 @@ const { config: economyConfig, factionById, normalizeEconomy, deriveItemEconomy,
 const { rollLootBundle, sourceTierFromLabel } = require('./lootEngine');
 const { encounterDiscoveries, advanceDiscovery, discoveryId } = require('./bestiaryDiscovery');
 
+const STARTER_CYPHER_IDS = ['cypher-01', 'cypher-02', 'cypher-03', 'cypher-38'];
+
 initializeApp();
 
 const clean = (value, max) => typeof value === 'string' ? value.trim().slice(0, max) : '';
@@ -672,7 +674,7 @@ exports.adminCreateUser = onCall({ region: 'europe-west1', cors: true }, async (
   try {
     created = await getAuth().createUser({ email, password });
     await getFirestore().collection('users').doc(created.uid).set({
-      email, displayName: '', active: false, conditions: [], inventory: [], unlockedCyphers: [], unlockedRecipes: [], economy: normalizeEconomy(),
+      email, displayName: '', active: false, conditions: [], inventory: [], unlockedCyphers: STARTER_CYPHER_IDS, unlockedRecipes: [], economy: normalizeEconomy(),
       createdAt: FieldValue.serverTimestamp(),
     });
   } catch (error) {

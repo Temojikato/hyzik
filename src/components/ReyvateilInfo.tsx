@@ -36,6 +36,8 @@ import {
 } from '../CooldownUtils';
 import FeedModal from './FeedModal';
 import HungerBar from './HungerBar';
+import HymmnosLabel from './HymmnosLabel';
+import { UI_HYMMNOS, classHymmnosPhrase, descriptionHymmnosPhrase, reyvateilIdentityPhrase } from '../data/hymmnosInterface';
 import { useCampaign } from '../contexts/CampaignContext';
 import { resolveAbilityInvocation } from '../utils/abilityHymmnos';
 
@@ -527,10 +529,13 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         >
           <VStack spacing={4} align="start">
             <Flex direction="column" align="center">
-              <Text fontSize="xs" color="textMuted" textTransform="uppercase" letterSpacing=".14em">Reyvateil link established</Text>
-              <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="bold" color="text" textAlign="center">
-                {reyvateil ? reyvateil.name : 'Unknown Reyvateil'} (Lv. {userLevel})
-              </Text>
+              <HymmnosLabel phrase={UI_HYMMNOS.reyvateilLinkEstablished} textAlign="center" scriptProps={{ fontSize: 'sm', letterSpacing: '.12em' }} />
+              <HymmnosLabel
+                phrase={reyvateilIdentityPhrase(reyvateil ? reyvateil.name : 'Unknown Reyvateil', userLevel)}
+                textAlign="center"
+                scriptProps={{ fontSize: { base: '2xl', md: '3xl' }, fontWeight: 'bold' }}
+                translationProps={{ fontSize: 'sm' }}
+              />
 
             </Flex>
 
@@ -551,24 +556,14 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                 maxH="520px"
               />
               <Box>
-                <Flex direction="row" align="center">
-                  <Text fontSize="sm" fontWeight="bold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
-                    Class:
-                  </Text>
-
-                  <Text
-                    fontSize="xl"
-                    fontWeight="bold"
-                    color="text"
-                    ml={2}
-                  >
-                    {reyvateil ? reyvateil.class : 'No class available.'}
-                  </Text>
-                </Flex>
-                <Text mt={4} fontSize="sm" fontWeight="semibold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
-                  Features:
-                </Text>
-                <Text color="text">{reyvateil ? reyvateil.features : 'No features available.'}</Text>
+                <Box>
+                  <HymmnosLabel phrase={UI_HYMMNOS.class} scriptProps={{ fontSize: 'sm', fontWeight: 'bold', letterSpacing: '.1em' }} />
+                  <HymmnosLabel phrase={classHymmnosPhrase(reyvateil ? reyvateil.class : 'Unknown role')} mt={1} scriptProps={{ fontSize: 'xl', fontWeight: 'bold' }} />
+                </Box>
+                <Box mt={4}>
+                  <HymmnosLabel phrase={UI_HYMMNOS.features} scriptProps={{ fontSize: 'sm', fontWeight: 'semibold', letterSpacing: '.1em' }} />
+                  <HymmnosLabel phrase={descriptionHymmnosPhrase(reyvateil?.features || 'Unknown form')} mt={1} scriptProps={{ fontSize: 'xl' }} />
+                </Box>
 
                 <Box mt={2}>
                   <Text fontSize="sm" fontWeight="semibold" color="textMuted" textTransform="uppercase" letterSpacing=".1em">
@@ -618,9 +613,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
         >
           <VStack spacing={4} align="start">
             <HungerBar currentHunger={hunger} maxHunger={100} />
-            <Text fontSize="sm" fontWeight="semibold" mb={2} color="textMuted" textTransform="uppercase" letterSpacing=".1em">
-              Abilities:
-            </Text>
+            <HymmnosLabel phrase={UI_HYMMNOS.abilities} mb={2} scriptProps={{ fontSize: 'lg', fontWeight: 'semibold', letterSpacing: '.1em' }} />
             <ErrorBoundary>
               <Grid
                 templateColumns={{ base: 'repeat(2, minmax(0, 1fr))', sm: 'repeat(3, minmax(0, 1fr))', lg: 'repeat(6, minmax(0, 1fr))' }}
@@ -630,7 +623,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
               >
                 {abilities?.map((ability) => {
                   const invocation = resolveAbilityInvocation(ability);
-                  const translated = unlockedLexicon.has(invocation.lexiconEntryId);
+                  const translated = invocation.parts.every((part) => unlockedLexicon.has(part.id));
                   const cooldownEndTime = cooldowns[ability.name] || 0;
                   const currentTime = Date.now();
                   const isCooldownActive = cooldownEndTime > currentTime;
@@ -642,7 +635,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                     <GridItem key={ability.name}>
                       <VStack spacing={2} align="center">
                         <Box textAlign="center"><Text fontFamily="Hymmnos" fontSize="xl" color="textHeader">{invocation.headword}</Text>{translated && <Text fontSize="xs" color="textMuted">{ability.name}</Text>}</Box>
-                        <Tooltip label={ability.name} aria-label={ability.name}>
+                        <Tooltip label={translated ? ability.name : invocation.pronunciation} aria-label={translated ? ability.name : 'Locked Reyvateil invocation'}>
                           <Button
                             onClick={() => handleAbilityClick(ability)}
                             borderRadius="full"
@@ -657,7 +650,7 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
                           >
                             <Image
                               src={ability.icon || 'https://via.placeholder.com/100'}
-                              alt={ability.name}
+                              alt={translated ? ability.name : 'Locked Reyvateil ability sigil'}
                               objectFit="cover"
                               filter={isCooldownActive ? 'grayscale(100%) opacity(0.5)' : 'none'}
                             />
@@ -696,11 +689,11 @@ const ReyvateilInfo: React.FC<ReyvateilInfoProps> = ({ reyvateil, inventory, set
           boxShadow="panel"
         >
           <HStack spacing={4}>
-            <Button colorScheme="green" onClick={handleFeedClick}>
-              Feed
+            <Button colorScheme="green" onClick={handleFeedClick} h="auto" py={2} aria-label="Feed Reyvateil">
+              <HymmnosLabel phrase={UI_HYMMNOS.feed} interactive={false} scriptProps={{ fontSize: 'lg' }} translationProps={{ color: 'whiteAlpha.800' }} />
             </Button>
-            <Button colorScheme="purple" onClick={handleRitual}>
-              Ritual
+            <Button colorScheme="purple" onClick={handleRitual} h="auto" py={2} aria-label="Open ritual">
+              <HymmnosLabel phrase={UI_HYMMNOS.ritual} interactive={false} scriptProps={{ fontSize: 'lg' }} translationProps={{ color: 'whiteAlpha.800' }} />
             </Button>
           </HStack>
         </Box>
