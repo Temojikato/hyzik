@@ -26,4 +26,5 @@ export const serializeEncounterParticipants = (participants: EncounterParticipan
   ...(Number.isFinite(participant.initiative) ? { initiative: participant.initiative } : {}),
   ...(Number.isFinite(participant.armorClass) ? { armorClass: participant.armorClass } : {}),
   ...(participant.monsterTier ? { monsterTier: participant.monsterTier } : {}),
+  ...(participant.turnResources ? { turnResources: participant.turnResources } : {}),
 }));

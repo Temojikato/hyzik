@@ -16,6 +16,50 @@ export interface Ability {
   };
 }
 
+export type CombatAptitudeKey = 'force' | 'finesse' | 'guard' | 'resonance' | 'focus' | 'tempo';
+export type CombatActionType = 'action' | 'quick' | 'reaction' | 'passive';
+export type CombatAbilityReset = 'turn' | 'round' | 'encounter' | 'passive';
+
+export interface CombatAbility {
+  id: string;
+  name: string;
+  description: string;
+  actionType: CombatActionType;
+  reset: CombatAbilityReset;
+  uses: number;
+  range: number;
+  damageType: string;
+  tags: string[];
+  icon?: string;
+  hymmnos?: Ability['hymmnos'];
+}
+
+export interface ReyvateilCombatProfile {
+  id: string;
+  specialtyTitle: string;
+  role: string;
+  damageType: string;
+  aptitudes: Record<CombatAptitudeKey, number>;
+  derived: {
+    maxHp: number;
+    defense: number;
+    initiative: number;
+    techniqueAttack: number;
+    songAttack: number;
+    saveDifficulty: number;
+    movement: number;
+  };
+  growth: {
+    hitPointsPerLevel: number;
+    aptitudeIncreaseLevels: number[];
+    newTechniqueLevels: number[];
+    evolutionLevel: number;
+    aptitudeCap: number;
+  };
+  combatAbilities: CombatAbility[];
+  socialAbilities: Ability[];
+}
+
 
 export interface EvolutionOption {
   name: string;
@@ -56,6 +100,7 @@ export interface Reyvateil {
     persuasion?: number;
   };
   abilities: Ability[];
+  combat?: ReyvateilCombatProfile;
   levelUpRequirements: UpgradeRequirement[];
   evolutionOptions: EvolutionOption[];
   image?: string; // URL or local path to the image

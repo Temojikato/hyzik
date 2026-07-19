@@ -1,7 +1,8 @@
 // src/components/Home.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, runTransaction, DocumentReference } from 'firebase/firestore';
 import { db, auth } from '../Firebase';
+import { functions } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { Reyvateil, Item } from '../types/Reyvateils';
 import { signOut } from 'firebase/auth';
@@ -11,6 +12,7 @@ import {
   Alert,
   AlertIcon,
   Box,
+  Button,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -23,9 +25,19 @@ import FullScreenNPCModal from './FullScreenNPCModal'; // Import the NPC modal c
 import Header from './Header'; // Import the Header component
 import PlayerInfo from './PlayerInfo';
 import TranslatorModal from './TranslatorModal';
+import CombatHome from './CombatHome';
+import { useCampaign } from '../contexts/CampaignContext';
+import combatCatalogJson from '../generated/reyvateilCombatCatalog.json';
+import { ReyvateilCombatProfile } from '../types/Reyvateils';
+import { httpsCallable } from 'firebase/functions';
+
+const combatCatalog = combatCatalogJson as Record<string, ReyvateilCombatProfile>;
 
 const Home: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, profile } = useAuth();
+  const { campaignState } = useCampaign();
+  const [profileMode, setProfileMode] = useState<'social' | 'combat'>('social');
+  const [combatSyncRequested, setCombatSyncRequested] = useState(false);
   const [reyvateil, setReyvateil] = useState<Reyvateil | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -60,6 +72,20 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [unlockedRecipes, setUnlockedRecipes] = useState<string[]>([]);
   const toast = useToast();
+
+  useEffect(() => {
+    setProfileMode(campaignState.battleActive ? 'combat' : 'social');
+  }, [campaignState.battleActive]);
+
+  useEffect(() => {
+    if (!currentUser || !profile?.reyvateilId || profile.combatProfile || combatSyncRequested) return;
+    setCombatSyncRequested(true);
+    void httpsCallable<undefined, { initialized: boolean; specialtyTitle?: string }>(functions, 'ensureCombatProfile')()
+      .then((result) => {
+        if (result.data.initialized) toast({ title: 'Combat profile awakened', description: `${result.data.specialtyTitle || 'Your Reyvateil'} is ready. Your existing social abilities were preserved.`, status: 'success' });
+      })
+      .catch((caught: any) => toast({ title: 'Combat profile is still synchronizing', description: caught?.message || String(caught), status: 'warning', duration: 7000 }));
+  }, [combatSyncRequested, currentUser, profile?.combatProfile, profile?.reyvateilId, toast]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -104,6 +130,7 @@ const Home: React.FC = () => {
             abilities: reyvateilData.abilities,
             levelUpRequirements: reyvateilData.levelUpRequirements,
             evolutionOptions: reyvateilData.evolutionOptions,
+            combat: reyvateilData.combat || combatCatalog[reyvateilSnap.id],
           });
 
           if (userData.inventory) {
@@ -204,6 +231,13 @@ const Home: React.FC = () => {
     }
   };
 
+  const socialReyvateil = useMemo(() => {
+    if (!reyvateil) return null;
+    const pool = reyvateil.combat?.socialAbilities || reyvateil.abilities;
+    const inherited = new Set(profile?.combatProfile?.inheritedSocialAbilityIds || []);
+    return { ...reyvateil, abilities: inherited.size ? pool.filter((ability) => ability.id && inherited.has(ability.id)) : reyvateil.abilities };
+  }, [profile?.combatProfile?.inheritedSocialAbilityIds, reyvateil]);
+
   if (loading) {
     return (
       <Flex justify="center" align="center" height="100vh">
@@ -236,9 +270,16 @@ const Home: React.FC = () => {
         handleLogout={handleLogout}
       />
 
-      {/* Main content */}
-      <ReyvateilInfo reyvateil={reyvateil} inventory={inventory} setInventory={setInventory} />
-      <PlayerInfo />
+      <Flex mt={4} p={1} bg="blackAlpha.400" borderRadius="xl" w="fit-content" border="1px solid" borderColor="whiteAlpha.300">
+        <Button variant={profileMode === 'social' ? 'solid' : 'ghost'} onClick={() => setProfileMode('social')}>Social profile</Button>
+        <Button ml={1} variant={profileMode === 'combat' ? 'solid' : 'ghost'} onClick={() => setProfileMode('combat')}>
+          Combat profile{campaignState.battleActive ? ' · LIVE' : ''}
+        </Button>
+      </Flex>
+      {profileMode === 'combat' && reyvateil && profile ? <CombatHome reyvateil={reyvateil} profile={profile} /> : <>
+        {socialReyvateil && <ReyvateilInfo reyvateil={socialReyvateil} inventory={inventory} setInventory={setInventory} />}
+        <PlayerInfo />
+      </>}
       </Box>
       <InventoryModal
         isOpen={isOpen}

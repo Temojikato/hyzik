@@ -55,6 +55,13 @@ const quizData: QuizData = quizDataJson;
 // ─── CONFIGURATION ──────────────────────────────────────────────────────
 const totalQuizQuestions = 9;
 const numOptionsPerQuestion = 6;
+const lineageLabels: Record<string, string> = {
+  Artificer: 'Mechanist Chorus', Barbarian: 'Primal Chorus', Bard: 'Harmonic Chorus', Bloodhunter: 'Sanguine Chorus',
+  Cleric: 'Sacred Chorus', Druid: 'Verdant Chorus', Fighter: 'Martial Chorus', Monk: 'Stillness Chorus',
+  Paladin: 'Oathbound Chorus', Ranger: 'Wayfarer Chorus', Rogue: 'Veiled Chorus', Sorcerer: 'Elemental Chorus',
+  Warlock: 'Occult Chorus', Wizard: 'Runescript Chorus',
+};
+const lineageLabel = (value: string) => lineageLabels[value] || value;
 
 // ─── COMPONENT PROPS ────────────────────────────────────────────────────
 interface ReyvateilTestProps {
@@ -390,13 +397,13 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
           Tie Breaker
         </Text>
         <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          There is a tie between: {tieBreakerOptions.join(', ')}. Which one calls to you?
+          Several resonances answered equally: {tieBreakerOptions.map(lineageLabel).join(', ')}. Which one calls to you?
         </Text>
         <RadioGroup onChange={(value) => handleTieBreakerAnswer(value as string)}>
           <Stack spacing={4} align="center">
             {tieBreakerOptions.map((cls) => (
               <Radio key={cls} value={cls} size="lg" colorScheme="purple">
-                <Text color="gray.200">{cls}</Text>
+                <Text color="gray.200">{lineageLabel(cls)}</Text>
               </Radio>
             ))}
           </Stack>
@@ -414,7 +421,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
           color="purple.300"
           mb={4}
         >
-          {classSpecificQuiz.title}
+          {testResult ? lineageLabel(testResult.className) : 'Reyvateil resonance'}
         </Text>
         <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
           {currentQuestion.question}
@@ -450,10 +457,10 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
             color="purple.300"
             mb={4}
           >
-            Your Class: {testResult.className}
+            Resonance: {lineageLabel(testResult.className)}
           </Text>
           <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-            {testResult.description}
+            This resonance narrowed the compatibility search; your Reyvateil remains the source of your actual combat identity.
           </Text>
           <Text
             fontSize="2xl"
@@ -462,7 +469,7 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
             color="purple.300"
             mb={4}
           >
-            Your Reyvateil Companion: {finalResult.reyvateil}
+            Your Reyvateil: {finalResult.reyvateil}
           </Text>
           <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
             {finalResult.description}
@@ -496,10 +503,10 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                     fontWeight="bold"
                     color="purple.400"
                   >
-                    Class :
+                    Combat identity:
                   </Text>
                   <Text fontSize="xl" fontWeight="bold" color="purple.400" ml={2}>
-                    {selectedReyvateil.class}
+                    {selectedReyvateil.combat?.specialtyTitle || selectedReyvateil.class}
                   </Text>
                 </Flex>
                 <Text mt={2} fontSize="md" color="gray.300">
@@ -508,11 +515,11 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
                 <br />
                 <br />
                 <Text fontSize="md" color="purple.400">
-                  Stats:
+                  Combat aptitudes:
                 </Text>
-                {selectedReyvateil.stats ? (
+                {selectedReyvateil.combat?.aptitudes ? (
                   <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
-                    {Object.entries(selectedReyvateil.stats).map(([stat, value]) => (
+                    {Object.entries(selectedReyvateil.combat.aptitudes).map(([stat, value]) => (
                       <Text key={stat} color="gray.300">
                         {capitalizeFirstLetter(stat.replace(/([A-Z])/g, ' $1'))}: {value}
                       </Text>

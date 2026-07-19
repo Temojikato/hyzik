@@ -21,7 +21,7 @@ import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
 import { mapData } from '../mapdata';
 import {
-  deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
+  advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
   sendGrantDeliveries, sendPrivateMessages, setCurrentSong, setPlayerActive, setPlayersActive, startEncounter, subscribeEncounter,
   subscribePlayers, updateEncounterParticipants, updatePlayerName,
 } from '../services/campaignService';
@@ -88,6 +88,8 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
   const [monsterSpecies, setMonsterSpecies] = useState<MonsterSpecies[]>([]);
   const [loading, setLoading] = useState(!previewMode);
   const [error, setError] = useState('');
+  const [syncingCombat, setSyncingCombat] = useState(false);
+  const toast = useToast();
   const userModal = useDisclosure();
 
   const refreshPlayers = useCallback(async () => {
@@ -119,12 +121,21 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
 
   const activeConditions = useMemo(() => players.reduce((total, player) => total + (player.conditions?.length || 0), 0), [players]);
   const activePlayers = useMemo(() => players.filter(isPlayerActive), [players]);
+  const synchronizeCombat = async () => {
+    setSyncingCombat(true);
+    try {
+      const result = await httpsCallable<undefined, { reyvateils: number; players: number }>(functions, 'adminSeedCombatProfiles')();
+      toast({ title: 'Combat arsenal synchronized', description: `${result.data.reyvateils} Reyvateils and ${result.data.players} existing players prepared without replacing social data.`, status: 'success', duration: 7000 });
+    } catch (caught: any) {
+      toast({ title: 'Combat synchronization failed', description: caught?.message || String(caught), status: 'error', duration: 8000 });
+    } finally { setSyncingCombat(false); }
+  };
 
   return <Box minH="100vh" bg="#090d14" color="#edf2f7" p={{ base: 3, md: 6 }}>
     <Flex maxW="1680px" mx="auto" direction="column" gap={5}>
       <Flex justify="space-between" align="center" gap={4} flexWrap="wrap">
         <Box><HStack color="#8f9bb0" fontSize="sm"><Badge bg="#312e52" color="#c4b5fd">ADMIN</Badge><Text>Omnia campaign control</Text></HStack><Heading mt={1}>Tower operations</Heading></Box>
-        <HStack><Button as={Link} to="/" leftIcon={<FaArrowLeft />} variant="outline" borderColor="#4a5568">Player portal</Button><IconButton aria-label="Refresh players" icon={<FaArrowRotateRight />} onClick={refreshPlayers} /></HStack>
+        <HStack><Button onClick={synchronizeCombat} isLoading={syncingCombat} variant="outline" borderColor="#4a5568">Sync combat data</Button><Button as={Link} to="/" leftIcon={<FaArrowLeft />} variant="outline" borderColor="#4a5568">Player portal</Button><IconButton aria-label="Refresh players" icon={<FaArrowRotateRight />} onClick={refreshPlayers} /></HStack>
       </Flex>
       <AdminMusicPlayer song={currentSong} />
       {error && <Alert status="error" bg="#3a1822" borderRadius="12px"><AlertIcon />{error}</Alert>}
@@ -493,12 +504,23 @@ const EncounterBuilderDraggable: React.FC<{
 };
 
 const BattleActions: React.FC<{ encounter: Encounter; onFinish: () => void }> = ({ encounter, onFinish }) => {
+  const [advancing, setAdvancing] = useState(false);
+  const toast = useToast();
   const openGameboard = () => window.open(
     `/admin/battle-map/${encounter.id}`,
     `hyzik-gameboard-${encounter.id}`,
     'popup=yes,width=1600,height=900,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=no',
   );
-  return <HStack><Button variant="outline" leftIcon={<FaArrowUpRightFromSquare />} onClick={openGameboard} isDisabled={!encounter.map}>Open gameboard</Button><Button colorScheme="red" onClick={onFinish}>End battle</Button></HStack>;
+  const advance = async () => {
+    setAdvancing(true);
+    try {
+      const result = await advanceEncounterTurn(encounter.id);
+      toast({ title: `Round ${result.round}: ${result.activeParticipantName}`, description: 'That combatant may now act.', status: 'success' });
+    } catch (caught: any) {
+      toast({ title: 'Could not advance turn', description: caught?.message || String(caught), status: 'warning', duration: 7000 });
+    } finally { setAdvancing(false); }
+  };
+  return <HStack><Button onClick={advance} isLoading={advancing}>{encounter.turn?.phase === 'active' ? `Next turn · round ${encounter.turn.round}` : 'Begin first turn'}</Button><Button variant="outline" leftIcon={<FaArrowUpRightFromSquare />} onClick={openGameboard} isDisabled={!encounter.map}>Open gameboard</Button><Button colorScheme="red" onClick={onFinish}>End battle</Button></HStack>;
 };
 
 const BattleScreenViewport: React.FC<{ encounter: Encounter }> = ({ encounter }) => {
@@ -517,6 +539,7 @@ const BattleScreenViewport: React.FC<{ encounter: Encounter }> = ({ encounter })
   return (
     <VStack align="stretch" spacing={5}>
       <Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><BattleActions encounter={encounter} onFinish={finish} /></Flex>
+      {encounter.turn?.phase === 'active' && <Flex p={3} bg="#163c32" border="1px solid #34d399" borderRadius="12px" justify="space-between"><Text fontWeight="bold">Acting now: {participants.find((entry) => entry.id === encounter.turn?.activeParticipantId)?.name || 'Unknown combatant'}</Text><Badge colorScheme="green">Round {encounter.turn.round}</Badge></Flex>}
       <Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}>
         <VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={persist}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" onClick={persist} isLoading={saving}>Save battle state</Button></VStack>
         <Box>{encounter.map ? <><BattleMapViewport map={encounter.map} /><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · exact saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box>

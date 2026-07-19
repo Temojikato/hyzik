@@ -2,6 +2,8 @@ const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { initializeApp } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const crypto = require('crypto');
+const combatCatalog = require('./combatCatalog.json');
 
 initializeApp();
 
@@ -36,6 +38,269 @@ const activeAudience = async (db, finderId) => {
   const snapshot = await db.collection('users').get();
   return snapshot.docs.filter((entry) => entry.id !== finderId && entry.data().active !== false).map((entry) => entry.id);
 };
+
+const deterministicSubset = (ids, count, seed) => {
+  return [...ids]
+    .map((id) => ({ id, score: crypto.createHash('sha256').update(`${seed}:${id}`).digest('hex') }))
+    .sort((a, b) => a.score.localeCompare(b.score))
+    .slice(0, count)
+    .map((entry) => entry.id);
+};
+
+const freshTurnResources = () => ({
+  actionAvailable: true,
+  quickAvailable: true,
+  reactionAvailable: true,
+  roundUses: {},
+  encounterUses: {},
+});
+
+const universalCombatAbilities = {
+  'universal-strike': { id: 'universal-strike', name: 'Strike', actionType: 'action', reset: 'turn', uses: 1 },
+  'universal-brace': { id: 'universal-brace', name: 'Brace', actionType: 'action', reset: 'turn', uses: 1 },
+  'universal-sprint': { id: 'universal-sprint', name: 'Sprint', actionType: 'action', reset: 'turn', uses: 1 },
+  'universal-withdraw': { id: 'universal-withdraw', name: 'Withdraw', actionType: 'action', reset: 'turn', uses: 1 },
+  'universal-assist': { id: 'universal-assist', name: 'Assist', actionType: 'action', reset: 'turn', uses: 1 },
+};
+
+const initiativeSequence = (participants) => participants
+  .map((participant, index) => ({ participant, index }))
+  .sort((a, b) => Number(b.participant.initiative) - Number(a.participant.initiative) || a.index - b.index)
+  .map(({ participant }) => participant.id);
+
+exports.selectReyvateilProfile = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const reyvateilId = clean(request.data?.reyvateilId, 80);
+  const imageUrl = clean(request.data?.imageUrl, 2000);
+  if (!reyvateilId) throw new HttpsError('invalid-argument', 'Choose a Reyvateil first.');
+  const db = getFirestore();
+  const reyvateilSnapshot = await db.collection('reyvateils').doc(reyvateilId).get();
+  if (!reyvateilSnapshot.exists) throw new HttpsError('not-found', 'That Reyvateil is not registered.');
+  const reyvateil = reyvateilSnapshot.data();
+  const combat = reyvateil.combat || combatCatalog[reyvateilId];
+  if (!combat || !Array.isArray(combat.combatAbilities) || combat.combatAbilities.length < 10 || !Array.isArray(combat.socialAbilities) || combat.socialAbilities.length < 10) {
+    throw new HttpsError('failed-precondition', 'That Reyvateil combat profile has not been prepared yet.');
+  }
+  const inheritedCombatAbilityIds = deterministicSubset(
+    combat.combatAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:combat-v1`,
+  );
+  const inheritedSocialAbilityIds = deterministicSubset(
+    combat.socialAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:social-v1`,
+  );
+  const userRef = db.collection('users').doc(request.auth.uid);
+  if (!reyvateil.combat) await reyvateilSnapshot.ref.set({ combat }, { merge: true });
+  await userRef.set({
+    reyvateilId,
+    reyvateilName: clean(reyvateil.name, 100),
+    reyvateilLevel: 1,
+    ...(imageUrl ? { reyvateilImageUrl: imageUrl } : {}),
+    combatProfile: {
+      version: 1,
+      specialtyTitle: clean(combat.specialtyTitle, 120),
+      role: clean(combat.role, 40),
+      level: 1,
+      aptitudes: combat.aptitudes,
+      derived: combat.derived,
+      inheritedCombatAbilityIds,
+      inheritedSocialAbilityIds,
+      assignedAt: FieldValue.serverTimestamp(),
+    },
+    combatStats: {
+      currentHp: Number(combat.derived.maxHp),
+      maxHp: Number(combat.derived.maxHp),
+      armorClass: Number(combat.derived.defense),
+    },
+  }, { merge: true });
+  return {
+    reyvateilId,
+    specialtyTitle: combat.specialtyTitle,
+    inheritedCombatAbilityIds,
+    inheritedSocialAbilityIds,
+  };
+});
+
+exports.adminSeedCombatProfiles = onCall({ region: 'europe-west1', cors: true, timeoutSeconds: 120 }, async (request) => {
+  requireAdmin(request);
+  const db = getFirestore();
+  const users = await db.collection('users').get();
+  const reyvateilSnapshots = await Promise.all(Object.keys(combatCatalog).map((id) => db.collection('reyvateils').doc(id).get()));
+  const names = Object.fromEntries(reyvateilSnapshots.map((snapshot) => [snapshot.id, clean(snapshot.data()?.name, 100) || snapshot.id]));
+  const operations = [
+    ...Object.entries(combatCatalog).map(([id, combat]) => ({ type: 'reyvateil', ref: db.collection('reyvateils').doc(id), data: { combat } })),
+    ...users.docs.flatMap((snapshot) => {
+      const user = snapshot.data();
+      const combat = combatCatalog[user.reyvateilId];
+      if (!combat) return [];
+      const previousHp = Number(user.combatStats?.currentHp);
+      const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
+      return [{ type: 'user', ref: snapshot.ref, data: {
+        reyvateilName: user.reyvateilName || names[user.reyvateilId],
+        combatProfile: {
+          version: 1,
+          specialtyTitle: combat.specialtyTitle,
+          role: combat.role,
+          level: Number(user.reyvateilLevel || user.level || 1),
+          aptitudes: combat.aptitudes,
+          derived: combat.derived,
+          inheritedCombatAbilityIds: Array.isArray(user.combatProfile?.inheritedCombatAbilityIds) && user.combatProfile.inheritedCombatAbilityIds.length
+            ? user.combatProfile.inheritedCombatAbilityIds
+            : deterministicSubset(combat.combatAbilities.map((ability) => ability.id), 5, `${snapshot.id}:${user.reyvateilId}:combat-v1`),
+          inheritedSocialAbilityIds: Array.isArray(user.combatProfile?.inheritedSocialAbilityIds) && user.combatProfile.inheritedSocialAbilityIds.length
+            ? user.combatProfile.inheritedSocialAbilityIds
+            : combat.socialAbilities.slice(0, 5).map((ability) => ability.id),
+          assignedAt: user.combatProfile?.assignedAt || FieldValue.serverTimestamp(),
+        },
+        combatStats: { currentHp, maxHp: combat.derived.maxHp, armorClass: combat.derived.defense },
+      } }];
+    }),
+  ];
+  for (let offset = 0; offset < operations.length; offset += 400) {
+    const batch = db.batch();
+    operations.slice(offset, offset + 400).forEach((operation) => batch.set(operation.ref, operation.data, { merge: true }));
+    await batch.commit();
+  }
+  return {
+    reyvateils: operations.filter((operation) => operation.type === 'reyvateil').length,
+    players: operations.filter((operation) => operation.type === 'user').length,
+  };
+});
+
+exports.ensureCombatProfile = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(request.auth.uid);
+  const userSnapshot = await userRef.get();
+  if (!userSnapshot.exists) throw new HttpsError('not-found', 'Your player profile is missing.');
+  const user = userSnapshot.data();
+  if (user.combatProfile?.version >= 1) return { initialized: false };
+  const reyvateilId = clean(user.reyvateilId, 80);
+  if (!reyvateilId) throw new HttpsError('failed-precondition', 'Choose a Reyvateil before preparing combat.');
+  const reyvateilRef = db.collection('reyvateils').doc(reyvateilId);
+  const reyvateilSnapshot = await reyvateilRef.get();
+  const combat = reyvateilSnapshot.data()?.combat || combatCatalog[reyvateilId];
+  if (!combat) throw new HttpsError('failed-precondition', 'This Reyvateil has no combat catalog.');
+  const previousHp = Number(user.combatStats?.currentHp);
+  const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
+  const batch = db.batch();
+  batch.set(reyvateilRef, { combat }, { merge: true });
+  batch.set(userRef, {
+    reyvateilName: user.reyvateilName || clean(reyvateilSnapshot.data()?.name, 100) || reyvateilId,
+    combatProfile: {
+      version: 1,
+      specialtyTitle: combat.specialtyTitle,
+      role: combat.role,
+      level: Number(user.reyvateilLevel || user.level || 1),
+      aptitudes: combat.aptitudes,
+      derived: combat.derived,
+      inheritedCombatAbilityIds: deterministicSubset(combat.combatAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:combat-v1`),
+      inheritedSocialAbilityIds: combat.socialAbilities.slice(0, 5).map((ability) => ability.id),
+      assignedAt: FieldValue.serverTimestamp(),
+    },
+    combatStats: { currentHp, maxHp: combat.derived.maxHp, armorClass: combat.derived.defense },
+  }, { merge: true });
+  await batch.commit();
+  return { initialized: true, specialtyTitle: combat.specialtyTitle };
+});
+
+exports.advanceEncounterTurn = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const encounterId = clean(request.data?.encounterId, 128);
+  if (!encounterId) throw new HttpsError('invalid-argument', 'An encounter ID is required.');
+  const db = getFirestore();
+  const encounterRef = db.collection('encounters').doc(encounterId);
+  return db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(encounterRef);
+    if (!snapshot.exists || snapshot.data().status !== 'active') throw new HttpsError('failed-precondition', 'This battle is no longer active.');
+    const encounter = snapshot.data();
+    const participants = Array.isArray(encounter.participants) ? encounter.participants.map((entry) => ({ ...entry })) : [];
+    if (!participants.length || participants.some((entry) => !Number.isFinite(Number(entry.initiative)))) {
+      throw new HttpsError('failed-precondition', 'Enter initiative for every combatant before starting turns.');
+    }
+    const sequence = initiativeSequence(participants);
+    const previous = encounter.turn || { phase: 'initiative', round: 1, activeIndex: -1, serial: 0 };
+    const oldIndex = previous.activeParticipantId ? sequence.indexOf(previous.activeParticipantId) : -1;
+    const activeIndex = previous.phase === 'initiative' || oldIndex < 0 ? 0 : (oldIndex + 1) % sequence.length;
+    const wrapped = previous.phase === 'active' && oldIndex >= 0 && activeIndex === 0;
+    const round = Math.max(1, Number(previous.round || 1) + (wrapped ? 1 : 0));
+    const activeParticipantId = sequence[activeIndex];
+    const active = participants.find((entry) => entry.id === activeParticipantId);
+    participants.forEach((participant) => {
+      const resources = participant.turnResources || freshTurnResources();
+      if (participant.id === activeParticipantId) {
+        participant.turnResources = { ...resources, actionAvailable: true, quickAvailable: true, reactionAvailable: true };
+      } else {
+        participant.turnResources = resources;
+      }
+    });
+    const turn = {
+      phase: 'active', round, activeIndex, activeParticipantId, sequence,
+      serial: Number(previous.serial || 0) + 1,
+      advancedAt: FieldValue.serverTimestamp(),
+    };
+    const combatLog = [...(encounter.combatLog || []), {
+      id: crypto.randomUUID(), action: 'turn-started', round,
+      participantId: active?.id, participantName: clean(active?.name, 120), createdAtMs: Date.now(),
+    }].slice(-80);
+    transaction.update(encounterRef, { participants, turn, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    return { round, activeParticipantId, activeParticipantName: active?.name || '' };
+  });
+});
+
+exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const encounterId = clean(request.data?.encounterId, 128);
+  const abilityId = clean(request.data?.abilityId, 180);
+  if (!encounterId || !abilityId) throw new HttpsError('invalid-argument', 'Encounter and technique are required.');
+  const db = getFirestore();
+  const encounterRef = db.collection('encounters').doc(encounterId);
+  const userRef = db.collection('users').doc(request.auth.uid);
+  return db.runTransaction(async (transaction) => {
+    const [encounterSnapshot, userSnapshot] = await Promise.all([transaction.get(encounterRef), transaction.get(userRef)]);
+    if (!encounterSnapshot.exists || encounterSnapshot.data().status !== 'active') throw new HttpsError('failed-precondition', 'There is no active battle.');
+    if (!userSnapshot.exists) throw new HttpsError('not-found', 'Your player profile is missing.');
+    const encounter = encounterSnapshot.data();
+    const player = userSnapshot.data();
+    const participants = encounter.participants.map((entry) => ({ ...entry }));
+    const participant = participants.find((entry) => entry.kind === 'player' && entry.sourceId === request.auth.uid);
+    if (!participant) throw new HttpsError('permission-denied', 'You are not part of this encounter.');
+    let ability = universalCombatAbilities[abilityId];
+    if (!ability) {
+      const inherited = player.combatProfile?.inheritedCombatAbilityIds || [];
+      if (!inherited.includes(abilityId)) throw new HttpsError('permission-denied', 'That technique was not inherited by your Reyvateil.');
+      const reyvateilSnapshot = await transaction.get(db.collection('reyvateils').doc(clean(player.reyvateilId, 80)));
+      ability = reyvateilSnapshot.data()?.combat?.combatAbilities?.find((entry) => entry.id === abilityId);
+    }
+    if (!ability) throw new HttpsError('not-found', 'That combat technique no longer exists.');
+    if (ability.actionType === 'passive') throw new HttpsError('failed-precondition', 'Passive techniques are always active.');
+    const turn = encounter.turn;
+    if (!turn || turn.phase !== 'active') throw new HttpsError('failed-precondition', 'The administrator has not started the first turn.');
+    if (ability.actionType !== 'reaction' && turn.activeParticipantId !== participant.id) {
+      throw new HttpsError('failed-precondition', 'Wait for your turn.');
+    }
+    const resources = { ...freshTurnResources(), ...(participant.turnResources || {}) };
+    resources.roundUses = { ...(resources.roundUses || {}) };
+    resources.encounterUses = { ...(resources.encounterUses || {}) };
+    if (ability.actionType === 'action' && !resources.actionAvailable) throw new HttpsError('failed-precondition', 'Your action has already been spent.');
+    if (ability.actionType === 'quick' && !resources.quickAvailable) throw new HttpsError('failed-precondition', 'Your quick action has already been spent.');
+    if (ability.actionType === 'reaction' && !resources.reactionAvailable) throw new HttpsError('failed-precondition', 'Your reaction has already been spent.');
+    const round = Number(turn.round || 1);
+    if (ability.reset === 'round' && resources.roundUses[ability.id] === round) throw new HttpsError('failed-precondition', 'That technique resets next round.');
+    if (ability.reset === 'encounter' && Number(resources.encounterUses[ability.id] || 0) >= Number(ability.uses || 1)) throw new HttpsError('failed-precondition', 'That technique is spent for this encounter.');
+    if (ability.actionType === 'action') resources.actionAvailable = false;
+    if (ability.actionType === 'quick') resources.quickAvailable = false;
+    if (ability.actionType === 'reaction') resources.reactionAvailable = false;
+    if (ability.reset === 'round') resources.roundUses[ability.id] = round;
+    if (ability.reset === 'encounter') resources.encounterUses[ability.id] = Number(resources.encounterUses[ability.id] || 0) + 1;
+    participant.turnResources = resources;
+    const combatLog = [...(encounter.combatLog || []), {
+      id: crypto.randomUUID(), action: 'ability-used', round,
+      participantId: participant.id, participantName: clean(participant.name, 120),
+      abilityId: ability.id, abilityName: clean(ability.name, 120), createdAtMs: Date.now(),
+    }].slice(-80);
+    transaction.update(encounterRef, { participants, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    return { abilityId: ability.id, abilityName: ability.name, resources };
+  });
+});
 
 exports.adminCreateUser = onCall({ region: 'europe-west1', cors: true }, async (request) => {
   requireAdmin(request);

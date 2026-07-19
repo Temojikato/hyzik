@@ -1,4 +1,25 @@
 import { Timestamp } from 'firebase/firestore';
+import { CombatAptitudeKey } from './Reyvateils';
+
+export interface PlayerCombatProfile {
+  version: number;
+  specialtyTitle: string;
+  role: string;
+  level: number;
+  aptitudes: Record<CombatAptitudeKey, number>;
+  derived: {
+    maxHp: number;
+    defense: number;
+    initiative: number;
+    techniqueAttack: number;
+    songAttack: number;
+    saveDifficulty: number;
+    movement: number;
+  };
+  inheritedCombatAbilityIds: string[];
+  inheritedSocialAbilityIds: string[];
+  assignedAt?: Timestamp;
+}
 
 export interface PlayerProfile {
   id: string;
@@ -15,6 +36,7 @@ export interface PlayerProfile {
     maxHp?: number;
     armorClass?: number;
   };
+  combatProfile?: PlayerCombatProfile;
   unlockedCyphers?: string[];
   unlockedRecipes?: string[];
   inventory?: unknown[];
@@ -115,6 +137,34 @@ export interface EncounterParticipant {
   maxHp: number;
   armorClass?: number;
   monsterTier?: string;
+  turnResources?: {
+    actionAvailable: boolean;
+    quickAvailable: boolean;
+    reactionAvailable: boolean;
+    roundUses: Record<string, number>;
+    encounterUses: Record<string, number>;
+  };
+}
+
+export interface EncounterTurnState {
+  phase: 'initiative' | 'active';
+  round: number;
+  activeIndex: number;
+  activeParticipantId?: string;
+  sequence: string[];
+  serial: number;
+  advancedAt?: Timestamp;
+}
+
+export interface CombatLogEntry {
+  id: string;
+  participantId?: string;
+  participantName?: string;
+  abilityId?: string;
+  abilityName?: string;
+  action: 'battle-started' | 'turn-started' | 'ability-used';
+  round: number;
+  createdAtMs: number;
 }
 
 export interface Encounter {
@@ -124,6 +174,8 @@ export interface Encounter {
   songId?: string;
   map?: EncounterMapFrame;
   participants: EncounterParticipant[];
+  turn?: EncounterTurnState;
+  combatLog?: CombatLogEntry[];
   createdAt?: Timestamp;
   startedAt?: Timestamp;
   endedAt?: Timestamp;

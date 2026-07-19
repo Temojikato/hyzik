@@ -47,7 +47,9 @@
     "admin:grant": "node scripts/setAdminClaim.js",
     "validate:items": "node scripts/validateItems.js",
     "content:items": "node scripts/seedItems.js",
-    "audio:hymmnos": "node scripts/renderHymmnosAudio.js"
+    "audio:hymmnos": "node scripts/renderHymmnosAudio.js",
+    "combat:build": "node scripts/buildReyvateilCombatCatalog.js",
+    "combat:seed": "node scripts/seedReyvateilCombat.js"
   },
   "eslintConfig": {
     "extends": [

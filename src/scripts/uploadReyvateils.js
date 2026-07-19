@@ -17,6 +17,7 @@ const db = admin.firestore();
 
 // Use absolute path to reyvateils.json
 const reyvateilsData = require(path.resolve(__dirname, '../reyvateils.json'));
+const combatCatalog = require(path.resolve(__dirname, '../generated/reyvateilCombatCatalog.json'));
 
 const uploadReyvateils = async () => {
   try {
@@ -24,7 +25,7 @@ const uploadReyvateils = async () => {
 
     reyvateilsData.forEach((reyvateil) => {
       const reyvateilRef = db.collection('reyvateils').doc(reyvateil.id);
-      batch.set(reyvateilRef, reyvateil);
+      batch.set(reyvateilRef, { ...reyvateil, combat: combatCatalog[reyvateil.id] });
     });
 
     await batch.commit();

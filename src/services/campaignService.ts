@@ -17,6 +17,8 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { db } from '../Firebase';
+import { functions } from '../Firebase';
+import { httpsCallable } from 'firebase/functions';
 import {
   CampaignSong,
   CampaignState,
@@ -290,6 +292,8 @@ export const startEncounter = async (input: {
     songId: input.song?.id || '',
     map: input.map || null,
     participants,
+    turn: { phase: 'initiative', round: 1, activeIndex: -1, sequence: [], serial: 0 },
+    combatLog: [{ id: crypto.randomUUID(), action: 'battle-started', round: 1, createdAtMs: Date.now() }],
     createdAt: serverTimestamp(),
     startedAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
@@ -311,9 +315,26 @@ export const updateEncounterParticipants = async (encounterId: string, participa
   await updateDoc(doc(db, 'encounters', encounterId), { participants: serializeEncounterParticipants(participants), updatedAt: serverTimestamp() });
 };
 
+export const advanceEncounterTurn = async (encounterId: string) => {
+  const callable = httpsCallable<{ encounterId: string }, { round: number; activeParticipantId: string; activeParticipantName: string }>(functions, 'advanceEncounterTurn');
+  return (await callable({ encounterId })).data;
+};
+
+export const activateCombatAbility = async (encounterId: string, abilityId: string) => {
+  const callable = httpsCallable<{ encounterId: string; abilityId: string }, { abilityId: string; abilityName: string }>(functions, 'activateCombatAbility');
+  return (await callable({ encounterId, abilityId })).data;
+};
+
 export const endEncounter = async (encounterId: string) => {
+  const encounterSnapshot = await getDoc(doc(db, 'encounters', encounterId));
+  const encounter = encounterSnapshot.data() as Encounter | undefined;
   const batch = writeBatch(db);
   batch.update(doc(db, 'encounters', encounterId), { status: 'complete', endedAt: serverTimestamp(), updatedAt: serverTimestamp() });
+  (encounter?.participants || []).filter((participant) => participant.kind === 'player').forEach((participant) => {
+    batch.update(doc(db, 'users', participant.sourceId), {
+      'combatStats.currentHp': Math.max(0, Math.min(participant.maxHp, participant.hp)),
+    });
+  });
   batch.set(doc(db, 'campaign', 'current'), {
     activeEncounterId: '', battleActive: false, timersPaused: false, timersResumedAt: serverTimestamp(), updatedAt: serverTimestamp(),
   }, { merge: true });

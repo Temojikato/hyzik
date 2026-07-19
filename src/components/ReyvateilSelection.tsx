@@ -39,6 +39,10 @@ import ReyvateilTest from './ReyvateilTest'; // Import the new component
 import { httpsCallable } from 'firebase/functions';
 import { FaWandMagicSparkles } from 'react-icons/fa6';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
+import combatCatalogJson from '../generated/reyvateilCombatCatalog.json';
+import { ReyvateilCombatProfile } from '../types/Reyvateils';
+
+const combatCatalog = combatCatalogJson as Record<string, ReyvateilCombatProfile>;
 
 const ReyvateilSelection: React.FC = () => {
   const { currentUser, profile } = useAuth();
@@ -80,12 +84,10 @@ const ReyvateilSelection: React.FC = () => {
         setLoading(true);
         const reyvateilsCol = collection(db, 'reyvateils');
         const reyvateilsSnapshot = await getDocs(reyvateilsCol);
-        const reyvateilsList: Reyvateil[] = reyvateilsSnapshot.docs.map(
-          (docSnap) => ({
-            id: docSnap.id,
-            ...docSnap.data(),
-          })
-        ) as Reyvateil[];
+        const reyvateilsList: Reyvateil[] = reyvateilsSnapshot.docs.map((docSnap) => {
+          const remote = docSnap.data() as Omit<Reyvateil, 'id'>;
+          return { id: docSnap.id, ...remote, combat: remote.combat || combatCatalog[docSnap.id] };
+        });
 
         const reyvateilsWithImages = await Promise.all(
           reyvateilsList.map(async (reyvateil) => {
@@ -158,17 +160,8 @@ const ReyvateilSelection: React.FC = () => {
         return;
       }
 
-      const userRef = doc(db, 'users', currentUser.uid);
-      await setDoc(
-        userRef,
-        {
-          reyvateilId: selectedReyvateilId,
-          reyvateilLevel: 1,
-          reyvateilImageUrl:
-            selectedImageUrl || selectedReyvateilData.images?.[0],
-        },
-        { merge: true }
-      );
+      const selectProfile = httpsCallable<{ reyvateilId: string; imageUrl: string }, { specialtyTitle: string }>(functions, 'selectReyvateilProfile');
+      await selectProfile({ reyvateilId: selectedReyvateilId, imageUrl: selectedImageUrl || selectedReyvateilData.images?.[0] || '' });
 
       toast({
         title: 'Reyvateil Selected',
@@ -206,7 +199,7 @@ const ReyvateilSelection: React.FC = () => {
     setGeneratingPortrait(true);
     try {
       const generate = httpsCallable<{ reyvateilName: string; reyvateilClass: string; direction: string }, { id: string; url: string }>(functions, 'generateReyvateilPortrait');
-      const result = await generate({ reyvateilName: selectedReyvateil.name, reyvateilClass: selectedReyvateil.class, direction: portraitDirection });
+      const result = await generate({ reyvateilName: selectedReyvateil.name, reyvateilClass: selectedReyvateil.combat?.specialtyTitle || selectedReyvateil.class, direction: portraitDirection });
       setGeneratedImages((current) => [result.data.url, ...current]);
       setSelectedImageUrl(result.data.url);
       toast({ title: 'Portrait generated', description: 'It has been selected. You can still choose any supplied form.', status: 'success' });
@@ -224,7 +217,7 @@ const ReyvateilSelection: React.FC = () => {
   const filteredReyvateils = reyvateils.filter(
     (reyvateil) =>
       reyvateil.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedClass ? reyvateil.class === selectedClass : true)
+      (selectedClass ? reyvateil.combat?.role === selectedClass : true)
   );
 
   const handleLogout = async () => {
@@ -249,16 +242,8 @@ const ReyvateilSelection: React.FC = () => {
     setSubmissionError('');
 
     try {
-      const userRef = doc(db, 'users', currentUser.uid);
-      await setDoc(
-        userRef,
-        {
-          reyvateilId: reyvateil.id,
-          reyvateilLevel: 1,
-          reyvateilImageUrl: selectedImageUrl || reyvateil.images?.[0],
-        },
-        { merge: true }
-      );
+      const selectProfile = httpsCallable<{ reyvateilId: string; imageUrl: string }, { specialtyTitle: string }>(functions, 'selectReyvateilProfile');
+      await selectProfile({ reyvateilId: reyvateil.id, imageUrl: selectedImageUrl || reyvateil.images?.[0] || '' });
 
       toast({
         title: 'Reyvateil Selected',
@@ -409,18 +394,18 @@ const ReyvateilSelection: React.FC = () => {
               </FormControl>
 
               <FormControl id="class" mb={4}>
-                <FormLabel color="gray.200">Filter by Class</FormLabel>
+                <FormLabel color="gray.200">Filter by combat role</FormLabel>
                 <Select
-                  placeholder="All Classes"
+                  placeholder="All roles"
                   value={selectedClass}
                   onChange={handleClassFilterChange}
                   focusBorderColor="purple.400"
                   bg="gray.700"
                   color="gray.100"
                 >
-                  {/* Add your class options here */}
-                  <option value="Barbarian">Barbarian</option>
-                  {/* ... other classes ... */}
+                  {([...(new Set(reyvateils.map((entry) => entry.combat?.role).filter(Boolean) as string[]))]).sort().map((role) => (
+                    <option key={role} value={role}>{capitalizeFirstLetter(role || '')}</option>
+                  ))}
                 </Select>
               </FormControl>
 
@@ -476,7 +461,7 @@ const ReyvateilSelection: React.FC = () => {
 
                           </Flex>
                           <Badge colorScheme="purple" variant="solid">
-                            {reyvateil.class}
+                            {reyvateil.combat?.specialtyTitle || reyvateil.class}
                           </Badge>
                         </Flex>
                         <Tooltip
@@ -589,7 +574,7 @@ const ReyvateilSelection: React.FC = () => {
                           fontWeight="bold"
                           color="purple.400"
                         >
-                          Class :
+                          Combat identity:
                         </Text>
 
                         <Text
@@ -598,7 +583,7 @@ const ReyvateilSelection: React.FC = () => {
                           color="purple.400"
                           ml={2}
                         >
-                          {selectedReyvateil.class}
+                          {selectedReyvateil.combat?.specialtyTitle || selectedReyvateil.class}
                         </Text>
                       </Flex>
                       <Text mt={2} fontSize="md" color="gray.300">
@@ -610,11 +595,11 @@ const ReyvateilSelection: React.FC = () => {
                         fontSize="md"
                         color="purple.400"
                       >
-                        Stats:
+                        Combat aptitudes:
                       </Text>
-                      {selectedReyvateil.stats ? (
+                      {selectedReyvateil.combat?.aptitudes ? (
                         <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
-                          {Object.entries(selectedReyvateil.stats).map(
+                          {Object.entries(selectedReyvateil.combat.aptitudes).map(
                             ([stat, value]) => (
                               <Text key={stat} color="gray.300">
                                 {capitalizeFirstLetter(
