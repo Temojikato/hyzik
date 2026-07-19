@@ -347,7 +347,10 @@ const ReyvateilSelection: React.FC = () => {
                 color="purple.300"
                 textShadow="2px 2px 10px rgba(255, 0, 255, 0.8)"
               >
-                Welcome! Choose an option:
+                What answers when the song finds you?
+              </Text>
+              <Text color="gray.300" textAlign="center" maxW="720px" mx="auto">
+                Thirteen choices will test what you preserve when survival, loyalty, and mercy stop agreeing. The trial matches that pattern directly to a Reyvateil combat identity.
               </Text>
               <Flex justify="center" mt={4}>
                 <Button
@@ -355,7 +358,7 @@ const ReyvateilSelection: React.FC = () => {
                   mr={4}
                   onClick={() => setStep('test')}
                 >
-                  Take the Test
+                  Begin the Resonance Trial
                 </Button>
                 <Button
                   colorScheme="purple"

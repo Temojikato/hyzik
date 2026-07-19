@@ -1,108 +1,67 @@
-// src/components/ReyvateilTest.tsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  Text,
-  RadioGroup,
-  Radio,
-  Stack,
-  Button,
-  Flex,
-  Image,
-  Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-  ModalCloseButton,
-  SimpleGrid,
   Alert,
   AlertIcon,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Progress,
+  SimpleGrid,
+  Stack,
+  Text,
+  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { Reyvateil } from '../types/Reyvateils';
-import quizDataJson from '../quizData.json';
-import {
-  ClassSpecificQuiz,
-  ClassSpecificOptionKey,
-  QuizData,
-  QuizQuestion,
-} from '../types/ReyvateilsQuizzes';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
+import {
+  ResonanceQuestion,
+  ResonanceResult,
+  resonanceQuestions,
+  resonanceTraitLabels,
+  resolveReyvateilResonance,
+} from '../data/reyvateilResonanceQuiz';
+import { Reyvateil } from '../types/Reyvateils';
 
-// ─── DYNAMIC IMPORTS FOR CLASS-SPECIFIC QUIZZES ─────────────────────────
-const classSpecificQuizzes: { [key: string]: () => Promise<any> } = {
-  Artificer: () => import('../artificerQuiz.json'),
-  Barbarian: () => import('../barbarianQuiz.json'),
-  Bard: () => import('../bardQuiz.json'),
-  Bloodhunter: () => import('../bloodhunterQuiz.json'),
-  Cleric: () => import('../clericQuiz.json'),
-  Druid: () => import('../druidQuiz.json'),
-  Fighter: () => import('../fighterQuiz.json'),
-  Monk: () => import('../monkQuiz.json'),
-  Paladin: () => import('../paladinQuiz.json'),
-  Ranger: () => import('../rangerQuiz.json'),
-  Rogue: () => import('../rogueQuiz.json'),
-  Sorcerer: () => import('../sorcererQuiz.json'),
-  Warlock: () => import('../warlockQuiz.json'),
-  Wizard: () => import('../wizardQuiz.json'),
-};
-
-const quizData: QuizData = quizDataJson;
-
-// ─── CONFIGURATION ──────────────────────────────────────────────────────
-const totalQuizQuestions = 9;
-const numOptionsPerQuestion = 6;
-const lineageLabels: Record<string, string> = {
-  Artificer: 'Mechanist Chorus', Barbarian: 'Primal Chorus', Bard: 'Harmonic Chorus', Bloodhunter: 'Sanguine Chorus',
-  Cleric: 'Sacred Chorus', Druid: 'Verdant Chorus', Fighter: 'Martial Chorus', Monk: 'Stillness Chorus',
-  Paladin: 'Oathbound Chorus', Ranger: 'Wayfarer Chorus', Rogue: 'Veiled Chorus', Sorcerer: 'Elemental Chorus',
-  Warlock: 'Occult Chorus', Wizard: 'Runescript Chorus',
-};
-const lineageLabel = (value: string) => lineageLabels[value] || value;
-
-// ─── COMPONENT PROPS ────────────────────────────────────────────────────
 interface ReyvateilTestProps {
   reyvateils: Reyvateil[];
   onAccept: (reyvateil: Reyvateil, selectedImageUrl: string) => void;
   onSelectYourself: () => void;
 }
 
-// ─── THE COMPONENT ──────────────────────────────────────────────────────
-const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
-  reyvateils,
-  onAccept,
-  onSelectYourself,
-}) => {
-  // STATES FOR THE INITIAL (CLASS-DETERMINING) QUIZ
-  const [selectedQuestions, setSelectedQuestions] = useState<QuizQuestion[]>([]);
-  const [balancedOptions, setBalancedOptions] = useState<string[][]>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+const shuffle = <T,>(values: readonly T[]): T[] => {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(Math.random() * (index + 1));
+    [result[index], result[target]] = [result[target], result[index]];
+  }
+  return result;
+};
+
+const createQuizRun = (): ResonanceQuestion[] => resonanceQuestions.map((question) => ({
+  ...question,
+  choices: shuffle(question.choices),
+}));
+
+const formatLabel = (value: string) => value
+  .replace(/([A-Z])/g, ' $1')
+  .replace(/^./, (character) => character.toUpperCase());
+
+const ReyvateilTest: React.FC<ReyvateilTestProps> = ({ reyvateils, onAccept, onSelectYourself }) => {
+  const [questions, setQuestions] = useState<ResonanceQuestion[]>(createQuizRun);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [testResult, setTestResult] = useState<{
-    className: string;
-    description: string;
-    totalScore: number;
-  } | null>(null);
-
-  // STATES FOR THE TIE-BREAKER, CLASS-SPECIFIC QUIZ & FINAL RESULT
-  const [quizStage, setQuizStage] = useState<
-    'initial' | 'tieBreaker' | 'classSpecific' | 'result'
-  >('initial');
-  const [tieBreakerOptions, setTieBreakerOptions] = useState<string[]>([]);
-  const [classSpecificQuiz, setClassSpecificQuiz] =
-    useState<ClassSpecificQuiz | null>(null);
-  const [classSpecificAnswers, setClassSpecificAnswers] = useState<string[]>([]);
-  const [finalResult, setFinalResult] = useState<{
-    reyvateil: string;
-    description: string;
-    totalScore: number;
-  } | null>(null);
-
-  // STATE FOR IMAGE SELECTION (FINAL RESULT)
-  const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
+  const [result, setResult] = useState<ResonanceResult | null>(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const {
     isOpen: isImageSelectionOpen,
     onOpen: onImageSelectionOpen,
@@ -110,492 +69,200 @@ const ReyvateilTest: React.FC<ReyvateilTestProps> = ({
   } = useDisclosure();
   useBackDismiss(isImageSelectionOpen, onImageSelectionClose);
 
-  // ─── UTILITY: SHUFFLE AN ARRAY ─────────────────────────────────────────
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  };
-
-  // ─── SIMPLE BALANCED ASSIGNMENT ALGORITHM ─────────────────────────────
-  /**
-   * Instead of heavy recursion, build a pool of classes (repeated according to targetCounts),
-   * shuffle it, and then split it into chunks. Each chunk must have unique classes.
-   */
-  const generateBalancedAssignmentSimple = (
-    numQuestions: number,
-    numOptions: number,
-    classes: string[],
-    targetCounts: { [key: string]: number }
-  ): string[][] | null => {
-    const totalSlots = numQuestions * numOptions;
-    const pool: string[] = [];
-    classes.forEach((cls) => {
-      const count = targetCounts[cls] || 0;
-      for (let i = 0; i < count; i++) {
-        pool.push(cls);
-      }
-    });
-    if (pool.length !== totalSlots) return null;
-    const maxAttempts = 1000;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      const shuffledPool = shuffleArray(pool);
-      const assignment: string[][] = [];
-      let valid = true;
-      for (let i = 0; i < numQuestions; i++) {
-        const chunk = shuffledPool.slice(i * numOptions, (i + 1) * numOptions);
-        if (new Set(chunk).size !== numOptions) {
-          valid = false;
-          break;
-        }
-        assignment.push(chunk);
-      }
-      if (valid) return assignment;
-    }
-    return null;
-  };
-
-  // ─── SETUP: SELECT QUESTIONS & PRECOMPUTE BALANCED OPTIONS ─────────────
-  useEffect(() => {
-    const shuffledQuestions = shuffleArray(quizData.quiz.questions);
-    const selected = shuffledQuestions.slice(0, totalQuizQuestions);
-    setSelectedQuestions(selected);
-
-    // Get the list of classes from the classMapping.
-    const classes = quizData.quiz.classMapping.map((mapping) => mapping.class);
-    const totalSlots = totalQuizQuestions * numOptionsPerQuestion;
-    const numClasses = classes.length;
-    const base = Math.floor(totalSlots / numClasses);
-    const remainder = totalSlots % numClasses;
-    const targetCounts: { [key: string]: number } = {};
-    classes.forEach((cls, index) => {
-      targetCounts[cls] = base + (index < remainder ? 1 : 0);
-    });
-
-    const assignment = generateBalancedAssignmentSimple(
-      totalQuizQuestions,
-      numOptionsPerQuestion,
-      classes,
-      targetCounts
-    );
-    if (assignment) {
-      setBalancedOptions(assignment);
-    } else {
-      // Fallback: random options for each question.
-      const fallback: string[][] = [];
-      for (let i = 0; i < totalQuizQuestions; i++) {
-        fallback.push(shuffleArray(classes).slice(0, numOptionsPerQuestion));
-      }
-      setBalancedOptions(fallback);
-    }
-  }, []);
-
-  // ─── HANDLER FOR THE INITIAL QUIZ ─────────────────────────────────────────
-  const handleTestAnswer = (selectedClass: string) => {
+  const answerQuestion = (answerId: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestionIndex] = selectedClass;
+    updatedAnswers[currentQuestionIndex] = answerId;
     setAnswers(updatedAnswers);
-
-    if (currentQuestionIndex < selectedQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      computeTestResult(updatedAnswers);
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((current) => current + 1);
+      return;
     }
+    setResult(resolveReyvateilResonance(updatedAnswers, reyvateils.map((reyvateil) => reyvateil.id)));
   };
 
-  // ─── NEW COMPUTE TEST RESULT (USING FREQUENCY) ───────────────────────────
-  const computeTestResult = (answersArray: string[]) => {
-    // Count how many times each class was selected.
-    const frequency: { [key: string]: number } = {};
-    answersArray.forEach((answer) => {
-      frequency[answer] = (frequency[answer] || 0) + 1;
-    });
-    const maxCount = Math.max(...Object.values(frequency));
-    const winners = Object.keys(frequency).filter(
-      (cls) => frequency[cls] === maxCount
-    );
-    if (winners.length === 1) {
-      // Clear winner.
-      const winningClass = winners[0];
-      const classInfo = quizData.quiz.classMapping.find(
-        (mapping) => mapping.class === winningClass
-      );
-      setTestResult({
-        className: winningClass,
-        description: classInfo ? classInfo.description : '',
-        totalScore: maxCount,
-      });
-      const loadQuiz = classSpecificQuizzes[winningClass];
-      if (loadQuiz) {
-        loadQuiz().then((module) => {
-          const specificQuiz = module.default as ClassSpecificQuiz;
-          setClassSpecificQuiz(specificQuiz);
-          setQuizStage('classSpecific');
-          setCurrentQuestionIndex(0);
-          setClassSpecificAnswers([]);
-        });
-      } else {
-        setQuizStage('result');
-      }
-    } else {
-      // Tie detected: ask a tie-breaker question.
-      setTieBreakerOptions(winners);
-      setQuizStage('tieBreaker');
-    }
-  };
-
-  // ─── HANDLER FOR THE TIE-BREAKER ANSWER ───────────────────────────────────
-  const handleTieBreakerAnswer = (selectedClass: string) => {
-    const classInfo = quizData.quiz.classMapping.find(
-      (mapping) => mapping.class === selectedClass
-    );
-    setTestResult({
-      className: selectedClass,
-      description: classInfo ? classInfo.description : '',
-      totalScore: 0,
-    });
-    const loadQuiz = classSpecificQuizzes[selectedClass];
-    if (loadQuiz) {
-      loadQuiz().then((module) => {
-        const specificQuiz = module.default as ClassSpecificQuiz;
-        setClassSpecificQuiz(specificQuiz);
-        setQuizStage('classSpecific');
-        setCurrentQuestionIndex(0);
-        setClassSpecificAnswers([]);
-      });
-    } else {
-      setQuizStage('result');
-    }
-  };
-
-  // ─── HANDLER FOR THE CLASS-SPECIFIC QUIZ (UNCHANGED) ─────────────────────
-  const handleClassSpecificAnswer = (answer: string) => {
-    const updatedAnswers = [...classSpecificAnswers];
-    updatedAnswers[currentQuestionIndex] = answer;
-    setClassSpecificAnswers(updatedAnswers);
-
-    if (
-      classSpecificQuiz &&
-      currentQuestionIndex < classSpecificQuiz.questions.length - 1
-    ) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      computeClassSpecificResult(updatedAnswers);
-    }
-  };
-
-  const computeClassSpecificResult = (answersArray: string[]) => {
-    let totalScore = 0;
-    if (!classSpecificQuiz) return;
-    for (let i = 0; i < classSpecificQuiz.questions.length; i++) {
-      const answer = answersArray[i];
-      if (!answer) continue;
-      // We still use a point system for the class-specific quiz.
-      const score =
-        classSpecificQuiz.scoring[answer as ClassSpecificOptionKey] || 0;
-      totalScore += score;
-    }
-    const mapping = classSpecificQuiz.reyvateilMapping.find((mapping) => {
-      const [min, max] = mapping.scoreRange.split(' - ').map(Number);
-      return totalScore >= min && totalScore <= max;
-    });
-    if (mapping) {
-      setFinalResult({
-        reyvateil: mapping.reyvateil,
-        description: mapping.description,
-        totalScore,
-      });
-      setQuizStage('result');
-    } else {
-      setFinalResult({
-        reyvateil: 'Unknown',
-        description: 'Unable to determine your Reyvateil companion.',
-        totalScore,
-      });
-      setQuizStage('result');
-    }
-  };
-
-  // ─── RETRY HANDLER ───────────────────────────────────────────────────────
-  const handleRetry = () => {
+  const retry = () => {
+    setQuestions(createQuizRun());
     setCurrentQuestionIndex(0);
     setAnswers([]);
-    setTestResult(null);
+    setResult(null);
     setSelectedImageUrl('');
-    setQuizStage('initial');
-    setClassSpecificQuiz(null);
-    setClassSpecificAnswers([]);
-    setFinalResult(null);
   };
 
-  // ─── IMAGE SELECTION HANDLERS ─────────────────────────────────────────────
-  const handleImageClick = () => {
-    onImageSelectionOpen();
-  };
-
-  const handleImageSelect = (imageUrl: string) => {
+  const selectImage = (imageUrl: string) => {
     setSelectedImageUrl(imageUrl);
     onImageSelectionClose();
   };
 
-  const capitalizeFirstLetter = (str: string): string => {
-    return str
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (char) => char.toUpperCase());
-  };
+  if (!result) {
+    const currentQuestion = questions[currentQuestionIndex];
+    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+    return (
+      <Box>
+        <Flex justify="space-between" align="end" gap={4} mb={2}>
+          <Box>
+            <Text color="purple.300" fontSize="xs" fontWeight="bold" letterSpacing="0.2em">REYVATEIL RESONANCE TRIAL</Text>
+            <Heading size="md" mt={1}>{currentQuestion.title}</Heading>
+          </Box>
+          <Text color="gray.400" fontSize="sm" whiteSpace="nowrap">{currentQuestionIndex + 1} / {questions.length}</Text>
+        </Flex>
+        <Progress value={progress} colorScheme="purple" size="sm" borderRadius="full" mb={6} bg="gray.700" />
 
-  // ─── RENDERING ───────────────────────────────────────────────────────────
-  if (
-    quizStage === 'initial' &&
-    selectedQuestions.length > 0 &&
-    balancedOptions.length > 0
-  ) {
-    const currentQuestion = selectedQuestions[currentQuestionIndex];
-    const currentOptions = balancedOptions[currentQuestionIndex];
-    return (
-      <>
-        <Text
-          fontSize="xl"
-          fontWeight="bold"
-          textAlign="center"
-          color="purple.300"
-          mb={4}
-        >
-          Question {currentQuestionIndex + 1} of {totalQuizQuestions}
-        </Text>
-        <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          {currentQuestion.question}
-        </Text>
-        <RadioGroup
-          key={currentQuestionIndex}
-          onChange={(value) => handleTestAnswer(value as string)}
-          value={answers[currentQuestionIndex] || ''}
-        >
-          <Stack spacing={4} align="center">
-            {currentOptions.map((cls) => (
-              <Radio key={cls} value={cls} size="lg" colorScheme="purple">
-                <Text color="gray.200">{currentQuestion.options[cls]}</Text>
-              </Radio>
-            ))}
-          </Stack>
-        </RadioGroup>
-      </>
-    );
-  } else if (quizStage === 'tieBreaker') {
-    return (
-      <>
-        <Text
-          fontSize="xl"
-          fontWeight="bold"
-          textAlign="center"
-          color="purple.300"
-          mb={4}
-        >
-          Tie Breaker
-        </Text>
-        <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          Several resonances answered equally: {tieBreakerOptions.map(lineageLabel).join(', ')}. Which one calls to you?
-        </Text>
-        <RadioGroup onChange={(value) => handleTieBreakerAnswer(value as string)}>
-          <Stack spacing={4} align="center">
-            {tieBreakerOptions.map((cls) => (
-              <Radio key={cls} value={cls} size="lg" colorScheme="purple">
-                <Text color="gray.200">{lineageLabel(cls)}</Text>
-              </Radio>
-            ))}
-          </Stack>
-        </RadioGroup>
-      </>
-    );
-  } else if (quizStage === 'classSpecific' && classSpecificQuiz) {
-    const currentQuestion = classSpecificQuiz.questions[currentQuestionIndex];
-    return (
-      <>
-        <Text
-          fontSize="xl"
-          fontWeight="bold"
-          textAlign="center"
-          color="purple.300"
-          mb={4}
-        >
-          {testResult ? lineageLabel(testResult.className) : 'Reyvateil resonance'}
-        </Text>
-        <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          {currentQuestion.question}
-        </Text>
-        <RadioGroup
-          key={currentQuestionIndex}
-          onChange={(value) => handleClassSpecificAnswer(value as string)}
-          value={classSpecificAnswers[currentQuestionIndex] || ''}
-        >
-          <Stack spacing={4} align="center">
-            {Object.entries(currentQuestion.options).map(
-              ([optionKey, optionValue]) => (
-                <Radio key={optionKey} value={optionKey} size="lg" colorScheme="purple">
-                  <Text color="gray.200">{optionValue}</Text>
-                </Radio>
-              )
-            )}
-          </Stack>
-        </RadioGroup>
-      </>
-    );
-  } else if (quizStage === 'result') {
-    if (finalResult && testResult) {
-      const selectedReyvateil = reyvateils.find(
-        (r) => r.name === finalResult.reyvateil
-      );
-      return (
-        <>
-          <Text
-            fontSize="2xl"
-            fontWeight="bold"
-            textAlign="center"
-            color="purple.300"
-            mb={4}
-          >
-            Resonance: {lineageLabel(testResult.className)}
-          </Text>
-          <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-            This resonance narrowed the compatibility search; your Reyvateil remains the source of your actual combat identity.
-          </Text>
-          <Text
-            fontSize="2xl"
-            fontWeight="bold"
-            textAlign="center"
-            color="purple.300"
-            mb={4}
-          >
-            Your Reyvateil: {finalResult.reyvateil}
-          </Text>
-          <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-            {finalResult.description}
-          </Text>
-          {selectedReyvateil ? (
-            <Flex
-              direction={{ base: 'column', md: 'row' }}
-              align="center"
-              justify="center"
-            >
-              <Image
-                src={selectedImageUrl || selectedReyvateil.images?.[0]}
-                alt={selectedReyvateil.name}
-                boxSize="300px"
-                objectFit="cover"
-                borderRadius="md"
-                mr={{ base: 0, md: 4 }}
-                mb={{ base: 4, md: 0 }}
-                cursor="pointer"
-                onClick={handleImageClick}
-              />
-              <Box ml={4}>
-                <Flex direction="row" align="center">
-                  <Text fontSize="xl" fontWeight="bold" color="purple.400">
-                    {selectedReyvateil.name}
-                  </Text>
-                </Flex>
-                <Flex direction="row" align="center" mt={2}>
-                  <Text
-                    fontSize="xl"
-                    fontWeight="bold"
-                    color="purple.400"
-                  >
-                    Combat identity:
-                  </Text>
-                  <Text fontSize="xl" fontWeight="bold" color="purple.400" ml={2}>
-                    {selectedReyvateil.combat?.specialtyTitle || selectedReyvateil.class}
-                  </Text>
-                </Flex>
-                <Text mt={2} fontSize="md" color="gray.300">
-                  {selectedReyvateil.features}
-                </Text>
-                <br />
-                <br />
-                <Text fontSize="md" color="purple.400">
-                  Combat aptitudes:
-                </Text>
-                {selectedReyvateil.combat?.aptitudes ? (
-                  <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
-                    {Object.entries(selectedReyvateil.combat.aptitudes).map(([stat, value]) => (
-                      <Text key={stat} color="gray.300">
-                        {capitalizeFirstLetter(stat.replace(/([A-Z])/g, ' $1'))}: {value}
-                      </Text>
-                    ))}
-                  </SimpleGrid>
-                ) : (
-                  <Alert status="error" borderRadius="md" mt={2}>
-                    <AlertIcon />
-                    Reyvateil stats are missing. Please contact support or update the data.
-                  </Alert>
-                )}
-              </Box>
-            </Flex>
-          ) : (
-            <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-              Unable to find the Reyvateil details.
+        {currentQuestionIndex === 0 && (
+          <Box bg="blackAlpha.300" border="1px solid" borderColor="purple.700" borderRadius="lg" p={4} mb={6}>
+            <Text color="gray.300" fontSize="sm">
+              The trial is not asking which answer is good. There are no clean answers here. Choose the consequence you could carry after every easier option has already failed.
             </Text>
-          )}
-          <Flex justify="center" mt={6}>
-            <Button
-              colorScheme="purple"
-              mr={4}
-              onClick={() => onAccept(selectedReyvateil!, selectedImageUrl)}
-              isDisabled={!selectedReyvateil}
-            >
-              Accept
-            </Button>
-            <Button colorScheme="purple" mr={4} onClick={handleRetry}>
-              Retry Test
-            </Button>
-            <Button variant="outline" colorScheme="purple" onClick={onSelectYourself}>
-              Choose Yourself
-            </Button>
-          </Flex>
-          <Modal
-            isOpen={isImageSelectionOpen}
-            onClose={onImageSelectionClose}
-            size="lg"
-            scrollBehavior="inside"
-          >
-            <ModalOverlay />
-            <ModalContent bg="gray.800">
-              <ModalHeader color="purple.300">Select an Image</ModalHeader>
-              <ModalCloseButton color="gray.200" />
-              <ModalBody
-                maxHeight="90vh"
-                overflowY="auto"
-                onWheel={(e) => e.stopPropagation()}
-              >
-                <VStack spacing={4}>
-                  {selectedReyvateil?.images?.map((image) => (
-                    <Box
-                      key={image}
-                      onClick={() => handleImageSelect(image)}
-                      cursor="pointer"
-                      _hover={{ boxShadow: '0 0 20px rgba(128, 90, 213, 0.5)' }}
-                    >
-                      <Image src={image} alt="Reyvateil Image Option" />
-                    </Box>
-                  ))}
-                </VStack>
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        </>
-      );
-    } else {
-      return (
-        <Text fontSize="lg" color="gray.200" textAlign="center" mb={6}>
-          Unable to determine your Reyvateil companion.
+          </Box>
+        )}
+
+        <Text fontSize={{ base: 'lg', md: 'xl' }} color="gray.100" lineHeight="1.65" mb={7}>
+          {currentQuestion.question}
         </Text>
-      );
-    }
+
+        <Stack spacing={3}>
+          {currentQuestion.choices.map((entry) => (
+            <Button
+              key={entry.id}
+              onClick={() => answerQuestion(entry.id)}
+              h="auto"
+              minH="64px"
+              justifyContent="flex-start"
+              textAlign="left"
+              whiteSpace="normal"
+              lineHeight="1.45"
+              px={{ base: 4, md: 5 }}
+              py={4}
+              bg={answers[currentQuestionIndex] === entry.id ? 'purple.700' : 'gray.700'}
+              color="gray.100"
+              border="1px solid"
+              borderColor={answers[currentQuestionIndex] === entry.id ? 'purple.300' : 'gray.600'}
+              _hover={{ bg: 'purple.800', borderColor: 'purple.400' }}
+              _active={{ bg: 'purple.700' }}
+            >
+              {entry.text}
+            </Button>
+          ))}
+        </Stack>
+
+        <Flex justify="space-between" align="center" mt={6} gap={4}>
+          <Button
+            variant="ghost"
+            colorScheme="purple"
+            onClick={() => setCurrentQuestionIndex((current) => Math.max(0, current - 1))}
+            isDisabled={currentQuestionIndex === 0}
+          >
+            Previous choice
+          </Button>
+          <Text color="gray.500" fontSize="xs" textAlign="right">Answers are scored as a pattern, never as a single moral verdict.</Text>
+        </Flex>
+      </Box>
+    );
   }
 
-  return null;
+  const selectedReyvateil = reyvateils.find((reyvateil) => reyvateil.id === result.profile.id);
+  if (!selectedReyvateil) {
+    return (
+      <Alert status="error" borderRadius="lg">
+        <AlertIcon />
+        Your resonance was found, but its Reyvateil record is unavailable. Retry the trial or contact the campaign administrator.
+      </Alert>
+    );
+  }
+
+  const visibleImage = selectedImageUrl || selectedReyvateil.images?.[0] || selectedReyvateil.image;
+  return (
+    <Box>
+      <VStack spacing={4} textAlign="center" mb={7}>
+        <Badge colorScheme="purple" px={3} py={1} borderRadius="full" letterSpacing="0.12em">RESONANCE FOUND</Badge>
+        <Heading size="xl" color="purple.200">{result.profile.specialtyTitle}</Heading>
+        <Text color="gray.300" maxW="760px">
+          Your answers did not describe a hero or a villain. They described what you preserve, what you spend, and what you become when every harmless choice is gone.
+        </Text>
+      </VStack>
+
+      <Box bg="blackAlpha.300" border="1px solid" borderColor="purple.700" borderRadius="xl" p={{ base: 4, md: 6 }} mb={7}>
+        <Text color="gray.400" fontSize="xs" fontWeight="bold" letterSpacing="0.16em" mb={3}>THE PATTERN YOUR CHOICES RETURNED TO</Text>
+        <Stack spacing={2}>
+          {result.topTraits.map((trait) => (
+            <HStack key={trait} align="start">
+              <Text color="purple.300">◆</Text>
+              <Text color="gray.200">{resonanceTraitLabels[trait]}</Text>
+            </HStack>
+          ))}
+        </Stack>
+        <Text color="gray.500" fontSize="xs" mt={4}>These are pressures in your answers, not virtues assigned to you.</Text>
+      </Box>
+
+      <Flex direction={{ base: 'column', md: 'row' }} align="center" justify="center" gap={6}>
+        {visibleImage && (
+          <Image
+            src={visibleImage}
+            alt={selectedReyvateil.name}
+            boxSize={{ base: '240px', md: '300px' }}
+            objectFit="cover"
+            borderRadius="xl"
+            border="2px solid"
+            borderColor="purple.500"
+            cursor={selectedReyvateil.images?.length ? 'pointer' : 'default'}
+            onClick={selectedReyvateil.images?.length ? onImageSelectionOpen : undefined}
+          />
+        )}
+        <Box flex="1" maxW="560px">
+          <Text color="purple.300" fontSize="sm" fontWeight="bold" letterSpacing="0.14em">YOUR REYVATEIL</Text>
+          <Heading size="lg" mt={1}>{selectedReyvateil.name}</Heading>
+          <Text color="gray.300" mt={2}>{selectedReyvateil.features}</Text>
+          <HStack mt={4} flexWrap="wrap">
+            <Badge colorScheme="purple">{result.profile.specialtyTitle}</Badge>
+            <Badge colorScheme="blue">{formatLabel(result.profile.role)}</Badge>
+          </HStack>
+          {selectedReyvateil.combat?.aptitudes ? (
+            <SimpleGrid columns={{ base: 2, sm: 3 }} spacing={2} mt={5}>
+              {Object.entries(selectedReyvateil.combat.aptitudes).map(([stat, value]) => (
+                <Box key={stat} bg="gray.700" borderRadius="md" px={3} py={2}>
+                  <Text color="gray.400" fontSize="xs">{formatLabel(stat)}</Text>
+                  <Text color="gray.100" fontWeight="bold">{value}</Text>
+                </Box>
+              ))}
+            </SimpleGrid>
+          ) : (
+            <Alert status="error" borderRadius="md" mt={4}><AlertIcon />Combat identity data is missing.</Alert>
+          )}
+        </Box>
+      </Flex>
+
+      <Flex justify="center" mt={8} gap={3} flexWrap="wrap">
+        <Button colorScheme="purple" onClick={() => onAccept(selectedReyvateil, selectedImageUrl)}>Accept this resonance</Button>
+        <Button colorScheme="purple" variant="outline" onClick={retry}>Retake the trial</Button>
+        <Button variant="ghost" colorScheme="purple" onClick={onSelectYourself}>Choose directly</Button>
+      </Flex>
+
+      <Modal isOpen={isImageSelectionOpen} onClose={onImageSelectionClose} size="lg" scrollBehavior="inside">
+        <ModalOverlay />
+        <ModalContent bg="gray.800">
+          <ModalHeader color="purple.300">Choose this Reyvateil's form</ModalHeader>
+          <ModalCloseButton color="gray.200" />
+          <ModalBody maxHeight="90vh" overflowY="auto" onWheel={(event) => event.stopPropagation()}>
+            <VStack spacing={4} pb={4}>
+              {selectedReyvateil.images?.map((image) => (
+                <Box
+                  key={image}
+                  onClick={() => selectImage(image)}
+                  cursor="pointer"
+                  border="2px solid"
+                  borderColor={(selectedImageUrl || selectedReyvateil.images?.[0]) === image ? 'purple.400' : 'transparent'}
+                  borderRadius="xl"
+                  overflow="hidden"
+                  _hover={{ boxShadow: '0 0 20px rgba(128, 90, 213, 0.5)' }}
+                >
+                  <Image src={image} alt={`${selectedReyvateil.name} form`} />
+                </Box>
+              ))}
+            </VStack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
+  );
 };
 
 export default ReyvateilTest;
