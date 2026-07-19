@@ -22,7 +22,6 @@ import {
 } from '@chakra-ui/react';
 import { Item, Reyvateil } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
-import AddItemModal from './AddItemModal';
 import ItemDetailsModal from './ItemDetailsModal';
 import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { useToast } from '@chakra-ui/react';
@@ -31,6 +30,8 @@ import { storage } from '../Firebase';
 import CraftingModal from './CraftingModal';
 import LootTroveModal from './LootTroveModal';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
+import EconomyModal from './EconomyModal';
+import { useAuth } from '../contexts/AuthContext';
 
 interface InventoryModalProps {
   isOpen: boolean;
@@ -54,17 +55,19 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
   setUnlockedRecipes,
 }) => {
   useBackDismiss(isOpen, onClose);
-  const {
-    isOpen: isAddItemOpen,
-    onOpen: onAddItemOpen,
-    onClose: onAddItemClose,
-  } = useDisclosure();
+  const { profile } = useAuth();
 
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const {
     isOpen: isItemDetailsOpen,
     onOpen: onItemDetailsOpen,
     onClose: onItemDetailsClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isEconomyOpen,
+    onOpen: onEconomyOpen,
+    onClose: onEconomyClose,
   } = useDisclosure();
 
 
@@ -158,7 +161,7 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
           display="flex"
           flexDirection="column"
         >
-          <ModalHeader color="textHeader">Your Inventory</ModalHeader>
+          <ModalHeader color="textHeader"><HStack justify="space-between" pr={10}><Text>Your Inventory</Text><Button size="sm" colorScheme="purple" onClick={onEconomyOpen}>{profile?.economy?.favor || 0} Favor · City Exchange</Button></HStack></ModalHeader>
           <ModalCloseButton color="text" />
           <ModalBody>
             {/* Filter and Add Item Button */}
@@ -166,9 +169,6 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
               <HStack justifyContent="flex-end">
                 <Button onClick={onLootTroveOpen} colorScheme="yellow">
                   Troves
-                </Button>
-                <Button onClick={onAddItemOpen} colorScheme="blue">
-                  Add Item
                 </Button>
                 <Button colorScheme="green" ml={2} onClick={onCraftingOpen}>
                   Crafting
@@ -245,16 +245,6 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
         </ModalContent>
       </Modal>
 
-      {/* Add Item Modal */}
-      <AddItemModal
-        isOpen={isAddItemOpen}
-        onClose={onAddItemClose}
-        currentUser={currentUser}
-        reyvateil={reyvateil}
-        inventory={inventory}
-        setInventory={setInventory}
-      />
-
       {/* Item Details Modal */}
       {selectedItem && (
         <ItemDetailsModal
@@ -283,6 +273,7 @@ const InventoryModal: React.FC<InventoryModalProps> = ({
       />
 
       <LootTroveModal setInventory={setInventory} isOpen={isLootTroveOpen} onClose={onLootTroveClose} currentUser={currentUser} inventory={inventory} />
+      <EconomyModal isOpen={isEconomyOpen} onClose={onEconomyClose} items={allItems} setInventory={setInventory} />
     </>
   );
 };

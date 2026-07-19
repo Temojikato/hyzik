@@ -13,6 +13,7 @@ const byId = new Map();
 const errors = [];
 for (const item of rows) {
   if (!item.id || !item.name || !item.description || !item.category || !Array.isArray(item.recipe)) errors.push(`${item._file}: invalid schema for ${item.name || item.id || 'unknown item'}`);
+  if (item.name === 'Gold Coin' || item.category === 'Currency') errors.push(`${item._file}: currency is forbidden; gold must be a material.`);
   if (byName.has(item.name)) errors.push(`Duplicate item name: ${item.name} (${byName.get(item.name)._file}, ${item._file})`);
   else byName.set(item.name, item);
   if (byId.has(item.id)) errors.push(`Duplicate item id: ${item.id} (${byId.get(item.id)._file}, ${item._file})`);

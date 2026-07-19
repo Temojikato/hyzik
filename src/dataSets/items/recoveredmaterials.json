@@ -1,0 +1,17 @@
+[
+  { "id": "Gold Nugget", "name": "Gold Nugget", "description": "A soft piece of recovered gold. Valuable as a conductive crafting material, but never treated as currency in Omnia.", "category": "Basic Materials", "recipe": [], "rarity": "common" },
+  { "id": "Broken Trinket", "name": "Broken Trinket", "description": "A damaged keepsake whose fittings and small components can still serve the city.", "category": "Collectibles", "recipe": [], "rarity": "common" },
+  { "id": "Essence of Nature", "name": "Essence of Nature", "description": "Condensed living resonance gathered from vigorous Tower growth.", "category": "Vials and Essences", "recipe": [], "rarity": "rare" },
+  { "id": "Exquisite Gem", "name": "Exquisite Gem", "description": "A flawless gemstone fit for precision enchantment and high-order focusing arrays.", "category": "Gemstones and Crystals", "recipe": [], "rarity": "epic" },
+  { "id": "Mushrooms", "name": "Mushrooms", "description": "Edible Tower fungi used in meals, poultices, and basic alchemy.", "category": "Culinary Ingredients", "recipe": [], "rarity": "common" },
+  { "id": "Mystery Box", "name": "Mystery Box", "description": "A sealed salvage container whose locking mechanism has outlived its maker.", "category": "Containers", "recipe": [], "rarity": "rare" },
+  { "id": "Old Boot", "name": "Old Boot", "description": "Waterlogged footwear; poor equipment, but usable leather and hardware remain.", "category": "Basic Materials", "recipe": [], "rarity": "common" },
+  { "id": "Old Relic", "name": "Old Relic", "description": "A weathered object of uncertain origin, useful to historians even when its function is lost.", "category": "Collectibles", "recipe": [], "rarity": "uncommon" },
+  { "id": "Pearl", "name": "Pearl", "description": "A lustrous organic gemstone formed in the Tower's strange waters.", "category": "Gemstones and Crystals", "recipe": [], "rarity": "uncommon" },
+  { "id": "Royal Emblem", "name": "Royal Emblem", "description": "An authenticated mark of vanished authority, prized by archivists and collectors.", "category": "Collectibles", "recipe": [], "rarity": "legendary" },
+  { "id": "Rusty Key", "name": "Rusty Key", "description": "A corroded key that may still fit one forgotten lock—or yield useful metal.", "category": "Tools and Equipment", "recipe": [], "rarity": "common" },
+  { "id": "Shard of Harmony", "name": "Shard of Harmony", "description": "A resonant fragment that settles nearby frequencies into a coherent pattern.", "category": "Gemstones and Crystals", "recipe": [], "rarity": "rare" },
+  { "id": "Shard of Tranquility", "name": "Shard of Tranquility", "description": "A cool fragment whose resonance suppresses agitation and unstable magic.", "category": "Gemstones and Crystals", "recipe": [], "rarity": "rare" },
+  { "id": "Small Gem", "name": "Small Gem", "description": "A modest cut or natural gemstone suited to trade, tools, and low-order enchantment.", "category": "Gemstones and Crystals", "recipe": [], "rarity": "uncommon" },
+  { "id": "Venestria's heart", "name": "Venestria's heart", "description": "The abandoned Reyvateil's crystallized core, still carrying the ache of an unfinished song.", "category": "Artifact Materials", "recipe": [], "rarity": "artifact" }
+]

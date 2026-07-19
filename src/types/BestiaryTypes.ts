@@ -33,4 +33,6 @@ export interface MonsterSpecies {
 export interface LootEntry {
   itemName: string;
   itemChance: number;
+  quantity?: string;
+  rarity?: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' | 'artifact';
 }

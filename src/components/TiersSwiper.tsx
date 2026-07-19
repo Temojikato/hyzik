@@ -17,7 +17,7 @@ import 'swiper/css';
 
 import { MonsterTier, MonsterLore, MonsterSpecies } from '../types/BestiaryTypes';
 import TierImage from './TierImage';
-import { addLootToInventory, rollLoot } from '../utils/lootLogic';
+import { rollLootSource } from '../services/campaignService';
 import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
 
@@ -107,9 +107,24 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
       });
       return;
     }
-    const lootItems = rollLoot(currentTier.Loot);
-
-    await addLootToInventory(lootItems, currentUser!!, toast, setInventory, inventory);
+    if (!currentUser) return;
+    try {
+      const result = await rollLootSource({
+        sourceKind: 'monster',
+        categoryId: monster.categoryId,
+        monsterName: monster.name,
+        tierId: currentTier.id || currentTier.Name || '',
+      });
+      toast({
+        title: result.jackpot ? 'Jackpot found' : 'Loot discovered',
+        description: `${result.count} reward${result.count === 1 ? '' : 's'} sent to your discoveries.`,
+        status: result.jackpot ? 'success' : 'info',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (caught: any) {
+      toast({ title: 'Loot failed', description: caught?.message || String(caught), status: 'error', duration: 7000, isClosable: true });
+    }
   };
   
   return (

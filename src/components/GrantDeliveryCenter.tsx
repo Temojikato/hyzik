@@ -174,7 +174,13 @@ const GrantDeliveryCenter: React.FC = () => {
               {(stage === 'shared' || transfer) && imageUrl && <Image src={imageUrl} alt={active.label} maxH="220px" objectFit="contain" borderRadius="xl" />}
               {(stage === 'shared' || transfer) && !item && <Spinner alignSelf="center" />}
               <Box><HeadingText>{active.amount} × {active.label}</HeadingText><Text mt={2} color="gray.300">{stage === 'shared' || transfer ? item?.description || 'An item discovered in Omnia.' : `You found ${active.amount} × ${active.label}. Do you take it, or show the group?`}</Text></Box>
-              {(stage === 'shared' || transfer) && <HStack flexWrap="wrap"><Badge colorScheme="purple">{item?.category || 'Item'}</Badge>{item?.recipe?.length ? <Badge colorScheme="blue">Crafting component</Badge> : null}</HStack>}
+              <HStack flexWrap="wrap">
+                {(stage === 'shared' || transfer) && <Badge colorScheme="purple">{item?.category || 'Item'}</Badge>}
+                {active.lootRarity && <Badge colorScheme={active.lootJackpot ? 'yellow' : 'gray'} textTransform="uppercase">{active.lootRarity}</Badge>}
+                {active.lootJackpot && <Badge colorScheme="yellow">1 IN 150 JACKPOT</Badge>}
+                {active.lootSource && <Badge variant="outline">{active.lootSource}</Badge>}
+                {(stage === 'shared' || transfer) && item?.recipe?.length ? <Badge colorScheme="blue">Crafting component</Badge> : null}
+              </HStack>
               {transfer && <Text p={3} bg="whiteAlpha.100" borderRadius="lg"><strong>{active.senderName || 'A party member'}</strong> wants to send this to you. It moves into your inventory only if you accept.</Text>}
               {stage === 'shared' && !finder && <Text p={4} bg="purple.900" borderRadius="xl"><strong>{active.senderName || 'The finder'}</strong> showed this to the group. Only the finder can decide who receives it.</Text>}
               {stage === 'shared' && finder && <FormControl><FormLabel>Who keeps it?</FormLabel><Select value={targetId} onChange={(event) => setTargetId(event.target.value)} bg="#111827"><option value="">Choose a player</option><option value={currentUser.uid}>{profile?.displayName || 'You'} (keep it yourself)</option>{party.map((player) => <option key={player.id} value={player.id}>{player.displayName}{player.reyvateilName ? ` · ${player.reyvateilName}` : ''}</option>)}</Select></FormControl>}

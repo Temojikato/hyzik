@@ -5,7 +5,7 @@ import {
   ModalHeader, ModalOverlay, NumberInput, NumberInputField, Select, SimpleGrid, Spinner, Stat, StatHelpText,
   StatLabel, StatNumber, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Text,
   Textarea, Th, Thead, Tr, useDisclosure, useToast, VStack, extendTheme,
-  Slider, SliderFilledTrack, SliderThumb, SliderTrack,
+  Slider, SliderFilledTrack, SliderThumb, SliderTrack, Progress,
 } from '@chakra-ui/react';
 import { collection, DocumentReference, getDocs } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import {
   FaArrowLeft, FaArrowRotateRight, FaBolt, FaEye, FaGift, FaMessage, FaMusic, FaPlay,
   FaArrowUpRightFromSquare, FaPlus, FaSkull, FaTrash, FaUsers,
+  FaChartLine,
 } from 'react-icons/fa6';
 import { db, functions, storage } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
@@ -23,15 +24,16 @@ import { mapData } from '../mapdata';
 import {
   adminRevivePlayer, advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
   sendGrantDeliveries, sendPrivateMessages, setCurrentSong, setPlayerActive, setPlayersActive, startEncounter, subscribeEncounter,
-  subscribePlayers, updateEncounterParticipants, updatePlayerName,
+  subscribePlayers, updateEncounterParticipants, updatePlayerName, subscribeEconomyTransactions, adminRecordBarter,
 } from '../services/campaignService';
-import { CampaignSong, Encounter, EncounterMapFrame, EncounterParticipant, GrantKind, PlayerProfile } from '../types/Campaign';
+import { CampaignSong, EconomyTransaction, Encounter, EncounterMapFrame, EncounterParticipant, GrantKind, PlayerProfile } from '../types/Campaign';
 import { ConditionDefinition } from '../types/Conditions';
 import { Item } from '../types/Reyvateils';
 import { MonsterSpecies } from '../types/BestiaryTypes';
 import { fetchAllMonstersFromNestedDocs } from '../utils/fetchAllMonsters';
 import { getEncounterParticipantIssues } from '../utils/encounter';
 import AdminMusicPlayer from './admin/AdminMusicPlayer';
+import { ECONOMY_FACTIONS, reputationTier } from '../utils/economy';
 
 const adminTheme = extendTheme({
   styles: { global: { 'html, body': { background: '#090d14', color: '#edf2f7' } } },
@@ -91,6 +93,7 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
   const [conditions, setConditions] = useState<ConditionDefinition[]>([]);
   const [items, setItems] = useState<AdminItem[]>([]);
   const [monsterSpecies, setMonsterSpecies] = useState<MonsterSpecies[]>([]);
+  const [economyTransactions, setEconomyTransactions] = useState<EconomyTransaction[]>([]);
   const [loading, setLoading] = useState(!previewMode);
   const [error, setError] = useState('');
   const [syncingCombat, setSyncingCombat] = useState(false);
@@ -124,6 +127,11 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
     ]).catch((caught) => setError(caught instanceof Error ? caught.message : String(caught)));
   }, [previewMode]);
 
+  useEffect(() => {
+    if (previewMode) return;
+    return subscribeEconomyTransactions(setEconomyTransactions, (caught) => setError(caught.message));
+  }, [previewMode]);
+
   const activeConditions = useMemo(() => players.reduce((total, player) => total + (player.conditions?.length || 0), 0), [players]);
   const activePlayers = useMemo(() => players.filter(isPlayerActive), [players]);
   const synchronizeCombat = async () => {
@@ -153,13 +161,14 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
       <Box sx={panel} overflow="hidden">
         <Tabs isLazy variant="unstyled">
           <TabList px={3} pt={3} overflowX="auto" gap={1} borderBottom="1px solid #2c3648">{[
-            [<FaUsers />, 'Players'], [<FaGift />, 'Grant'], [<FaMessage />, 'Messages'], [<FaMusic />, 'Music'], [<FaSkull />, 'Encounter'],
+            [<FaUsers />, 'Players'], [<FaGift />, 'Grant'], [<FaMessage />, 'Messages'], [<FaMusic />, 'Music'], [<FaChartLine />, 'Economy'], [<FaSkull />, 'Encounter'],
           ].map(([icon, label]) => <Tab key={String(label)} color="#a6b0c2" whiteSpace="nowrap" borderRadius="10px 10px 0 0" _selected={{ bg: '#252d3c', color: 'white' }}><HStack>{icon}<Text>{label}</Text></HStack></Tab>)}</TabList>
           <TabPanels>
             <TabPanel p={{ base: 3, md: 5 }}><PlayersPanel players={players} loading={loading} currentUid={currentUser?.uid} onCreate={userModal.onOpen} /></TabPanel>
             <TabPanel p={{ base: 3, md: 5 }}><GrantDeliveryPanel players={players} conditions={conditions} items={items} senderId={currentUser?.uid || ''} /></TabPanel>
             <TabPanel p={{ base: 3, md: 5 }}><MessagePanel players={players} senderId={currentUser?.uid || ''} /></TabPanel>
             <TabPanel p={{ base: 3, md: 5 }}><MusicPanel songs={songs} currentSongId={campaignState.currentSongId} /></TabPanel>
+            <TabPanel p={{ base: 3, md: 5 }}><EconomyPanel players={players} transactions={economyTransactions} /></TabPanel>
             <TabPanel p={{ base: 3, md: 5 }}><EncounterPanel players={players} songs={songs} species={monsterSpecies} activeEncounterId={campaignState.activeEncounterId} /></TabPanel>
           </TabPanels>
         </Tabs>
@@ -577,6 +586,74 @@ const BattleScreen: React.FC<{ encounter: Encounter }> = ({ encounter }) => {
   const ordered = [...participants].sort((a, b) => Number(Boolean(a.dead)) - Number(Boolean(b.dead)) || (b.initiative ?? -999) - (a.initiative ?? -999));
   const finish = async () => { if (!window.confirm('End this battle and resume eligible player timers?')) return; try { await endEncounter(encounter.id); toast({ title: 'Battle ended', description: 'Global timer pause released.', status: 'success' }); } catch (caught) { toast({ title: 'Could not end battle', description: String(caught), status: 'error' }); } };
   return <VStack align="stretch" spacing={5}><Flex justify="space-between" gap={4} flexWrap="wrap"><Box><HStack><Badge bg="#7f1d1d" color="#fecaca">COMBAT · TIMERS PAUSED</Badge><Text color="#8f9bb0">{participants.length} combatants</Text></HStack><Heading mt={1}>{encounter.name}</Heading></Box><Button colorScheme="red" onClick={finish}>End battle</Button></Flex><Grid templateColumns={{ base: '1fr', xl: 'minmax(420px,.85fr) minmax(0,1.15fr)' }} gap={6}><VStack align="stretch" spacing={2}>{ordered.map((entry, index) => <Grid key={entry.id} templateColumns="44px minmax(130px,1fr) 82px 90px 90px" alignItems="center" gap={2} p={3} bg={index === 0 && entry.initiative !== undefined ? '#211a38' : '#0d131e'} border="1px solid #2c3648" borderRadius="12px"><Text textAlign="center" fontSize="xl" fontWeight="bold">{index + 1}</Text><Box><Text fontWeight="bold" noOfLines={1}>{entry.name}</Text><Badge bg={entry.kind === 'player' ? '#163c32' : '#51252c'} color={entry.kind === 'player' ? '#a7f3d0' : '#fecaca'}>{entry.kind}</Badge></Box><FormControl><FormLabel fontSize="10px" mb={1}>INIT</FormLabel><NumberInput size="sm" value={entry.initiative ?? ''} onChange={(_, value) => update(entry.id, { initiative: Number.isFinite(value) ? value : undefined })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><FormControl><FormLabel fontSize="10px" mb={1}>HP</FormLabel><NumberInput size="sm" value={entry.hp} onChange={(_, value) => update(entry.id, { hp: Number.isFinite(value) ? value : 0 })} onBlur={() => persist()}><NumberInputField /></NumberInput></FormControl><Text color="#8f9bb0" fontSize="sm">/ {entry.maxHp} HP</Text></Grid>)}<Button alignSelf="flex-end" variant="outline" borderColor="#46536a" onClick={() => persist()} isLoading={saving}>Save battle state</Button></VStack><Box>{encounter.map ? <><Box aspectRatio="16/9" overflow="hidden" borderRadius="14px" border="1px solid #354156"><Box as="img" src={encounter.map.imageUrl} w="100%" h="100%" objectFit="cover" transform={`scale(${encounter.map.zoom})`} transformOrigin={`${encounter.map.focusX}% ${encounter.map.focusY}%`} /></Box><Text mt={2} color="#8f9bb0">{encounter.map.floorName} · saved encounter frame</Text></> : <Box aspectRatio="16/9" border="1px dashed #3f4c63" borderRadius="14px" display="grid" placeItems="center"><Text color="#8f9bb0">This encounter has no battle map.</Text></Box>}</Box></Grid></VStack>;
+};
+
+const EconomyPanel: React.FC<{ players: PlayerProfile[]; transactions: EconomyTransaction[] }> = ({ players, transactions }) => {
+  const [playerId, setPlayerId] = useState('');
+  const [factionId, setFactionId] = useState(ECONOMY_FACTIONS[0].id);
+  const [vendorName, setVendorName] = useState('');
+  const [favorDelta, setFavorDelta] = useState(0);
+  const [reputationDelta, setReputationDelta] = useState(0);
+  const [note, setNote] = useState('');
+  const [saving, setSaving] = useState(false);
+  const toast = useToast();
+  const partyFavor = players.reduce((sum, player) => sum + Number(player.economy?.favor || 0), 0);
+  const lifetimeEarned = players.reduce((sum, player) => sum + Number(player.economy?.lifetimeFavorEarned || 0), 0);
+  const lifetimeSpent = players.reduce((sum, player) => sum + Number(player.economy?.lifetimeFavorSpent || 0), 0);
+  const donatedItems = players.reduce((sum, player) => sum + Number(player.economy?.donatedItemCount || 0), 0);
+  const recordBarter = async () => {
+    if (!playerId || !note.trim() || (!favorDelta && !reputationDelta)) return;
+    setSaving(true);
+    try {
+      await adminRecordBarter({ userId: playerId, factionId, vendorName: vendorName.trim() || undefined, favorDelta, reputationDelta, note: note.trim() });
+      toast({ title: 'Barter recorded', description: 'Balances were updated and the literal trade was added to the permanent ledger.', status: 'success' });
+      setFavorDelta(0); setReputationDelta(0); setNote('');
+    } catch (caught: any) {
+      toast({ title: 'Could not record barter', description: caught?.message || String(caught), status: 'error', duration: 7000 });
+    } finally { setSaving(false); }
+  };
+  return <VStack align="stretch" spacing={6}>
+    <Box><Heading size="md">Favor, factions, and literal trade history</Heading><Text color="#8f9bb0">Favor is spendable. Reputation and the transaction ledger are permanent campaign records.</Text></Box>
+    <SimpleGrid columns={{ base: 2, lg: 4 }} spacing={3}>
+      <Box sx={panel} p={4}><Text color="#8f9bb0" fontSize="xs">PARTY FAVOR AVAILABLE</Text><Heading size="lg">{partyFavor}</Heading></Box>
+      <Box sx={panel} p={4}><Text color="#8f9bb0" fontSize="xs">LIFETIME FAVOR EARNED</Text><Heading size="lg">{lifetimeEarned}</Heading></Box>
+      <Box sx={panel} p={4}><Text color="#8f9bb0" fontSize="xs">LIFETIME FAVOR SPENT</Text><Heading size="lg">{lifetimeSpent}</Heading></Box>
+      <Box sx={panel} p={4}><Text color="#8f9bb0" fontSize="xs">ITEMS GIVEN TO OMNIA</Text><Heading size="lg">{donatedItems}</Heading></Box>
+    </SimpleGrid>
+    <Box>
+      <Heading size="sm" mb={3}>Reputation graph</Heading>
+      <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4}>
+        {ECONOMY_FACTIONS.map((faction) => {
+          const maximum = Math.max(1, ...players.map((player) => Number(player.economy?.reputation?.[faction.id] || 0)));
+          const donated = players.reduce((sum, player) => sum + Number(player.economy?.factionContributions?.[faction.id]?.items || 0), 0);
+          const generated = players.reduce((sum, player) => sum + Number(player.economy?.factionContributions?.[faction.id]?.favor || 0), 0);
+          return <Box key={faction.id} sx={panel} p={4}>
+            <Flex justify="space-between" gap={3}><Box><Text fontWeight="bold">{faction.name}</Text><Text fontSize="xs" color="#8f9bb0">{donated} items · {generated} Favor generated</Text></Box><Badge bg="#312e52" color="#c4b5fd">{faction.vendors.length} vendors</Badge></Flex>
+            <VStack align="stretch" mt={4} spacing={3}>{players.map((player) => {
+              const score = Number(player.economy?.reputation?.[faction.id] || 0);
+              const contribution = player.economy?.factionContributions?.[faction.id];
+              return <Box key={player.id}><Flex justify="space-between" fontSize="sm"><Text>{playerLabel(player)}</Text><Text>{score} · {reputationTier(score).name}</Text></Flex><Progress mt={1} value={(score / maximum) * 100} size="sm" colorScheme="purple" borderRadius="full" /><Text mt={1} fontSize="10px" color="#738097">{contribution?.items || 0} donated · {contribution?.favor || 0} Favor generated</Text></Box>;
+            })}</VStack>
+          </Box>;
+        })}
+      </SimpleGrid>
+    </Box>
+    <Box sx={panel} p={4}>
+      <Heading size="sm" mb={1}>Record an in-person barter</Heading><Text color="#8f9bb0" fontSize="sm" mb={4}>Use this when the table negotiates manually at a location. Negative Favor means the player paid; positive Favor means the vendor credited them.</Text>
+      <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr 1fr 150px 150px' }} gap={3}>
+        <FormControl><FormLabel>Player</FormLabel><Select value={playerId} onChange={(event) => setPlayerId(event.target.value)}><option value="">Choose player</option>{players.map((player) => <option key={player.id} value={player.id}>{playerLabel(player)}</option>)}</Select></FormControl>
+        <FormControl><FormLabel>Faction</FormLabel><Select value={factionId} onChange={(event) => setFactionId(event.target.value)}>{ECONOMY_FACTIONS.map((faction) => <option key={faction.id} value={faction.id}>{faction.name}</option>)}</Select></FormControl>
+        <FormControl><FormLabel>Vendor / counterparty</FormLabel><Input value={vendorName} onChange={(event) => setVendorName(event.target.value)} /></FormControl>
+        <FormControl><FormLabel>Favor change</FormLabel><NumberInput value={favorDelta} onChange={(_, value) => setFavorDelta(Number.isFinite(value) ? Math.floor(value) : 0)}><NumberInputField /></NumberInput></FormControl>
+        <FormControl><FormLabel>Rep change</FormLabel><NumberInput value={reputationDelta} onChange={(_, value) => setReputationDelta(Number.isFinite(value) ? Math.floor(value) : 0)}><NumberInputField /></NumberInput></FormControl>
+      </Grid>
+      <HStack mt={3} align="end"><FormControl><FormLabel>Exact trade / ruling</FormLabel><Input value={note} onChange={(event) => setNote(event.target.value)} placeholder="What changed hands, why, and any negotiated terms" /></FormControl><Button onClick={recordBarter} isLoading={saving} isDisabled={!playerId || !note.trim() || (!favorDelta && !reputationDelta)}>Record trade</Button></HStack>
+    </Box>
+    <Box>
+      <Heading size="sm" mb={3}>Trade history</Heading>
+      <TableContainer border="1px solid #2c3648" borderRadius="12px" maxH="620px" overflowY="auto"><Table size="sm" variant="simple"><Thead position="sticky" top={0} bg="#111722" zIndex={1}><Tr><Th>When</Th><Th>Player</Th><Th>Event</Th><Th>Counterparty</Th><Th>Item / terms</Th><Th isNumeric>Favor</Th><Th isNumeric>Rep</Th></Tr></Thead><Tbody>{transactions.map((entry) => <Tr key={entry.id}><Td whiteSpace="nowrap">{entry.createdAt?.toDate ? entry.createdAt.toDate().toLocaleString() : new Date(entry.createdAtMs).toLocaleString()}</Td><Td>{entry.playerName || players.find((player) => player.id === entry.playerId)?.displayName || entry.playerId}</Td><Td><Badge>{entry.kind}</Badge></Td><Td>{entry.vendorName || entry.factionName || entry.counterpartyName || '—'}</Td><Td><Text>{entry.itemName ? `${entry.quantity || 1} × ${entry.itemName}` : entry.note || '—'}</Text>{entry.itemName && entry.note && <Text fontSize="xs" color="#8f9bb0">{entry.note}</Text>}</Td><Td isNumeric color={entry.favorDelta > 0 ? '#86efac' : entry.favorDelta < 0 ? '#fca5a5' : undefined}>{entry.favorDelta > 0 ? '+' : ''}{entry.favorDelta}</Td><Td isNumeric>{entry.reputationDelta ? `+${entry.reputationDelta}` : '—'}</Td></Tr>)}{!transactions.length && <Tr><Td colSpan={7}><Text py={8} textAlign="center" color="#8f9bb0">No economy transactions recorded yet.</Text></Td></Tr>}</Tbody></Table></TableContainer>
+    </Box>
+  </VStack>;
 };
 
 const AdminPortal: React.FC<{ previewMode?: boolean }> = (props) => <ChakraProvider theme={adminTheme} resetCSS={false}><AdminPortalContent {...props} /></ChakraProvider>;

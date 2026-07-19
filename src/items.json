@@ -1211,11 +1211,11 @@
     "recipe": []
   },
   {
-    "id": "Gold Coin",
-    "name": "Gold Coin",
-    "description": "Currency used to purchase items from merchants.",
-    "category": "Currency",
-    "recipe": ["Gold Ingot"]
+    "id": "Gold Nugget",
+    "name": "Gold Nugget",
+    "description": "A soft piece of recovered gold used as a conductive crafting material, never as currency.",
+    "category": "Basic Materials",
+    "recipe": []
   },
   {
     "id": "Spices",

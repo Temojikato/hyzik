@@ -132,6 +132,10 @@ export interface Item {
   description: string; // Placeholder for item descriptions
   category: string;
   recipe: { itemId: string; quantity: number }[];
+  rarity?: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' | 'artifact';
+  favorValue?: number;
+  purchasePrice?: number;
+  preferredFactionIds?: string[];
 }
 
 export interface DBItem {

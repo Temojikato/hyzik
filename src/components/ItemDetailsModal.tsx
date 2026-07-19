@@ -21,18 +21,19 @@ import {
   Select,
   NumberInput,
   NumberInputField,
+  Badge,
+  HStack,
+  Box,
 } from '@chakra-ui/react';
 import { Item } from '../types/Reyvateils';
 import { User } from 'firebase/auth';
-import RemoveItemModal from './RemoveItemModal';
-import { doc, runTransaction } from 'firebase/firestore';
-import { db } from '../Firebase';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
-import { serializeInventory } from '../utils/inventory';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../Firebase';
+import { donateInventoryItem } from '../services/campaignService';
+import { ECONOMY_FACTIONS, factionDonationQuote, itemEconomy } from '../utils/economy';
 
 interface PartyOption { id: string; displayName: string; reyvateilName?: string }
 
@@ -59,16 +60,17 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
 }) => {
   useBackDismiss(isOpen, onClose);
   const {
-    isOpen: isRemoveModalOpen,
-    onOpen: onRemoveModalOpen,
-    onClose: onRemoveModalClose,
-  } = useDisclosure();
-  const {
     isOpen: isSendModalOpen,
     onOpen: onSendModalOpen,
     onClose: onSendModalClose,
   } = useDisclosure();
+  const {
+    isOpen: isDonateModalOpen,
+    onOpen: onDonateModalOpen,
+    onClose: onDonateModalClose,
+  } = useDisclosure();
   useBackDismiss(isSendModalOpen, onSendModalClose);
+  useBackDismiss(isDonateModalOpen, onDonateModalClose);
   const toast = useToast();
 
   const [imageUrl, setImageUrl] = useState<string>('placeholder-image');
@@ -77,6 +79,9 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
   const [sendTarget, setSendTarget] = useState('');
   const [sendAmount, setSendAmount] = useState(1);
   const [sending, setSending] = useState(false);
+  const [donationFaction, setDonationFaction] = useState(ECONOMY_FACTIONS[0].id);
+  const [donationAmount, setDonationAmount] = useState(1);
+  const [donating, setDonating] = useState(false);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -95,71 +100,8 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
     fetchImage();
   }, [item]);
 
-  const handleDissimulate = async () => {
-    if (!currentUser) return;
-
-    try {
-      await runTransaction(db, async (transaction) => {
-        const userRef = doc(db, 'users', currentUser.uid);
-        const userSnap = await transaction.get(userRef);
-        if (!userSnap.exists()) throw new Error('User does not exist');
-
-        const userData = userSnap.data();
-        const newUnlockedRecipes = [...(userData.unlockedRecipes || [])];
-
-        // Update inventory
-        const newInventory = [...inventory];
-        const itemIndex = newInventory.findIndex((i) => i.id === item.id);
-        if (itemIndex !== -1) {
-          const inv = newInventory[itemIndex];
-
-          if (inv.quantity) {
-            if (inv.quantity < 10) {
-              throw new Error('Not enough items. You need ' + (10 - inv.quantity) + " more.");
-            } else {
-              inv.quantity -= 10;
-              if (inv.quantity <= 0) {
-                newInventory.splice(itemIndex, 1);
-              }
-            }
-          } else {
-            throw new Error('Item quantity is undefined.');
-          }
-        } else {
-          throw new Error('Item not found in inventory.');
-        }
-
-        if (!newUnlockedRecipes.includes(item.id)) {
-          newUnlockedRecipes.push(item.id);
-        }
-
-        // Update user data in transaction
-        transaction.update(userRef, { unlockedRecipes: newUnlockedRecipes, inventory: serializeInventory(newInventory) });
-      });
-
-      setUnlockedRecipes(item.id);
-
-      toast({
-        title: 'Recipe Unlocked',
-        description: `You have unlocked the recipe for ${item.name}!`,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      onClose();
-    } catch (error: any) {
-      console.error('Error during dissimulation:', error);
-      toast({
-        title: 'Error',
-        description: `Failed to unlock recipe: ${error.message}`,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const hasRecipe = unlockedRecipes.includes(item.id);
+  const economy = itemEconomy(item);
+  const donationQuote = factionDonationQuote(item, donationFaction, donationAmount);
 
   const openSend = async () => {
     onSendModalOpen();
@@ -191,6 +133,24 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
     } finally { setSending(false); }
   };
 
+  const donateItem = async () => {
+    if (!currentUser) return;
+    setDonating(true);
+    try {
+      const result = await donateInventoryItem(item.id, donationFaction, donationAmount);
+      setInventory((current) => current.flatMap((entry) => {
+        if (entry.id !== item.id) return [entry];
+        const quantity = Math.max(0, Number(entry.quantity || 0) - donationAmount);
+        return quantity ? [{ ...entry, quantity }] : [];
+      }));
+      toast({ title: `+${result.favorEarned} Favor`, description: `${result.factionName} gained ${donationAmount} × ${item.name}. Reputation +${result.reputationEarned}.`, status: 'success', duration: 6500, isClosable: true });
+      onDonateModalClose();
+      onClose();
+    } catch (caught: any) {
+      toast({ title: 'Donation failed', description: caught?.message || String(caught), status: 'error', duration: 7000, isClosable: true });
+    } finally { setDonating(false); }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered>
@@ -215,33 +175,19 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
                 Quantity: <strong>{item.quantity}</strong>
               </Text>
               <Text color="text">Category: {item.category}</Text>
+              <HStack><Badge textTransform="uppercase">{economy.rarity}</Badge><Badge colorScheme="purple">Base donation {economy.favorValue} Favor</Badge></HStack>
             </VStack>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="purple" variant="outline" onClick={openSend} mr={3}>
               Send
             </Button>
-            <Button colorScheme="red" onClick={onRemoveModalOpen} mr={3}>
-              Remove
+            <Button colorScheme="green" onClick={() => { setDonationAmount(1); onDonateModalOpen(); }}>
+              Donate to the city
             </Button>
-            {!hasRecipe && (
-              <Button colorScheme="blue" onClick={handleDissimulate}>
-                Dissimulate
-              </Button>
-            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-      {/* Remove Item Modal */}
-      <RemoveItemModal
-        isOpen={isRemoveModalOpen}
-        onClose={onRemoveModalClose}
-        item={item}
-        inventory={inventory}
-        setInventory={setInventory}
-        currentUser={currentUser}
-      />
 
       <Modal isOpen={isSendModalOpen} onClose={onSendModalClose} isCentered>
         <ModalOverlay />
@@ -256,6 +202,24 @@ const ItemDetailsModal: React.FC<ItemDetailsModalProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter><Button variant="ghost" mr={3} onClick={onSendModalClose}>Cancel</Button><Button onClick={sendItem} isLoading={sending} isDisabled={!sendTarget || sendAmount < 1 || sendAmount > Number(item.quantity || 0)}>Send for acceptance</Button></ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isDonateModalOpen} onClose={onDonateModalClose} isCentered size="lg">
+        <ModalOverlay />
+        <ModalContent bg="surface" color="text">
+          <ModalHeader>Donate {item.name}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4} align="stretch">
+              <Text>Your Reyvateil can send recovered resources home from anywhere. Choose who receives them; Favor is spendable city credit, while faction reputation is permanent.</Text>
+              <FormControl><FormLabel>Recipient faction</FormLabel><Select value={donationFaction} onChange={(event) => setDonationFaction(event.target.value)}>{ECONOMY_FACTIONS.map((faction) => <option key={faction.id} value={faction.id}>{faction.name}</option>)}</Select></FormControl>
+              <Box p={3} border="1px solid" borderColor="border" borderRadius="md"><Text fontWeight="bold">{ECONOMY_FACTIONS.find((faction) => faction.id === donationFaction)?.name}</Text><Text fontSize="sm" opacity={.78}>{ECONOMY_FACTIONS.find((faction) => faction.id === donationFaction)?.summary}</Text></Box>
+              <FormControl><FormLabel>Quantity</FormLabel><NumberInput min={1} max={Math.max(1, Number(item.quantity || 1))} value={donationAmount} onChange={(_, value) => setDonationAmount(Number.isFinite(value) ? Math.max(1, Math.floor(value)) : 1)}><NumberInputField /></NumberInput></FormControl>
+              <Box p={4} borderRadius="md" bg="surfaceRaised"><HStack justify="space-between"><Text>Favor earned</Text><Text fontSize="xl" fontWeight="bold">+{donationQuote.favor}</Text></HStack><HStack justify="space-between"><Text>Faction reputation</Text><Text fontWeight="bold">+{donationQuote.reputation}</Text></HStack><Text mt={2} fontSize="sm" color={donationQuote.preferred ? 'green.300' : 'orange.300'}>{donationQuote.preferred ? 'This faction urgently values this category.' : 'This faction can use it, but another faction may value it more.'}</Text></Box>
+            </VStack>
+          </ModalBody>
+          <ModalFooter><Button variant="ghost" mr={3} onClick={onDonateModalClose}>Cancel</Button><Button colorScheme="green" onClick={donateItem} isLoading={donating} isDisabled={donationAmount < 1 || donationAmount > Number(item.quantity || 0)}>Donate permanently</Button></ModalFooter>
         </ModalContent>
       </Modal>
     </>

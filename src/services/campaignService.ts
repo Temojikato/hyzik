@@ -8,6 +8,7 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  orderBy,
   query,
   runTransaction,
   serverTimestamp,
@@ -15,6 +16,7 @@ import {
   updateDoc,
   where,
   writeBatch,
+  limit,
 } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { functions } from '../Firebase';
@@ -25,6 +27,7 @@ import {
   Encounter,
   EncounterMapFrame,
   EncounterParticipant,
+  EconomyTransaction,
   GrantDelivery,
   GrantKind,
   MessageStatus,
@@ -83,11 +86,44 @@ export const subscribePrivateMessages = (
     collection(db, 'privateMessages'),
     where('recipientId', '==', userId),
   );
+
   return onSnapshot(messagesQuery, (snapshot) => {
     const messages = snapshot.docs.map((item) => ({ id: item.id, ...item.data() } as PrivateMessage));
     messages.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
     onValue(messages);
   }, onError);
+};
+
+export const subscribeEconomyTransactions = (
+  onValue: (transactions: EconomyTransaction[]) => void,
+  onError?: (error: Error) => void,
+) => onSnapshot(query(collection(db, 'economyTransactions'), orderBy('createdAtMs', 'desc'), limit(300)), (snapshot) => {
+  onValue(snapshot.docs.map((entry) => ({ id: entry.id, ...entry.data() } as EconomyTransaction)));
+}, onError);
+
+export const rollLootSource = async (input: {
+  sourceKind: 'trove' | 'monster';
+  categoryId: string;
+  tierId: string;
+  monsterName?: string;
+}) => {
+  const callable = httpsCallable<typeof input, { count: number; sourceLabel: string; sourceTier: number; jackpot: boolean; items: Array<{ itemName: string; quantity: number; rarity: string; jackpot: boolean }> }>(functions, 'rollLootSource');
+  return (await callable(input)).data;
+};
+
+export const donateInventoryItem = async (itemId: string, factionId: string, amount: number) => {
+  const callable = httpsCallable<{ itemId: string; factionId: string; amount: number }, { favorEarned: number; reputationEarned: number; preferred: boolean; factionName: string }>(functions, 'donateInventoryItem');
+  return (await callable({ itemId, factionId, amount })).data;
+};
+
+export const purchaseCityItem = async (itemId: string, factionId: string, vendorName: string, amount: number) => {
+  const callable = httpsCallable<{ itemId: string; factionId: string; vendorName: string; amount: number }, { itemId: string; amount: number; totalPrice: number; unitPrice: number }>(functions, 'purchaseCityItem');
+  return (await callable({ itemId, factionId, vendorName, amount })).data;
+};
+
+export const adminRecordBarter = async (input: { userId: string; factionId: string; vendorName?: string; favorDelta: number; reputationDelta: number; note: string }) => {
+  const callable = httpsCallable<typeof input, { economy: PlayerProfile['economy'] }>(functions, 'adminRecordBarter');
+  return (await callable(input)).data;
 };
 
 export const updateMessageStatus = async (messageId: string, status: MessageStatus) => {

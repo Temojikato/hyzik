@@ -75,6 +75,11 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /economyTransactions/{transactionId} {
+      allow read: if admin();
+      allow write: if false;
+    }
+
     match /reyvateils/{reyvateilId}/abilities/{abilityId} {
       allow read: if signedIn();
       allow write: if admin();

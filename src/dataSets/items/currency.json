@@ -1,9 +1,1 @@
-[
-  {
-    "id": "Gold Coin",
-    "name": "Gold Coin",
-    "description": "Currency used to purchase items from merchants.",
-    "category": "Currency",
-    "recipe": ["Gold Ingot"]
-  }
-]
+[]

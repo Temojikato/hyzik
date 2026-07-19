@@ -41,6 +41,7 @@ export interface PlayerProfile {
   };
   combatProfile?: PlayerCombatProfile;
   mortality?: MortalityState;
+  economy?: PlayerEconomy;
   unlockedCyphers?: string[];
   unlockedRecipes?: string[];
   inventory?: unknown[];
@@ -48,6 +49,38 @@ export interface PlayerProfile {
   active?: boolean;
   activatedAt?: Timestamp;
   pausedAt?: Timestamp;
+}
+
+export interface PlayerEconomy {
+  favor: number;
+  reputation: Record<string, number>;
+  lifetimeFavorEarned: number;
+  lifetimeFavorSpent: number;
+  donatedItemCount: number;
+  donatedValue: number;
+  factionContributions: Record<string, { items: number; favor: number }>;
+}
+
+export type EconomyTransactionKind = 'donation' | 'purchase' | 'barter' | 'transfer' | 'transfer-declined' | 'currency-migration';
+
+export interface EconomyTransaction {
+  id: string;
+  kind: EconomyTransactionKind;
+  playerId: string;
+  playerName: string;
+  counterpartyPlayerId?: string;
+  counterpartyName?: string;
+  factionId?: string;
+  factionName?: string;
+  vendorName?: string;
+  itemId?: string;
+  itemName?: string;
+  quantity?: number;
+  favorDelta: number;
+  reputationDelta?: number;
+  note?: string;
+  createdAt?: Timestamp;
+  createdAtMs: number;
 }
 
 export type MortalConsequence = 'permanent-damage' | 'lost-limb' | 'death';
@@ -131,6 +164,11 @@ export interface GrantDelivery {
   source?: 'admin' | 'loot' | 'transfer';
   audienceIds?: string[];
   senderName?: string;
+  recipientName?: string;
+  lootRarity?: string;
+  lootJackpot?: boolean;
+  lootSource?: string;
+  lootSourceTier?: number;
   createdAt?: Timestamp;
 }
 

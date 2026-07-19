@@ -4,6 +4,9 @@ const { getAuth } = require('firebase-admin/auth');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const crypto = require('crypto');
 const combatCatalog = require('./combatCatalog.json');
+const lootTroves = require('./lootTroves.json');
+const { config: economyConfig, factionById, normalizeEconomy, deriveItemEconomy, donationQuote, purchaseQuote } = require('./economy');
+const { rollLootBundle, sourceTierFromLabel } = require('./lootEngine');
 
 initializeApp();
 
@@ -565,7 +568,7 @@ exports.adminCreateUser = onCall({ region: 'europe-west1', cors: true }, async (
   try {
     created = await getAuth().createUser({ email, password });
     await getFirestore().collection('users').doc(created.uid).set({
-      email, displayName: '', active: false, conditions: [], inventory: [], unlockedCyphers: [], unlockedRecipes: [],
+      email, displayName: '', active: false, conditions: [], inventory: [], unlockedCyphers: [], unlockedRecipes: [], economy: normalizeEconomy(),
       createdAt: FieldValue.serverTimestamp(),
     });
   } catch (error) {
@@ -660,6 +663,183 @@ exports.publishLoot = onCall({ region: 'europe-west1', cors: true }, async (requ
   return { count };
 });
 
+exports.rollLootSource = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const sourceKind = clean(request.data?.sourceKind, 20);
+  const db = getFirestore();
+  let source;
+  let sourceTier = 1;
+  let sourceLabel = '';
+  if (sourceKind === 'trove') {
+    const categoryId = clean(request.data?.categoryId, 120);
+    const tierId = clean(request.data?.tierId, 120);
+    const category = (lootTroves.categories || []).find((entry) => entry.category === categoryId);
+    source = category?.tiers?.find((entry) => entry.id === tierId);
+    if (!source) throw new HttpsError('not-found', 'That loot source no longer exists.');
+    sourceLabel = clean(source.name, 120) || tierId;
+    const tierIndex = category.tiers.findIndex((entry) => entry.id === tierId);
+    sourceTier = Math.max(1, Math.min(4, tierIndex + 1));
+  } else if (sourceKind === 'monster') {
+    const categoryId = clean(request.data?.categoryId, 120);
+    const monsterName = clean(request.data?.monsterName, 180);
+    const tierId = clean(request.data?.tierId, 120);
+    const categorySnapshot = await db.collection('bestiary').doc(categoryId).get();
+    const monster = categorySnapshot.data()?.[monsterName];
+    source = monster?.Tiers?.[tierId];
+    if (!source) throw new HttpsError('not-found', 'That monster tier no longer exists.');
+    sourceLabel = clean(source.Name, 120) || `${tierId} ${monsterName}`;
+    sourceTier = /avatar|reyvateil/i.test(`${categoryId} ${monsterName}`) ? 4 : sourceTierFromLabel(`${tierId} ${sourceLabel}`, 'monster');
+  } else {
+    throw new HttpsError('invalid-argument', 'Choose a monster or trove loot source.');
+  }
+  const rolled = rollLootBundle(source.loot || source.Loot, {
+    sourceTier,
+    maxItems: sourceKind === 'trove' ? Number(source.maxAmountOfItems || 1) : 1,
+  });
+  const tangible = rolled.filter((entry) => String(entry.itemName).toLowerCase() !== 'nothing');
+  if (!tangible.length) return { count: 0, sourceLabel, sourceTier, items: [], jackpot: false };
+  const finderSnapshot = await db.collection('users').doc(request.auth.uid).get();
+  if (!finderSnapshot.exists) throw new HttpsError('not-found', 'Your player profile is missing.');
+  const itemSnapshots = await Promise.all(tangible.map((entry) => db.doc(itemPath(entry.itemName)).get()));
+  const missing = itemSnapshots.filter((snapshot) => !snapshot.exists).map((_, index) => tangible[index].itemName);
+  if (missing.length) throw new HttpsError('failed-precondition', `Loot table references missing item records: ${missing.join(', ')}.`);
+  const batch = db.batch();
+  const groupId = `loot-${Date.now()}-${request.auth.uid}`;
+  tangible.forEach((entry, index) => {
+    const itemSnapshot = itemSnapshots[index];
+    const deliveryRef = db.collection('grantDeliveries').doc();
+    batch.set(deliveryRef, {
+      groupId,
+      recipientId: request.auth.uid,
+      senderId: request.auth.uid,
+      senderName: clean(finderSnapshot.data().displayName, 80) || 'A party member',
+      kind: 'item', resourceId: entry.itemName,
+      label: clean(itemSnapshot.data().name, 120) || entry.itemName,
+      amount: entry.quantity, source: 'loot', status: 'waiting', audienceIds: [],
+      lootRarity: entry.rarity, lootJackpot: entry.jackpot === true,
+      lootSource: sourceLabel, lootSourceTier: sourceTier,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+  });
+  await batch.commit();
+  return { count: tangible.length, sourceLabel, sourceTier, items: tangible, jackpot: tangible.some((entry) => entry.jackpot) };
+});
+
+exports.donateInventoryItem = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const itemId = clean(request.data?.itemId, 180);
+  const factionId = clean(request.data?.factionId, 80);
+  const amount = quantity(request.data?.amount);
+  if (!itemId || !factionById[factionId]) throw new HttpsError('invalid-argument', 'Choose an item and receiving faction.');
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(request.auth.uid);
+  const itemRef = db.doc(itemPath(itemId));
+  const ledgerRef = db.collection('economyTransactions').doc();
+  return db.runTransaction(async (transaction) => {
+    const [userSnapshot, itemSnapshot] = await Promise.all([transaction.get(userRef), transaction.get(itemRef)]);
+    if (!userSnapshot.exists || !itemSnapshot.exists) throw new HttpsError('not-found', 'The player or item record is missing.');
+    let quote;
+    try { quote = donationQuote(itemSnapshot.data(), factionId, amount); }
+    catch (error) { throw new HttpsError('invalid-argument', error.message); }
+    const inventory = removeInventoryEntry(userSnapshot.data().inventory, itemRef, amount);
+    const economy = normalizeEconomy(userSnapshot.data().economy);
+    economy.favor += quote.favor;
+    economy.lifetimeFavorEarned += quote.favor;
+    economy.donatedItemCount += amount;
+    economy.donatedValue += quote.favorValue * amount;
+    economy.reputation[factionId] += quote.reputation;
+    economy.factionContributions[factionId].items += amount;
+    economy.factionContributions[factionId].favor += quote.favor;
+    const playerName = clean(userSnapshot.data().displayName, 80) || 'Unnamed player';
+    transaction.update(userRef, { inventory, economy });
+    transaction.set(ledgerRef, {
+      kind: 'donation', playerId: request.auth.uid, playerName,
+      factionId, factionName: quote.faction.name,
+      itemId, itemName: clean(itemSnapshot.data().name, 120) || itemId, quantity: amount,
+      favorDelta: quote.favor, reputationDelta: quote.reputation,
+      note: quote.preferred ? 'Priority civic need' : 'Accepted outside the faction’s normal specialty',
+      createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
+    });
+    return { economy, favorEarned: quote.favor, reputationEarned: quote.reputation, preferred: quote.preferred, factionName: quote.faction.name };
+  });
+});
+
+exports.purchaseCityItem = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const itemId = clean(request.data?.itemId, 180);
+  const factionId = clean(request.data?.factionId, 80);
+  const vendorName = clean(request.data?.vendorName, 120);
+  const amount = Math.max(1, Math.min(99, quantity(request.data?.amount)));
+  const faction = factionById[factionId];
+  if (!itemId || !faction) throw new HttpsError('invalid-argument', 'Choose an item and city faction.');
+  if (vendorName && !faction.vendors.includes(vendorName)) throw new HttpsError('invalid-argument', 'That vendor does not belong to the selected faction.');
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(request.auth.uid);
+  const itemRef = db.doc(itemPath(itemId));
+  const ledgerRef = db.collection('economyTransactions').doc();
+  return db.runTransaction(async (transaction) => {
+    const [userSnapshot, itemSnapshot] = await Promise.all([transaction.get(userRef), transaction.get(itemRef)]);
+    if (!userSnapshot.exists || !itemSnapshot.exists) throw new HttpsError('not-found', 'The player or item record is missing.');
+    const economy = normalizeEconomy(userSnapshot.data().economy);
+    let quote;
+    try { quote = purchaseQuote(itemSnapshot.data(), factionId, economy.reputation[factionId], amount); }
+    catch (error) { throw new HttpsError('failed-precondition', error.message); }
+    const requiredReputation = { common: 0, uncommon: 0, rare: 25, epic: 60, legendary: 120, artifact: Number.MAX_SAFE_INTEGER }[quote.rarity] || 0;
+    if (economy.reputation[factionId] < requiredReputation) throw new HttpsError('failed-precondition', `This ${quote.rarity} stock requires ${requiredReputation} reputation with ${faction.name}.`);
+    if (quote.rarity === 'artifact') throw new HttpsError('failed-precondition', 'Artifacts cannot be bought from ordinary city stock.');
+    if (economy.favor < quote.totalPrice) throw new HttpsError('failed-precondition', `You need ${quote.totalPrice - economy.favor} more Favor.`);
+    economy.favor -= quote.totalPrice;
+    economy.lifetimeFavorSpent += quote.totalPrice;
+    const inventory = addInventoryEntry(userSnapshot.data().inventory, itemRef, amount);
+    const playerName = clean(userSnapshot.data().displayName, 80) || 'Unnamed player';
+    transaction.update(userRef, { inventory, economy });
+    transaction.set(ledgerRef, {
+      kind: 'purchase', playerId: request.auth.uid, playerName,
+      factionId, factionName: faction.name, vendorName: vendorName || faction.vendors[0],
+      itemId, itemName: clean(itemSnapshot.data().name, 120) || itemId, quantity: amount,
+      favorDelta: -quote.totalPrice, reputationDelta: 0,
+      note: `${quote.tier.name} rate · ${quote.tier.discountPercent}% reputation discount`,
+      createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
+    });
+    return { economy, itemId, amount, totalPrice: quote.totalPrice, unitPrice: quote.unitPrice };
+  });
+});
+
+exports.adminRecordBarter = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const userId = clean(request.data?.userId, 128);
+  const factionId = clean(request.data?.factionId, 80);
+  const vendorName = clean(request.data?.vendorName, 120);
+  const note = clean(request.data?.note, 500);
+  const favorDelta = Math.max(-100000, Math.min(100000, Math.floor(Number(request.data?.favorDelta || 0))));
+  const reputationDelta = Math.max(-1000, Math.min(1000, Math.floor(Number(request.data?.reputationDelta || 0))));
+  const faction = factionById[factionId];
+  if (!userId || !faction || !note || (!favorDelta && !reputationDelta)) throw new HttpsError('invalid-argument', 'Choose a player and faction, enter a change, and describe the barter.');
+  const db = getFirestore();
+  const userRef = db.collection('users').doc(userId);
+  const ledgerRef = db.collection('economyTransactions').doc();
+  return db.runTransaction(async (transaction) => {
+    const userSnapshot = await transaction.get(userRef);
+    if (!userSnapshot.exists) throw new HttpsError('not-found', 'That player no longer exists.');
+    const economy = normalizeEconomy(userSnapshot.data().economy);
+    if (economy.favor + favorDelta < 0) throw new HttpsError('failed-precondition', 'That barter would reduce Favor below zero.');
+    const appliedReputation = Math.max(-economy.reputation[factionId], reputationDelta);
+    economy.favor += favorDelta;
+    economy.reputation[factionId] += appliedReputation;
+    if (favorDelta > 0) economy.lifetimeFavorEarned += favorDelta;
+    if (favorDelta < 0) economy.lifetimeFavorSpent += Math.abs(favorDelta);
+    const playerName = clean(userSnapshot.data().displayName, 80) || 'Unnamed player';
+    transaction.update(userRef, { economy });
+    transaction.set(ledgerRef, {
+      kind: 'barter', playerId: userId, playerName,
+      factionId, factionName: faction.name, vendorName: vendorName || faction.vendors[0],
+      favorDelta, reputationDelta: appliedReputation, note,
+      createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
+    });
+    return { economy };
+  });
+});
+
 exports.createInventoryTransfer = onCall({ region: 'europe-west1', cors: true }, async (request) => {
   if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
   const itemId = clean(request.data?.itemId, 180);
@@ -683,6 +863,7 @@ exports.createInventoryTransfer = onCall({ region: 'europe-west1', cors: true },
       groupId: `transfer-${deliveryRef.id}`,
       recipientId: targetUserId, senderId: request.auth.uid,
       senderName: clean(senderSnapshot.data().displayName, 80) || 'A party member',
+      recipientName: clean(targetSnapshot.data().displayName, 80) || 'Unnamed player',
       kind: 'item', resourceId: itemId,
       label: clean(itemSnapshot.data().name, 120) || itemId,
       amount, source: 'transfer', status: 'transfer-waiting', audienceIds: [],
@@ -698,6 +879,7 @@ exports.respondToInventoryTransfer = onCall({ region: 'europe-west1', cors: true
   const accept = request.data?.accept === true;
   const db = getFirestore();
   const deliveryRef = db.collection('grantDeliveries').doc(deliveryId);
+  const ledgerRef = db.collection('economyTransactions').doc();
   await db.runTransaction(async (transaction) => {
     const deliverySnapshot = await transaction.get(deliveryRef);
     if (!deliverySnapshot.exists) throw new HttpsError('not-found', 'This transfer is no longer available.');
@@ -712,6 +894,15 @@ exports.respondToInventoryTransfer = onCall({ region: 'europe-west1', cors: true
     const reference = db.doc(itemPath(delivery.resourceId));
     const inventory = addInventoryEntry(ownerSnapshot.data().inventory, reference, quantity(delivery.amount));
     transaction.update(ownerRef, { inventory });
+    transaction.set(ledgerRef, {
+      kind: accept ? 'transfer' : 'transfer-declined',
+      playerId: clean(delivery.senderId, 128), playerName: clean(delivery.senderName, 80) || 'A party member',
+      counterpartyPlayerId: request.auth.uid, counterpartyName: clean(delivery.recipientName, 80) || (accept ? clean(ownerSnapshot.data().displayName, 80) : 'Unnamed player'),
+      itemId: clean(delivery.resourceId, 180), itemName: clean(delivery.label, 120), quantity: quantity(delivery.amount),
+      favorDelta: 0, reputationDelta: 0,
+      note: accept ? 'Player-to-player transfer accepted' : 'Player-to-player transfer declined and returned',
+      createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
+    });
     transaction.delete(deliveryRef);
   });
   return { accepted: accept };

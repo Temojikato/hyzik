@@ -13,7 +13,7 @@ import {
   useToast
 } from "@chakra-ui/react";
 import lootTroveData from "../dataSets/lootTroves.json";
-import { rollLoot, addLootToInventory, RolledLoot } from "../utils/lootLogic";
+import { rollLootSource } from "../services/campaignService";
 import { User } from "firebase/auth";
 import { Item } from "../types/Reyvateils";
 import { useBackDismiss } from "../contexts/BackNavigationContext";
@@ -23,7 +23,7 @@ export interface Tier {
   id: string;
   name: string;
   description: string;
-  loot: { itemName: string; itemChance: number; quantity?: string }[];
+  loot: { itemName: string; itemChance: number; quantity?: string; rarity?: string }[];
   image: string;
   maxAmountOfItems: number;
 }
@@ -41,23 +41,6 @@ interface LootTroveModalProps {
   setInventory: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
-/**
- * Returns a number between 1 and maxItems.
- * Always returns at least 1.
- * For each potential additional item (from 2 to maxItems), there is a 1 in maxItems chance to stop.
- */
-function determineLootCount(maxItems: number): number {
-  let count = 1;
-  for (let i = 2; i <= maxItems; i++) {
-    if (Math.random() < 1 / maxItems) {
-      break;
-    }
-    count++;
-  }
-  console.log(count);
-  return count;
-}
-
 const LootTroveModal: React.FC<LootTroveModalProps> = ({
   isOpen,
   onClose,
@@ -69,25 +52,19 @@ const LootTroveModal: React.FC<LootTroveModalProps> = ({
   const toast = useToast();
   const categories: LootCategory[] = lootTroveData.categories;
   const [selectedCategory, setSelectedCategory] = useState<LootCategory | null>(null);
+  const [rolling, setRolling] = useState(false);
 
   const handleTierClick = async (tier: Tier) => {
-    // Determine how many loot rolls we get from this tier.
-    const lootRollCount = determineLootCount(tier.maxAmountOfItems);
-    let combinedLoot: RolledLoot[] = [];
-    for (let i = 0; i < lootRollCount; i++) {
-      // rollLoot returns an array of RolledLoot for one roll.
-      combinedLoot.push(...rollLoot(tier.loot));
-    }
-
-    // Add the combined loot to the user's inventory.
+    if (!selectedCategory || !currentUser) return;
+    setRolling(true);
     try {
-      console.log(combinedLoot)
-      await addLootToInventory(combinedLoot, currentUser!, toast, setInventory, inventory);
-    } catch (error) {
-      // (Error handling is done within addLootToInventory.)
-      console.error("Error adding loot:", error);
+      const result = await rollLootSource({ sourceKind: 'trove', categoryId: selectedCategory.category, tierId: tier.id });
+      toast({ title: result.jackpot ? 'Jackpot found' : 'Trove opened', description: `${result.count} reward${result.count === 1 ? '' : 's'} sent to your discoveries.`, status: result.jackpot ? 'success' : 'info', duration: 5000, isClosable: true });
+    } catch (caught: any) {
+      toast({ title: 'Could not open trove', description: caught?.message || String(caught), status: 'error', duration: 7000, isClosable: true });
+    } finally {
+      setRolling(false);
     }
-    // Reset and close.
     setSelectedCategory(null);
     onClose();
   };
@@ -124,6 +101,8 @@ const LootTroveModal: React.FC<LootTroveModalProps> = ({
                 <Button
                   key={tier.id}
                   onClick={() => handleTierClick(tier)}
+                  isLoading={rolling}
+                  isDisabled={rolling}
                   width="100%"
                   colorScheme="purple"
                 >

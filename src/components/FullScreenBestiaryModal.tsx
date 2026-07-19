@@ -140,7 +140,7 @@ const FullScreenBestiaryModal: React.FC<FullScreenBestiaryModalProps> = ({
   const tiersArray: MonsterTier[] = useMemo(() => {
     if (!selectedMonster?.Tiers) return [];
     // Convert from Record<string, MonsterTier> to MonsterTier[]
-    const baseArray = Object.entries(selectedMonster.Tiers).map(([_, val]) => val);
+    const baseArray = Object.entries(selectedMonster.Tiers).map(([id, val]) => ({ ...val, id }));
     // Reverse the order if you want oldest => newest or similar
     return baseArray.reverse();
   }, [selectedMonster]);
