@@ -281,9 +281,9 @@ const Home: React.FC = () => {
         handleLogout={handleLogout}
       />
 
-      <Flex mt={4} p={1} bg="blackAlpha.400" borderRadius="xl" w="fit-content" border="1px solid" borderColor="whiteAlpha.300">
-        <Button variant={profileMode === 'social' ? 'solid' : 'ghost'} onClick={() => setProfileMode('social')}>Social profile</Button>
-        <Button ml={1} variant={profileMode === 'combat' ? 'solid' : 'ghost'} onClick={() => setProfileMode('combat')}>
+      <Flex mt={{ base: 2, md: 4 }} p={1} bg="blackAlpha.400" borderRadius="xl" w={{ base: 'full', md: 'fit-content' }} border="1px solid" borderColor="whiteAlpha.300">
+        <Button flex={{ base: 1, md: 'initial' }} size={{ base: 'sm', md: 'md' }} variant={profileMode === 'social' ? 'solid' : 'ghost'} onClick={() => setProfileMode('social')}>Social profile</Button>
+        <Button flex={{ base: 1, md: 'initial' }} size={{ base: 'sm', md: 'md' }} ml={1} variant={profileMode === 'combat' ? 'solid' : 'ghost'} onClick={() => setProfileMode('combat')}>
           Combat profile{campaignState.battleActive ? ' · LIVE' : ''}
         </Button>
       </Flex>

@@ -52,8 +52,8 @@ const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <Flex justify="space-between" align="center" mb={5} gap={4} p={{ base: 3, md: 4 }} bg="rgba(10,14,23,.84)" border="1px solid" borderColor="border" borderRadius="panel" backdropFilter="blur(12px)" position="sticky" top={3} zIndex={1000} boxShadow="panel">
-      <Box minW={0}>
+    <Flex justify="space-between" align="center" mb={{ base: 3, md: 5 }} gap={{ base: 2, md: 4 }} p={{ base: 2, md: 4 }} bg="rgba(10,14,23,.9)" border="1px solid" borderColor="border" borderRadius={{ base: 'xl', md: 'panel' }} backdropFilter="blur(12px)" position="sticky" top={{ base: 1, md: 3 }} zIndex={1000} boxShadow="panel">
+      <Box minW={0} display={{ base: 'none', md: 'block' }}>
        <Heading
         as="h1"
         fontSize={{ base: '2xl', md: '3xl' }}
@@ -68,6 +68,11 @@ const Header: React.FC<HeaderProps> = ({
        <Badge mt={1} colorScheme={timersRunning ? 'green' : 'gray'}>{timersRunning ? 'Session active' : 'Timers paused'}</Badge>
        <HStack spacing={2} display={{ base: 'none', xl: 'flex' }}><Badge colorScheme="purple">Tower link</Badge>{currentSong?.lines[0]?.hymmnos ? <><Text fontSize="xs" color="textMuted">Receiving:</Text><Text fontFamily="Hymmnos" fontSize="sm" color="textHeader" noOfLines={1}>{currentSong.lines[0].hymmnos}</Text></> : <Text fontSize="xs" color="textMuted">Awaiting song telemetry</Text>}</HStack>
       </Box>
+      <Box minW={0} flex="1" display={{ base: 'block', md: 'none' }}>
+        <Text fontSize="sm" fontWeight="bold" color="textHeader" noOfLines={1}>{profile?.displayName || currentUser?.displayName || 'Unnamed Diver'}</Text>
+        <Text fontSize="9px" color="textMuted" noOfLines={1}>{currentUser?.uid}</Text>
+        <Badge mt={0.5} fontSize="9px" colorScheme={timersRunning ? 'green' : 'gray'}>{timersRunning ? 'Session active' : 'Timers paused'}</Badge>
+      </Box>
 
       {/* Mobile Hamburger Menu */}
       <Box display={{ base: 'block', lg: 'none' }}>
@@ -75,6 +80,8 @@ const Header: React.FC<HeaderProps> = ({
           colorScheme="blue"
           variant="outline"
           fontFamily="Hymmnos"
+          size="sm"
+          flexShrink={0}
           onClick={onOpen}
         >Functions</Button>
           <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
