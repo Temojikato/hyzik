@@ -9,7 +9,7 @@ describe('Reyvateil combat catalog', () => {
   it('gives all forty-two Reyvateils complete, distinct identity pools', () => {
     expect(Object.keys(catalog)).toHaveLength(42);
     Object.values(catalog).forEach((profile) => {
-      expect(profile.catalogVersion).toBeGreaterThanOrEqual(2);
+      expect(profile.catalogVersion).toBeGreaterThanOrEqual(3);
       expect(profile.specialtyTitle).toBeTruthy();
       expect(Object.keys(profile.aptitudes)).toEqual(['force', 'finesse', 'guard', 'resonance', 'focus', 'tempo']);
       expect(profile.combatAbilities).toHaveLength(10);
@@ -19,9 +19,18 @@ describe('Reyvateil combat catalog', () => {
       expect(new Set(profile.socialAbilities.map((ability) => ability.id)).size).toBe(10);
       expect(new Set(profile.combatSongs.map((song) => song.id)).size).toBe(profile.combatSongs.length);
       expect(profile.derived.maxHp).toBeGreaterThan(0);
-      expect(profile.derived.defense).toBeGreaterThan(0);
+      expect(profile.derived.defense).toBe(10 + profile.aptitudes.guard + profile.aptitudes.finesse);
+      expect(profile.derived.techniqueAttack).toBe(2 + profile.aptitudes[profile.techniqueAptitude]);
+      expect(profile.growth.aptitudeGrowthOrder).toHaveLength(5);
     });
     expect(new Set(Object.values(catalog).map((profile) => profile.specialtyTitle)).size).toBe(42);
+  });
+
+  it('assigns every aptitude a saving-throw domain across the combat rules', () => {
+    const rules = Object.values(catalog).flatMap((profile) => [...profile.combatAbilities, ...profile.combatSongs]).map((ability) => ability.description).join(' ');
+    ['Force', 'Finesse', 'Guard', 'Resonance', 'Focus', 'Tempo'].forEach((aptitude) => {
+      expect(rules).toContain(`${aptitude} saving throw`);
+    });
   });
 
   it('uses the canonical damage registry and contains no undefined Guard-test language', () => {

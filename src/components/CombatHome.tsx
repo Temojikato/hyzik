@@ -23,21 +23,28 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
   Tooltip,
+  Tr,
   useToast,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { FaBolt, FaChevronDown, FaChevronUp, FaLock, FaShieldHalved, FaVolumeHigh } from 'react-icons/fa6';
+import { FaBolt, FaChevronDown, FaChevronUp, FaCircleQuestion, FaLock, FaShieldHalved, FaVolumeHigh } from 'react-icons/fa6';
 import { useAuth } from '../contexts/AuthContext';
 import { useCampaign } from '../contexts/CampaignContext';
 import { activateCombatAbility, subscribeEncounter } from '../services/campaignService';
 import { Encounter, EncounterParticipant, PlayerCombatProfile, PlayerProfile } from '../types/Campaign';
-import { Ability, CombatAbility, CombatSong, Reyvateil } from '../types/Reyvateils';
+import { Ability, CombatAbility, CombatAptitudeKey, CombatSong, Reyvateil } from '../types/Reyvateils';
 import { getAbilitySpokenForm, resolveAbilityInvocation } from '../utils/abilityHymmnos';
 import { combatDamageTypes } from '../data/combatDamageTypes';
-import { resolveBraceText, resolveCombatText, resolveStrikeText } from '../utils/combatText';
+import { resolveBraceText, resolveCombatText, resolveShoveText, resolveStrikeText } from '../utils/combatText';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const aptitudeLabels: Record<string, { label: string; hint: string }> = {
@@ -55,6 +62,7 @@ const commonActions = (combat: PlayerCombatProfile) => [
   ['universal-sprint', 'Sprint', `Move again up to your full movement (${combat.derived.movement} spaces).`],
   ['universal-withdraw', 'Withdraw', `Move up to ${Math.floor(combat.derived.movement / 2)} spaces without provoking reactions.`],
   ['universal-assist', 'Assist', 'Give one ally advantage on its next relevant attack, saving throw, or aptitude check before your next turn.'],
+  ['universal-shove', 'Shove', resolveShoveText(combat)],
 ];
 
 const actionLabel: Record<string, string> = { action: 'Action', quick: 'Quick', reaction: 'Reaction', passive: 'Passive' };
@@ -246,12 +254,61 @@ const DamageTypeReference: React.FC<{ isOpen: boolean; onClose: () => void }> = 
   </Modal>
 );
 
+const StatsReference: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  combat: PlayerCombatProfile;
+  growthOrder: CombatAptitudeKey[];
+}> = ({ isOpen, onClose, combat, growthOrder }) => {
+  const techniqueLabel = aptitudeLabels[combat.techniqueAptitude]?.label || combat.techniqueAptitude;
+  const rows: Array<{ key: CombatAptitudeKey; job: string; implemented: string; saves: string }> = [
+    { key: 'force', job: 'Power and imposed movement', implemented: 'Force techniques, Strike, Shove', saves: 'Breaking restraints and resisting forced passage' },
+    { key: 'finesse', job: 'Precision and evasion', implemented: 'Defence, Finesse techniques, Strike', saves: 'Dodging bursts, traps, and aimed hazards' },
+    { key: 'guard', job: 'Endurance and stability', implemented: 'Maximum HP, HP growth, Defence, Brace', saves: 'Resisting poison, impact, and displacement' },
+    { key: 'resonance', job: 'Song output and magical force', implemented: 'Song Attack, Resonance techniques', saves: 'Resisting silence and hostile resonance' },
+    { key: 'focus', job: 'Control, perception, and intent', implemented: 'Save DC and Focus-doctrine techniques', saves: 'Resisting fear, deception, and mental control' },
+    { key: 'tempo', job: 'Speed and timing', implemented: 'Initiative, movement, Sprint, Withdraw', saves: 'Escaping zones and timing-based hazards' },
+  ];
+  const derived: Array<[string, string, number]> = [
+    ['Defence', `10 + Guard (${combat.aptitudes.guard}) + Finesse (${combat.aptitudes.finesse})`, combat.derived.defense],
+    ['Initiative', `Tempo (${combat.aptitudes.tempo})`, combat.derived.initiative],
+    ['Technique Attack', `2 + doctrine aptitude: ${techniqueLabel} (${combat.aptitudes[combat.techniqueAptitude]})`, combat.derived.techniqueAttack],
+    ['Song Attack', `2 + Resonance (${combat.aptitudes.resonance})`, combat.derived.songAttack],
+    ['Save Difficulty', `10 + Focus (${combat.aptitudes.focus})`, combat.derived.saveDifficulty],
+    ['Movement', '5 + half Tempo, rounded down', combat.derived.movement],
+    ['Maximum HP', 'Base durability + Guard + level growth', combat.derived.maxHp],
+  ];
+  return <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'full', md: '6xl' }} scrollBehavior="inside">
+    <ModalOverlay />
+    <ModalContent bg="backgroundSecondary" color="textBody">
+      <ModalHeader>Combat stats explained</ModalHeader>
+      <ModalCloseButton />
+      <ModalBody pb={6}>
+        <Text color="textMuted" mb={4}>Every aptitude has a universal job, a saving-throw domain, and at least one direct combat use. Rolls are resolved at the table; the portal supplies live modifiers and tracks turns, uses, Songs, and progression.</Text>
+        <TableContainer border="1px solid" borderColor="whiteAlpha.300" borderRadius="xl" whiteSpace="normal">
+          <Table size="sm" variant="simple">
+            <Thead><Tr><Th>Aptitude</Th><Th>Primary job</Th><Th>Where it is used</Th><Th display={{ base: 'none', lg: 'table-cell' }}>Typical saves</Th></Tr></Thead>
+            <Tbody>{rows.map((row) => <Tr key={row.key}><Td fontWeight="bold">{aptitudeLabels[row.key].label}<Text fontSize="xs" color="textMuted">+{combat.aptitudes[row.key]}</Text></Td><Td>{row.job}</Td><Td>{row.implemented}</Td><Td display={{ base: 'none', lg: 'table-cell' }}>{row.saves}</Td></Tr>)}</Tbody>
+          </Table>
+        </TableContainer>
+        <Heading size="sm" mt={6} mb={3}>Derived values for this profile</Heading>
+        <TableContainer border="1px solid" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Table size="sm"><Thead><Tr><Th>Value</Th><Th>Formula</Th><Th isNumeric>Result</Th></Tr></Thead><Tbody>{derived.map(([label, formula, value]) => <Tr key={label}><Td fontWeight="bold">{label}</Td><Td>{formula}</Td><Td isNumeric fontWeight="bold">{label === 'Initiative' || label.includes('Attack') ? '+' : ''}{value}</Td></Tr>)}</Tbody></Table>
+        </TableContainer>
+        <Box mt={5} p={4} borderRadius="xl" bg="blackAlpha.400"><Text fontWeight="bold">Growth path</Text><Text mt={1} color="textMuted">Automatic doctrine order: {growthOrder.map((key) => aptitudeLabels[key].label).join(' → ')}. Each listed aptitude-increase level advances the next entry, up to the aptitude cap.</Text></Box>
+      </ModalBody>
+    </ModalContent>
+  </Modal>;
+};
+
 const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = ({ reyvateil, profile }) => {
   const { currentUser } = useAuth();
   const { campaignState } = useCampaign();
   const [encounter, setEncounter] = useState<Encounter | null>(null);
   const damageReference = useDisclosure();
+  const statsReference = useDisclosure();
   useBackDismiss(damageReference.isOpen, damageReference.onClose);
+  useBackDismiss(statsReference.isOpen, statsReference.onClose);
   useEffect(() => {
     if (!campaignState.activeEncounterId) { setEncounter(null); return undefined; }
     return subscribeEncounter(campaignState.activeEncounterId, setEncounter, () => setEncounter(null));
@@ -270,13 +327,14 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
     return <Box mt={6} p={8} border="1px solid" borderColor="orange.400" borderRadius="xl"><Heading size="md">Combat profile awaiting synchronization</Heading><Text mt={2}>Your existing Reyvateil is being prepared. An administrator can run the combat migration without changing your social profile.</Text></Box>;
   }
   const combatProfile = profile.combatProfile;
+  const techniqueAptitude = combatProfile.techniqueAptitude || combat.techniqueAptitude;
   const songs = combat.combatSongs || [];
   const activeSong = encounter?.activeSong;
   const activeCombatant = encounter?.participants.find((entry) => entry.id === encounter.turn?.activeParticipantId)?.name;
   const derivedValues = [
     { label: 'Defence', value: combatProfile.derived.defense, icon: <FaShieldHalved /> },
     { label: 'Initiative', value: `+${combatProfile.derived.initiative}`, icon: <FaBolt /> },
-    { label: 'Technique', value: `+${combatProfile.derived.techniqueAttack}` },
+    { label: `Technique (${aptitudeLabels[techniqueAptitude]?.label || techniqueAptitude})`, value: `+${combatProfile.derived.techniqueAttack}` },
     { label: 'Song', value: `+${combatProfile.derived.songAttack}` },
     { label: 'Save DC', value: combatProfile.derived.saveDifficulty },
   ];
@@ -298,7 +356,7 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
         <Box minW="220px" p={4} borderRadius="xl" bg={isTurn ? 'green.900' : 'blackAlpha.400'}><Badge colorScheme={campaignState.battleActive ? 'red' : 'gray'}>{campaignState.battleActive ? `ROUND ${encounter?.turn?.round || 1}` : 'OUT OF COMBAT'}</Badge><Heading size="md" mt={2}>{isTurn ? 'Your turn' : activeCombatant ? `${activeCombatant} is acting` : 'Waiting for initiative'}</Heading>{isTurn && <Text mt={1}>Action {participant?.turnResources?.actionAvailable === false ? 'spent' : 'ready'} · Quick {participant?.turnResources?.quickAvailable === false ? 'spent' : 'ready'}</Text>}</Box>
       </Flex>
 
-      <Box><Heading size={{ base: 'sm', md: 'md' }} mb={{ base: 2, md: 3 }}>Combat aptitudes</Heading><SimpleGrid columns={{ base: 3, md: 3, xl: 6 }} spacing={{ base: 2, md: 3 }}>{Object.entries(combatProfile.aptitudes).map(([key, value]) => <Tooltip key={key} label={aptitudeLabels[key]?.hint}><Box p={{ base: 2, md: 4 }} minH={{ base: '62px', md: 'auto' }} bg="blackAlpha.300" borderRadius={{ base: 'lg', md: 'xl' }} border="1px solid" borderColor="whiteAlpha.300"><Text color="textMuted" fontSize={{ base: '9px', md: 'xs' }} textTransform="uppercase" noOfLines={1}>{aptitudeLabels[key]?.label || key}</Text><Text fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.2" fontWeight="bold">+{value}</Text></Box></Tooltip>)}</SimpleGrid></Box>
+      <Box><Flex justify="space-between" align="center" mb={{ base: 2, md: 3 }}><Heading size={{ base: 'sm', md: 'md' }}>Combat aptitudes</Heading><Button size={{ base: 'xs', md: 'sm' }} variant="ghost" leftIcon={<FaCircleQuestion />} onClick={statsReference.onOpen}>Stats explained</Button></Flex><SimpleGrid columns={{ base: 3, md: 3, xl: 6 }} spacing={{ base: 2, md: 3 }}>{Object.entries(combatProfile.aptitudes).map(([key, value]) => <Tooltip key={key} label={aptitudeLabels[key]?.hint}><Box p={{ base: 2, md: 4 }} minH={{ base: '62px', md: 'auto' }} bg="blackAlpha.300" borderRadius={{ base: 'lg', md: 'xl' }} border="1px solid" borderColor="whiteAlpha.300"><Text color="textMuted" fontSize={{ base: '9px', md: 'xs' }} textTransform="uppercase" noOfLines={1}>{aptitudeLabels[key]?.label || key}</Text><Text fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.2" fontWeight="bold">+{value}</Text></Box></Tooltip>)}</SimpleGrid></Box>
 
       <Box><Flex justify="space-between" align="center" mb={{ base: 2, md: 3 }}><Heading size={{ base: 'sm', md: 'md' }}>Derived values</Heading><Button size={{ base: 'xs', md: 'sm' }} variant="outline" onClick={damageReference.onOpen}>Damage types</Button></Flex><SimpleGrid columns={{ base: 3, md: 5 }} spacing={{ base: 2, md: 3 }}>{derivedValues.map((entry) => <Box key={entry.label} p={{ base: 2, md: 4 }} minH={{ base: '62px', md: 'auto' }} bg="blackAlpha.300" borderRadius={{ base: 'lg', md: 'xl' }}><HStack spacing={1.5}>{entry.icon}<Text fontSize={{ base: '9px', md: 'md' }} color={{ base: 'textMuted', md: 'inherit' }} textTransform={{ base: 'uppercase', md: 'none' }} noOfLines={1}>{entry.label}</Text></HStack><Text fontSize={{ base: 'xl', md: '2xl' }} lineHeight="1.2" fontWeight="bold">{entry.value}</Text></Box>)}</SimpleGrid></Box>
 
@@ -312,10 +370,11 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
         </TabPanels>
       </Tabs>
 
-      <ResponsiveInfoPanel title="Growth and progression"><Text fontSize={{ base: 'sm', md: 'md' }}>Gain {combat.growth.hitPointsPerLevel} maximum HP per level. Raise one aptitude at levels {combat.growth.aptitudeIncreaseLevels.join(', ')} (cap {combat.growth.aptitudeCap}). Inherit another technique at levels {combat.growth.newTechniqueLevels.join(' and ')}. This identity’s {combat.growth.songCapacity}-Song repertoire unlocks further Songs at levels {combat.growth.newSongLevels.join(', ') || '—'}. Evolution becomes possible at level {combat.growth.evolutionLevel}.</Text></ResponsiveInfoPanel>
+      <ResponsiveInfoPanel title="Growth and progression"><Text fontSize={{ base: 'sm', md: 'md' }}>Gain {combat.growth.hitPointsPerLevel} maximum HP per level. Aptitudes increase automatically at levels {combat.growth.aptitudeIncreaseLevels.join(', ')} in this doctrine’s order: {combat.growth.aptitudeGrowthOrder.map((key) => aptitudeLabels[key].label).join(' → ')} (cap {combat.growth.aptitudeCap}). Inherit another technique at levels {combat.growth.newTechniqueLevels.join(' and ')}. This identity’s {combat.growth.songCapacity}-Song repertoire unlocks further Songs at levels {combat.growth.newSongLevels.join(', ') || '—'}. Evolution becomes possible at level {combat.growth.evolutionLevel}.</Text></ResponsiveInfoPanel>
 
       <ResponsiveInfoPanel title="Combat rules"><SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}><Text><b>Attack:</b> roll d20 + the listed attack bonus against the target’s Defence. Meeting or exceeding Defence hits.</Text><Text><b>Saving throw:</b> the target rolls d20 + the named aptitude against the attacker’s Save Difficulty. Advantage means roll twice and keep the higher result.</Text><Text><b>Turn:</b> one Action, one Quick action, movement, and one Reaction before your next turn.</Text><Text><b>Exposed:</b> the next attack against the creature has advantage, then Exposed ends. <b>Rooted:</b> movement becomes 0.</Text><Text><b>Silenced:</b> Hymmnos techniques and Songs cannot be activated. <b>Prone:</b> adjacent attacks have advantage; standing costs half movement.</Text><Text><b>Resistance:</b> halve the affected damage after other reductions. Temporary HP is lost first.</Text><Text><b>Song audibility:</b> a Song only affects creatures able to hear it. Canticles do not distinguish friend from foe. Soundless creatures are immune.</Text><Text><b>Song channel:</b> Verses are instant. A new Canticle interrupts the old one regardless of performer.</Text></SimpleGrid></ResponsiveInfoPanel>
       <DamageTypeReference isOpen={damageReference.isOpen} onClose={damageReference.onClose} />
+      <StatsReference isOpen={statsReference.isOpen} onClose={statsReference.onClose} combat={{ ...combatProfile, techniqueAptitude }} growthOrder={combat.growth.aptitudeGrowthOrder} />
     </VStack>
   );
 };

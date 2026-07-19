@@ -53,6 +53,70 @@ const deterministicSubset = (ids, count, seed) => {
     .map((entry) => entry.id);
 };
 
+const PLAYER_COMBAT_PROFILE_VERSION = 2;
+const roleTechniqueAptitude = {
+  vanguard: 'force', bulwark: 'force', striker: 'finesse', skirmisher: 'finesse',
+  controller: 'resonance', support: 'focus', channeler: 'resonance', tactician: 'focus',
+};
+const buildPlayerCombatState = ({ combat, user = {}, uid, reyvateilId, level: requestedLevel }) => {
+  const level = Math.max(1, Math.min(20, Math.floor(Number(requestedLevel || user.reyvateilLevel || user.level || 1))));
+  const aptitudes = { ...combat.aptitudes };
+  const growth = combat.growth || {};
+  const growthOrder = Array.isArray(growth.aptitudeGrowthOrder) && growth.aptitudeGrowthOrder.length
+    ? growth.aptitudeGrowthOrder
+    : ['focus', 'guard', 'resonance', 'tempo', 'force'];
+  const increaseCount = (growth.aptitudeIncreaseLevels || []).filter((unlockLevel) => level >= Number(unlockLevel)).length;
+  for (let index = 0; index < increaseCount; index += 1) {
+    const key = growthOrder[index % growthOrder.length];
+    aptitudes[key] = Math.min(Number(growth.aptitudeCap || 7), Number(aptitudes[key] || 0) + 1);
+  }
+  const techniqueAptitude = combat.techniqueAptitude || roleTechniqueAptitude[combat.role] || 'focus';
+  const techniqueCount = Math.min(
+    combat.combatAbilities.length,
+    5 + (growth.newTechniqueLevels || []).filter((unlockLevel) => level >= Number(unlockLevel)).length,
+  );
+  const baseGuard = Number(combat.aptitudes.guard || 0);
+  const maxHp = Number(combat.derived.maxHp || 1)
+    + Math.max(0, level - 1) * Number(growth.hitPointsPerLevel || (3 + baseGuard))
+    + Math.max(0, aptitudes.guard - baseGuard) * 4;
+  const derived = {
+    maxHp,
+    defense: 10 + aptitudes.guard + aptitudes.finesse,
+    initiative: aptitudes.tempo,
+    techniqueAttack: 2 + aptitudes[techniqueAptitude],
+    songAttack: 2 + aptitudes.resonance,
+    saveDifficulty: 10 + aptitudes.focus,
+    movement: 5 + Math.floor(aptitudes.tempo / 2),
+  };
+  const inheritedCombatAbilityIds = deterministicSubset(
+    combat.combatAbilities.map((ability) => ability.id), techniqueCount, `${uid}:${reyvateilId}:combat-v1`,
+  );
+  const inheritedSocialAbilityIds = Array.isArray(user.combatProfile?.inheritedSocialAbilityIds) && user.combatProfile.inheritedSocialAbilityIds.length
+    ? user.combatProfile.inheritedSocialAbilityIds
+    : deterministicSubset(combat.socialAbilities.map((ability) => ability.id), 5, `${uid}:${reyvateilId}:social-v1`);
+  const oldMaxHp = Number(user.combatStats?.maxHp);
+  const oldCurrentHp = Number(user.combatStats?.currentHp);
+  const currentHp = Number.isFinite(oldCurrentHp) && oldCurrentHp >= 0
+    ? Math.min(maxHp, oldCurrentHp + (Number.isFinite(oldMaxHp) ? Math.max(0, maxHp - oldMaxHp) : 0))
+    : maxHp;
+  return {
+    combatProfile: {
+      version: PLAYER_COMBAT_PROFILE_VERSION,
+      catalogVersion: Number(combat.catalogVersion || 0),
+      specialtyTitle: clean(combat.specialtyTitle, 120),
+      role: clean(combat.role, 40),
+      level,
+      techniqueAptitude,
+      aptitudes,
+      derived,
+      inheritedCombatAbilityIds,
+      inheritedSocialAbilityIds,
+      assignedAt: user.combatProfile?.assignedAt || FieldValue.serverTimestamp(),
+    },
+    combatStats: { currentHp, maxHp, armorClass: derived.defense },
+  };
+};
+
 const freshTurnResources = () => ({
   actionAvailable: true,
   quickAvailable: true,
@@ -67,6 +131,7 @@ const universalCombatAbilities = {
   'universal-sprint': { id: 'universal-sprint', name: 'Sprint', actionType: 'action', reset: 'turn', uses: 1 },
   'universal-withdraw': { id: 'universal-withdraw', name: 'Withdraw', actionType: 'action', reset: 'turn', uses: 1 },
   'universal-assist': { id: 'universal-assist', name: 'Assist', actionType: 'action', reset: 'turn', uses: 1 },
+  'universal-shove': { id: 'universal-shove', name: 'Shove', actionType: 'action', reset: 'turn', uses: 1 },
 };
 
 const initiativeSequence = (participants) => participants
@@ -87,43 +152,23 @@ exports.selectReyvateilProfile = onCall({ region: 'europe-west1', cors: true }, 
   if (!combat || !Array.isArray(combat.combatAbilities) || combat.combatAbilities.length < 10 || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4 || !Array.isArray(combat.socialAbilities) || combat.socialAbilities.length < 10) {
     throw new HttpsError('failed-precondition', 'That Reyvateil combat profile has not been prepared yet.');
   }
-  const inheritedCombatAbilityIds = deterministicSubset(
-    combat.combatAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:combat-v1`,
-  );
-  const inheritedSocialAbilityIds = deterministicSubset(
-    combat.socialAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:social-v1`,
-  );
   const userRef = db.collection('users').doc(request.auth.uid);
   if (Number(reyvateil.combat?.catalogVersion || 0) < Number(combat.catalogVersion || 0)) {
     await reyvateilSnapshot.ref.set({ combat }, { merge: true });
   }
+  const combatState = buildPlayerCombatState({ combat, uid: request.auth.uid, reyvateilId, level: 1 });
   await userRef.set({
     reyvateilId,
     reyvateilName: clean(reyvateil.name, 100),
     reyvateilLevel: 1,
     ...(imageUrl ? { reyvateilImageUrl: imageUrl } : {}),
-    combatProfile: {
-      version: 1,
-      specialtyTitle: clean(combat.specialtyTitle, 120),
-      role: clean(combat.role, 40),
-      level: 1,
-      aptitudes: combat.aptitudes,
-      derived: combat.derived,
-      inheritedCombatAbilityIds,
-      inheritedSocialAbilityIds,
-      assignedAt: FieldValue.serverTimestamp(),
-    },
-    combatStats: {
-      currentHp: Number(combat.derived.maxHp),
-      maxHp: Number(combat.derived.maxHp),
-      armorClass: Number(combat.derived.defense),
-    },
+    ...combatState,
   }, { merge: true });
   return {
     reyvateilId,
     specialtyTitle: combat.specialtyTitle,
-    inheritedCombatAbilityIds,
-    inheritedSocialAbilityIds,
+    inheritedCombatAbilityIds: combatState.combatProfile.inheritedCombatAbilityIds,
+    inheritedSocialAbilityIds: combatState.combatProfile.inheritedSocialAbilityIds,
   };
 });
 
@@ -139,26 +184,10 @@ exports.adminSeedCombatProfiles = onCall({ region: 'europe-west1', cors: true, t
       const user = snapshot.data();
       const combat = combatCatalog[user.reyvateilId];
       if (!combat) return [];
-      const previousHp = Number(user.combatStats?.currentHp);
-      const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
+      const combatState = buildPlayerCombatState({ combat, user, uid: snapshot.id, reyvateilId: user.reyvateilId });
       return [{ type: 'user', ref: snapshot.ref, data: {
         reyvateilName: user.reyvateilName || names[user.reyvateilId],
-        combatProfile: {
-          version: 1,
-          specialtyTitle: combat.specialtyTitle,
-          role: combat.role,
-          level: Number(user.reyvateilLevel || user.level || 1),
-          aptitudes: combat.aptitudes,
-          derived: combat.derived,
-          inheritedCombatAbilityIds: Array.isArray(user.combatProfile?.inheritedCombatAbilityIds) && user.combatProfile.inheritedCombatAbilityIds.length
-            ? user.combatProfile.inheritedCombatAbilityIds
-            : deterministicSubset(combat.combatAbilities.map((ability) => ability.id), 5, `${snapshot.id}:${user.reyvateilId}:combat-v1`),
-          inheritedSocialAbilityIds: Array.isArray(user.combatProfile?.inheritedSocialAbilityIds) && user.combatProfile.inheritedSocialAbilityIds.length
-            ? user.combatProfile.inheritedSocialAbilityIds
-            : combat.socialAbilities.slice(0, 5).map((ability) => ability.id),
-          assignedAt: user.combatProfile?.assignedAt || FieldValue.serverTimestamp(),
-        },
-        combatStats: { currentHp, maxHp: combat.derived.maxHp, armorClass: combat.derived.defense },
+        ...combatState,
       } }];
     }),
   ];
@@ -180,7 +209,6 @@ exports.ensureCombatProfile = onCall({ region: 'europe-west1', cors: true }, asy
   const userSnapshot = await userRef.get();
   if (!userSnapshot.exists) throw new HttpsError('not-found', 'Your player profile is missing.');
   const user = userSnapshot.data();
-  if (user.combatProfile?.version >= 1) return { initialized: false };
   const reyvateilId = clean(user.reyvateilId, 80);
   if (!reyvateilId) throw new HttpsError('failed-precondition', 'Choose a Reyvateil before preparing combat.');
   const reyvateilRef = db.collection('reyvateils').doc(reyvateilId);
@@ -188,24 +216,17 @@ exports.ensureCombatProfile = onCall({ region: 'europe-west1', cors: true }, asy
   const registeredCombat = reyvateilSnapshot.data()?.combat;
   const combat = currentCombatCatalog(registeredCombat, reyvateilId);
   if (!combat || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4) throw new HttpsError('failed-precondition', 'This Reyvateil has no complete combat and Song catalog.');
-  const previousHp = Number(user.combatStats?.currentHp);
-  const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
+  const level = Math.max(1, Math.floor(Number(user.reyvateilLevel || user.level || 1)));
+  const alreadyCurrent = Number(user.combatProfile?.version || 0) >= PLAYER_COMBAT_PROFILE_VERSION
+    && Number(user.combatProfile?.catalogVersion || 0) >= Number(combat.catalogVersion || 0)
+    && Number(user.combatProfile?.level || 0) === level;
+  if (alreadyCurrent) return { initialized: false };
+  const combatState = buildPlayerCombatState({ combat, user, uid: request.auth.uid, reyvateilId, level });
   const batch = db.batch();
   batch.set(reyvateilRef, { combat }, { merge: true });
   batch.set(userRef, {
     reyvateilName: user.reyvateilName || clean(reyvateilSnapshot.data()?.name, 100) || reyvateilId,
-    combatProfile: {
-      version: 1,
-      specialtyTitle: combat.specialtyTitle,
-      role: combat.role,
-      level: Number(user.reyvateilLevel || user.level || 1),
-      aptitudes: combat.aptitudes,
-      derived: combat.derived,
-      inheritedCombatAbilityIds: deterministicSubset(combat.combatAbilities.map((ability) => ability.id), 5, `${request.auth.uid}:${reyvateilId}:combat-v1`),
-      inheritedSocialAbilityIds: combat.socialAbilities.slice(0, 5).map((ability) => ability.id),
-      assignedAt: FieldValue.serverTimestamp(),
-    },
-    combatStats: { currentHp, maxHp: combat.derived.maxHp, armorClass: combat.derived.defense },
+    ...combatState,
   }, { merge: true });
   await batch.commit();
   return { initialized: true, specialtyTitle: combat.specialtyTitle };

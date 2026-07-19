@@ -9,6 +9,35 @@ This file is the campaign-facing source of truth for damage vocabulary and comba
 - Player-facing descriptions must resolve the acting player's numbers. They must say `1d10 + 4`, not `1d10 + Force`.
 - There is no mechanic called a "Guard test." Guard may be named as a saving-throw aptitude when an effect genuinely calls for one.
 
+## Combat aptitudes
+
+Every aptitude has a universal job. An aptitude should never exist only as flavor or be silently replaced by whichever other aptitude is higher.
+
+| Aptitude | Universal job | Direct implementations | Typical saving throws |
+| --- | --- | --- | --- |
+| Force | Power and imposed movement | Force-doctrine Technique Attack, Strike, Shove | Breaking restraints and resisting forced passage |
+| Finesse | Precision and evasion | Defence, Finesse-doctrine Technique Attack, Strike | Dodging bursts, traps, and aimed hazards |
+| Guard | Endurance and stability | Maximum HP, HP growth, Defence, Brace | Poison, impact, and displacement |
+| Resonance | Song output and magical force | Song Attack, Resonance-doctrine Technique Attack | Silence and hostile resonance |
+| Focus | Control, perception, and intent | Save Difficulty, Focus-doctrine Technique Attack, tactical aid | Fear, deception, and mental control |
+| Tempo | Speed and timing | Initiative, movement, Sprint, Withdraw | Escaping zones and timing hazards |
+
+### Derived formulas
+
+- **Defence:** `10 + Guard + Finesse`.
+- **Initiative:** `Tempo`.
+- **Technique Attack:** `2 + the Reyvateil doctrine's declared technique aptitude`. Vanguard and Bulwark use Force; Striker and Skirmisher use Finesse; Controller and Channeler use Resonance; Support and Tactician use Focus.
+- **Song Attack:** `2 + Resonance`.
+- **Save Difficulty:** `10 + Focus`.
+- **Movement:** `5 + floor(Tempo / 2)` spaces.
+- **Maximum HP:** the Reyvateil's level-one base, plus its HP-per-level growth and any Guard increases.
+
+Attack rolls, saving throws, damage, positioning, and conditions are resolved at the table. The server authoritatively tracks initiative state, available actions and reactions, limited uses, active Canticles, level gates, and profile progression.
+
+### Growth
+
+Combat level follows `reyvateilLevel`. Each doctrine has a deterministic aptitude growth order; reaching a listed aptitude-increase level raises the next aptitude in that order up to its cap. Maximum HP, Defence, movement, attacks, Save Difficulty, and inherited Technique count are recalculated automatically. New Techniques join the player's deterministic inheritance pool at the doctrine's listed levels, while Songs reveal according to their own level gates.
+
 ## Canonical damage types
 
 There is deliberately no universal element wheel. A monster, weapon, item, Song, or feature owns its specific `resistances`, `vulnerabilities`, and `immunities`. Never infer those from the type alone.

@@ -1,10 +1,11 @@
 {
   "thundara": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "thundara",
     "specialtyTitle": "Stormbreak Vanguard",
     "role": "vanguard",
     "damageType": "lightning",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 3,
@@ -30,6 +31,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "force",
+        "guard",
+        "tempo",
+        "resonance",
+        "focus"
       ],
       "newTechniqueLevels": [
         3,
@@ -412,11 +420,12 @@
     ]
   },
   "gronk": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "gronk",
     "specialtyTitle": "Lithic Bastion",
     "role": "bulwark",
     "damageType": "stone",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 2,
@@ -427,7 +436,7 @@
     },
     "derived": {
       "maxHp": 44,
-      "defense": 19,
+      "defense": 17,
       "initiative": 1,
       "techniqueAttack": 6,
       "songAttack": 4,
@@ -442,6 +451,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "guard",
+        "force",
+        "focus",
+        "resonance",
+        "tempo"
       ],
       "newTechniqueLevels": [
         3,
@@ -824,11 +840,12 @@
     ]
   },
   "ragnor": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "ragnor",
     "specialtyTitle": "Cinderwake Ravager",
     "role": "vanguard",
     "damageType": "fire",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 5,
       "finesse": 3,
@@ -854,6 +871,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "force",
+        "guard",
+        "tempo",
+        "resonance",
+        "focus"
       ],
       "newTechniqueLevels": [
         3,
@@ -1236,11 +1260,12 @@
     ]
   },
   "melodia": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "melodia",
     "specialtyTitle": "Canticle Conductor",
     "role": "support",
     "damageType": "sonic",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -1251,9 +1276,9 @@
     },
     "derived": {
       "maxHp": 24,
-      "defense": 16,
+      "defense": 15,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -1266,6 +1291,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -1699,11 +1731,12 @@
     ]
   },
   "harmonix": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "harmonix",
     "specialtyTitle": "Resonance Weaver",
     "role": "controller",
     "damageType": "sonic",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -1714,9 +1747,9 @@
     },
     "derived": {
       "maxHp": 24,
-      "defense": 17,
+      "defense": 15,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -1729,6 +1762,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -1766,7 +1806,7 @@
       {
         "id": "harmonix-combat-prismatic-echo-field",
         "name": "Prismatic Echo Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -1784,7 +1824,7 @@
       {
         "id": "harmonix-combat-dissonant-distort",
         "name": "Dissonant Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -1892,7 +1932,7 @@
       {
         "id": "harmonix-combat-dissonant-closed-world",
         "name": "Dissonant Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -1955,7 +1995,7 @@
       {
         "id": "harmonix-song-prismatic-echo-dissonance-verse",
         "name": "Prismatic Echo Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -2162,11 +2202,12 @@
     ]
   },
   "lyra": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "lyra",
     "specialtyTitle": "Valkyric Virtuoso",
     "role": "tactician",
     "damageType": "sonic",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 4,
@@ -2192,6 +2233,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "tempo",
+        "resonance",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -2626,11 +2674,12 @@
     ]
   },
   "serapha": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "serapha",
     "specialtyTitle": "Dawnward Hierophant",
     "role": "support",
     "damageType": "radiant",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 2,
@@ -2641,9 +2690,9 @@
     },
     "derived": {
       "maxHp": 32,
-      "defense": 19,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 4,
+      "techniqueAttack": 7,
       "songAttack": 6,
       "saveDifficulty": 15,
       "movement": 6
@@ -2656,6 +2705,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -3090,11 +3146,12 @@
     ]
   },
   "lumiel": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "lumiel",
     "specialtyTitle": "Aurora Theurge",
     "role": "channeler",
     "damageType": "radiant",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -3105,9 +3162,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -3120,6 +3177,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "resonance",
+        "focus",
+        "tempo",
+        "guard",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -3283,7 +3347,7 @@
       {
         "id": "lumiel-combat-crystal-dawn-terminal-verse",
         "name": "Crystal Dawn Terminal Verse",
-        "description": "One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance radiant damage on failure or half on success.",
+        "description": "One target within 8 spaces makes a Finesse saving throw against your Save Difficulty, taking 5d8 + Resonance radiant damage on failure or half on success.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -3553,11 +3617,12 @@
     ]
   },
   "vespera": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "vespera",
     "specialtyTitle": "Twilight Confessor",
     "role": "controller",
     "damageType": "shadow",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -3568,9 +3633,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 18,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 6,
       "saveDifficulty": 15,
       "movement": 6
@@ -3583,6 +3648,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -3621,7 +3693,7 @@
       {
         "id": "vespera-combat-moonless-field",
         "name": "Moonless Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -3639,7 +3711,7 @@
       {
         "id": "vespera-combat-dreaming-dusk-distort",
         "name": "Dreaming Dusk Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -3747,7 +3819,7 @@
       {
         "id": "vespera-combat-dreaming-dusk-closed-world",
         "name": "Dreaming Dusk Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -3810,7 +3882,7 @@
       {
         "id": "vespera-song-moonless-dissonance-verse",
         "name": "Moonless Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -4017,11 +4089,12 @@
     ]
   },
   "sylvane": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "sylvane",
     "specialtyTitle": "Verdant Cantor",
     "role": "support",
     "damageType": "nature",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -4032,9 +4105,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 6,
       "saveDifficulty": 14,
       "movement": 6
@@ -4047,6 +4120,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -4481,11 +4561,12 @@
     ]
   },
   "faelith": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "faelith",
     "specialtyTitle": "Wildbloom Shepherd",
     "role": "controller",
     "damageType": "nature",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 3,
       "finesse": 3,
@@ -4496,9 +4577,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 6,
       "saveDifficulty": 14,
       "movement": 6
@@ -4511,6 +4592,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -4549,7 +4637,7 @@
       {
         "id": "faelith-combat-antlered-field",
         "name": "Antlered Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -4567,7 +4655,7 @@
       {
         "id": "faelith-combat-sporewake-distort",
         "name": "Sporewake Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -4675,7 +4763,7 @@
       {
         "id": "faelith-combat-sporewake-closed-world",
         "name": "Sporewake Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -4738,7 +4826,7 @@
       {
         "id": "faelith-song-antlered-dissonance-verse",
         "name": "Antlered Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -4945,11 +5033,12 @@
     ]
   },
   "terralyn": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "terralyn",
     "specialtyTitle": "Deepstone Warden",
     "role": "bulwark",
     "damageType": "stone",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 2,
@@ -4960,7 +5049,7 @@
     },
     "derived": {
       "maxHp": 44,
-      "defense": 19,
+      "defense": 17,
       "initiative": 1,
       "techniqueAttack": 6,
       "songAttack": 5,
@@ -4975,6 +5064,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "guard",
+        "force",
+        "focus",
+        "resonance",
+        "tempo"
       ],
       "newTechniqueLevels": [
         3,
@@ -5357,11 +5453,12 @@
     ]
   },
   "valora": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "valora",
     "specialtyTitle": "Iron Oathkeeper",
     "role": "bulwark",
     "damageType": "metal",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 3,
@@ -5387,6 +5484,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "guard",
+        "force",
+        "focus",
+        "resonance",
+        "tempo"
       ],
       "newTechniqueLevels": [
         3,
@@ -5769,11 +5873,12 @@
     ]
   },
   "arcanix": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "arcanix",
     "specialtyTitle": "Kinetic Duelist",
     "role": "skirmisher",
     "damageType": "force",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -5799,6 +5904,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "tempo",
+        "finesse",
+        "focus",
+        "force",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -6181,11 +6293,12 @@
     ]
   },
   "sentora": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "sentora",
     "specialtyTitle": "Runeguard Marshal",
     "role": "tactician",
     "damageType": "metal",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 3,
       "finesse": 3,
@@ -6196,9 +6309,9 @@
     },
     "derived": {
       "maxHp": 32,
-      "defense": 18,
+      "defense": 17,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 5,
       "saveDifficulty": 14,
       "movement": 6
@@ -6211,6 +6324,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "tempo",
+        "resonance",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -6593,11 +6713,12 @@
     ]
   },
   "zenara": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "zenara",
     "specialtyTitle": "Stillwater Adept",
     "role": "skirmisher",
     "damageType": "psychic",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -6623,6 +6744,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "tempo",
+        "finesse",
+        "focus",
+        "force",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -7005,11 +7133,12 @@
     ]
   },
   "kinetix": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "kinetix",
     "specialtyTitle": "Velocity Savant",
     "role": "skirmisher",
     "damageType": "force",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -7035,6 +7164,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "tempo",
+        "finesse",
+        "focus",
+        "force",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -7417,11 +7553,12 @@
     ]
   },
   "serenix": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "serenix",
     "specialtyTitle": "Serene Tempest",
     "role": "controller",
     "damageType": "psychic",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 4,
@@ -7432,9 +7569,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 18,
+      "defense": 17,
       "initiative": 3,
-      "techniqueAttack": 6,
+      "techniqueAttack": 5,
       "songAttack": 5,
       "saveDifficulty": 15,
       "movement": 6
@@ -7447,6 +7584,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -7485,7 +7629,7 @@
       {
         "id": "serenix-combat-mindful-storm-field",
         "name": "Mindful Storm Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -7503,7 +7647,7 @@
       {
         "id": "serenix-combat-quiet-river-distort",
         "name": "Quiet River Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -7611,7 +7755,7 @@
       {
         "id": "serenix-combat-quiet-river-closed-world",
         "name": "Quiet River Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -7674,7 +7818,7 @@
       {
         "id": "serenix-song-mindful-storm-dissonance-verse",
         "name": "Mindful Storm Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -7881,11 +8025,12 @@
     ]
   },
   "radiant": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "radiant",
     "specialtyTitle": "Consecrated Smith",
     "role": "bulwark",
     "damageType": "radiant",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 2,
@@ -7896,7 +8041,7 @@
     },
     "derived": {
       "maxHp": 44,
-      "defense": 19,
+      "defense": 17,
       "initiative": 2,
       "techniqueAttack": 6,
       "songAttack": 5,
@@ -7911,6 +8056,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "guard",
+        "force",
+        "focus",
+        "resonance",
+        "tempo"
       ],
       "newTechniqueLevels": [
         3,
@@ -8293,11 +8445,12 @@
     ]
   },
   "valorin": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "valorin",
     "specialtyTitle": "Sigilbound Custodian",
     "role": "support",
     "damageType": "radiant",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 3,
       "finesse": 2,
@@ -8308,9 +8461,9 @@
     },
     "derived": {
       "maxHp": 36,
-      "defense": 19,
+      "defense": 17,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 5,
       "saveDifficulty": 14,
       "movement": 6
@@ -8323,6 +8476,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -8757,11 +8917,12 @@
     ]
   },
   "etherea": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "etherea",
     "specialtyTitle": "Celestial Intercessor",
     "role": "support",
     "damageType": "radiant",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -8772,9 +8933,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 18,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -8787,6 +8948,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -9220,11 +9388,12 @@
     ]
   },
   "sylvanna": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "sylvanna",
     "specialtyTitle": "Thornpath Stalker",
     "role": "striker",
     "damageType": "nature",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -9250,6 +9419,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -9632,11 +9808,12 @@
     ]
   },
   "windrunner": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "windrunner",
     "specialtyTitle": "Galecrest Lancer",
     "role": "skirmisher",
     "damageType": "wind",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -9662,6 +9839,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "tempo",
+        "finesse",
+        "focus",
+        "force",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -10044,11 +10228,12 @@
     ]
   },
   "falconis": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "falconis",
     "specialtyTitle": "Talon-Eye Huntress",
     "role": "striker",
     "damageType": "piercing",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -10074,6 +10259,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -10456,11 +10648,12 @@
     ]
   },
   "shadowlyn": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "shadowlyn",
     "specialtyTitle": "Umbral Infiltrator",
     "role": "striker",
     "damageType": "shadow",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 2,
       "finesse": 5,
@@ -10486,6 +10679,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -10868,11 +11068,12 @@
     ]
   },
   "whisper": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "whisper",
     "specialtyTitle": "Hushblade Savant",
     "role": "controller",
     "damageType": "shadow",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 5,
@@ -10885,7 +11086,7 @@
       "maxHp": 24,
       "defense": 17,
       "initiative": 4,
-      "techniqueAttack": 7,
+      "techniqueAttack": 5,
       "songAttack": 5,
       "saveDifficulty": 14,
       "movement": 7
@@ -10898,6 +11099,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -10936,7 +11144,7 @@
       {
         "id": "whisper-combat-silken-dark-field",
         "name": "Silken Dark Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -10954,7 +11162,7 @@
       {
         "id": "whisper-combat-whispered-hex-distort",
         "name": "Whispered Hex Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -11062,7 +11270,7 @@
       {
         "id": "whisper-combat-whispered-hex-closed-world",
         "name": "Whispered Hex Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -11125,7 +11333,7 @@
       {
         "id": "whisper-song-silken-dark-dissonance-verse",
         "name": "Silken Dark Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -11332,11 +11540,12 @@
     ]
   },
   "nightshade": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "nightshade",
     "specialtyTitle": "Nocturne Venefex",
     "role": "striker",
     "damageType": "poison",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 5,
@@ -11362,6 +11571,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -11744,11 +11960,12 @@
     ]
   },
   "emberlyn": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "emberlyn",
     "specialtyTitle": "Furnace Cantor",
     "role": "channeler",
     "damageType": "fire",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -11759,9 +11976,9 @@
     },
     "derived": {
       "maxHp": 24,
-      "defense": 16,
+      "defense": 15,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -11774,6 +11991,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "resonance",
+        "focus",
+        "tempo",
+        "guard",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -11937,7 +12161,7 @@
       {
         "id": "emberlyn-combat-blazing-rune-terminal-verse",
         "name": "Blazing Rune Terminal Verse",
-        "description": "One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance fire damage on failure or half on success.",
+        "description": "One target within 8 spaces makes a Finesse saving throw against your Save Difficulty, taking 5d8 + Resonance fire damage on failure or half on success.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -12207,11 +12431,12 @@
     ]
   },
   "frostia": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "frostia",
     "specialtyTitle": "Rimeglass Arcanist",
     "role": "controller",
     "damageType": "frost",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -12222,9 +12447,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 18,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -12237,6 +12462,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -12274,7 +12506,7 @@
       {
         "id": "frostia-combat-true-frost-field",
         "name": "True Frost Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -12292,7 +12524,7 @@
       {
         "id": "frostia-combat-crystal-winter-distort",
         "name": "Crystal Winter Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -12400,7 +12632,7 @@
       {
         "id": "frostia-combat-crystal-winter-closed-world",
         "name": "Crystal Winter Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -12463,7 +12695,7 @@
       {
         "id": "frostia-song-true-frost-dissonance-verse",
         "name": "True Frost Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -12670,11 +12902,12 @@
     ]
   },
   "storma": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "storma",
     "specialtyTitle": "Voltaic Invoker",
     "role": "channeler",
     "damageType": "lightning",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 4,
@@ -12687,7 +12920,7 @@
       "maxHp": 24,
       "defense": 16,
       "initiative": 4,
-      "techniqueAttack": 6,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 13,
       "movement": 7
@@ -12700,6 +12933,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "resonance",
+        "focus",
+        "tempo",
+        "guard",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -12863,7 +13103,7 @@
       {
         "id": "storma-combat-stormhum-terminal-verse",
         "name": "Stormhum Terminal Verse",
-        "description": "One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance lightning damage on failure or half on success.",
+        "description": "One target within 8 spaces makes a Finesse saving throw against your Save Difficulty, taking 5d8 + Resonance lightning damage on failure or half on success.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -13133,11 +13373,12 @@
     ]
   },
   "nyxara": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "nyxara",
     "specialtyTitle": "Starless Occultist",
     "role": "controller",
     "damageType": "void",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -13148,9 +13389,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 18,
+      "defense": 16,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -13163,6 +13404,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -13200,7 +13448,7 @@
       {
         "id": "nyxara-combat-witchlight-field",
         "name": "Witchlight Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -13218,7 +13466,7 @@
       {
         "id": "nyxara-combat-deepsea-veil-distort",
         "name": "Deepsea Veil Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -13326,7 +13574,7 @@
       {
         "id": "nyxara-combat-deepsea-veil-closed-world",
         "name": "Deepsea Veil Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -13389,7 +13637,7 @@
       {
         "id": "nyxara-song-witchlight-dissonance-verse",
         "name": "Witchlight Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -13596,11 +13844,12 @@
     ]
   },
   "voidwing": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "voidwing",
     "specialtyTitle": "Abyssal Nocturnist",
     "role": "channeler",
     "damageType": "void",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -13611,9 +13860,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -13626,6 +13875,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "resonance",
+        "focus",
+        "tempo",
+        "guard",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -13789,7 +14045,7 @@
       {
         "id": "voidwing-combat-miasmic-terminal-verse",
         "name": "Miasmic Terminal Verse",
-        "description": "One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance void damage on failure or half on success.",
+        "description": "One target within 8 spaces makes a Finesse saving throw against your Save Difficulty, taking 5d8 + Resonance void damage on failure or half on success.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -14059,11 +14315,12 @@
     ]
   },
   "eclipsa": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "eclipsa",
     "specialtyTitle": "Eclipse Sovereign",
     "role": "tactician",
     "damageType": "shadow",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 4,
@@ -14089,6 +14346,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "tempo",
+        "resonance",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -14471,11 +14735,12 @@
     ]
   },
   "arcanis": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "arcanis",
     "specialtyTitle": "Runescript Magister",
     "role": "tactician",
     "damageType": "arcane",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -14486,9 +14751,9 @@
     },
     "derived": {
       "maxHp": 24,
-      "defense": 17,
+      "defense": 15,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -14501,6 +14766,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "tempo",
+        "resonance",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -14934,11 +15206,12 @@
     ]
   },
   "mystara": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "mystara",
     "specialtyTitle": "Aetheric Restorer",
     "role": "support",
     "damageType": "arcane",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -14949,9 +15222,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -14964,6 +15237,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -15397,11 +15677,12 @@
     ]
   },
   "enchantra": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "enchantra",
     "specialtyTitle": "Glyphweave Architect",
     "role": "controller",
     "damageType": "arcane",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -15412,9 +15693,9 @@
     },
     "derived": {
       "maxHp": 24,
-      "defense": 17,
+      "defense": 15,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 7,
       "songAttack": 7,
       "saveDifficulty": 15,
       "movement": 6
@@ -15427,6 +15708,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -15464,7 +15752,7 @@
       {
         "id": "enchantra-combat-enchanting-field",
         "name": "Enchanting Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -15482,7 +15770,7 @@
       {
         "id": "enchantra-combat-lexicon-distort",
         "name": "Lexicon Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -15590,7 +15878,7 @@
       {
         "id": "enchantra-combat-lexicon-closed-world",
         "name": "Lexicon Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -15653,7 +15941,7 @@
       {
         "id": "enchantra-song-enchanting-dissonance-verse",
         "name": "Enchanting Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -15860,11 +16148,12 @@
     ]
   },
   "cogwyn": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "cogwyn",
     "specialtyTitle": "Clockwork Ordinator",
     "role": "tactician",
     "damageType": "metal",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 3,
       "finesse": 3,
@@ -15875,9 +16164,9 @@
     },
     "derived": {
       "maxHp": 32,
-      "defense": 18,
+      "defense": 17,
       "initiative": 2,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 6,
       "saveDifficulty": 14,
       "movement": 6
@@ -15890,6 +16179,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "tempo",
+        "resonance",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -16272,11 +16568,12 @@
     ]
   },
   "fluxara": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "fluxara",
     "specialtyTitle": "Circuitflow Savant",
     "role": "support",
     "damageType": "force",
+    "techniqueAptitude": "focus",
     "aptitudes": {
       "force": 2,
       "finesse": 3,
@@ -16287,9 +16584,9 @@
     },
     "derived": {
       "maxHp": 28,
-      "defense": 17,
+      "defense": 16,
       "initiative": 3,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 7,
       "saveDifficulty": 14,
       "movement": 6
@@ -16302,6 +16599,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "guard",
+        "tempo",
+        "finesse"
       ],
       "newTechniqueLevels": [
         3,
@@ -16735,11 +17039,12 @@
     ]
   },
   "gearlock": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "gearlock",
     "specialtyTitle": "Malfunction Artillerist",
     "role": "striker",
     "damageType": "metal",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 3,
       "finesse": 4,
@@ -16765,6 +17070,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,
@@ -17147,11 +17459,12 @@
     ]
   },
   "crimsonis": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "crimsonis",
     "specialtyTitle": "Sanguine Puppeteer",
     "role": "controller",
     "damageType": "blood",
+    "techniqueAptitude": "resonance",
     "aptitudes": {
       "force": 3,
       "finesse": 3,
@@ -17162,9 +17475,9 @@
     },
     "derived": {
       "maxHp": 32,
-      "defense": 19,
+      "defense": 17,
       "initiative": 1,
-      "techniqueAttack": 5,
+      "techniqueAttack": 6,
       "songAttack": 6,
       "saveDifficulty": 15,
       "movement": 5
@@ -17177,6 +17490,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "focus",
+        "resonance",
+        "tempo",
+        "finesse",
+        "guard"
       ],
       "newTechniqueLevels": [
         3,
@@ -17215,7 +17535,7 @@
       {
         "id": "crimsonis-combat-fleshcraft-field",
         "name": "Fleshcraft Field",
-        "description": "Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.",
+        "description": "Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -17233,7 +17553,7 @@
       {
         "id": "crimsonis-combat-bloodpuppet-distort",
         "name": "Bloodpuppet Distort",
-        "description": "One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.",
+        "description": "One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.",
         "actionType": "quick",
         "reset": "round",
         "uses": 1,
@@ -17341,7 +17661,7 @@
       {
         "id": "crimsonis-combat-bloodpuppet-closed-world",
         "name": "Bloodpuppet Closed World",
-        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.",
+        "description": "Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.",
         "actionType": "action",
         "reset": "encounter",
         "uses": 1,
@@ -17404,7 +17724,7 @@
       {
         "id": "crimsonis-song-fleshcraft-dissonance-verse",
         "name": "Fleshcraft Dissonance Verse",
-        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
+        "description": "The chosen target must be able to hear this Verse. One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.",
         "actionType": "action",
         "reset": "round",
         "uses": 1,
@@ -17611,11 +17931,12 @@
     ]
   },
   "hemoria": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "hemoria",
     "specialtyTitle": "Vitality Harrower",
     "role": "vanguard",
     "damageType": "blood",
+    "techniqueAptitude": "force",
     "aptitudes": {
       "force": 4,
       "finesse": 3,
@@ -17641,6 +17962,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "force",
+        "guard",
+        "tempo",
+        "resonance",
+        "focus"
       ],
       "newTechniqueLevels": [
         3,
@@ -18023,11 +18351,12 @@
     ]
   },
   "sanguis": {
-    "catalogVersion": 2,
+    "catalogVersion": 3,
     "id": "sanguis",
     "specialtyTitle": "Crimson Occultator",
     "role": "striker",
     "damageType": "blood",
+    "techniqueAptitude": "finesse",
     "aptitudes": {
       "force": 4,
       "finesse": 4,
@@ -18053,6 +18382,13 @@
         6,
         8,
         10
+      ],
+      "aptitudeGrowthOrder": [
+        "finesse",
+        "tempo",
+        "force",
+        "focus",
+        "resonance"
       ],
       "newTechniqueLevels": [
         3,

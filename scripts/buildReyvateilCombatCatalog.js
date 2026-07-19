@@ -103,14 +103,14 @@ const roleTemplates = {
   ],
   controller: [
     ['Snare', 'action', 'turn', 1, 'Attack at 6 spaces for 1d8 + Resonance {damage}; the target loses 1 space of movement.'],
-    ['Field', 'action', 'round', 1, 'Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.'],
-    ['Distort', 'quick', 'round', 1, 'One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.'],
+    ['Field', 'action', 'round', 1, 'Create a 2-space zone; enemies entering it make a Tempo saving throw against your Save Difficulty or become Rooted for the turn.'],
+    ['Distort', 'quick', 'round', 1, 'One creature within 5 spaces makes a Guard saving throw against your Save Difficulty. On failure, move it 1 space.'],
     ['Interference', 'reaction', 'round', 1, 'Impose disadvantage on an enemy test you can see within 5 spaces.'],
     ['Cascade', 'action', 'encounter', 1, 'Make a Song attack against the Defense of each creature in a 3-space burst. On a hit, deal 3d6 {damage} damage and leave it Silenced for one turn.'],
     ['Fracture', 'action', 'turn', 1, 'A target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Exposed on failure.'],
     ['Fold', 'quick', 'round', 1, 'Exchange positions with a willing ally within 5 spaces.'],
     ['Denial', 'reaction', 'encounter', 2, 'Cancel a non-ultimate technique used within 5 spaces; its action is spent.'],
-    ['Closed World', 'action', 'encounter', 1, 'Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.'],
+    ['Closed World', 'action', 'encounter', 1, 'Create a 4-space sealed field for one round. A creature attempting to cross makes a Force saving throw against your Save Difficulty.'],
     ['Pressure', 'passive', 'passive', 0, 'Enemies suffering one of your conditions take 1 Resonance damage at the start of their turns.'],
   ],
   support: [
@@ -134,7 +134,7 @@ const roleTemplates = {
     ['Pierce', 'action', 'turn', 1, 'Attack for 1d8 {damage} and ignore 2 Defense.'],
     ['Phase', 'quick', 'round', 1, 'Pass through occupied spaces and solid cover during this turn.'],
     ['Absorb', 'reaction', 'encounter', 2, 'Reduce incoming elemental damage to zero and empower your next attack by 1d8.'],
-    ['Terminal Verse', 'action', 'encounter', 1, 'One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance {damage} damage on failure or half on success.'],
+    ['Terminal Verse', 'action', 'encounter', 1, 'One target within 8 spaces makes a Finesse saving throw against your Save Difficulty, taking 5d8 + Resonance {damage} damage on failure or half on success.'],
     ['Conduit', 'passive', 'passive', 0, 'When you roll maximum on a damage die, gain 1 temporary HP.'],
   ],
   tactician: [
@@ -149,6 +149,33 @@ const roleTemplates = {
     ['Checkmate', 'action', 'encounter', 1, 'Choose a visible enemy; until your next turn all allies deal +1d8 damage to it.'],
     ['Overview', 'passive', 'passive', 0, 'At the start of each round, mark one visible enemy; the first ally to hit it gains 2 movement.'],
   ],
+};
+
+// Every doctrine has one deliberate technique aptitude. This avoids the old
+// `max(Force, Finesse)` shortcut, which made the lower aptitude mechanically
+// irrelevant for many Reyvateils.
+const roleTechniqueAptitude = {
+  vanguard: 'force',
+  bulwark: 'force',
+  striker: 'finesse',
+  skirmisher: 'finesse',
+  controller: 'resonance',
+  support: 'focus',
+  channeler: 'resonance',
+  tactician: 'focus',
+};
+
+// Aptitude growth is automatic and doctrine-specific for now. The order is
+// explicit so profiles can be reproduced deterministically at any level.
+const roleAptitudeGrowthOrder = {
+  vanguard: ['force', 'guard', 'tempo', 'resonance', 'focus'],
+  bulwark: ['guard', 'force', 'focus', 'resonance', 'tempo'],
+  striker: ['finesse', 'tempo', 'force', 'focus', 'resonance'],
+  skirmisher: ['tempo', 'finesse', 'focus', 'force', 'resonance'],
+  controller: ['focus', 'resonance', 'tempo', 'finesse', 'guard'],
+  support: ['focus', 'resonance', 'guard', 'tempo', 'finesse'],
+  channeler: ['resonance', 'focus', 'tempo', 'guard', 'finesse'],
+  tactician: ['focus', 'tempo', 'resonance', 'finesse', 'guard'],
 };
 
 // Every Reyvateil knows a complete Song set in addition to inherited
@@ -183,7 +210,7 @@ const roleSongTemplates = {
   ],
   controller: [
     ['Binding Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 6 spaces. On a hit, deal 1d6 + Resonance {damage} damage and Root it until its next turn.'],
-    ['Dissonance Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.'],
+    ['Dissonance Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Resonance saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.'],
     ['Pressure Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, each affected creature suffering a condition takes Resonance {damage} damage at the start of its turn.'],
     ['Closed-World Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, create a 4-space field for 3 rounds. Each affected creature treats it as difficult terrain and cannot leave without spending an action.'],
   ],
@@ -238,6 +265,7 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
   const templates = roleTemplates[role];
   if (!templates) throw new Error(`Unknown combat role ${role}`);
   const aptitudes = Object.fromEntries(['force', 'finesse', 'guard', 'resonance', 'focus', 'tempo'].map((key, index) => [key, aptitudeValues[index]]));
+  const techniqueAptitude = roleTechniqueAptitude[role];
   const songFocused = ['controller', 'support', 'channeler'].includes(role) || ['sonic', 'arcane'].includes(damageType);
   const startsWithTwoSongs = aptitudes.resonance >= 5;
   const songUnlockLevels = songFocused
@@ -300,19 +328,20 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
     })),
   ];
   const maxHp = 16 + aptitudes.guard * 4 + (role === 'vanguard' ? 4 : role === 'bulwark' ? 8 : 0);
-  const defense = 10 + aptitudes.guard + Math.max(aptitudes.finesse, aptitudes.focus);
+  const defense = 10 + aptitudes.guard + aptitudes.finesse;
   return [id, {
-    catalogVersion: 2,
+    catalogVersion: 3,
     id,
     specialtyTitle,
     role,
     damageType,
+    techniqueAptitude,
     aptitudes,
     derived: {
       maxHp,
       defense,
       initiative: aptitudes.tempo,
-      techniqueAttack: 2 + Math.max(aptitudes.force, aptitudes.finesse),
+      techniqueAttack: 2 + aptitudes[techniqueAptitude],
       songAttack: 2 + aptitudes.resonance,
       saveDifficulty: 10 + aptitudes.focus,
       movement: 5 + Math.floor(aptitudes.tempo / 2),
@@ -320,6 +349,7 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
     growth: {
       hitPointsPerLevel: 3 + aptitudes.guard,
       aptitudeIncreaseLevels: [2, 4, 6, 8, 10],
+      aptitudeGrowthOrder: roleAptitudeGrowthOrder[role],
       newTechniqueLevels: [3, 7],
       newSongLevels: songUnlockLevels.filter((level) => level > 1),
       songCapacity: combatSongs.length,

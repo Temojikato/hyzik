@@ -3,9 +3,11 @@ import { CombatAptitudeKey, CombatSongAudience } from './Reyvateils';
 
 export interface PlayerCombatProfile {
   version: number;
+  catalogVersion?: number;
   specialtyTitle: string;
   role: string;
   level: number;
+  techniqueAptitude: CombatAptitudeKey;
   aptitudes: Record<CombatAptitudeKey, number>;
   derived: {
     maxHp: number;
@@ -27,6 +29,7 @@ export interface PlayerProfile {
   displayName?: string;
   reyvateilId?: string;
   reyvateilName?: string;
+  reyvateilLevel?: number;
   reyvateilImageUrl?: string;
   level?: number;
   conditions?: Array<string | { name: string; type?: string; amount?: number; color?: string }>;

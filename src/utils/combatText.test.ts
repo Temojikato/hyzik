@@ -1,4 +1,4 @@
-import { resolveBraceText, resolveCombatText, resolveStrikeText } from './combatText';
+import { resolveBraceText, resolveCombatText, resolveShoveText, resolveStrikeText } from './combatText';
 
 const combat = {
   aptitudes: { force: 4, finesse: 3, guard: 5, resonance: 2, focus: 3, tempo: 2 },
@@ -14,9 +14,10 @@ test('resolves player-owned aptitude formulas to their actual values', () => {
     .toBe('Gain temporary HP equal to 3 (Focus), then deal 2 metal damage.');
 });
 
-test('renders universal actions without hidden arithmetic or Guard tests', () => {
+test('renders universal actions without hidden arithmetic', () => {
   expect(resolveStrikeText(combat)).toContain('Force (+4) or Finesse (+3)');
   expect(resolveStrikeText(combat)).toContain('1d6 + 4');
   expect(resolveBraceText(combat)).toContain('18 becomes 20');
-  expect(resolveBraceText(combat)).not.toMatch(/Guard test/i);
+  expect(resolveBraceText(combat)).toContain('Guard (+5) saving throws');
+  expect(resolveShoveText(combat)).toContain('against 10 + your Force (14)');
 });

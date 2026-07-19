@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   const { currentUser, profile } = useAuth();
   const { campaignState } = useCampaign();
   const [profileMode, setProfileMode] = useState<'social' | 'combat'>('social');
-  const [combatSyncRequested, setCombatSyncRequested] = useState(false);
+  const [lastCombatSyncKey, setLastCombatSyncKey] = useState('');
   const [reyvateil, setReyvateil] = useState<Reyvateil | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -78,14 +78,23 @@ const Home: React.FC = () => {
   }, [campaignState.battleActive]);
 
   useEffect(() => {
-    if (!currentUser || !profile?.reyvateilId || profile.combatProfile || combatSyncRequested) return;
-    setCombatSyncRequested(true);
+    if (!currentUser || !profile?.reyvateilId) return;
+    const bundledVersion = Number(combatCatalog[profile.reyvateilId]?.catalogVersion || 0);
+    const level = Number(profile.reyvateilLevel || profile.level || 1);
+    const needsSync = !profile.combatProfile
+      || Number(profile.combatProfile.version || 0) < 2
+      || Number(profile.combatProfile.catalogVersion || 0) < bundledVersion
+      || Number(profile.combatProfile.level || 0) !== level;
+    if (!needsSync) return;
+    const syncKey = `${currentUser.uid}:${profile.reyvateilId}:${level}:${profile.combatProfile?.version || 0}:${profile.combatProfile?.catalogVersion || 0}`;
+    if (lastCombatSyncKey === syncKey) return;
+    setLastCombatSyncKey(syncKey);
     void httpsCallable<undefined, { initialized: boolean; specialtyTitle?: string }>(functions, 'ensureCombatProfile')()
       .then((result) => {
         if (result.data.initialized) toast({ title: 'Combat profile awakened', description: `${result.data.specialtyTitle || 'Your Reyvateil'} is ready. Your existing social abilities were preserved.`, status: 'success' });
       })
       .catch((caught: any) => toast({ title: 'Combat profile is still synchronizing', description: caught?.message || String(caught), status: 'warning', duration: 7000 }));
-  }, [combatSyncRequested, currentUser, profile?.combatProfile, profile?.reyvateilId, toast]);
+  }, [currentUser, lastCombatSyncKey, profile?.combatProfile, profile?.level, profile?.reyvateilId, profile?.reyvateilLevel, toast]);
 
   useEffect(() => {
     const fetchUserData = async () => {

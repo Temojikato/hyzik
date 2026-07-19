@@ -43,5 +43,9 @@ export const resolveStrikeText = (combat: Pick<PlayerCombatProfile, 'aptitudes' 
 };
 
 export const resolveBraceText = (combat: Pick<PlayerCombatProfile, 'aptitudes' | 'derived'>) => (
-  `Gain +2 Defence (${combat.derived.defense} becomes ${combat.derived.defense + 2}) and attacks against you have disadvantage until the start of your next turn.`
+  `Gain +2 Defence (${combat.derived.defense} becomes ${combat.derived.defense + 2}), advantage on Guard (${signedCombatValue(combat.aptitudes.guard)}) saving throws, and attacks against you have disadvantage until the start of your next turn.`
+);
+
+export const resolveShoveText = (combat: Pick<PlayerCombatProfile, 'aptitudes' | 'derived'>) => (
+  `Choose one adjacent creature. It makes a Force saving throw against 10 + your Force (${10 + combat.aptitudes.force}). On failure, push it 2 spaces or knock it Prone.`
 );

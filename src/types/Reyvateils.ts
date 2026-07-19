@@ -52,6 +52,7 @@ export interface ReyvateilCombatProfile {
   specialtyTitle: string;
   role: string;
   damageType: string;
+  techniqueAptitude: CombatAptitudeKey;
   aptitudes: Record<CombatAptitudeKey, number>;
   derived: {
     maxHp: number;
@@ -65,6 +66,7 @@ export interface ReyvateilCombatProfile {
   growth: {
     hitPointsPerLevel: number;
     aptitudeIncreaseLevels: number[];
+    aptitudeGrowthOrder: CombatAptitudeKey[];
     newTechniqueLevels: number[];
     newSongLevels: number[];
     songCapacity: number;
