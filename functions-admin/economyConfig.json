@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "reputationTiers": [
     { "minimum": 0, "name": "Unknown", "discountPercent": 0 },
     { "minimum": 10, "name": "Noticed", "discountPercent": 3 },
@@ -84,6 +84,28 @@
       "vendors": ["The Endless Emporium", "Shadow Alley"]
     }
   ],
+  "vendorStock": {
+    "Guild Quartermaster": ["Survival Gear", "Containers"],
+    "The Diver's Guildhall": ["Tools and Equipment", "Weapons", "Armor"],
+    "The Foundry": ["Basic Materials", "Advanced Materials", "Artifact Materials", "Legendary Materials"],
+    "The Iron Forge": ["Crafting Stations", "Tools and Equipment"],
+    "The Blade and Bow": ["Weapons", "Tools and Weapons/Gemstones and Crystals"],
+    "Shield and Anvil": ["Armor"],
+    "The Healing Hand Clinic": ["Consumables", "Vials and Essences/Organic Components"],
+    "The Mending Mind Clinic": ["Lesser Spirit Food", "Vials and Essences/Other Magical Items"],
+    "Cremia's Salvation": ["Culinary Ingredients", "Ingredient"],
+    "The Alchemist's Alembic": ["Alchemical Ingredients", "Vials and Essences"],
+    "Arcane Antiques": ["Gemstones and Crystals", "Wondrous Items", "Tools and Weapons/Gemstones and Crystals"],
+    "The Whispering Quill": ["Ritual", "Ritual Items", "Ritual Items/Tools and Equipment"],
+    "Hall of Records": ["Collectibles"],
+    "Reyvateil Sanctuary": ["Leveling Component", "Vials and Essences/Other Magical Items"],
+    "The Grain Mill": ["Culinary Ingredients", "Ingredient"],
+    "The Waterworks": ["Basic Materials", "Containers"],
+    "The Resting Wyvern": ["Survival Gear"],
+    "The Silver Chalice": ["Trade Goods", "Tools and Equipment"],
+    "The Endless Emporium": ["Collectibles", "Trade Goods", "Gemstones and Crystals"],
+    "Shadow Alley": ["Wondrous Items", "Vials and Essences/Other Magical Items"]
+  },
   "itemOverrides": {
     "Health Potion": { "rarity": "uncommon", "favorValue": 16, "purchasePrice": 55, "preferredFactionIds": ["healing-concord"] },
     "Antidote": { "rarity": "uncommon", "favorValue": 9, "purchasePrice": 32, "preferredFactionIds": ["healing-concord"] },

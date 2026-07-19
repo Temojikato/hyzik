@@ -22,11 +22,11 @@ import { useCampaign } from '../contexts/CampaignContext';
 import { CYPHERS } from '../data/cyphers';
 import { mapData } from '../mapdata';
 import {
-  adminRevivePlayer, advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
+  adminAdvanceDay, adminRevivePlayer, adminSetWorldMode, advanceEncounterTurn, deleteSong, endEncounter, grantCondition, grantCypherToPlayers, grantItem, listPlayers, saveSong,
   sendGrantDeliveries, sendPrivateMessages, setCurrentSong, setPlayerActive, setPlayersActive, startEncounter, subscribeEncounter,
   subscribePlayers, updateEncounterParticipants, updatePlayerName, subscribeEconomyTransactions, adminRecordBarter,
 } from '../services/campaignService';
-import { CampaignSong, EconomyTransaction, Encounter, EncounterMapFrame, EncounterParticipant, GrantKind, PlayerProfile } from '../types/Campaign';
+import { CampaignSong, CampaignState, EconomyTransaction, Encounter, EncounterMapFrame, EncounterParticipant, GrantKind, PlayerProfile } from '../types/Campaign';
 import { ConditionDefinition } from '../types/Conditions';
 import { Item } from '../types/Reyvateils';
 import { MonsterSpecies } from '../types/BestiaryTypes';
@@ -99,6 +99,7 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
   const [syncingCombat, setSyncingCombat] = useState(false);
   const toast = useToast();
   const userModal = useDisclosure();
+  const dayModal = useDisclosure();
 
   const refreshPlayers = useCallback(async () => {
     if (previewMode) return;
@@ -158,6 +159,7 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
         <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Current song</StatLabel><StatNumber fontSize="md" noOfLines={1}>{currentSong?.title || 'None'}</StatNumber><StatHelpText color="#8f9bb0">stored in Firestore</StatHelpText></Stat></Box>
         <Box sx={panel} p={4}><Stat><StatLabel color="#8f9bb0">Campaign state</StatLabel><StatNumber fontSize="md">{campaignState.battleActive ? 'IN COMBAT' : 'Exploration'}</StatNumber><StatHelpText color="#8f9bb0">{campaignState.timersPaused ? 'all timers paused' : 'timers follow player status'}</StatHelpText></Stat></Box>
       </SimpleGrid>
+      <CampaignClockPanel state={campaignState} players={players} onAdvanceDay={dayModal.onOpen} />
       <Box sx={panel} overflow="hidden">
         <Tabs isLazy variant="unstyled">
           <TabList px={3} pt={3} overflowX="auto" gap={1} borderBottom="1px solid #2c3648">{[
@@ -175,7 +177,77 @@ const AdminPortalContent: React.FC<{ previewMode?: boolean }> = ({ previewMode =
       </Box>
     </Flex>
     <CreateUserModal isOpen={userModal.isOpen} onClose={userModal.onClose} />
+    <AdvanceDayModal isOpen={dayModal.isOpen} onClose={dayModal.onClose} players={players} currentDay={campaignState.day || 1} />
   </Box>;
+};
+
+const CampaignClockPanel: React.FC<{ state: CampaignState; players: PlayerProfile[]; onAdvanceDay: () => void }> = ({ state, players, onAdvanceDay }) => {
+  const [changing, setChanging] = useState<'town' | 'dungeon' | ''>('');
+  const toast = useToast();
+  const mode = state.worldMode === 'dungeon' ? 'dungeon' : 'town';
+  const pending = players.reduce((total, player) => total + (player.purchaseReservations?.length || 0), 0);
+  const changeMode = async (next: 'town' | 'dungeon') => {
+    setChanging(next);
+    try {
+      const result = await adminSetWorldMode(next);
+      toast({
+        title: next === 'town' ? 'Town mode active' : 'Dungeon mode active',
+        description: next === 'town'
+          ? `${result.fulfilledReservations} reserved purchase${result.fulfilledReservations === 1 ? '' : 's'} delivered.`
+          : 'Players may reserve vendor stock, but nothing is delivered until the party returns to town.',
+        status: 'success', duration: 6000,
+      });
+    } catch (caught: any) {
+      toast({ title: 'Could not change campaign mode', description: caught?.message || String(caught), status: 'error', duration: 7000 });
+    } finally { setChanging(''); }
+  };
+  return <Box sx={panel} p={4}>
+    <Flex justify="space-between" gap={4} align="center" flexWrap="wrap">
+      <Box><HStack><Badge colorScheme={mode === 'town' ? 'green' : 'orange'}>{mode.toUpperCase()} MODE</Badge><Badge bg="#252d3c" color="#cbd5e1">DAY {state.day || 1}</Badge>{pending > 0 && <Badge colorScheme="orange">{pending} pending reservations</Badge>}</HStack><Text mt={2} color="#8f9bb0" fontSize="sm">Town delivers purchases immediately. Dungeon mode records paid reservations for the next return.</Text></Box>
+      <HStack flexWrap="wrap">
+        <Button variant={mode === 'town' ? 'solid' : 'outline'} colorScheme="green" onClick={() => changeMode('town')} isLoading={changing === 'town'} isDisabled={Boolean(changing)}>Enter town</Button>
+        <Button variant={mode === 'dungeon' ? 'solid' : 'outline'} colorScheme="orange" onClick={() => changeMode('dungeon')} isLoading={changing === 'dungeon'} isDisabled={Boolean(changing)}>Enter dungeon</Button>
+        <Button onClick={onAdvanceDay} isDisabled={state.battleActive === true}>Advance day / rest</Button>
+      </HStack>
+    </Flex>
+  </Box>;
+};
+
+const AdvanceDayModal: React.FC<{ isOpen: boolean; onClose: () => void; players: PlayerProfile[]; currentDay: number }> = ({ isOpen, onClose, players, currentDay }) => {
+  const [hours, setHours] = useState<Record<string, number>>({});
+  const [saving, setSaving] = useState(false);
+  const toast = useToast();
+  useEffect(() => {
+    if (isOpen) setHours(Object.fromEntries(players.map((player) => [player.id, player.mortality?.dead ? 0 : 8])));
+  }, [isOpen, players]);
+  const advance = async () => {
+    setSaving(true);
+    try {
+      const result = await adminAdvanceDay(players.map((player) => ({ userId: player.id, hours: hours[player.id] || 0 })));
+      toast({ title: `Campaign advanced to day ${result.day}`, description: `${result.restedPlayers} players healed; ${result.dailyResets} earned daily resets.`, status: 'success', duration: 7000 });
+      onClose();
+    } catch (caught: any) {
+      toast({ title: 'Could not advance the day', description: caught?.message || String(caught), status: 'error', duration: 8000 });
+    } finally { setSaving(false); }
+  };
+  return <Modal isOpen={isOpen} onClose={onClose} size="2xl" isCentered scrollBehavior="inside">
+    <ModalOverlay />
+    <ModalContent bg="#111722" color="#edf2f7">
+      <ModalHeader>End day {currentDay}</ModalHeader><ModalCloseButton />
+      <ModalBody><Text color="#8f9bb0">Each hour restores one-sixth of maximum HP (rounded up). Five or more hours grants that player’s daily resets. Dead players cannot recover through sleep.</Text><VStack mt={5} align="stretch" spacing={3}>{players.map((player) => {
+        const maxHp = Number(player.combatStats?.maxHp || player.combatProfile?.derived.maxHp || 1);
+        const currentHp = Number(player.combatStats?.currentHp ?? maxHp);
+        const rested = hours[player.id] || 0;
+        const projected = player.mortality?.dead ? currentHp : Math.min(maxHp, currentHp + Math.ceil((maxHp * rested) / 6));
+        return <Grid key={player.id} templateColumns={{ base: '1fr', md: 'minmax(0,1fr) 140px 160px' }} gap={3} alignItems="center" p={3} border="1px solid #2c3648" borderRadius="12px" opacity={player.mortality?.dead ? .45 : 1}>
+          <Box><Text fontWeight="bold">{playerLabel(player)}</Text><Text fontSize="xs" color="#8f9bb0">HP {currentHp}/{maxHp} → {projected}/{maxHp}</Text></Box>
+          <FormControl><FormLabel fontSize="xs" mb={1}>Hours slept</FormLabel><NumberInput min={0} max={24} value={rested} isDisabled={player.mortality?.dead} onChange={(_, value) => setHours((current) => ({ ...current, [player.id]: Number.isFinite(value) ? value : 0 }))}><NumberInputField /></NumberInput></FormControl>
+          <Badge justifySelf={{ base: 'start', md: 'end' }} colorScheme={rested >= 5 && !player.mortality?.dead ? 'green' : 'gray'}>{rested >= 5 && !player.mortality?.dead ? 'DAILY RESET' : 'NO DAILY RESET'}</Badge>
+        </Grid>;
+      })}</VStack></ModalBody>
+      <ModalFooter><Button variant="ghost" mr={3} onClick={onClose}>Cancel</Button><Button onClick={advance} isLoading={saving}>Advance to day {currentDay + 1}</Button></ModalFooter>
+    </ModalContent>
+  </Modal>;
 };
 
 const PlayersPanel: React.FC<{ players: PlayerProfile[]; loading: boolean; currentUid?: string; onCreate: () => void }> = ({ players, loading, currentUid, onCreate }) => {

@@ -61,16 +61,22 @@ const donationQuote = (item, factionId, amount) => {
 
 const reputationTier = (reputation) => [...config.reputationTiers].reverse().find((tier) => finiteInt(reputation) >= tier.minimum) || config.reputationTiers[0];
 
-const purchaseQuote = (item, factionId, reputation, amount) => {
+const vendorStocksItem = (vendorName, item = {}) => Array.isArray(config.vendorStock?.[vendorName])
+  && config.vendorStock[vendorName].includes(item.category);
+
+const purchaseQuote = (item, factionId, reputation, amount, vendorName) => {
   const faction = factionById[factionId];
   if (!faction) throw new Error('Unknown faction.');
+  const selectedVendor = vendorName || faction.vendors[0];
+  if (!faction.vendors.includes(selectedVendor)) throw new Error('That vendor does not belong to the selected faction.');
+  if (!vendorStocksItem(selectedVendor, item)) throw new Error(`${selectedVendor} does not stock this type of item.`);
   const itemEconomy = deriveItemEconomy(item);
   const available = itemEconomy.preferredFactionIds.includes(factionId) || faction.preferredCategories.includes(item.category);
   if (!available) throw new Error('That faction does not normally stock this item.');
   const quantity = Math.max(1, Math.min(99, finiteInt(amount, 1)));
   const tier = reputationTier(reputation);
   const unitPrice = Math.max(1, Math.ceil(itemEconomy.purchasePrice * (1 - tier.discountPercent / 100)));
-  return { ...itemEconomy, faction, quantity, tier, unitPrice, totalPrice: unitPrice * quantity };
+  return { ...itemEconomy, faction, vendorName: selectedVendor, quantity, tier, unitPrice, totalPrice: unitPrice * quantity };
 };
 
-module.exports = { config, factionById, normalizeEconomy, deriveItemEconomy, donationQuote, reputationTier, purchaseQuote };
+module.exports = { config, factionById, normalizeEconomy, deriveItemEconomy, donationQuote, reputationTier, purchaseQuote, vendorStocksItem };

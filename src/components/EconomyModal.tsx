@@ -1,13 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import {
-  Badge, Box, Button, Divider, FormControl, FormLabel, Grid, HStack, Input, Modal, ModalBody,
+  Alert, AlertIcon, Badge, Box, Button, Divider, FormControl, FormLabel, Grid, HStack, Input, Modal, ModalBody,
   ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Progress, Select, SimpleGrid, Tab, TabList,
   TabPanel, TabPanels, Tabs, Text, useToast, VStack,
 } from '@chakra-ui/react';
 import { useAuth } from '../contexts/AuthContext';
+import { useCampaign } from '../contexts/CampaignContext';
 import { purchaseCityItem } from '../services/campaignService';
 import { Item } from '../types/Reyvateils';
-import { ECONOMY_FACTIONS, factionPrice, itemEconomy, REPUTATION_TIERS, reputationTier } from '../utils/economy';
+import { ECONOMY_FACTIONS, factionPrice, itemEconomy, REPUTATION_TIERS, reputationTier, vendorStocksItem } from '../utils/economy';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 const rarityRequirement: Record<string, number> = { common: 0, uncommon: 0, rare: 25, epic: 60, legendary: 120, artifact: Number.POSITIVE_INFINITY };
@@ -22,6 +23,7 @@ interface EconomyModalProps {
 const EconomyModal: React.FC<EconomyModalProps> = ({ isOpen, onClose, items, setInventory }) => {
   useBackDismiss(isOpen, onClose);
   const { profile } = useAuth();
+  const { campaignState } = useCampaign();
   const toast = useToast();
   const [factionId, setFactionId] = useState(ECONOMY_FACTIONS[0].id);
   const [vendorName, setVendorName] = useState(ECONOMY_FACTIONS[0].vendors[0]);
@@ -30,24 +32,34 @@ const EconomyModal: React.FC<EconomyModalProps> = ({ isOpen, onClose, items, set
   const economy = profile?.economy;
   const reputation = economy?.reputation?.[factionId] || 0;
   const faction = ECONOMY_FACTIONS.find((entry) => entry.id === factionId) || ECONOMY_FACTIONS[0];
+  const worldMode = campaignState.worldMode === 'dungeon' ? 'dungeon' : 'town';
   const stock = useMemo(() => items
     .filter((item) => item.name !== 'Gold Coin' && item.category !== 'Currency')
     .filter((item) => itemEconomy(item).preferredFactionIds.includes(factionId))
+    .filter((item) => vendorStocksItem(vendorName, item))
     .filter((item) => `${item.name} ${item.category}`.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => factionPrice(a, reputation).price - factionPrice(b, reputation).price)
-    .slice(0, 80), [items, factionId, reputation, search]);
+    .slice(0, 80), [items, factionId, vendorName, reputation, search]);
 
   const buy = async (item: Item) => {
     setBuying(item.id);
     try {
       const result = await purchaseCityItem(item.id, factionId, vendorName, 1);
-      setInventory((current) => {
-        const existing = current.find((entry) => entry.id === item.id);
-        return existing
-          ? current.map((entry) => entry.id === item.id ? { ...entry, quantity: Number(entry.quantity || 0) + 1 } : entry)
-          : [...current, { ...item, quantity: 1 }];
+      if (result.status === 'acquired') {
+        setInventory((current) => {
+          const existing = current.find((entry) => entry.id === item.id);
+          return existing
+            ? current.map((entry) => entry.id === item.id ? { ...entry, quantity: Number(entry.quantity || 0) + 1 } : entry)
+            : [...current, { ...item, quantity: 1 }];
+        });
+      }
+      toast({
+        title: result.status === 'reserved' ? `${item.name} reserved` : `${item.name} acquired`,
+        description: result.status === 'reserved'
+          ? `${result.totalPrice} Favor paid. It will enter your inventory when the campaign returns to town.`
+          : `${result.totalPrice} Favor paid to ${vendorName}.`,
+        status: 'success', duration: 6000, isClosable: true,
       });
-      toast({ title: `${item.name} acquired`, description: `${result.totalPrice} Favor paid to ${vendorName}.`, status: 'success', duration: 5000, isClosable: true });
     } catch (caught: any) {
       toast({ title: 'Trade refused', description: caught?.message || String(caught), status: 'error', duration: 7000, isClosable: true });
     } finally { setBuying(''); }
@@ -56,22 +68,24 @@ const EconomyModal: React.FC<EconomyModalProps> = ({ isOpen, onClose, items, set
   return <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered scrollBehavior="inside">
     <ModalOverlay />
     <ModalContent bg="surface" color="text" maxH="88vh">
-      <ModalHeader><HStack justify="space-between" pr={10}><Text>City Exchange</Text><Badge colorScheme="purple" fontSize="md">{economy?.favor || 0} Favor</Badge></HStack></ModalHeader>
+      <ModalHeader><HStack justify="space-between" pr={10} flexWrap="wrap"><Text>City Exchange</Text><HStack><Badge colorScheme={worldMode === 'town' ? 'green' : 'orange'} fontSize="sm">{worldMode === 'town' ? 'TOWN · immediate trade' : 'DUNGEON · reservations only'}</Badge><Badge colorScheme="purple" fontSize="md">{economy?.favor || 0} Favor</Badge></HStack></HStack></ModalHeader>
       <ModalCloseButton />
       <ModalBody pb={6}>
         <Tabs isLazy variant="enclosed">
           <TabList><Tab>Trade</Tab><Tab>Faction reputation</Tab></TabList>
           <TabPanels>
             <TabPanel px={0}>
+              {worldMode === 'dungeon' && <Alert status="warning" mb={4} borderRadius="lg"><AlertIcon /><Box><Text fontWeight="bold">Remote reservation link</Text><Text fontSize="sm">Favor is paid now, but goods stay with the vendor until the administrator returns the campaign to town mode.</Text></Box></Alert>}
               <Grid templateColumns={{ base: '1fr', lg: '290px minmax(0,1fr)' }} gap={5}>
                 <VStack align="stretch" spacing={4}>
-                  <FormControl><FormLabel>Faction</FormLabel><Select value={factionId} onChange={(event) => { const next = ECONOMY_FACTIONS.find((entry) => entry.id === event.target.value) || ECONOMY_FACTIONS[0]; setFactionId(next.id); setVendorName(next.vendors[0]); }}>{ECONOMY_FACTIONS.map((entry) => <option key={entry.id} value={entry.id}>{entry.name}</option>)}</Select></FormControl>
-                  <FormControl><FormLabel>Vendor</FormLabel><Select value={vendorName} onChange={(event) => setVendorName(event.target.value)}>{faction.vendors.map((vendor) => <option key={vendor}>{vendor}</option>)}</Select></FormControl>
+                  <FormControl><FormLabel>Faction</FormLabel><Select value={factionId} onChange={(event) => { const next = ECONOMY_FACTIONS.find((entry) => entry.id === event.target.value) || ECONOMY_FACTIONS[0]; setFactionId(next.id); setVendorName(next.vendors[0]); }}>{ECONOMY_FACTIONS.map((entry) => <option style={{ color: '#f8fafc', background: '#111827' }} key={entry.id} value={entry.id}>{entry.name}</option>)}</Select></FormControl>
+                  <FormControl><FormLabel>Vendor</FormLabel><Select value={vendorName} onChange={(event) => setVendorName(event.target.value)}>{faction.vendors.map((vendor) => <option style={{ color: '#f8fafc', background: '#111827' }} key={vendor}>{vendor}</option>)}</Select></FormControl>
                   <Box p={4} bg="surfaceRaised" borderRadius="md"><Text fontWeight="bold">{faction.name}</Text><Text fontSize="sm" opacity={.76}>{faction.summary}</Text><Divider my={3} /><Text fontSize="sm">Reputation: <strong>{reputation}</strong> · {reputationTier(reputation).name}</Text><Text fontSize="sm">Price reduction: {reputationTier(reputation).discountPercent}%</Text></Box>
                   <Text fontSize="sm" opacity={.72}>Favor is party-city credit you may spend. Reputation is permanent and only controls trust, discounts, and rare stock access.</Text>
+                  {Boolean(profile?.purchaseReservations?.length) && <Box p={4} border="1px solid" borderColor="orange.400" borderRadius="lg"><Text fontWeight="bold">Reserved for town ({profile?.purchaseReservations?.length})</Text>{profile?.purchaseReservations?.map((reservation) => <Text key={reservation.id} mt={1} fontSize="sm">{reservation.quantity} × {reservation.itemName} · {reservation.vendorName}</Text>)}</Box>}
                 </VStack>
                 <VStack align="stretch" spacing={3}>
-                  <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search this faction's stock…" />
+                  <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={`Search ${vendorName}'s stock…`} />
                   {stock.map((item) => {
                     const quote = factionPrice(item, reputation);
                     const required = rarityRequirement[quote.rarity] ?? 0;
@@ -80,7 +94,7 @@ const EconomyModal: React.FC<EconomyModalProps> = ({ isOpen, onClose, items, set
                     return <HStack key={item.id} p={3} border="1px solid" borderColor="border" borderRadius="md" align="center">
                       <Box flex="1"><HStack><Text fontWeight="bold">{item.name}</Text><Badge textTransform="uppercase">{quote.rarity}</Badge></HStack><Text fontSize="sm" opacity={.72}>{item.category}</Text>{locked && <Text fontSize="xs" color="orange.300">{Number.isFinite(required) ? `Requires ${required} reputation` : 'Artifacts are never ordinary vendor stock'}</Text>}</Box>
                       <Text fontWeight="bold" whiteSpace="nowrap">{quote.price} Favor</Text>
-                      <Button size="sm" onClick={() => buy(item)} isLoading={buying === item.id} isDisabled={locked || unaffordable || Boolean(buying)}>Buy</Button>
+                      <Button size="sm" onClick={() => buy(item)} isLoading={buying === item.id} isDisabled={locked || unaffordable || Boolean(buying)}>{worldMode === 'town' ? 'Buy' : 'Reserve'}</Button>
                     </HStack>;
                   })}
                   {!stock.length && <Text p={6} textAlign="center" opacity={.72}>No stock matches this search.</Text>}

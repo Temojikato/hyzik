@@ -116,8 +116,18 @@ export const donateInventoryItem = async (itemId: string, factionId: string, amo
 };
 
 export const purchaseCityItem = async (itemId: string, factionId: string, vendorName: string, amount: number) => {
-  const callable = httpsCallable<{ itemId: string; factionId: string; vendorName: string; amount: number }, { itemId: string; amount: number; totalPrice: number; unitPrice: number }>(functions, 'purchaseCityItem');
+  const callable = httpsCallable<{ itemId: string; factionId: string; vendorName: string; amount: number }, { itemId: string; amount: number; totalPrice: number; unitPrice: number; status: 'acquired' | 'reserved'; reservationId?: string }>(functions, 'purchaseCityItem');
   return (await callable({ itemId, factionId, vendorName, amount })).data;
+};
+
+export const adminSetWorldMode = async (worldMode: 'town' | 'dungeon') => {
+  const callable = httpsCallable<{ worldMode: 'town' | 'dungeon' }, { worldMode: 'town' | 'dungeon'; fulfilledReservations: number }>(functions, 'adminSetWorldMode');
+  return (await callable({ worldMode })).data;
+};
+
+export const adminAdvanceDay = async (rests: Array<{ userId: string; hours: number }>) => {
+  const callable = httpsCallable<{ rests: Array<{ userId: string; hours: number }> }, { day: number; restedPlayers: number; dailyResets: number }>(functions, 'adminAdvanceDay');
+  return (await callable({ rests })).data;
 };
 
 export const adminRecordBarter = async (input: { userId: string; factionId: string; vendorName?: string; favorDelta: number; reputationDelta: number; note: string }) => {

@@ -67,7 +67,7 @@ const commonActions = (combat: PlayerCombatProfile) => [
 ];
 
 const actionLabel: Record<string, string> = { action: 'Action', song: 'Song', quick: 'Quick follow-up', reaction: 'Reaction', passive: 'Passive' };
-const resetLabel: Record<string, string> = { turn: 'each turn', round: 'each round', encounter: 'per encounter', passive: 'always' };
+const resetLabel: Record<string, string> = { turn: 'each turn', round: 'each round', encounter: 'per encounter', daily: 'per qualifying rest', passive: 'always' };
 const songAudienceLabel: Record<CombatSong['audience'], string> = {
   performer: 'Performer must hear',
   'chosen-hearer': 'Chosen hearer',
@@ -97,6 +97,7 @@ const abilityUnavailableReason = (
   participant: EncounterParticipant | undefined,
   encounter: Encounter | null,
   playerLevel = 1,
+  dailyUses: Record<string, number> = {},
 ) => {
   const levelRequired = Number(ability.levelRequired || 1);
   if (playerLevel < levelRequired) return `Unlocks at level ${levelRequired}`;
@@ -112,6 +113,7 @@ const abilityUnavailableReason = (
   if (ability.actionType === 'reaction' && resources?.reactionAvailable === false) return 'Reaction spent';
   if (ability.reset === 'round' && resources?.roundUses?.[ability.id] === encounter.turn.round) return 'Resets next round';
   if (ability.reset === 'encounter' && Number(resources?.encounterUses?.[ability.id] || 0) >= ability.uses) return 'Spent for this encounter';
+  if (ability.reset === 'daily' && Number(dailyUses[ability.id] || 0) >= ability.uses) return 'Resets after 5+ hours of rest';
   return '';
 };
 
@@ -121,7 +123,8 @@ const TechniqueCard: React.FC<{
   participant?: EncounterParticipant;
   encounter: Encounter | null;
   kind?: 'technique' | 'song';
-}> = ({ ability, combatProfile, participant, encounter, kind = 'technique' }) => {
+  dailyUses?: Record<string, number>;
+}> = ({ ability, combatProfile, participant, encounter, kind = 'technique', dailyUses = {} }) => {
   const toast = useToast();
   const { unlockedLexicon } = useCampaign();
   const [activating, setActivating] = useState(false);
@@ -130,7 +133,7 @@ const TechniqueCard: React.FC<{
   const translation = invocation.parts.map((part) => unlockedLexicon.get(part.id));
   const translated = translation.every(Boolean);
   const spoken = getAbilitySpokenForm(invocation);
-  const reason = abilityUnavailableReason(ability, participant, encounter, combatProfile.level);
+  const reason = abilityUnavailableReason(ability, participant, encounter, combatProfile.level, dailyUses);
   const song = kind === 'song' ? ability as CombatSong : null;
   const levelRequired = Number(ability.levelRequired || 1);
   const levelLocked = combatProfile.level < levelRequired;
@@ -448,8 +451,8 @@ const CombatHome: React.FC<{ reyvateil: Reyvateil; profile: PlayerProfile }> = (
       <Tabs defaultIndex={0} isLazy variant="unstyled">
         <TabList p={1} bg="blackAlpha.400" border="1px solid" borderColor="whiteAlpha.300" borderRadius="xl"><Tab flex="1" minH="44px" borderRadius="lg" fontWeight="bold" _selected={{ bg: 'primary', color: 'white' }}>Techniques <Badge ml={2} colorScheme="gray">{techniques.length}</Badge></Tab><Tab flex="1" minH="44px" borderRadius="lg" fontWeight="bold" _selected={{ bg: 'primary', color: 'white' }}>Songs <Badge ml={2} colorScheme="gray">{songs.length}</Badge></Tab></TabList>
         <TabPanels>
-          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Inherited techniques</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Five techniques inherited from {reyvateil.name}. Tap a row to inspect or activate it.</Text><Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{techniques.map((ability) => <TechniqueCard key={ability.id} ability={ability} combatProfile={combatProfile} participant={participant} encounter={encounter} />)}</Grid><Divider my={{ base: 4, md: 6 }} borderColor="whiteAlpha.300" /><Heading size={{ base: 'sm', md: 'md' }}>Universal actions</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Reliable actions shared by every combatant.</Text><SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={{ base: 2, md: 3 }}>{commonActions(combatProfile).map((action) => <CommonActionCard key={action[0]} action={action} participant={participant} encounter={encounter} />)}</SimpleGrid></TabPanel>
-          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Song repertoire</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Song is separate from Action. Spend it on one Verse, begin a Canticle, or sustain your existing Canticle. Canticles affect every creature that can hear them, friend or foe.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</TabPanel>
+          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Inherited techniques</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Five techniques inherited from {reyvateil.name}. Tap a row to inspect or activate it.</Text><Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{techniques.map((ability) => <TechniqueCard key={ability.id} ability={ability} combatProfile={combatProfile} participant={participant} encounter={encounter} dailyUses={profile.combatDailyUses} />)}</Grid><Divider my={{ base: 4, md: 6 }} borderColor="whiteAlpha.300" /><Heading size={{ base: 'sm', md: 'md' }}>Universal actions</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Reliable actions shared by every combatant.</Text><SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={{ base: 2, md: 3 }}>{commonActions(combatProfile).map((action) => <CommonActionCard key={action[0]} action={action} participant={participant} encounter={encounter} />)}</SimpleGrid></TabPanel>
+          <TabPanel px={0} pt={{ base: 3, md: 5 }} pb={0}><Heading size={{ base: 'sm', md: 'md' }}>Song repertoire</Heading><Text color="textMuted" fontSize={{ base: 'xs', md: 'md' }} mt={1} mb={{ base: 3, md: 4 }}>Song is separate from Action. Spend it on one Verse, begin a Canticle, or sustain your existing Canticle. Canticles affect every creature that can hear them, friend or foe.</Text>{songs.length ? <Grid templateColumns={{ base: '1fr', lg: 'repeat(2,minmax(0,1fr))' }} gap={{ base: 2, md: 4 }}>{songs.map((song) => <TechniqueCard key={song.id} ability={song} combatProfile={combatProfile} participant={participant} encounter={encounter} kind="song" dailyUses={profile.combatDailyUses} />)}</Grid> : <Box p={4} borderRadius="xl" border="1px solid" borderColor="orange.300"><Text>Song definitions are synchronizing with this Reyvateil.</Text></Box>}</TabPanel>
         </TabPanels>
       </Tabs>
 

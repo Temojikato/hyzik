@@ -18,7 +18,7 @@ export interface Ability {
 
 export type CombatAptitudeKey = 'force' | 'finesse' | 'guard' | 'resonance' | 'focus' | 'tempo';
 export type CombatActionType = 'action' | 'song' | 'quick' | 'reaction' | 'passive';
-export type CombatAbilityReset = 'turn' | 'round' | 'encounter' | 'passive';
+export type CombatAbilityReset = 'turn' | 'round' | 'encounter' | 'daily' | 'passive';
 export type CombatSongForm = 'verse' | 'canticle';
 export type CombatSongAudience = 'performer' | 'chosen-hearer' | 'area-hearers' | 'all-hearers';
 

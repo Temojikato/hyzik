@@ -56,3 +56,8 @@ export const shiftAllCooldowns = (milliseconds: number) => {
     setCooldown(abilityName, endTime + milliseconds);
   });
 };
+
+/** Clear every browser-backed social ability cooldown after a qualifying daily rest. */
+export const clearAllCooldowns = () => {
+  Object.keys(getAllCooldowns()).forEach(clearCooldown);
+};

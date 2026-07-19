@@ -40,8 +40,13 @@ export interface PlayerProfile {
     armorClass?: number;
   };
   combatProfile?: PlayerCombatProfile;
+  combatDailyUses?: Record<string, number>;
+  dailyResetVersion?: number;
+  lastRestHours?: number;
+  lastDailyResetAt?: Timestamp;
   mortality?: MortalityState;
   economy?: PlayerEconomy;
+  purchaseReservations?: PurchaseReservation[];
   unlockedCyphers?: string[];
   unlockedRecipes?: string[];
   inventory?: unknown[];
@@ -61,7 +66,19 @@ export interface PlayerEconomy {
   factionContributions: Record<string, { items: number; favor: number }>;
 }
 
-export type EconomyTransactionKind = 'donation' | 'purchase' | 'barter' | 'transfer' | 'transfer-declined' | 'currency-migration';
+export type EconomyTransactionKind = 'donation' | 'purchase' | 'reservation' | 'reservation-fulfilled' | 'barter' | 'transfer' | 'transfer-declined' | 'currency-migration';
+
+export interface PurchaseReservation {
+  id: string;
+  itemId: string;
+  itemName: string;
+  quantity: number;
+  factionId: string;
+  factionName: string;
+  vendorName: string;
+  totalPrice: number;
+  createdAtMs: number;
+}
 
 export interface EconomyTransaction {
   id: string;
@@ -143,6 +160,9 @@ export interface CampaignState {
   timersPausedAt?: Timestamp;
   timersResumedAt?: Timestamp;
   activeEncounterId?: string;
+  worldMode?: 'town' | 'dungeon';
+  day?: number;
+  lastDayAdvancedAt?: Timestamp;
   updatedAt?: Timestamp;
 }
 

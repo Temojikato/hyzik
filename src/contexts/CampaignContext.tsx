@@ -4,7 +4,7 @@ import publicLexiconJson from '../generated/hymmnosPublicIndex.json';
 import { useAuth } from './AuthContext';
 import { subscribeCampaignState, subscribeSongs, subscribeUnlockedLexicon } from '../services/campaignService';
 import { CampaignSong, CampaignState, PublicLexiconEntry, UnlockedLexiconEntry } from '../types/Campaign';
-import { shiftAllCooldowns } from '../CooldownUtils';
+import { clearAllCooldowns, shiftAllCooldowns } from '../CooldownUtils';
 
 interface CampaignContextValue {
   campaignState: CampaignState;
@@ -79,6 +79,18 @@ export const CampaignProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const unlockedLexicon = useMemo(() => new Map(unlockedEntries.map((entry) => [entry.id, entry])), [unlockedEntries]);
   const shouldRunTimers = Boolean(profile && campaignReady && profile.active !== false && !campaignState.timersPaused && !campaignState.battleActive);
   const timersRunning = shouldRunTimers && timerClockReady;
+
+  useEffect(() => {
+    if (!currentUser || !profile) return;
+    const version = Math.max(0, Number(profile.dailyResetVersion || 0));
+    const key = `omnia-daily-reset-version-${currentUser.uid}`;
+    const applied = Math.max(0, Number(localStorage.getItem(key) || 0));
+    if (version > applied) {
+      clearAllCooldowns();
+      localStorage.setItem(key, String(version));
+      setTimerEpoch((value) => value + 1);
+    }
+  }, [currentUser, profile]);
 
   useEffect(() => {
     if (!currentUser || !profile || !campaignReady) { setTimerClockReady(false); return; }

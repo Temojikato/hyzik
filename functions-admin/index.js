@@ -418,6 +418,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     if (!Object.prototype.hasOwnProperty.call(previousResources, 'songAvailable')) resources.quickAvailable = false;
     resources.roundUses = { ...(resources.roundUses || {}) };
     resources.encounterUses = { ...(resources.encounterUses || {}) };
+    const dailyUses = { ...(player.combatDailyUses || {}) };
     if (song && !resources.songAvailable) throw new HttpsError('failed-precondition', 'Your Song has already been spent.');
     if (!song && ability.actionType === 'action' && !resources.actionAvailable) throw new HttpsError('failed-precondition', 'Your action has already been spent.');
     if (ability.actionType === 'quick' && !resources.quickAvailable) throw new HttpsError('failed-precondition', 'Use an Action technique before its Quick follow-up.');
@@ -425,6 +426,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     const round = Number(turn.round || 1);
     if (ability.reset === 'round' && resources.roundUses[ability.id] === round) throw new HttpsError('failed-precondition', 'That technique resets next round.');
     if (ability.reset === 'encounter' && Number(resources.encounterUses[ability.id] || 0) >= Number(ability.uses || 1)) throw new HttpsError('failed-precondition', 'That technique is spent for this encounter.');
+    if (ability.reset === 'daily' && Number(dailyUses[ability.id] || 0) >= Number(ability.uses || 1)) throw new HttpsError('failed-precondition', 'That technique is spent until a qualifying rest.');
     if (song) resources.songAvailable = false;
     if (!song && ability.actionType === 'action') {
       resources.actionAvailable = false;
@@ -434,6 +436,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     if (ability.actionType === 'reaction') resources.reactionAvailable = false;
     if (ability.reset === 'round') resources.roundUses[ability.id] = round;
     if (ability.reset === 'encounter') resources.encounterUses[ability.id] = Number(resources.encounterUses[ability.id] || 0) + 1;
+    if (ability.reset === 'daily') dailyUses[ability.id] = Number(dailyUses[ability.id] || 0) + 1;
     participant.turnResources = resources;
     const interruptedSong = song?.songForm === 'canticle' ? encounter.activeSong || null : null;
     const activeSong = song?.songForm === 'canticle' ? {
@@ -462,6 +465,7 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
       createdAtMs: Date.now(),
     }].slice(-80);
     transaction.update(encounterRef, { participants, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    if (ability.reset === 'daily') transaction.update(userRef, { combatDailyUses: dailyUses });
     return { abilityId: ability.id, abilityName: ability.name, resources, activeSong };
   });
 });
@@ -776,13 +780,16 @@ exports.purchaseCityItem = onCall({ region: 'europe-west1', cors: true }, async 
   const db = getFirestore();
   const userRef = db.collection('users').doc(request.auth.uid);
   const itemRef = db.doc(itemPath(itemId));
+  const campaignRef = db.collection('campaign').doc('current');
   const ledgerRef = db.collection('economyTransactions').doc();
   return db.runTransaction(async (transaction) => {
-    const [userSnapshot, itemSnapshot] = await Promise.all([transaction.get(userRef), transaction.get(itemRef)]);
+    const [userSnapshot, itemSnapshot, campaignSnapshot] = await Promise.all([
+      transaction.get(userRef), transaction.get(itemRef), transaction.get(campaignRef),
+    ]);
     if (!userSnapshot.exists || !itemSnapshot.exists) throw new HttpsError('not-found', 'The player or item record is missing.');
     const economy = normalizeEconomy(userSnapshot.data().economy);
     let quote;
-    try { quote = purchaseQuote(itemSnapshot.data(), factionId, economy.reputation[factionId], amount); }
+    try { quote = purchaseQuote(itemSnapshot.data(), factionId, economy.reputation[factionId], amount, vendorName || faction.vendors[0]); }
     catch (error) { throw new HttpsError('failed-precondition', error.message); }
     const requiredReputation = { common: 0, uncommon: 0, rare: 25, epic: 60, legendary: 120, artifact: Number.MAX_SAFE_INTEGER }[quote.rarity] || 0;
     if (economy.reputation[factionId] < requiredReputation) throw new HttpsError('failed-precondition', `This ${quote.rarity} stock requires ${requiredReputation} reputation with ${faction.name}.`);
@@ -790,18 +797,132 @@ exports.purchaseCityItem = onCall({ region: 'europe-west1', cors: true }, async 
     if (economy.favor < quote.totalPrice) throw new HttpsError('failed-precondition', `You need ${quote.totalPrice - economy.favor} more Favor.`);
     economy.favor -= quote.totalPrice;
     economy.lifetimeFavorSpent += quote.totalPrice;
-    const inventory = addInventoryEntry(userSnapshot.data().inventory, itemRef, amount);
+    const worldMode = campaignSnapshot.data()?.worldMode === 'dungeon' ? 'dungeon' : 'town';
+    const reservationId = crypto.randomUUID();
+    const itemName = clean(itemSnapshot.data().name, 120) || itemId;
     const playerName = clean(userSnapshot.data().displayName, 80) || 'Unnamed player';
-    transaction.update(userRef, { inventory, economy });
+    const reservations = Array.isArray(userSnapshot.data().purchaseReservations)
+      ? [...userSnapshot.data().purchaseReservations]
+      : [];
+    if (worldMode === 'dungeon') {
+      if (reservations.length >= 200) throw new HttpsError('resource-exhausted', 'Your reservation queue is full. Return to town before reserving more goods.');
+      reservations.push({
+        id: reservationId, itemId, itemName, quantity: amount,
+        factionId, factionName: faction.name, vendorName: quote.vendorName,
+        totalPrice: quote.totalPrice, createdAtMs: Date.now(),
+      });
+      transaction.update(userRef, { purchaseReservations: reservations, economy });
+    } else {
+      transaction.update(userRef, { inventory: addInventoryEntry(userSnapshot.data().inventory, itemRef, amount), economy });
+    }
     transaction.set(ledgerRef, {
-      kind: 'purchase', playerId: request.auth.uid, playerName,
-      factionId, factionName: faction.name, vendorName: vendorName || faction.vendors[0],
-      itemId, itemName: clean(itemSnapshot.data().name, 120) || itemId, quantity: amount,
+      kind: worldMode === 'dungeon' ? 'reservation' : 'purchase', playerId: request.auth.uid, playerName,
+      factionId, factionName: faction.name, vendorName: quote.vendorName,
+      itemId, itemName, quantity: amount,
       favorDelta: -quote.totalPrice, reputationDelta: 0,
-      note: `${quote.tier.name} rate · ${quote.tier.discountPercent}% reputation discount`,
+      note: worldMode === 'dungeon'
+        ? `Paid at ${quote.tier.name} rate; reserved for the next return to town`
+        : `${quote.tier.name} rate · ${quote.tier.discountPercent}% reputation discount`,
       createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
     });
-    return { economy, itemId, amount, totalPrice: quote.totalPrice, unitPrice: quote.unitPrice };
+    return {
+      economy, itemId, amount, totalPrice: quote.totalPrice, unitPrice: quote.unitPrice,
+      status: worldMode === 'dungeon' ? 'reserved' : 'acquired',
+      ...(worldMode === 'dungeon' ? { reservationId } : {}),
+    };
+  });
+});
+
+exports.adminSetWorldMode = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const worldMode = clean(request.data?.worldMode, 20);
+  if (!['town', 'dungeon'].includes(worldMode)) throw new HttpsError('invalid-argument', 'Choose town or dungeon mode.');
+  const db = getFirestore();
+  const campaignRef = db.collection('campaign').doc('current');
+  const listedUsers = await db.collection('users').get();
+  return db.runTransaction(async (transaction) => {
+    const [campaignSnapshot, ...userSnapshots] = await Promise.all([
+      transaction.get(campaignRef),
+      ...listedUsers.docs.map((entry) => transaction.get(entry.ref)),
+    ]);
+    let fulfilledReservations = 0;
+    if (worldMode === 'town') {
+      userSnapshots.forEach((snapshot) => {
+        if (!snapshot.exists) return;
+        const user = snapshot.data();
+        const reservations = Array.isArray(user.purchaseReservations) ? user.purchaseReservations : [];
+        if (!reservations.length) return;
+        let inventory = [...(user.inventory || [])];
+        const playerName = clean(user.displayName, 80) || 'Unnamed player';
+        reservations.forEach((reservation) => {
+          const reservedItemId = clean(reservation.itemId, 180);
+          const reservedAmount = quantity(reservation.quantity);
+          if (!reservedItemId) return;
+          inventory = addInventoryEntry(inventory, db.doc(itemPath(reservedItemId)), reservedAmount);
+          transaction.set(db.collection('economyTransactions').doc(), {
+            kind: 'reservation-fulfilled', playerId: snapshot.id, playerName,
+            factionId: clean(reservation.factionId, 80), factionName: clean(reservation.factionName, 120),
+            vendorName: clean(reservation.vendorName, 120), itemId: reservedItemId,
+            itemName: clean(reservation.itemName, 120) || reservedItemId, quantity: reservedAmount,
+            favorDelta: 0, reputationDelta: 0,
+            note: `Reserved on campaign day ${Number(campaignSnapshot.data()?.day || 1)}; delivered on return to town`,
+            createdAtMs: Date.now(), createdAt: FieldValue.serverTimestamp(),
+          });
+          fulfilledReservations += 1;
+        });
+        transaction.update(snapshot.ref, { inventory, purchaseReservations: [] });
+      });
+    }
+    transaction.set(campaignRef, { worldMode, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+    return { worldMode, fulfilledReservations };
+  });
+});
+
+exports.adminAdvanceDay = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const requestedRests = Array.isArray(request.data?.rests) ? request.data.rests.slice(0, 200) : [];
+  const restByUser = new Map(requestedRests.map((entry) => [
+    clean(entry?.userId, 128),
+    Math.max(0, Math.min(24, Math.floor(Number(entry?.hours || 0)))),
+  ]).filter(([userId]) => Boolean(userId)));
+  const db = getFirestore();
+  const campaignRef = db.collection('campaign').doc('current');
+  const listedUsers = await db.collection('users').get();
+  return db.runTransaction(async (transaction) => {
+    const [campaignSnapshot, ...userSnapshots] = await Promise.all([
+      transaction.get(campaignRef),
+      ...listedUsers.docs.map((entry) => transaction.get(entry.ref)),
+    ]);
+    if (campaignSnapshot.data()?.battleActive === true) throw new HttpsError('failed-precondition', 'End the active battle before advancing the campaign day.');
+    let restedPlayers = 0;
+    let dailyResets = 0;
+    userSnapshots.forEach((snapshot) => {
+      if (!snapshot.exists) return;
+      const user = snapshot.data();
+      const hours = restByUser.get(snapshot.id) || 0;
+      const dead = user.mortality?.dead === true;
+      const maxHp = Math.max(1, Math.floor(Number(user.combatStats?.maxHp || user.combatProfile?.derived?.maxHp || 1)));
+      const currentHp = Math.max(0, Math.min(maxHp, Math.floor(Number(user.combatStats?.currentHp ?? maxHp))));
+      const healedHp = dead ? currentHp : Math.min(maxHp, currentHp + Math.ceil((maxHp * hours) / 6));
+      if (hours > 0 && !dead) restedPlayers += 1;
+      const update = {
+        'combatStats.currentHp': healedHp,
+        'combatStats.maxHp': maxHp,
+        lastRestHours: hours,
+      };
+      if (hours >= 5 && !dead) {
+        update.combatDailyUses = {};
+        update.dailyResetVersion = Math.max(0, Math.floor(Number(user.dailyResetVersion || 0))) + 1;
+        update.lastDailyResetAt = FieldValue.serverTimestamp();
+        dailyResets += 1;
+      }
+      transaction.update(snapshot.ref, update);
+    });
+    const day = Math.max(1, Math.floor(Number(campaignSnapshot.data()?.day || 1))) + 1;
+    transaction.set(campaignRef, {
+      day, lastDayAdvancedAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp(),
+    }, { merge: true });
+    return { day, restedPlayers, dailyResets };
   });
 });
 

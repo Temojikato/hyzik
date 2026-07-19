@@ -6,6 +6,10 @@ export type EconomyFaction = typeof economyConfig.factions[number];
 
 export const ECONOMY_FACTIONS = economyConfig.factions;
 export const REPUTATION_TIERS = economyConfig.reputationTiers;
+export const VENDOR_STOCK = economyConfig.vendorStock as Record<string, string[]>;
+
+export const vendorStocksItem = (vendorName: string, item: Pick<Item, 'category'>) =>
+  (VENDOR_STOCK[vendorName] || []).includes(item.category);
 
 const rarityOrder: ItemRarity[] = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'artifact'];
 
