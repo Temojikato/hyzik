@@ -293,6 +293,7 @@ export const startEncounter = async (input: {
     map: input.map || null,
     participants,
     turn: { phase: 'initiative', round: 1, activeIndex: -1, sequence: [], serial: 0 },
+    activeSong: null,
     combatLog: [{ id: crypto.randomUUID(), action: 'battle-started', round: 1, createdAtMs: Date.now() }],
     createdAt: serverTimestamp(),
     startedAt: serverTimestamp(),
@@ -329,7 +330,7 @@ export const endEncounter = async (encounterId: string) => {
   const encounterSnapshot = await getDoc(doc(db, 'encounters', encounterId));
   const encounter = encounterSnapshot.data() as Encounter | undefined;
   const batch = writeBatch(db);
-  batch.update(doc(db, 'encounters', encounterId), { status: 'complete', endedAt: serverTimestamp(), updatedAt: serverTimestamp() });
+  batch.update(doc(db, 'encounters', encounterId), { status: 'complete', activeSong: null, endedAt: serverTimestamp(), updatedAt: serverTimestamp() });
   (encounter?.participants || []).filter((participant) => participant.kind === 'player').forEach((participant) => {
     batch.update(doc(db, 'users', participant.sourceId), {
       'combatStats.currentHp': Math.max(0, Math.min(participant.maxHp, participant.hp)),

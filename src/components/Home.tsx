@@ -123,6 +123,14 @@ const Home: React.FC = () => {
           }
 
           const reyvateilData = reyvateilSnap.data();
+          const registeredCombat = reyvateilData.combat as ReyvateilCombatProfile | undefined;
+          const bundledCombat = combatCatalog[reyvateilSnap.id];
+          // Catalog rollouts must not strand existing Firestore Reyvateils. Until
+          // the admin runs the persistence sync, use the bundled canonical
+          // profile whenever the registered copy predates combat Songs.
+          const currentCombat = Array.isArray(registeredCombat?.combatSongs)
+            ? registeredCombat
+            : bundledCombat || registeredCombat;
           setReyvateil({
             id: reyvateilSnap.id,
             name: reyvateilData.name,
@@ -133,7 +141,7 @@ const Home: React.FC = () => {
             abilities: reyvateilData.abilities,
             levelUpRequirements: reyvateilData.levelUpRequirements,
             evolutionOptions: reyvateilData.evolutionOptions,
-            combat: reyvateilData.combat || combatCatalog[reyvateilSnap.id],
+            combat: currentCombat,
           });
 
           if (userData.inventory) {

@@ -156,6 +156,20 @@ export interface EncounterTurnState {
   advancedAt?: Timestamp;
 }
 
+export interface ActiveCombatSong {
+  songId: string;
+  songName: string;
+  form: 'canticle';
+  performerParticipantId: string;
+  performerSourceId: string;
+  performerName: string;
+  stage: 'chanting' | 'active';
+  startedRound: number;
+  activatesAtRound: number;
+  endsAfterRound: number | null;
+  audioUrl?: string;
+}
+
 export interface CombatLogEntry {
   id: string;
   participantId?: string;
@@ -175,6 +189,7 @@ export interface Encounter {
   map?: EncounterMapFrame;
   participants: EncounterParticipant[];
   turn?: EncounterTurnState;
+  activeSong?: ActiveCombatSong | null;
   combatLog?: CombatLogEntry[];
   createdAt?: Timestamp;
   startedAt?: Timestamp;

@@ -55,10 +55,10 @@ const identities = {
 const roleTemplates = {
   vanguard: [
     ['Assault', 'action', 'turn', 1, 'Strike one nearby enemy for 1d10 + Force {damage} damage, then move 2 spaces without provoking.'],
-    ['Roar', 'action', 'round', 1, 'Enemies within 2 spaces test Focus or become Exposed until your next turn.'],
+    ['Roar', 'action', 'round', 1, 'Enemies within 2 spaces make a Focus saving throw against your Save Difficulty or become Exposed until your next turn.'],
     ['Surge', 'quick', 'round', 1, 'Gain 2 Guard and advantage on your next Force test this turn.'],
     ['Reversal', 'reaction', 'round', 1, 'When hit nearby, reduce the damage by 1d8 + Guard and step toward the attacker.'],
-    ['Cataclysm', 'action', 'encounter', 1, 'Crash through a 3-space line; creatures there take 3d8 {damage} damage and fall Prone on a failed Guard test.'],
+    ['Cataclysm', 'action', 'encounter', 1, 'Crash through a 3-space line and make a Technique attack against each creature\'s Defense. On a hit, deal 3d8 {damage} damage and knock it Prone.'],
     ['Challenge', 'action', 'turn', 1, 'Mark one enemy you can see. It has disadvantage against allies until your next turn.'],
     ['Overrun', 'quick', 'round', 1, 'Move up to half speed through hostile spaces; the first enemy crossed takes Force damage.'],
     ['Refusal', 'reaction', 'encounter', 2, 'When reduced to 0 HP, remain at 1 HP and immediately make a basic Strike.'],
@@ -68,10 +68,10 @@ const roleTemplates = {
   bulwark: [
     ['Interdict', 'action', 'turn', 1, 'Strike for 1d8 + Force {damage} damage and bind the target\'s attention until your next turn.'],
     ['Rampart', 'action', 'round', 1, 'Create adjacent cover; you and one ally gain 3 Defense until your next turn.'],
-    ['Anchor', 'quick', 'round', 1, 'You cannot be moved and gain advantage on Guard tests until your next turn.'],
+    ['Anchor', 'quick', 'round', 1, 'You cannot be moved and attacks against you have disadvantage until your next turn.'],
     ['Aegis', 'reaction', 'round', 1, 'Take a hit meant for an adjacent ally and reduce it by Guard.'],
     ['Citadel', 'action', 'encounter', 1, 'For one round, allies within 2 spaces gain resistance to all damage and cannot be displaced.'],
-    ['Lock', 'action', 'turn', 1, 'An adjacent enemy tests Guard or becomes Rooted until the end of its next turn.'],
+    ['Lock', 'action', 'turn', 1, 'Make a Technique attack against an adjacent enemy\'s Defense. On a hit, it becomes Rooted until the end of its next turn.'],
     ['Advance', 'quick', 'round', 1, 'Move 2 spaces with one adjacent willing ally; neither provokes reactions.'],
     ['Unbroken', 'reaction', 'encounter', 2, 'Cancel one critical hit against a creature within 2 spaces; it becomes a normal hit.'],
     ['Absolute Wall', 'action', 'encounter', 1, 'Raise a 4-space barrier with 20 HP and Defense equal to yours.'],
@@ -80,7 +80,7 @@ const roleTemplates = {
   striker: [
     ['Execution', 'action', 'turn', 1, 'Attack one target for 1d10 + Finesse {damage} damage; deal +1d6 if it is Exposed.'],
     ['Ambush', 'action', 'round', 1, 'Move 3 spaces, then attack with advantage for 2d8 {damage} damage.'],
-    ['Feint', 'quick', 'round', 1, 'Make one enemy test Focus; on failure your next attack against it ignores reactions.'],
+    ['Feint', 'quick', 'round', 1, 'One enemy makes a Focus saving throw against your Save Difficulty; on failure your next attack against it ignores reactions.'],
     ['Slip', 'reaction', 'round', 1, 'When targeted, move 1 space and impose disadvantage on the attack.'],
     ['Predation', 'action', 'encounter', 1, 'Make three attacks against one target, each dealing 1d8 {damage} damage.'],
     ['Expose', 'action', 'turn', 1, 'Deal 1d6 damage and make the target Exposed until an ally hits it.'],
@@ -95,7 +95,7 @@ const roleTemplates = {
     ['Accelerate', 'quick', 'round', 1, 'Gain 3 spaces of movement and advantage on Finesse tests this turn.'],
     ['Afterimage', 'reaction', 'round', 1, 'When attacked, move 2 spaces; if this breaks range, the attack misses.'],
     ['Meteor Step', 'action', 'encounter', 1, 'Cross up to 8 spaces in a straight line; each enemy crossed takes 2d8 {damage}.'],
-    ['Displace', 'action', 'turn', 1, 'Strike for 1d6 {damage} and move the target 2 spaces on a failed Guard test.'],
+    ['Displace', 'action', 'turn', 1, 'Make a Technique attack against Defense. On a hit, deal 1d6 {damage} damage and move the target 2 spaces.'],
     ['Updraft', 'quick', 'round', 1, 'Leap to any visible space within 4 spaces, ignoring terrain.'],
     ['Vector Turn', 'reaction', 'encounter', 2, 'Redirect a ranged attack that misses you toward another legal target.'],
     ['Zero Distance', 'action', 'encounter', 1, 'Teleport adjacent to a visible target and deal 4d8 + Tempo {damage} damage.'],
@@ -103,14 +103,14 @@ const roleTemplates = {
   ],
   controller: [
     ['Snare', 'action', 'turn', 1, 'Attack at 6 spaces for 1d8 + Resonance {damage}; the target loses 1 space of movement.'],
-    ['Field', 'action', 'round', 1, 'Create a 2-space zone; enemies entering it test Focus or become Rooted for the turn.'],
-    ['Distort', 'quick', 'round', 1, 'Move one creature within 5 spaces by 1 space on a failed Focus test.'],
+    ['Field', 'action', 'round', 1, 'Create a 2-space zone; enemies entering it make a Focus saving throw against your Save Difficulty or become Rooted for the turn.'],
+    ['Distort', 'quick', 'round', 1, 'One creature within 5 spaces makes a Focus saving throw against your Save Difficulty. On failure, move it 1 space.'],
     ['Interference', 'reaction', 'round', 1, 'Impose disadvantage on an enemy test you can see within 5 spaces.'],
-    ['Cascade', 'action', 'encounter', 1, 'A 3-space burst deals 3d6 {damage}; failed Focus tests also leave creatures Silenced for one turn.'],
-    ['Fracture', 'action', 'turn', 1, 'A target within 6 spaces becomes Exposed on a failed Focus test.'],
+    ['Cascade', 'action', 'encounter', 1, 'Make a Song attack against the Defense of each creature in a 3-space burst. On a hit, deal 3d6 {damage} damage and leave it Silenced for one turn.'],
+    ['Fracture', 'action', 'turn', 1, 'A target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Exposed on failure.'],
     ['Fold', 'quick', 'round', 1, 'Exchange positions with a willing ally within 5 spaces.'],
     ['Denial', 'reaction', 'encounter', 2, 'Cancel a non-ultimate technique used within 5 spaces; its action is spent.'],
-    ['Closed World', 'action', 'encounter', 1, 'Create a 4-space sealed field for one round; nothing crosses its edge without passing a Focus test.'],
+    ['Closed World', 'action', 'encounter', 1, 'Create a 4-space sealed field for one round. A creature attempting to cross makes a Focus saving throw against your Save Difficulty.'],
     ['Pressure', 'passive', 'passive', 0, 'Enemies suffering one of your conditions take 1 Resonance damage at the start of their turns.'],
   ],
   support: [
@@ -127,14 +127,14 @@ const roleTemplates = {
   ],
   channeler: [
     ['Bolt', 'action', 'turn', 1, 'Attack a target within 7 spaces for 1d10 + Resonance {damage} damage.'],
-    ['Wave', 'action', 'round', 1, 'A 4-space line deals 2d6 {damage}; targets failing Guard are pushed 2 spaces.'],
+    ['Wave', 'action', 'round', 1, 'Make a Technique attack against the Defense of each target in a 4-space line. On a hit, deal 2d6 {damage} damage and push it 2 spaces.'],
     ['Charge', 'quick', 'round', 1, 'Add 1d8 {damage} damage to your next technique this turn.'],
     ['Feedback', 'reaction', 'round', 1, 'When hit by a technique, deal Resonance {damage} back to its user.'],
     ['Overload', 'action', 'encounter', 1, 'A 3-space burst deals 4d8 {damage}; you become Exposed until your next turn.'],
     ['Pierce', 'action', 'turn', 1, 'Attack for 1d8 {damage} and ignore 2 Defense.'],
     ['Phase', 'quick', 'round', 1, 'Pass through occupied spaces and solid cover during this turn.'],
     ['Absorb', 'reaction', 'encounter', 2, 'Reduce incoming elemental damage to zero and empower your next attack by 1d8.'],
-    ['Terminal Verse', 'action', 'encounter', 1, 'A target within 8 spaces takes 5d8 + Resonance {damage}, half on a successful Focus test.'],
+    ['Terminal Verse', 'action', 'encounter', 1, 'One target within 8 spaces makes a Focus saving throw against your Save Difficulty, taking 5d8 + Resonance {damage} damage on failure or half on success.'],
     ['Conduit', 'passive', 'passive', 0, 'When you roll maximum on a damage die, gain 1 temporary HP.'],
   ],
   tactician: [
@@ -151,6 +151,65 @@ const roleTemplates = {
   ],
 };
 
+// Every Reyvateil knows a complete Song set in addition to inherited
+// techniques. Verses resolve immediately and never interrupt a Canticle.
+// Canticles occupy the one shared performance channel for the encounter.
+const roleSongTemplates = {
+  vanguard: [
+    ['Warcry Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 5 spaces. On a hit, deal 1d8 + Resonance {damage} damage.'],
+    ['Unbroken Verse', 'verse', 'round', 1, 0, 0, 'Gain temporary HP equal to 1d6 + Guard and advantage on your next melee attack this turn.'],
+    ['Marching Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first allied hit each round deals +1d4 {damage} damage.'],
+    ['Cataclysm Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, enemies within 3 spaces cannot take reactions and take Resonance {damage} damage at the start of their turns for 3 rounds.'],
+  ],
+  bulwark: [
+    ['Shelter Verse', 'verse', 'turn', 1, 0, 0, 'One ally within 5 spaces gains +2 Defense until your next turn.'],
+    ['Rebuke Verse', 'verse', 'round', 1, 0, 0, 'Make a Song attack against one target within 5 spaces. On a hit, deal 1d6 + Resonance {damage} damage and it cannot move closer to an ally this turn.'],
+    ['Rampart Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, allies within 3 spaces gain +1 Defense.'],
+    ['Citadel Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 3 spaces gain resistance to {damage} damage and cannot be forcibly moved for 3 rounds.'],
+  ],
+  striker: [
+    ['Killing Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 6 spaces. On a hit, deal 1d10 + Resonance {damage} damage.'],
+    ['Opening Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Exposed on failure.'],
+    ['Predator Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first hit against an Exposed enemy each round deals +1d6 {damage} damage.'],
+    ['Final Quiet Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, your attacks score a critical hit on 19 or 20 for 3 rounds.'],
+  ],
+  skirmisher: [
+    ['Waystep Verse', 'verse', 'turn', 1, 0, 0, 'Move up to 3 spaces, then make a Song attack against one target within 3 spaces for 1d8 + Resonance {damage} damage.'],
+    ['Afterimage Verse', 'verse', 'round', 1, 0, 0, 'Move up to half your movement without provoking reactions and gain +2 Defense until your next turn.'],
+    ['Gale Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, allies gain 2 movement and the first space they leave each turn does not provoke reactions.'],
+    ['Zero-Distance Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies may teleport 2 spaces instead of taking their normal movement for 3 rounds.'],
+  ],
+  controller: [
+    ['Binding Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 6 spaces. On a hit, deal 1d6 + Resonance {damage} damage and Root it until its next turn.'],
+    ['Dissonance Verse', 'verse', 'round', 1, 0, 0, 'One target within 6 spaces makes a Focus saving throw against your Save Difficulty, becoming Silenced until your next turn on failure.'],
+    ['Pressure Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, enemies suffering a condition take Resonance {damage} damage at the start of their turns.'],
+    ['Closed-World Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, create a 4-space field for 3 rounds. Enemies treat it as difficult terrain and cannot leave without spending an action.'],
+  ],
+  support: [
+    ['Mending Verse', 'verse', 'turn', 1, 0, 0, 'One creature within 5 spaces restores 1d8 + Resonance HP.'],
+    ['Cleansing Verse', 'verse', 'round', 1, 0, 0, 'End one harmful condition on a creature within 5 spaces or grant it temporary HP equal to Focus.'],
+    ['Restoration Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first wounded ally to begin a turn within 4 spaces restores Resonance HP.'],
+    ['Grand Chorus Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 4 spaces gain advantage on their first attack each round for 3 rounds.'],
+  ],
+  channeler: [
+    ['Bolting Verse', 'verse', 'turn', 1, 0, 0, 'Make a Song attack against one target within 8 spaces. On a hit, deal 1d10 + Resonance {damage} damage.'],
+    ['Wave Verse', 'verse', 'round', 1, 0, 0, 'Make a Song attack against the Defense of each target in a 4-space line. On a hit, deal 2d6 {damage} damage.'],
+    ['Conduit Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, the first maximum damage die rolled by an ally each round grants it temporary HP equal to Resonance.'],
+    ['Overload Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, the first allied Song or technique hit each round deals +2d6 {damage} damage for 3 rounds.'],
+  ],
+  tactician: [
+    ['Directive Verse', 'verse', 'turn', 1, 0, 0, 'One ally within 6 spaces may immediately make a basic Strike using your Focus bonus.'],
+    ['Readiness Verse', 'verse', 'round', 1, 0, 0, 'One ally within 6 spaces regains its reaction and may move 2 spaces without provoking.'],
+    ['Formation Canticle', 'canticle', 'encounter', 1, 0, null, 'While this Canticle is active, one willing ally may move 1 space whenever another ally ends its turn.'],
+    ['Perfect-Sequence Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, the first allied miss each round may be rerolled for 3 rounds.'],
+  ],
+};
+
+const advancedSongTemplates = [
+  ['Ascendant Verse', 'verse', 'encounter', 2, 0, 0, 'Make a Song attack against one target within 8 spaces. On a hit, deal 3d8 + Resonance {damage} damage; on a miss, deal half damage.'],
+  ['Sovereign Canticle', 'canticle', 'encounter', 1, 1, 3, 'After one round of chanting, allies within 5 spaces gain +2 Defence and add 1d8 {damage} damage to their first hit each round for 3 rounds.'],
+];
+
 const socialTemplates = [
   ['Field Counsel', 'Read the immediate environment and reveal one practical danger the group has overlooked.', 900, 'hymmnos pagle'],
   ['Quiet Industry', 'Complete a careful mundane task with supernatural steadiness and without drawing attention.', 1200, 'gyen quive'],
@@ -165,6 +224,7 @@ const damageHeadword = {
   poison: 'kuhle', frost: 'jue lyuma', arcane: 'maya', void: 'dazua', blood: 'prooth',
 };
 const techniqueHeadwords = ['zethpa', 'rinc', 'pauwel', 'cecet', 'ruinie', 'gyaeje', 'm.y.b.', 'tarfe', 'zodaw', 'ture'];
+const songHeadwords = ['hymmnos', 'wearequewie', 'yorr', 'exec', 'zethpa', 'rinc'];
 
 const slug = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const baseById = new Map(JSON.parse(fs.readFileSync(sourcePath, 'utf8')).map((entry) => [entry.id, entry]));
@@ -176,12 +236,17 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
   const templates = roleTemplates[role];
   if (!templates) throw new Error(`Unknown combat role ${role}`);
   const aptitudes = Object.fromEntries(['force', 'finesse', 'guard', 'resonance', 'focus', 'tempo'].map((key, index) => [key, aptitudeValues[index]]));
+  const songFocused = ['controller', 'support', 'channeler'].includes(role) || ['sonic', 'arcane'].includes(damageType);
+  const startsWithTwoSongs = aptitudes.resonance >= 5;
+  const songUnlockLevels = songFocused
+    ? (startsWithTwoSongs ? [1, 1, 3, 5, 7, 9] : [1, 2, 4, 6, 8, 10])
+    : (startsWithTwoSongs ? [1, 1, 4, 7] : [1, 3, 5, 7]);
   const combatAbilities = templates.map(([suffix, actionType, reset, uses, effect], index) => {
     const name = `${motifs[index % motifs.length]} ${suffix}`;
     return {
       id: `${id}-combat-${slug(name)}`,
       name,
-      description: effect.replaceAll('{damage}', damageType),
+      description: effect.replaceAll('{damage}', damageType).replaceAll('Defense', 'Defence'),
       actionType,
       reset,
       uses,
@@ -189,6 +254,27 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
       damageType,
       tags: [role, damageType, index === 8 ? 'ultimate' : index === 9 ? 'passive' : 'technique'],
       hymmnos: { headword: `${damageHeadword[damageType]} ${techniqueHeadwords[index]}` },
+    };
+  });
+  const songTemplates = songFocused ? [...roleSongTemplates[role], ...advancedSongTemplates] : roleSongTemplates[role];
+  const combatSongs = songTemplates.map(([suffix, songForm, reset, uses, chantRounds, durationRounds, effect], index) => {
+    const name = `${motifs[index % motifs.length]} ${suffix}`;
+    return {
+      id: `${id}-song-${slug(name)}`,
+      name,
+      description: effect.replaceAll('{damage}', damageType).replaceAll('Defense', 'Defence'),
+      actionType: 'action',
+      reset,
+      uses,
+      range: /within (\d+) spaces/.exec(effect)?.[1] ? Number(/within (\d+) spaces/.exec(effect)[1]) : 0,
+      damageType,
+      tags: [role, damageType, 'song', songForm],
+      songForm,
+      levelRequired: songUnlockLevels[index],
+      chantRounds,
+      durationRounds,
+      audioUrl: '',
+      hymmnos: { headword: `hymmnos ${damageHeadword[damageType]} ${songHeadwords[index % songHeadwords.length]}` },
     };
   });
   const socialAbilities = [
@@ -223,10 +309,13 @@ const catalog = Object.fromEntries(Object.entries(identities).map(([id, tuple]) 
       hitPointsPerLevel: 3 + aptitudes.guard,
       aptitudeIncreaseLevels: [2, 4, 6, 8, 10],
       newTechniqueLevels: [3, 7],
+      newSongLevels: songUnlockLevels.filter((level) => level > 1),
+      songCapacity: combatSongs.length,
       evolutionLevel: 5,
       aptitudeCap: 7,
     },
     combatAbilities,
+    combatSongs,
     socialAbilities,
   }];
 }));

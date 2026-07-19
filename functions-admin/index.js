@@ -77,8 +77,8 @@ exports.selectReyvateilProfile = onCall({ region: 'europe-west1', cors: true }, 
   const reyvateilSnapshot = await db.collection('reyvateils').doc(reyvateilId).get();
   if (!reyvateilSnapshot.exists) throw new HttpsError('not-found', 'That Reyvateil is not registered.');
   const reyvateil = reyvateilSnapshot.data();
-  const combat = reyvateil.combat || combatCatalog[reyvateilId];
-  if (!combat || !Array.isArray(combat.combatAbilities) || combat.combatAbilities.length < 10 || !Array.isArray(combat.socialAbilities) || combat.socialAbilities.length < 10) {
+  const combat = Array.isArray(reyvateil.combat?.combatSongs) ? reyvateil.combat : combatCatalog[reyvateilId];
+  if (!combat || !Array.isArray(combat.combatAbilities) || combat.combatAbilities.length < 10 || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4 || !Array.isArray(combat.socialAbilities) || combat.socialAbilities.length < 10) {
     throw new HttpsError('failed-precondition', 'That Reyvateil combat profile has not been prepared yet.');
   }
   const inheritedCombatAbilityIds = deterministicSubset(
@@ -177,8 +177,9 @@ exports.ensureCombatProfile = onCall({ region: 'europe-west1', cors: true }, asy
   if (!reyvateilId) throw new HttpsError('failed-precondition', 'Choose a Reyvateil before preparing combat.');
   const reyvateilRef = db.collection('reyvateils').doc(reyvateilId);
   const reyvateilSnapshot = await reyvateilRef.get();
-  const combat = reyvateilSnapshot.data()?.combat || combatCatalog[reyvateilId];
-  if (!combat) throw new HttpsError('failed-precondition', 'This Reyvateil has no combat catalog.');
+  const registeredCombat = reyvateilSnapshot.data()?.combat;
+  const combat = Array.isArray(registeredCombat?.combatSongs) ? registeredCombat : combatCatalog[reyvateilId];
+  if (!combat || !Array.isArray(combat.combatSongs) || combat.combatSongs.length < 4) throw new HttpsError('failed-precondition', 'This Reyvateil has no complete combat and Song catalog.');
   const previousHp = Number(user.combatStats?.currentHp);
   const currentHp = Number.isFinite(previousHp) && previousHp >= 0 ? Math.min(previousHp, combat.derived.maxHp) : combat.derived.maxHp;
   const batch = db.batch();
@@ -237,11 +238,29 @@ exports.advanceEncounterTurn = onCall({ region: 'europe-west1', cors: true }, as
       serial: Number(previous.serial || 0) + 1,
       advancedAt: FieldValue.serverTimestamp(),
     };
-    const combatLog = [...(encounter.combatLog || []), {
+    let activeSong = encounter.activeSong ? { ...encounter.activeSong } : null;
+    const songLog = [];
+    if (wrapped && activeSong?.stage === 'chanting' && round >= Number(activeSong.activatesAtRound || round)) {
+      activeSong.stage = 'active';
+      songLog.push({
+        id: crypto.randomUUID(), action: 'ability-used', round,
+        participantId: activeSong.performerParticipantId, participantName: clean(activeSong.performerName, 120),
+        abilityId: activeSong.songId, abilityName: clean(activeSong.songName, 120), songEvent: 'canticle-activated', createdAtMs: Date.now(),
+      });
+    }
+    if (wrapped && activeSong?.stage === 'active' && activeSong.endsAfterRound !== null && round > Number(activeSong.endsAfterRound)) {
+      songLog.push({
+        id: crypto.randomUUID(), action: 'ability-used', round,
+        participantId: activeSong.performerParticipantId, participantName: clean(activeSong.performerName, 120),
+        abilityId: activeSong.songId, abilityName: clean(activeSong.songName, 120), songEvent: 'canticle-ended', createdAtMs: Date.now(),
+      });
+      activeSong = null;
+    }
+    const combatLog = [...(encounter.combatLog || []), ...songLog, {
       id: crypto.randomUUID(), action: 'turn-started', round,
       participantId: active?.id, participantName: clean(active?.name, 120), createdAtMs: Date.now(),
     }].slice(-80);
-    transaction.update(encounterRef, { participants, turn, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    transaction.update(encounterRef, { participants, turn, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
     return { round, activeParticipantId, activeParticipantName: active?.name || '' };
   });
 });
@@ -264,13 +283,21 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     const participant = participants.find((entry) => entry.kind === 'player' && entry.sourceId === request.auth.uid);
     if (!participant) throw new HttpsError('permission-denied', 'You are not part of this encounter.');
     let ability = universalCombatAbilities[abilityId];
+    let song = null;
     if (!ability) {
       const inherited = player.combatProfile?.inheritedCombatAbilityIds || [];
-      if (!inherited.includes(abilityId)) throw new HttpsError('permission-denied', 'That technique was not inherited by your Reyvateil.');
       const reyvateilSnapshot = await transaction.get(db.collection('reyvateils').doc(clean(player.reyvateilId, 80)));
-      ability = reyvateilSnapshot.data()?.combat?.combatAbilities?.find((entry) => entry.id === abilityId);
+      const registeredCombat = reyvateilSnapshot.data()?.combat;
+      const combat = Array.isArray(registeredCombat?.combatSongs) ? registeredCombat : combatCatalog[clean(player.reyvateilId, 80)];
+      const technique = combat?.combatAbilities?.find((entry) => entry.id === abilityId);
+      song = combat?.combatSongs?.find((entry) => entry.id === abilityId) || null;
+      if (technique && !inherited.includes(abilityId)) throw new HttpsError('permission-denied', 'That technique was not inherited by your Reyvateil.');
+      ability = technique || song;
     }
-    if (!ability) throw new HttpsError('not-found', 'That combat technique no longer exists.');
+    if (!ability) throw new HttpsError('not-found', 'That combat technique or Song no longer exists.');
+    if (song && Number(player.combatProfile?.level || 1) < Number(song.levelRequired || 1)) {
+      throw new HttpsError('failed-precondition', `That Song unlocks at level ${song.levelRequired}.`);
+    }
     if (ability.actionType === 'passive') throw new HttpsError('failed-precondition', 'Passive techniques are always active.');
     const turn = encounter.turn;
     if (!turn || turn.phase !== 'active') throw new HttpsError('failed-precondition', 'The administrator has not started the first turn.');
@@ -292,13 +319,32 @@ exports.activateCombatAbility = onCall({ region: 'europe-west1', cors: true }, a
     if (ability.reset === 'round') resources.roundUses[ability.id] = round;
     if (ability.reset === 'encounter') resources.encounterUses[ability.id] = Number(resources.encounterUses[ability.id] || 0) + 1;
     participant.turnResources = resources;
+    const interruptedSong = song?.songForm === 'canticle' ? encounter.activeSong || null : null;
+    const activeSong = song?.songForm === 'canticle' ? {
+      songId: song.id,
+      songName: clean(song.name, 120),
+      form: 'canticle',
+      performerParticipantId: participant.id,
+      performerSourceId: request.auth.uid,
+      performerName: clean(participant.name, 120),
+      stage: Number(song.chantRounds || 0) > 0 ? 'chanting' : 'active',
+      startedRound: round,
+      activatesAtRound: round + Number(song.chantRounds || 0),
+      endsAfterRound: Number.isFinite(Number(song.durationRounds)) && song.durationRounds !== null
+        ? round + Number(song.chantRounds || 0) + Number(song.durationRounds) - 1
+        : null,
+      ...(song.audioUrl ? { audioUrl: clean(song.audioUrl, 2000) } : {}),
+    } : encounter.activeSong || null;
     const combatLog = [...(encounter.combatLog || []), {
       id: crypto.randomUUID(), action: 'ability-used', round,
       participantId: participant.id, participantName: clean(participant.name, 120),
-      abilityId: ability.id, abilityName: clean(ability.name, 120), createdAtMs: Date.now(),
+      abilityId: ability.id, abilityName: clean(ability.name, 120),
+      ...(song ? { songForm: song.songForm, songEvent: song.songForm === 'verse' ? 'verse-resolved' : 'canticle-started' } : {}),
+      ...(interruptedSong ? { interruptedSongId: interruptedSong.songId, interruptedSongName: clean(interruptedSong.songName, 120) } : {}),
+      createdAtMs: Date.now(),
     }].slice(-80);
-    transaction.update(encounterRef, { participants, combatLog, updatedAt: FieldValue.serverTimestamp() });
-    return { abilityId: ability.id, abilityName: ability.name, resources };
+    transaction.update(encounterRef, { participants, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
+    return { abilityId: ability.id, abilityName: ability.name, resources, activeSong };
   });
 });
 
