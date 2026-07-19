@@ -28,7 +28,7 @@ import {
   Divider,
   HStack,
 } from '@chakra-ui/react';
-import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDocFromServer, setDoc } from 'firebase/firestore';
 import { auth, db, storage, functions } from '../Firebase';
 import { Reyvateil } from '../types/Reyvateils';
 import { useAuth } from '../contexts/AuthContext';
@@ -77,6 +77,32 @@ const ReyvateilSelection: React.FC = () => {
 
   // New state for managing the steps
   const [step, setStep] = useState<'initial' | 'select' | 'test'>('initial');
+
+  // Recover from a completed selection even if Home briefly saw an older cached
+  // user document and sent the player back here.
+  useEffect(() => {
+    if (profile?.reyvateilId && !submissionLoading) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate, profile?.reyvateilId, submissionLoading]);
+
+  const persistSelection = async (reyvateilId: string, imageUrl: string) => {
+    if (!currentUser) throw new Error('User not authenticated.');
+
+    const selectProfile = httpsCallable<
+      { reyvateilId: string; imageUrl: string },
+      { reyvateilId: string; specialtyTitle: string }
+    >(functions, 'selectReyvateilProfile');
+    const result = await selectProfile({ reyvateilId, imageUrl });
+
+    // Callable writes happen through the Admin SDK, outside this client's local
+    // Firestore cache. Confirm the server copy before Home is allowed to decide
+    // whether onboarding is complete.
+    const confirmedProfile = await getDocFromServer(doc(db, 'users', currentUser.uid));
+    if (!confirmedProfile.exists() || confirmedProfile.data().reyvateilId !== result.data.reyvateilId) {
+      throw new Error('The Reyvateil selection could not be confirmed.');
+    }
+  };
 
   useEffect(() => {
     const fetchReyvateils = async () => {
@@ -160,8 +186,10 @@ const ReyvateilSelection: React.FC = () => {
         return;
       }
 
-      const selectProfile = httpsCallable<{ reyvateilId: string; imageUrl: string }, { specialtyTitle: string }>(functions, 'selectReyvateilProfile');
-      await selectProfile({ reyvateilId: selectedReyvateilId, imageUrl: selectedImageUrl || selectedReyvateilData.images?.[0] || '' });
+      await persistSelection(
+        selectedReyvateilId,
+        selectedImageUrl || selectedReyvateilData.images?.[0] || ''
+      );
 
       toast({
         title: 'Reyvateil Selected',
@@ -172,7 +200,7 @@ const ReyvateilSelection: React.FC = () => {
       });
 
       onClose();
-      navigate('/');
+      navigate('/', { replace: true });
     } catch (err) {
       console.error('Error selecting Reyvateil:', err);
       setSubmissionError('Failed to select Reyvateil. Please try again.');
@@ -242,8 +270,7 @@ const ReyvateilSelection: React.FC = () => {
     setSubmissionError('');
 
     try {
-      const selectProfile = httpsCallable<{ reyvateilId: string; imageUrl: string }, { specialtyTitle: string }>(functions, 'selectReyvateilProfile');
-      await selectProfile({ reyvateilId: reyvateil.id, imageUrl: selectedImageUrl || reyvateil.images?.[0] || '' });
+      await persistSelection(reyvateil.id, selectedImageUrl || reyvateil.images?.[0] || '');
 
       toast({
         title: 'Reyvateil Selected',
@@ -253,7 +280,7 @@ const ReyvateilSelection: React.FC = () => {
         isClosable: true,
       });
 
-      navigate('/');
+      navigate('/', { replace: true });
     } catch (err) {
       console.error('Error selecting Reyvateil:', err);
       setSubmissionError('Failed to select Reyvateil. Please try again.');

@@ -1,6 +1,6 @@
 // src/components/Home.tsx
 import React, { useEffect, useMemo, useState } from 'react';
-import { doc, getDoc, runTransaction, DocumentReference } from 'firebase/firestore';
+import { doc, getDoc, getDocFromServer, runTransaction, DocumentReference } from 'firebase/firestore';
 import { db, auth } from '../Firebase';
 import { functions } from '../Firebase';
 import { useAuth } from '../contexts/AuthContext';
@@ -93,7 +93,10 @@ const Home: React.FC = () => {
         setLoading(true);
         try {
           const userRef = doc(db, 'users', currentUser.uid);
-          const userSnap = await getDoc(userRef);
+          // Reyvateil selection is written by a callable function through the
+          // Admin SDK. A normal getDoc may briefly serve the pre-selection cache
+          // and incorrectly restart onboarding, so routing must use server truth.
+          const userSnap = await getDocFromServer(userRef);
 
           if (!userSnap.exists()) {
             setError('User data not found.');
@@ -105,7 +108,7 @@ const Home: React.FC = () => {
           if (!userData.reyvateilId) {
             setError('No Reyvateil selected.');
             setLoading(false);
-            navigate('/select-reyvateil');
+            navigate('/select-reyvateil', { replace: true });
             return;
           }
 
