@@ -13,6 +13,12 @@ const run = async () => {
     const speciesCount = Object.keys(data).filter((key) => key !== 'description').length;
     console.log(`Seeded bestiary/${categoryId}: ${speciesCount} species.`);
   }
+  if (useFirebaseCli) {
+    // The authored catalog deliberately starts fully hidden. Rebuild the
+    // derived discovery flags immediately so content seeding never erases
+    // knowledge earned in completed encounters.
+    await require('./rebuildBestiaryDiscovery').run();
+  }
 };
 
 run().catch((error) => { console.error(error); process.exitCode = 1; });

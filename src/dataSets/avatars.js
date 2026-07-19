@@ -1,6 +1,6 @@
 module.exports = {
   "Avatar of Greed and Patience": {
-    Locked: false,
+    Locked: true,
     Lore: {
       Formation:
         "The only discovered Avatar of any of the current Deities of Chaos, let alone ancient ones. One of the oldest of them all, it is quite unsure what generation they belong to. The progenitor of Slimes and thus a very important part of the Tower, even for the people.",
@@ -11,7 +11,10 @@ module.exports = {
       Behavior:
         "It doesn't seem to have any visual sentience—it just sits there. It collects, it sheds, and it appears eternal and unmoving."
     },
-    LoreLocked: false,
+    LoreLocked: true,
+    DiscoveryManaged: true,
+    LoreUnlockCount: 0,
+    EncounterCount: 0,
     Name: "Avatar of Greed and Patience",
     Tiers: {
       Minor: {
@@ -22,7 +25,7 @@ module.exports = {
           { itemName: "Ancient Manuscript", itemChance: 15 },
           { itemName: "Nothing", itemChance: 35 }
         ],
-        Locked: false,
+        Locked: true,
         Name: "Avatar of Greed and Patience",
         Stats: {
           Strength: "???",

@@ -1,6 +1,6 @@
 module.exports = {
   'Venestria, The Tangled Vine': {
-    Locked: false,
+    Locked: true,
     Lore: {
       Formation: 'Venestria was once the Reyvateil of an aspiring Diver whose name has been lost. Separated from both necklace and sanctuary, she slept inside her own roots for generations while Chaos distorted the unfinished bond.',
       'Social Tendencies': 'Venestria is a unique person, not a repeatable species. Survivors who tried to communicate returned speaking in riddles and displaying severe psychic damage; whether this was malice, panic, or an attempted Song is unknown.',
@@ -8,7 +8,10 @@ module.exports = {
       Behavior: 'She hides her small body inside a much larger root network, reacting to movement, song, and attempted contact as though they were fragments of an old emergency. Her exact intentions remain unknown.',
       Rarity: 'Unique. There is only one Venestria.',
     },
-    LoreLocked: false,
+    LoreLocked: true,
+    DiscoveryManaged: true,
+    LoreUnlockCount: 0,
+    EncounterCount: 0,
     Name: 'Venestria, The Tangled Vine',
     Tiers: {
       Unique: {
@@ -19,7 +22,7 @@ module.exports = {
           { itemName: 'Essence of Nature', itemChance: 15, rarity: 'rare' },
           { itemName: 'Nothing', itemChance: 35, rarity: 'common' },
         ],
-        Locked: false,
+        Locked: true,
         Name: 'Venestria, The Tangled Vine',
         SongHearing: 'audible',
         Stats: {

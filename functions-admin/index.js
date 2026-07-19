@@ -1,12 +1,13 @@
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { initializeApp } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
-const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { getFirestore, FieldValue, FieldPath } = require('firebase-admin/firestore');
 const crypto = require('crypto');
 const combatCatalog = require('./combatCatalog.json');
 const lootTroves = require('./lootTroves.json');
 const { config: economyConfig, factionById, normalizeEconomy, deriveItemEconomy, donationQuote, purchaseQuote } = require('./economy');
 const { rollLootBundle, sourceTierFromLabel } = require('./lootEngine');
+const { encounterDiscoveries, advanceDiscovery, discoveryId } = require('./bestiaryDiscovery');
 
 initializeApp();
 
@@ -504,6 +505,105 @@ exports.continueCombatSong = onCall({ region: 'europe-west1', cors: true }, asyn
     }].slice(-80);
     transaction.update(encounterRef, { participants, activeSong, combatLog, updatedAt: FieldValue.serverTimestamp() });
     return { songId: activeSong.songId, songName: activeSong.songName, resources, activeSong };
+  });
+});
+
+exports.adminEndEncounter = onCall({ region: 'europe-west1', cors: true }, async (request) => {
+  requireAdmin(request);
+  const encounterId = clean(request.data?.encounterId, 128);
+  if (!encounterId) throw new HttpsError('invalid-argument', 'Encounter is required.');
+  const db = getFirestore();
+  const encounterRef = db.collection('encounters').doc(encounterId);
+  const campaignRef = db.collection('campaign').doc('current');
+
+  return db.runTransaction(async (transaction) => {
+    const [encounterSnapshot] = await Promise.all([transaction.get(encounterRef), transaction.get(campaignRef)]);
+    if (!encounterSnapshot.exists) throw new HttpsError('not-found', 'That encounter no longer exists.');
+    const encounter = encounterSnapshot.data();
+    if (encounter.status !== 'active') throw new HttpsError('failed-precondition', 'That battle has already ended.');
+
+    const candidates = encounterDiscoveries(encounter.participants || []);
+    const categoryIds = [...new Set(candidates.map((entry) => entry.categoryId))];
+    const categoryRefs = new Map(categoryIds.map((categoryId) => [categoryId, db.collection('bestiary').doc(categoryId)]));
+    const categorySnapshots = await Promise.all(categoryIds.map((categoryId) => transaction.get(categoryRefs.get(categoryId))));
+    const categoryData = new Map(categoryIds.map((categoryId, index) => [categoryId, categorySnapshots[index].exists ? categorySnapshots[index].data() : null]));
+    const known = candidates.filter((entry) => categoryData.get(entry.categoryId)?.[entry.speciesName]?.Tiers);
+    const progressRefs = known.map((entry) => db.collection('bestiaryProgress').doc(discoveryId(entry.categoryId, entry.speciesName)));
+    const progressSnapshots = await Promise.all(progressRefs.map((ref) => transaction.get(ref)));
+
+    const fieldUpdates = new Map();
+    const results = known.map((entry, index) => {
+      const species = categoryData.get(entry.categoryId)[entry.speciesName];
+      const result = advanceDiscovery({
+        categoryId: entry.categoryId,
+        speciesName: entry.speciesName,
+        species,
+        previous: progressSnapshots[index].exists ? progressSnapshots[index].data() : {},
+        tierIds: entry.tierIds,
+      });
+      const updates = fieldUpdates.get(entry.categoryId) || [];
+      updates.push(
+        new FieldPath(entry.speciesName, 'Locked'), false,
+        new FieldPath(entry.speciesName, 'LoreLocked'), false,
+        new FieldPath(entry.speciesName, 'DiscoveryManaged'), true,
+        new FieldPath(entry.speciesName, 'LoreUnlockCount'), result.loreUnlockCount,
+        new FieldPath(entry.speciesName, 'EncounterCount'), result.encounterCount,
+      );
+      result.unlockedTiers.forEach((tierId) => {
+        if (species.Tiers?.[tierId]) updates.push(new FieldPath(entry.speciesName, 'Tiers', tierId, 'Locked'), false);
+      });
+      fieldUpdates.set(entry.categoryId, updates);
+      transaction.set(progressRefs[index], {
+        categoryId: result.categoryId,
+        speciesName: result.speciesName,
+        encounterCount: result.encounterCount,
+        tierEncounterCounts: result.tierEncounterCounts,
+        unlockedTiers: result.unlockedTiers,
+        loreUnlockCount: result.loreUnlockCount,
+        lastEncounterId: encounterId,
+        updatedAt: FieldValue.serverTimestamp(),
+        ...(result.baseUnlocked ? { firstEncounterId: encounterId, discoveredAt: FieldValue.serverTimestamp() } : {}),
+      }, { merge: true });
+      return result;
+    });
+
+    fieldUpdates.forEach((updates, categoryId) => transaction.update(categoryRefs.get(categoryId), ...updates));
+    (encounter.participants || []).filter((participant) => participant.kind === 'player').forEach((participant) => {
+      const maxHp = Math.max(1, Number.isFinite(Number(participant.maxHp)) ? Number(participant.maxHp) : 1);
+      const currentHp = Number.isFinite(Number(participant.hp)) ? Number(participant.hp) : maxHp;
+      transaction.update(db.collection('users').doc(participant.sourceId), {
+        'combatStats.currentHp': Math.max(0, Math.min(maxHp, currentHp)),
+      });
+    });
+    transaction.update(encounterRef, {
+      status: 'complete',
+      activeSong: null,
+      endedAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+      bestiaryDiscovery: results.map((result) => ({
+        categoryId: result.categoryId,
+        speciesName: result.speciesName,
+        baseUnlocked: result.baseUnlocked,
+        loreUnlockCount: result.loreUnlockCount,
+        newlyUnlockedLoreField: result.newlyUnlockedLoreField || '',
+        newlyUnlockedTiers: result.newlyUnlockedTiers,
+      })),
+    });
+    transaction.set(campaignRef, {
+      activeEncounterId: '', battleActive: false, timersPaused: false,
+      timersResumedAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp(),
+    }, { merge: true });
+
+    return {
+      discoveries: results.map((result) => ({
+        categoryId: result.categoryId,
+        speciesName: result.speciesName,
+        baseUnlocked: result.baseUnlocked,
+        loreUnlocked: result.newlyUnlockedLoreField || '',
+        tierUnlocked: result.newlyUnlockedTiers,
+        encounterCount: result.encounterCount,
+      })),
+    };
   });
 });
 

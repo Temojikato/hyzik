@@ -16,6 +16,7 @@ for (const categoryId of repeatableCategories) {
     if (speciesName === 'description') continue;
     speciesCount += 1;
     if (!species.Lore?.Formation || !species.Lore?.Habitat || !species.Lore?.Behavior || !species.Lore?.Rarity) errors.push(`${categoryId}/${speciesName}: incomplete lore.`);
+    if (species.DiscoveryManaged !== true || species.Locked !== true || species.LoreLocked !== true || Number(species.LoreUnlockCount) !== 0) errors.push(`${categoryId}/${speciesName}: authored discovery defaults must begin fully hidden.`);
     const tiers = species.Tiers || {};
     const chaosSlime = categoryId === 'Slime' && speciesName === 'Chaos Slime';
     if (chaosSlime) {

@@ -48,12 +48,14 @@
     "validate:items": "node scripts/validateItems.js",
     "validate:loot": "node scripts/validateLoot.js",
     "validate:bestiary": "node scripts/validateBestiary.js",
+    "test:bestiary-discovery": "node --test functions-admin/bestiaryDiscovery.test.js",
     "test:loot": "node --test functions-admin/lootEngine.test.js",
     "content:items": "node scripts/seedItems.js",
     "audio:hymmnos": "node scripts/renderHymmnosAudio.js",
     "combat:build": "node scripts/buildReyvateilCombatCatalog.js",
     "combat:seed": "node scripts/seedReyvateilCombat.js",
-    "bestiary:seed": "node scripts/seedBestiary.js"
+    "bestiary:seed": "node scripts/seedBestiary.js",
+    "bestiary:rebuild-discovery": "node scripts/rebuildBestiaryDiscovery.js"
   },
   "eslintConfig": {
     "extends": [

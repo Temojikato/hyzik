@@ -70,4 +70,21 @@ const mergeDocument = async (collectionId, documentId, data) => {
   return request(url, { method: 'PATCH', body: JSON.stringify({ fields: encodeFields(merged) }) });
 };
 
-module.exports = { mergeDocument };
+const listDocuments = async (collectionId) => {
+  const documents = [];
+  let pageToken = '';
+  do {
+    const url = new URL(`${baseUrl}/${encodeURIComponent(collectionId)}`);
+    url.searchParams.set('pageSize', '300');
+    if (pageToken) url.searchParams.set('pageToken', pageToken);
+    const page = await request(url.toString());
+    (page.documents || []).forEach((document) => documents.push({
+      id: document.name.split('/').pop(),
+      ...decodeFields(document.fields || {}),
+    }));
+    pageToken = page.nextPageToken || '';
+  } while (pageToken);
+  return documents;
+};
+
+module.exports = { mergeDocument, listDocuments };

@@ -23,6 +23,9 @@ export async function fetchAllMonstersFromNestedDocs(): Promise<MonsterSpecies[]
         name: speciesName,
         locked: (speciesData as any).Locked,
         loreLocked: (speciesData as any).LoreLocked,
+        discoveryManaged: (speciesData as any).DiscoveryManaged === true,
+        loreUnlockCount: Number((speciesData as any).LoreUnlockCount || 0),
+        encounterCount: Number((speciesData as any).EncounterCount || 0),
         Lore: (speciesData as any).Lore,
         Tiers: (speciesData as any).Tiers
       };

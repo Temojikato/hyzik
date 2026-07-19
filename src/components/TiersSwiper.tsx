@@ -8,7 +8,8 @@ import {
   useBreakpointValue,
   Grid,
   Button,
-  useToast
+  useToast,
+  VStack
 } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
@@ -45,13 +46,16 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
   const slidesPerView = useBreakpointValue({ base: 1.0, md: 1.4 });
   const monsterName = monster.name;
   const monsterLore = monster.Lore;
-  const blurStyleLore: React.CSSProperties = loreLocked
-    ? {
-        filter: 'blur(4px)',
-        pointerEvents: 'none',
-        userSelect: 'none',
-      }
-    : {};
+  const loreEntries = monsterLore ? [
+    ['Formation', monsterLore.Formation],
+    ['Social Tendencies', monsterLore['Social Tendencies']],
+    ['Habitat', monsterLore.Habitat],
+    ['Behavior', monsterLore.Behavior],
+    ['Rarity', monsterLore.Rarity],
+  ].filter((entry): entry is [string, string] => typeof entry[1] === 'string' && entry[1].trim().length > 0) : [];
+  const loreUnlockCount = monster.discoveryManaged
+    ? Math.max(0, Math.min(loreEntries.length, Number(monster.loreUnlockCount || 0)))
+    : loreLocked ? 0 : loreEntries.length;
 
   const currentTier = reorderedTiers[displayIndex] || null;
 
@@ -146,35 +150,20 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
             </Heading>
           )}
           {monsterLore && (
-            <Box style={blurStyleLore}>
+            <Box>
               <Heading size="md" color="purple.200" mb={2}>
                 Lore
               </Heading>
-              {monsterLore.Formation && (
-                <Text color="gray.200" mb={2}>
-                  <strong>Formation:</strong> {monsterLore.Formation}
-                </Text>
-              )}
-              {monsterLore['Social Tendencies'] && (
-                <Text color="gray.200" mb={2}>
-                  <strong>Social Tendencies:</strong> {monsterLore['Social Tendencies']}
-                </Text>
-              )}
-              {monsterLore.Habitat && (
-                <Text color="gray.200" mb={2}>
-                  <strong>Habitat:</strong> {monsterLore.Habitat}
-                </Text>
-              )}
-              {monsterLore.Behavior && (
-                <Text color="gray.200" mb={2}>
-                  <strong>Behavior:</strong> {monsterLore.Behavior}
-                </Text>
-              )}
-              {monsterLore.Rarity && (
-                <Text color="gray.200" mb={2}>
-                  <strong>Rarity:</strong> {monsterLore.Rarity}
-                </Text>
-              )}
+              <VStack align="stretch" spacing={2}>
+                {loreEntries.map(([label, value], index) => index < loreUnlockCount ? (
+                  <Text key={label} color="gray.200"><strong>{label}:</strong> {value}</Text>
+                ) : (
+                  <Box key={label} px={3} py={2} border="1px dashed" borderColor="gray.600" borderRadius="md" bg="blackAlpha.200">
+                    <Text color="gray.500" fontSize="sm"><strong>{label}:</strong> Undiscovered — survive another encounter with this creature.</Text>
+                  </Box>
+                ))}
+              </VStack>
+              {monster.discoveryManaged && <Text mt={3} color="purple.200" fontSize="xs">Observed in {monster.encounterCount || 0} completed encounter{monster.encounterCount === 1 ? '' : 's'} · {loreUnlockCount}/{loreEntries.length} lore fragments recovered</Text>}
             </Box>
           )}
         </Box>
@@ -191,6 +180,7 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
               <TierImage
                 tierName={currentTier.Name ?? `Tier ${displayIndex}`}
                 alt={currentTier.Name}
+                show={!currentTier.Locked}
               />
               {currentTier.Locked && (
                 <Badge mt={2} colorScheme="red">
@@ -307,7 +297,7 @@ const TiersSwiper: React.FC<TiersSwiperProps> = ({
 
       {/* New Loot Button */}
       <Box p={4} textAlign="center">
-        <Button colorScheme="blue" onClick={handleLoot}>
+        <Button colorScheme="blue" onClick={handleLoot} isDisabled={!currentTier || currentTier.Locked}>
           Loot
         </Button>
       </Box>

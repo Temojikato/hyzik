@@ -119,3 +119,16 @@ An ordinary species' Chaos tier is also its specialized Chaos form: the Chaos ti
 - Chaos tiers should be rare story events, containment breaches, or deep-floor apexes. Their roll tables are strong enough to swing encounters in either direction; do not balance them as deterministic damage races.
 - The first protected tutorial floors may contain Minor and selected Regular populations. A Chaos encounter there should signal a specific containment failure, not ordinary local wildlife.
 - Unique Reyvateil encounters should reveal personal history, failed sanctuary, and the broken Diver bond. Reusing their mechanics under a different name would erase what makes them Reyvateil.
+
+## Bestiary discovery progression
+
+Bestiary knowledge is shared campaign knowledge and advances only when the administrator ends a completed encounter. Merely opening the encounter builder, adding a creature, or abandoning a battle does not reveal anything.
+
+- The first completed encounter with a species unlocks its base entry and its first authored lore fragment. Its tier profiles and stat blocks remain hidden.
+- Every later completed encounter with that species reveals one more authored lore fragment, in this order: Formation, Social Tendencies, Habitat, Behavior, then Rarity. Species with fewer authored fields stop when their available lore is exhausted.
+- A particular tier profile unlocks after that exact tier has appeared in two completed encounters. Fighting a Minor specimen twice does not reveal the Regular, Greater, or Chaos profile.
+- Multiple bodies of the same species and tier in one encounter count as one observation, preventing a swarm from completing the research track at once.
+- Fighting several different tiers of one species in the same encounter advances each tier's observation count once, but the species lore still advances only once.
+- Unique abandoned Reyvateil follow the same observation cadence for their single encounter profile. This reveals knowledge progressively without inventing generic tiers or copies of a unique being.
+
+Completed encounter documents are the audit trail. When the bestiary content is reseeded, the discovery rebuild replays that history so earned knowledge is preserved.

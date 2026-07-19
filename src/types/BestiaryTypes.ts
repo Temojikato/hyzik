@@ -30,6 +30,9 @@ export interface MonsterSpecies {
   name: string;        // e.g. "Fire Slime"
   locked?: boolean;
   loreLocked?: boolean;
+  discoveryManaged?: boolean;
+  loreUnlockCount?: number;
+  encounterCount?: number;
   Lore?: MonsterLore;
   Tiers?: Record<string, MonsterTier>;  // "Minor" => { locked, ... }
 }

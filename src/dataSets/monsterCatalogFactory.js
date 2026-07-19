@@ -141,7 +141,7 @@ const buildTier = (blueprint, tier, legacyTier) => {
   const profile = profileFor(tier.rank, blueprint.role || 'balanced');
   const generated = {
     id: tier.key,
-    Locked: Boolean(tier.rank > 1 || tier.chaos),
+    Locked: true,
     Name: defaultTierName(blueprint, tier),
     Description: blueprint.descriptions?.[tier.key] || defaultDescription(blueprint, tier),
     Stats: statsFor(blueprint, tier, profile),
@@ -168,8 +168,11 @@ const createSpecies = (blueprint, legacySpecies) => {
   const tiers = blueprint.tiers || (blueprint.chaosSpecies ? CHAOS_SLIME_TIERS : DEFAULT_TIERS);
   return {
     ...(legacySpecies || {}),
-    Locked: legacySpecies?.Locked ?? blueprint.locked ?? true,
-    LoreLocked: legacySpecies?.LoreLocked ?? blueprint.loreLocked ?? false,
+    Locked: true,
+    LoreLocked: true,
+    DiscoveryManaged: true,
+    LoreUnlockCount: 0,
+    EncounterCount: 0,
     Name: blueprint.name,
     // The expansion blueprint is sourced from the current lore and therefore
     // wins where an older placeholder contradicts it (notably Chaos Slimes).

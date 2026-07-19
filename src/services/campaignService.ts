@@ -388,20 +388,18 @@ export const adminRevivePlayer = async (userId: string) => {
   return (await callable({ userId })).data;
 };
 
+export interface BestiaryEncounterDiscovery {
+  categoryId: string;
+  speciesName: string;
+  baseUnlocked: boolean;
+  loreUnlocked: string;
+  tierUnlocked: string[];
+  encounterCount: number;
+}
+
 export const endEncounter = async (encounterId: string) => {
-  const encounterSnapshot = await getDoc(doc(db, 'encounters', encounterId));
-  const encounter = encounterSnapshot.data() as Encounter | undefined;
-  const batch = writeBatch(db);
-  batch.update(doc(db, 'encounters', encounterId), { status: 'complete', activeSong: null, endedAt: serverTimestamp(), updatedAt: serverTimestamp() });
-  (encounter?.participants || []).filter((participant) => participant.kind === 'player').forEach((participant) => {
-    batch.update(doc(db, 'users', participant.sourceId), {
-      'combatStats.currentHp': Math.max(0, Math.min(participant.maxHp, participant.hp)),
-    });
-  });
-  batch.set(doc(db, 'campaign', 'current'), {
-    activeEncounterId: '', battleActive: false, timersPaused: false, timersResumedAt: serverTimestamp(), updatedAt: serverTimestamp(),
-  }, { merge: true });
-  await batch.commit();
+  const callable = httpsCallable<{ encounterId: string }, { discoveries: BestiaryEncounterDiscovery[] }>(functions, 'adminEndEncounter');
+  return (await callable({ encounterId })).data;
 };
 
 export const subscribeUnlockedLexicon = (
