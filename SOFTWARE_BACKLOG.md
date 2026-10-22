@@ -1,8 +1,44 @@
 # Hyzik Software Backlog
 
-Last updated: 2026-07-18
+Last updated: 2026-10-22
 
 This is the persistent product backlog for ideas that must survive between software-development sessions. Add new ideas here as they arise. Nothing in this file should be treated as implemented merely because related code already exists.
+
+## Working scope: one trusted group of six (2026-10-22)
+
+This is a private campaign tool for one DM and five trusted friends, not a public product. This section supersedes stricter security or infrastructure requirements in the original capture below.
+
+- Keep the existing login, one DM role, basic Firebase ownership rules, and DM-only shared campaign controls. Do not build a general role/permission system.
+- Restrict access to the six campaign accounts with a simple server-controlled allowlist. Implementation is pending identification of the six account IDs; do not guess them, lock out existing users, or treat arbitrary signed-in accounts as campaign members.
+- Trust players to edit their sheets, inventory, stats, and resources. Do not add server validation solely to prevent cheating.
+- Locked lore and translations need normal UI hiding. Deliberate inspection with browser developer tools is outside scope. Existing working server-side filtering can remain; do not rewrite it merely to remove protection.
+- Hide DM navigation from players and retain the simple admin check. Route names do not need to be secret.
+- Keep private messages discreet and recipient-scoped. Keep player preview view-only to prevent accidental actions.
+- Keep encounter history and useful loot/economy records for play and recovery. Comprehensive security audits, access telemetry, and logging every DM action are out of scope.
+- Never put service-account credentials or paid API keys in the client or Git. Keep a basic spending cap for optional paid generation.
+- Use backend functions for secrets, shared-state consistency, and reliability. Do not move ordinary trusted-player actions to a backend solely for anti-cheating.
+- Do not add enterprise security reviews, elaborate abuse systems, multi-campaign infrastructure, or ongoing security chores without a concrete need.
+
+### Current implementation and next work
+
+The working branch is `codex/full-backlog-rebuild`; `master` predates the July 2026 rebuild. The original Captured statuses below describe historical requirements, not a reliable list of missing features. Code inspection found implementations for the admin portal, player preview, 48 Cyphers, translator, song control/playback, private messages, combat, economy, campaign modes, and bestiary discovery. Deployment and seeded Firebase data remain unverified.
+
+Priority order:
+1. Finish the small access/credential pass: remove the legacy credential fallback, verify the historically committed key was revoked, and identify the six accounts before adding membership restrictions. Key revocation is an external verification task, not established by removing a file.
+2. Verify the deployed app and campaign data against the working branch.
+3. Audit Town and Floor 1 NPCs, portraits, lore, and map links. Nine NPC datasets exist but were not substantially revised in the July rebuild; placeholder portraits remain.
+4. Complete and review map content. Exploration data currently covers the Town and Tower Floor 1; the battle-map display exists, but a full map/content redo is not complete.
+5. Finish unique creature combat profiles (the Avatar of Greed and Patience still has unknown stats) and playtest the expanded bestiary and first-session encounters.
+6. Check first-session item availability, crafting, loot, and discovery flows.
+7. Revisit remaining UI polish and optional media only after table-play needs are covered.
+
+### Work log
+
+- 2026-10-22: Adopted trusted-group scope; replaced security-first implementation priorities with campaign readiness.
+- 2026-10-22: Started credential cleanup: administrative scripts must use explicitly configured credentials or application-default credentials; the removed `src/serviceAccountKey.json` is no longer an automatic fallback.
+- Pending: verify old key revocation and deployment; confirm six account IDs before membership restrictions.
+
+---
 
 ## Status legend
 
@@ -44,7 +80,7 @@ Required behavior:
 - Allow the admin to open a player's portal in a clearly marked **view-only impersonation/preview mode**.
 - Preview mode must never run mutations, consume resources, unlock content, or accidentally submit actions as the player.
 - Preserve an obvious exit control and persistent “Viewing as [player]” indicator while previewing.
-- Keep an audit trail for sensitive DM actions where practical: Cypher grants, popup messages, and current-song changes.
+- Keep useful campaign history where it supports play or recovery; comprehensive DM-action audit trails are not required.
 
 Current-code observation:
 
@@ -72,7 +108,7 @@ Required behavior:
 - Use the canonical campaign lexicon as the source of truth.
 - Model lexicon entries with stable IDs and fields for headword, pronunciation, part of speech, dialect, literal meanings, usage notes, and audio when available.
 - Track unlocked knowledge per player, not only globally.
-- Locked words must not leak their translation through search results, accessibility labels, HTML attributes, page source, API payloads, or client-side filtering of a fully downloaded secret lexicon.
+- Hide locked translations in the normal player UI, including search and accessibility text. Preventing deliberate developer-tool inspection is outside this group's scope.
 - Search should work across only the meanings and forms that player is allowed to know.
 - The translator should segment known song text and explain unlocked words without pretending that word substitution equals a complete grammatical translation.
 - Validated full-line and poetic translations may be shown when that line/song translation has been explicitly unlocked.
@@ -344,7 +380,7 @@ Required behavior:
   - optional pronunciation-audio asset from item 9.
 - In ability lists, show the canonical Hymmnos name as the primary identity.
 - Automatically reveal the translated ability name when the player owns the relevant Cypher knowledge. Use the established translated-text color treatment from item 8.
-- Without the relevant Cypher, keep the translation hidden; do not leak it through tooltips, accessibility labels, API payloads, icons, filenames, or client-side filtering.
+- Without the relevant Cypher, hide translations in normal UI, tooltips, and accessibility labels. Anti-inspection protections for payloads and filenames are not required.
 - Opening `ReyvateilSkillModal` must always show:
   - the canonical Hymmnos ability name;
   - the exact words the player must exclaim;
@@ -364,7 +400,7 @@ Content and migration work:
 - Decide which abilities are executable Song Magic and whether any genuinely nonmagical abilities are exempt.
 - Author and audit a Hymmnos name/invocation ledger for every applicable ability before hiding its existing English name.
 - Migrate icons and cooldown keys away from mutable display names toward stable ability IDs so translation changes do not break storage paths or cooldown state.
-- Audit current icon filenames and `alt` text because both may reveal locked English names.
+- Keep visible labels and accessible text consistent with the intended reveal state; renaming assets solely to prevent deliberate inspection is not required.
 
 Open decisions:
 
@@ -377,20 +413,7 @@ Open decisions:
 
 ## Recommended implementation sequence
 
-This order minimizes rework while preserving the user's priorities:
-
-1. Security and data discovery: authentication, Firebase rules, existing unlock systems, service credentials, and canonical schemas.
-2. Admin role/account and protected admin shell.
-3. Player overview and view-only player preview.
-4. Hymmnos lexicon normalization plus the 40+ Cypher content map.
-5. Per-player Cypher storage and unlock services.
-6. Translator/lexicon UI and progressive Hymmnos rendering.
-7. Ability-language schema, audited Hymmnos invocations, and ability-modal integration.
-8. Song catalog, current-song state, player synchronization, and YouTube admin playback.
-9. Discreet realtime messaging.
-10. First-session item/crafting audit and expansion—this can run in parallel with UI feature work when development resumes.
-11. Broader UI/UX and architecture redesign, informed by the completed feature shapes.
-12. Optional paid media: Reyvateil image generation and pre-rendered pronunciation audio.
+Use the current priority order in **Working scope: one trusted group of six** above. The original security-first sequence is retired. Preserve working features and prioritize NPCs, maps, unique encounters, and first-session usability.
 
 ## Existing implementation anchors found during capture
 
