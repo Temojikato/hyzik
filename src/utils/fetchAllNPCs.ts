@@ -14,7 +14,7 @@ export async function fetchAllNPCs(): Promise<NPC[]> {
     const data = npcDoc.data(); // e.g., { "Elara Moonshadow": { ... }, "Thorn Silvertongue": { ... } }
     for (const [npcName, npcData] of Object.entries(data)) {
       const npcObj: NPC = {
-        id: npcName,
+        id: (npcData as any).id || npcName,
         // We no longer store a simple string in basicInfo; expect an object.
         basicInfo: (npcData as any).basicInfo,
         imageUrl: (npcData as any).imageUrl,

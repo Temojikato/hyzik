@@ -13,6 +13,8 @@ export interface MapRegion {
   /** For Town-type regions only: an array of images for the building, 
     inside or outside. */
   carouselImages?: string[];
+  /** Exact Resident Codex workplace linked to this location, when authored. */
+  npcWorkplace?: string;
 }
 
 export interface MapArea {
@@ -41,8 +43,11 @@ export interface MapCategory {
 }
 
 // Utility functions
-function parseCoordsToPolygon(coordsStr: string): [number, number][] {
-  const coords = coordsStr.split(',').map(Number);
+export function parseCoordsToPolygon(coordsStr: string): [number, number][] {
+  const coords = coordsStr.trim().split(/[\s,]+/).map(Number);
+  if (coords.length < 6 || coords.length % 2 !== 0 || coords.some(value => !Number.isFinite(value))) {
+    throw new Error('Map polygons require at least three finite coordinate pairs.');
+  }
   const polygon: [number, number][] = [];
   for (let i = 0; i < coords.length; i += 2) {
     polygon.push([coords[i], coords[i + 1]]);
@@ -78,6 +83,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "the-healing-hand-clinic",
+                npcWorkplace: "The Healing Hand Clinic",
                 name: "The Healing Hand Clinic",
                 locked: false,
                 monstersDocumented: false,
@@ -91,6 +97,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "the-mending-mind-clinic",
+                npcWorkplace: "The Mending Mind Clinic",
                 name: "The Mending Mind Clinic",
                 locked: false,
                 monstersDocumented: false,
@@ -100,6 +107,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "cremias-salvation",
+                npcWorkplace: "Cremia's Salvation",
                 name: "Cremia’s Salvation",
                 locked: false,
                 monstersDocumented: false,
@@ -131,6 +139,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "shield-anvil",
+                npcWorkplace: "Shield and Anvil",
                 name: "Shield & Anvil",
                 locked: false,
                 monstersDocumented: false,
@@ -140,7 +149,8 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "endless-emporium",
-                name: "The Endless Emporeum",
+                npcWorkplace: "The Endless Emporium",
+                name: "The Endless Emporium",
                 locked: false,
                 monstersDocumented: false,
                 monsters: [],
@@ -152,7 +162,8 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "arcane-antique",
-                name: "Arcane Antique",
+                npcWorkplace: "Arcane Antiques",
+                name: "Arcane Antiques",
                 locked: false,
                 monstersDocumented: false,
                 monsters: [],
@@ -164,6 +175,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "blade-bow",
+                npcWorkplace: "The Blade and Bow",
                 name: "The Blade and Bow",
                 locked: false,
                 monstersDocumented: false,
@@ -182,6 +194,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "whispering-quill",
+                npcWorkplace: "The Whispering Quill",
                 name: "The Whispering Quill",
                 locked: false,
                 monstersDocumented: false,
@@ -191,6 +204,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "trinkets-treasures",
+                npcWorkplace: "Trinkets and Treasures",
                 name: "Trinkets and Treasures",
                 locked: false,
                 monstersDocumented: false,
@@ -209,6 +223,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "golden-grain",
+                npcWorkplace: "The Golden Grain",
                 name: "The Golden Grain",
                 locked: false,
                 monstersDocumented: false,
@@ -218,6 +233,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "alchemists-alembic",
+                npcWorkplace: "The Alchemist's Alembic",
                 name: "The Alchemist's Alembic",
                 locked: false,
                 monstersDocumented: false,
@@ -289,6 +305,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "silver-chalice",
+                npcWorkplace: "The Silver Chalice",
                 name: "The Silver Chalice",
                 locked: false,
                 monstersDocumented: false,
@@ -312,6 +329,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "reyvateil-sanctuary",
+                npcWorkplace: "Reyvateil Sanctuary",
                 name: "Reyvateil Sanctuary",
                 locked: false,
                 monstersDocumented: false,
@@ -321,6 +339,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "hall-of-records",
+                npcWorkplace: "The Hall of Records",
                 name: "The Hall of Records",
                 locked: false,
                 monstersDocumented: false,
@@ -330,6 +349,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "divers-guildhall",
+                npcWorkplace: "The Diver's Guildhall",
                 name: "The Diver's Guildhall",
                 locked: false,
                 monstersDocumented: false,
@@ -339,6 +359,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "alroen-lodge",
+                npcWorkplace: "The Alroen Lodge",
                 name: "The Alroen Lodge",
                 locked: false,
                 monstersDocumented: false,
@@ -361,6 +382,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "wandering-minstrel",
+                npcWorkplace: "The Wandering Minstrel",
                 name: "The Wandering Minstrel",
                 locked: false,
                 monstersDocumented: false,
@@ -370,6 +392,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "quiet-corner",
+                npcWorkplace: "The Quiet Corner",
                 name: "The Quiet Corner",
                 locked: false,
                 monstersDocumented: false,
@@ -379,6 +402,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "resting-wyvern",
+                npcWorkplace: "The Resting Wyvern",
                 name: "The Resting Wyvern",
                 locked: false,
                 monstersDocumented: false,
@@ -388,6 +412,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "drunken-drake",
+                npcWorkplace: "The Drunken Drake",
                 name: "The Drunken Drake",
                 locked: false,
                 monstersDocumented: false,
@@ -410,6 +435,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "glass-menagerie",
+                npcWorkplace: "The Glass Menagerie",
                 name: "Glass Menagerie",
                 locked: false,
                 monstersDocumented: false,
@@ -419,6 +445,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "clockwork-wonders",
+                npcWorkplace: "Clockwork Wonders",
                 name: "Clockwork Wonders",
                 locked: false,
                 monstersDocumented: false,
@@ -428,6 +455,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "iron-forge",
+                npcWorkplace: "The Iron Forge",
                 name: "The Iron Forge",
                 locked: false,
                 monstersDocumented: false,
@@ -437,6 +465,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "herbalist-haven",
+                npcWorkplace: "The Herbalist's Haven",
                 name: "Herbalist Haven",
                 locked: false,
                 monstersDocumented: false,
@@ -446,6 +475,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "enchanters-enclave",
+                npcWorkplace: "The Enchanter's Enclave",
                 name: "Enchanter's Enclave",
                 locked: false,
                 monstersDocumented: false,
@@ -469,6 +499,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "basilica-hq",
+                npcWorkplace: "The Basilic Headquarters",
                 name: "Basilica HQ",
                 locked: false,
                 monstersDocumented: false,
@@ -478,6 +509,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "town-hall",
+                npcWorkplace: "Town Hall",
                 name: "Town Hall",
                 locked: false,
                 monstersDocumented: false,
@@ -500,6 +532,7 @@ export const mapData: MapCategory[] = [
             regions: [ // Add Regions within the Area
               {
                 id: "grain-mill",
+                npcWorkplace: "The Grain Mill",
                 name: "The Grain Mill",
                 locked: false,
                 monstersDocumented: false,
@@ -509,6 +542,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "foundry",
+                npcWorkplace: "The Foundry",
                 name: "The Foundry",
                 locked: false,
                 monstersDocumented: false,
@@ -518,6 +552,7 @@ export const mapData: MapCategory[] = [
               },
               {
                 id: "waterworks",
+                npcWorkplace: "The Waterworks",
                 name: "The Waterworks",
                 locked: false,
                 monstersDocumented: false,

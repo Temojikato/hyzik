@@ -1,13 +1,6 @@
 // src/scripts/uploadNPCs.js
-const admin = require('firebase-admin');
+const admin = require('../../scripts/firebaseAdmin');
 const path = require('path');
-const serviceAccount = require(path.resolve(__dirname, '../serviceAccountKey.json'));
-
-// Initialize the Firebase Admin SDK
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  projectId: 'hyzik-5edfd',  // Use your actual project id here
-});
 
 const db = admin.firestore();
 
@@ -43,6 +36,7 @@ async function uploadNPCs() {
     console.log('Successfully uploaded merged NPC data to residentCodex/NPCs!');
   } catch (error) {
     console.error('Error uploading NPC data:', error);
+    process.exitCode = 1;
   }
 }
 

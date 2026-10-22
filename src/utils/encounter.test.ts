@@ -24,7 +24,7 @@ describe('serializeEncounterParticipants', () => {
     const incomplete = [{
       id: 'monster-a', sourceId: 'construct', kind: 'monster' as const, name: 'V2-UNM0V3D', hp: 0, maxHp: 0,
     }];
-    expect(getEncounterParticipantIssues(incomplete)).toEqual(['V2-UNM0V3D: Max HP, current HP, AC']);
+    expect(getEncounterParticipantIssues(incomplete)).toEqual(['V2-UNM0V3D: Max HP, current HP, Defence']);
     expect(() => assertEncounterParticipants(incomplete)).toThrow('V2-UNM0V3D');
   });
 

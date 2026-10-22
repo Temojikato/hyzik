@@ -10,6 +10,7 @@ import {
   ModalBody,
   Box,
   Text,
+  Button,
   Flex,
   IconButton,
   Tooltip,
@@ -26,6 +27,7 @@ import { getMonsterByName } from '../utils/fetchAllMonsters';
 import { User } from 'firebase/auth';
 import { Item } from '../types/Reyvateils';
 import InteractiveMapRegionTown from './InteractiveMapRegionTown';
+import FullScreenNPCModal from './FullScreenNPCModal';
 import { useBackDismiss } from '../contexts/BackNavigationContext';
 
 interface RegionModalProps {
@@ -56,6 +58,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
   currentUser
 }) => {
   useBackDismiss(isOpen, onClose);
+  const residents = useDisclosure();
   // State and refs for interactive image (same as your working code)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -325,6 +328,11 @@ const RegionModal: React.FC<RegionModalProps> = ({
                 <Text fontWeight="bold" fontSize="lg" mb={2}>
                   Region Details
                 </Text>
+                {region.npcWorkplace && !region.locked && (
+                  <Button mb={4} onClick={residents.onOpen}>
+                    View residents
+                  </Button>
+                )}
                 <Text fontWeight="semibold" mb={1}>
                   Description:
                 </Text>
@@ -368,6 +376,15 @@ const RegionModal: React.FC<RegionModalProps> = ({
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      {region.npcWorkplace && (
+        <FullScreenNPCModal
+          isOpen={residents.isOpen}
+          onClose={residents.onClose}
+          currentUser={currentUser}
+          initialWorkplace={region.npcWorkplace}
+        />
+      )}
 
       {selectedMonster && (
         <Modal

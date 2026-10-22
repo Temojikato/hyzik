@@ -30,8 +30,18 @@ npm run admin:grant -- --email your-admin@example.com
 # Verify that every item and recipe is coherent.
 npm run validate:items
 
+# Check NPC records, map geometry, and authored workplace links.
+npm run audit:campaign
+
+# Regenerate the repository content inventory and remaining gaps.
+npm run audit:campaign -- --report
+
 # Upload the validated item and crafting catalog.
 npm run content:items
+
+# Upload NPC catalog data using the shared admin credential setup.
+# This merges authored fields, including lore unlock defaults; review before reseeding an active campaign.
+npm run content:npcs
 ```
 
 Set `GOOGLE_APPLICATION_CREDENTIALS` to a Firebase service-account JSON stored outside this repository. A workstation with Google application-default credentials may instead set `HYZIK_USE_APPLICATION_DEFAULT=true`. Administrative scripts no longer fall back to `src/serviceAccountKey.json`. Verify that the historically committed service-account key has been revoked; deleting it from Git does not revoke it. Keep replacement credentials outside the repository.

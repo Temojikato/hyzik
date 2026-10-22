@@ -24,9 +24,9 @@ This is a private campaign tool for one DM and five trusted friends, not a publi
 The working branch is `codex/full-backlog-rebuild`; `master` predates the July 2026 rebuild. The original Captured statuses below describe historical requirements, not a reliable list of missing features. Code inspection found implementations for the admin portal, player preview, 48 Cyphers, translator, song control/playback, private messages, combat, economy, campaign modes, and bestiary discovery. Deployment and seeded Firebase data remain unverified.
 
 Priority order:
-1. Finish the small access/credential pass: remove the legacy credential fallback, verify the historically committed key was revoked, and identify the six accounts before adding membership restrictions. Key revocation is an external verification task, not established by removing a file.
+1. External follow-up when Firebase access is available: verify the historically committed key was revoked and identify the six accounts before adding membership restrictions. The shared admin helper and NPC uploader no longer load the legacy credential path. Do not block independent campaign work on these external checks.
 2. Verify the deployed app and campaign data against the working branch.
-3. Audit Town and Floor 1 NPCs, portraits, lore, and map links. Nine NPC datasets exist but were not substantially revised in the July rebuild; placeholder portraits remain.
+3. Continue the NPC content review using [the generated audit](docs/CAMPAIGN_CONTENT_AUDIT.md). Structural checks pass for 118 NPCs across nine datasets; 30 town locations now link to their authored workplaces. Verify the 126 named Firebase portraits and review lore/discovery tiers in play. All 118 fallback image URLs are placeholders; this does not establish that the primary portrait files are absent.
 4. Complete and review map content. Exploration data currently covers the Town and Tower Floor 1; the battle-map display exists, but a full map/content redo is not complete.
 5. Finish unique creature combat profiles (the Avatar of Greed and Patience still has unknown stats) and playtest the expanded bestiary and first-session encounters.
 6. Check first-session item availability, crafting, loot, and discovery flows.
@@ -36,6 +36,9 @@ Priority order:
 
 - 2026-10-22: Adopted trusted-group scope; replaced security-first implementation priorities with campaign readiness.
 - 2026-10-22: Started credential cleanup: administrative scripts must use explicitly configured credentials or application-default credentials; the removed `src/serviceAccountKey.json` is no longer an automatic fallback.
+- 2026-10-22: Completed the first NPC/map implementation pass: fixed coordinate parsing for all 37 town building polygons, linked 30 town locations to filtered Resident Codex views, corrected two building labels, preserved stable NPC IDs, fixed stale portrait requests, added local missing-art fallbacks, corrected gallery opening to the selected slide, and improved NPC detail layout on phones.
+- 2026-10-22: Added `audit:campaign`, `test:campaign-content`, and the checked `content:npcs` upload command. Updated the NPC uploader to use the shared credential setup and return a failing exit status on upload errors. No upload or deployment was performed.
+- 2026-10-22: Verification for this pass: production build and TypeScript check passed; 42 React/unit tests and five content/geometry tests passed. Corrected an old encounter-test expectation from AC to the current Defence terminology. Existing build warnings remain.
 - Pending: verify old key revocation and deployment; confirm six account IDs before membership restrictions.
 
 ---

@@ -15,7 +15,6 @@ import {
   Input,
   VStack,
   Heading,
-  Image,
   useDisclosure,
   Wrap,
   WrapItem,
@@ -32,10 +31,11 @@ import { useBackDismiss } from '../contexts/BackNavigationContext';
 type CategoryMode = 'workplace' | 'families' | 'faction';
 const categoryModes: CategoryMode[] = ['workplace', 'families', 'faction'];
 
-const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; currentUser: any }> = ({
+const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; currentUser: any; initialWorkplace?: string }> = ({
   isOpen,
   onClose,
   currentUser,
+  initialWorkplace,
 }) => {
   useBackDismiss(isOpen, onClose);
   const [allNPCs, setAllNPCs] = useState<NPC[]>([]);
@@ -67,6 +67,10 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
   // Fetch NPC data when modal opens
   useEffect(() => {
     if (isOpen) {
+      if (initialWorkplace) {
+        setViewMode('workplace');
+        setSelectedCategoryValue(initialWorkplace);
+      }
       setLoading(true);
       fetchAllNPCs()
         .then((data) => setAllNPCs(data))
@@ -86,7 +90,7 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
       setSearchTerm('');
       setSelectedCategoryValue(null);
     }
-  }, [isOpen, toast]);
+  }, [isOpen, toast, initialWorkplace]);
 
   // Cycle between category modes
   const cycleViewMode = () => {
@@ -99,7 +103,7 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
   // Extract unique category values for the current mode
   const uniqueCategoryValues = useMemo(() => {
     const values = allNPCs.flatMap((npc) =>
-      npc.categories && npc.categories[viewMode] ? npc.categories[viewMode] : []
+      !npc.categoryLocks?.[viewMode] && npc.categories?.[viewMode] ? npc.categories[viewMode] : []
     ).sort((a, b) => {
       const nameA = a.toLowerCase().replace(/^the\s+/, '');
       const nameB = b.toLowerCase().replace(/^the\s+/, '');
@@ -138,22 +142,22 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
     return (
       <Box p={4} color="gray.100" width="100%">
         {/* Top row: Image (fixed width) + Basic Info (flexible) */}
-        <Flex direction="row" align="flex-start" wrap="nowrap" mb={4}>
+        <Flex direction={{ base: 'column', sm: 'row' }} align="flex-start" mb={4} gap={4}>
           {/* Image Column */}
           <Box
-            width="200px"    // You can tweak this width
+            width={{ base: '100%', sm: '200px' }}
             flexShrink={0}
             mr={4}
             cursor="pointer"
-            onClick={() => openGallery(0)} // Always open gallery at first image
           >
             {npc.imageFiles && npc.imageFiles.length > 0 ? (
               <Box>
                 <Swiper spaceBetween={10} slidesPerView={1} style={{ width: '100%', height: 'auto' }}>
                   {npc.imageFiles.map((filename, index) => (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={index} onClick={() => openGallery(index)}>
                       <NPCImage
                         npcName={npc.basicInfo.name}
+                        fallbackUrl={npc.imageUrl}
                         imageFiles={npc.imageFiles || []}
                         locked={npc.locked || false}
                         boxSize="100%"
@@ -168,14 +172,14 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
               </Box>
             ) : (
               <Box>
-                <Image
-                  src={npc.imageUrl}
-                  alt={npc.basicInfo.name}
-                  width="100%"
-                  objectFit="contain"
+                <NPCImage
+                  npcName={npc.basicInfo.name}
+                  imageFiles={[]}
+                  fallbackUrl={npc.imageUrl}
+                  locked={npc.locked}
                 />
                 <Text fontSize="xs" color="gray.400" mt={1} textAlign="center">
-                  Click image to view gallery
+                  Portrait
                 </Text>
               </Box>
             )}
@@ -228,8 +232,8 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
                         parseInt(a[0].replace('level', '')) -
                         parseInt(b[0].replace('level', ''))
                     )
-                    .map(([level, text], index) => {
-                      const levelNumber = index + 1;
+                    .map(([level, text]) => {
+                      const levelNumber = Number(level.replace('level', ''));
                       const isLocked = levelNumber > field.unlockedtier;
                       return (
                         <Box
@@ -356,18 +360,19 @@ const FullScreenNPCModal: React.FC<{ isOpen: boolean; onClose: () => void; curre
                               {npc.imageFiles && npc.imageFiles.length > 0 ? (
                                 <NPCImage
                                   npcName={npc.basicInfo.name}
+                                  fallbackUrl={npc.imageUrl}
                                   imageFiles={npc.imageFiles || []}
                                   locked={npc.locked || false}
                                   boxSize="80px"
                                   currentIndex={0}
                                 />
                               ) : (
-                                <Image
-                                  src={npc.imageUrl}
-                                  alt={npc.basicInfo.name}
-                                  maxW="80px"
-                                  borderRadius="full"
-                                  mr={6}
+                                <NPCImage
+                                  npcName={npc.basicInfo.name}
+                                  imageFiles={[]}
+                                  fallbackUrl={npc.imageUrl}
+                                  locked={npc.locked}
+                                  boxSize="80px"
                                 />
                               )}
                             </Box>

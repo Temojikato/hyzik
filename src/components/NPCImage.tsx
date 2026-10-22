@@ -1,6 +1,5 @@
-// src/components/NPCImage.tsx
 import React, { useEffect, useState } from 'react';
-import { Box, Image, Spinner, Icon } from '@chakra-ui/react';
+import { Box, Image, Spinner, Icon, Text } from '@chakra-ui/react';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase';
 import { FaLock } from 'react-icons/fa';
@@ -9,77 +8,62 @@ import { NPCImageFile } from '../types/ResidentCodexTypes';
 interface NPCImageProps {
   npcName: string;
   imageFiles: NPCImageFile[];
-  locked?: boolean;         // Overall locked state for the NPC
+  locked?: boolean;
   boxSize?: string;
   currentIndex?: number;
+  fallbackUrl?: string;
 }
 
 const NPCImage: React.FC<NPCImageProps> = ({
-  npcName,
-  imageFiles,
-  locked = false,
-  boxSize,
-  currentIndex = 0,
+  npcName, imageFiles, locked = false, boxSize, currentIndex = 0, fallbackUrl,
 }) => {
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const filename = imageFiles[currentIndex]?.filename;
+  // Legacy records contain example.com URLs. Missing art uses a local fallback.
+  const usableFallback = fallbackUrl && !/example\.com|via\.placeholder\.com|placehold\.co/i.test(fallbackUrl)
+    ? fallbackUrl : '';
+  const sourceKey = JSON.stringify([filename, usableFallback]);
+  const [source, setSource] = useState({ key: '', url: '', loading: false });
 
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const imageFile = imageFiles[currentIndex];
-        const imageRef = ref(storage, `npcs/${imageFile.filename}`);
-        const url = await getDownloadURL(imageRef);
-        setImageUrl(url);
-      } catch (error) {
-        console.error('Error fetching NPC image:', error);
-        setImageUrl('https://via.placeholder.com/300');
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (imageFiles && imageFiles.length > 0) {
-      fetchImage();
+    let cancelled = false;
+    setSource({ key: sourceKey, url: '', loading: Boolean(filename) });
+    if (filename) {
+      getDownloadURL(ref(storage, `npcs/${filename}`))
+        .then(url => {
+          if (!cancelled) setSource({ key: sourceKey, url, loading: false });
+        })
+        .catch(() => {
+          if (!cancelled) setSource({ key: sourceKey, url: usableFallback, loading: false });
+        });
     } else {
-      setLoading(false);
+      setSource({ key: sourceKey, url: usableFallback, loading: false });
     }
-  }, [npcName, imageFiles, currentIndex]);
+    return () => { cancelled = true; };
+  }, [filename, usableFallback, sourceKey]);
 
-  if (loading) {
-    return (
-      <Box display="flex" alignItems="center" justifyContent="center" width={boxSize || '100%'} height="auto">
-        <Spinner size="md" />
-      </Box>
-    );
-  }
-
-  // Determine if this specific image is locked (individual lock OR overall lock)
+  const loading = source.key !== sourceKey ? Boolean(filename) : source.loading;
+  const imageUrl = source.key === sourceKey ? source.url : '';
   const imageLocked = locked || (imageFiles[currentIndex]?.locked ?? false);
+  const initials = npcName.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('');
+  const placeholder = (
+    <Box role="img" aria-label={`Portrait unavailable for ${npcName}`} bg="surfaceRaised"
+      minH="80px" w="100%" display="flex" alignItems="center" justifyContent="center" p={4}>
+      <Text color="textMuted" fontWeight="bold" fontSize="xl">{initials || '?'}</Text>
+    </Box>
+  );
 
   return (
-    <Box position="relative" width={boxSize || '100%'} height="auto" overflow="hidden" borderRadius="md">
-      <Image
-        src={imageUrl}
-        alt={npcName}
-        width="100%"
-        height="auto"
-        objectFit="contain"
-        filter={imageLocked ? 'blur(8px)' : 'none'}
-        transition="filter 0.3s ease-in-out"
-      />
+    <Box position="relative" width={boxSize || '100%'} overflow="hidden" borderRadius="md">
+      <Box filter={imageLocked ? 'blur(8px)' : 'none'}>
+        {loading ? (
+          <Box minH="80px" display="flex" alignItems="center" justifyContent="center"><Spinner size="md" /></Box>
+        ) : imageUrl ? (
+          <Image src={imageUrl} alt={npcName} width="100%" height="auto" objectFit="contain" fallback={placeholder} />
+        ) : placeholder}
+      </Box>
       {imageLocked && (
-        <Box
-          position="absolute"
-          top="0"
-          left="0"
-          width="100%"
-          height="100%"
-          bg="rgba(0, 0, 0, 0.4)"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Icon as={FaLock} boxSize={8} color="whiteAlpha.800" />
+        <Box position="absolute" inset={0} bg="blackAlpha.500" display="flex" alignItems="center" justifyContent="center">
+          <Icon as={FaLock} boxSize={8} color="whiteAlpha.800" aria-label="Portrait locked" />
         </Box>
       )}
     </Box>
