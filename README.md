@@ -34,7 +34,7 @@ npm run validate:items
 npm run content:items
 ```
 
-Set `GOOGLE_APPLICATION_CREDENTIALS` to a Firebase service-account JSON stored outside this repository. A workstation with Google application-default credentials may instead set `HYZIK_USE_APPLICATION_DEFAULT=true`. The historical `src/serviceAccountKey.json` must be rotated and removed from Git history; it is now ignored so it cannot be bundled or recommitted.
+Set `GOOGLE_APPLICATION_CREDENTIALS` to a Firebase service-account JSON stored outside this repository. A workstation with Google application-default credentials may instead set `HYZIK_USE_APPLICATION_DEFAULT=true`. Administrative scripts no longer fall back to `src/serviceAccountKey.json`. Verify that the historically committed service-account key has been revoked; deleting it from Git does not revoke it. Keep replacement credentials outside the repository.
 
 ## Hymmnos privacy model
 
