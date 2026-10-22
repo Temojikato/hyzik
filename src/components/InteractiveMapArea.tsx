@@ -202,7 +202,7 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
         </Tooltip>
       )}
 
-      {isMobile && isFullscreen && (
+      {isMobile && (
         <Box
           position="absolute"
           bottom="10px"
@@ -227,7 +227,7 @@ const InteractiveMapArea: React.FC<InteractiveMapAreaProps> = ({
         wheel={{ step: 0.1 }}
         pinch={{ step: 0.1 }}
       >
-        <TransformComponent>
+        <TransformComponent wrapperStyle={{ width: '100%', height: '100%', touchAction: 'none', overscrollBehavior: 'contain' }}>
           <Box position="relative" width="100%" height="100%">
             {/* The base area (or floor) image */}
             <Box

@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   Flex,
 } from '@chakra-ui/react';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { FaExpand, FaCompress, FaPlus, FaMinus, FaUndo } from 'react-icons/fa';
 
 import { MapFloor, MapArea } from '../mapdata';
@@ -40,6 +40,7 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
 }) => {
   const [isFullscreen, setIsFullscreen] = React.useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>(null);
+  const transformRef = useRef<ReactZoomPanPinchRef>(null);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
 
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -97,15 +98,9 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
     };
   }, []);
 
-  const handleZoomIn = () => {
-    // Implement zoom in functionality if needed
-  };
-  const handleZoomOut = () => {
-    // Implement zoom out functionality if needed
-  };
-  const handleReset = () => {
-    // Implement reset functionality if needed
-  };
+  const handleZoomIn = () => transformRef.current?.zoomIn();
+  const handleZoomOut = () => transformRef.current?.zoomOut();
+  const handleReset = () => transformRef.current?.resetTransform();
 
   return (
     <Flex
@@ -132,7 +127,7 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
       )}
 
       {/* Zoom Controls if Mobile & Fullscreen */}
-      {isMobile && isFullscreen && (
+      {isMobile && (
         <Box
           position="absolute"
           bottom="10px"
@@ -149,6 +144,7 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
       )}
 
       <TransformWrapper
+        ref={transformRef}
         initialScale={1}
         minScale={0.5}
         maxScale={10}
@@ -161,6 +157,8 @@ const InteractiveMapBase: React.FC<InteractiveMapBaseProps> = ({
           wrapperStyle={{
             width: "100%",
             height: "100%",
+            touchAction: 'none',
+            overscrollBehavior: 'contain',
           }}
           contentStyle={{ width: "100%", height: "100%" }}
         >

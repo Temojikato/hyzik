@@ -253,7 +253,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered allowPinchZoom>
         <ModalOverlay />
         <ModalContent bg="surface" color="text">
           <ModalHeader>{region.name}</ModalHeader>
@@ -304,7 +304,7 @@ const RegionModal: React.FC<RegionModalProps> = ({
                     wheel={{ step: 0.1 }}
                     pinch={{ step: 0.1 }}
                   >
-                    <TransformComponent>
+                    <TransformComponent wrapperStyle={{ width: '100%', height: '100%', touchAction: 'none', overscrollBehavior: 'contain' }}>
                       <Box position="relative" width="100%" height="100%">
                         <Box
                           as="img"

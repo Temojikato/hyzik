@@ -25,7 +25,7 @@ interface FullScreenMapModalProps {
 const FullScreenMapModal: React.FC<FullScreenMapModalProps> = ({ isOpen, onClose, inventory, setInventory, currentUser }) => {
   useBackDismiss(isOpen, onClose);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered motionPreset="slideInBottom">
+    <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered motionPreset="slideInBottom" allowPinchZoom>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Map</ModalHeader>

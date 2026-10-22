@@ -40,6 +40,7 @@ Priority order:
 - 2026-10-22: Added `audit:campaign`, `test:campaign-content`, and the checked `content:npcs` upload command. Updated the NPC uploader to use the shared credential setup and return a failing exit status on upload errors. No upload or deployment was performed.
 - 2026-10-22: Verification for this pass: production build and TypeScript check passed; 42 React/unit tests and five content/geometry tests passed. Corrected an old encounter-test expectation from AC to the current Defence terminology. Existing build warnings remain.
 - Pending: verify old key revocation and deployment; confirm six account IDs before membership restrictions.
+- 2026-10-22: Fixed the reported player-map pinch issue by updating react-zoom-pan-pinch from 3.6.1 to 3.7.0 (the old version mistakes a quickly added second finger for a double-tap). Map modals allow pinch gestures, map surfaces reserve touch input, and overview zoom/reset controls now work outside fullscreen. Mobile Chromium verification reproduced scale remaining at 1 before the fix and reaching 2.6 after it on both overview and district maps; zoom/reset buttons and location taps also passed. Hosting deployment is pending Firebase login.
 
 ---
 

@@ -81,7 +81,7 @@ const MapAreaModal: React.FC<MapAreaModalProps> = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered allowPinchZoom>
         <ModalOverlay />
         <ModalContent mt="2rem" maxHeight="90vh" bg="surface" color="text">
           <ModalHeader>{area.name}</ModalHeader>
